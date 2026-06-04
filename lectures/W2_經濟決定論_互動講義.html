@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政治社會學 W2 — 研究方法與經濟決定論 I</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;
+  --gold:#b8860b;--sage:#5a6e5a;--muted:#6b6560;--line:#c9c0b4;
+  --card-bg:#faf7f2;--blue:#3a5a8c;--purple:#6b4c7a;--teal:#2a7a6e;
+  --red:#c0392b;--green:#27ae60;--orange:#d35400;
+  --macro:#8b2500; --meso:#b8860b; --micro:#2c5f7c;
+  --mssd:#2a7a6e; --mdsd:#8b2500;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+
+/* 頂部導航 */
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.2rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .9rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.76rem;font-weight:500;color:#888;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#ccc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:var(--paper);background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.88rem;font-weight:700;margin-right:1rem;flex-shrink:0}
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+
+/* 頁面 */
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:920px;margin:0 auto}
+
+/* 底部 */
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+
+/* 標題 */
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,3vw,2.1rem);font-weight:800;color:var(--ink);margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent);position:relative}
+.page h2::after{content:'';position:absolute;left:0;bottom:-2px;width:60px;height:2px;background:var(--gold)}
+.page h2 .mark{color:var(--accent)}
+.page h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent);margin:1.6rem 0 .8rem;display:flex;align-items:center;gap:.5rem}
+.page h3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;font-size:.85rem;font-weight:700;flex-shrink:0}
+.page h4{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin:1rem 0 .5rem}
+.page p{font-size:.92rem;color:#333;margin-bottom:.7rem;line-height:1.95}
+.page p strong{color:var(--accent);font-weight:700}
+.page ul,.page ol{margin:.6rem 0 .9rem 1.5rem}
+.page li{font-size:.9rem;margin-bottom:.35rem;line-height:1.9;color:#333}
+.page li strong{color:var(--ink)}
+.section-lead{font-size:.88rem;color:var(--muted);margin:-.3rem 0 .8rem;font-style:italic;font-family:'Source Serif 4',serif}
+
+/* Hero */
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:900;color:var(--ink);line-height:1.12;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:640px;margin:0 auto 1.4rem}
+.hero-teacher{font-size:.9rem;color:#555;margin-bottom:1.4rem}
+.hero-teacher strong{color:var(--accent)}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+
+.story-lead{font-size:.98rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+
+/* 卡片 */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.2rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.1rem 1.2rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card h4{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--accent);margin-bottom:.4rem;margin-top:0}
+.card p{font-size:.84rem;color:#555;margin-bottom:0;line-height:1.75}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.blue{border-top-color:var(--blue)}.card.blue h4{color:var(--blue)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.purple{border-top-color:var(--purple)}.card.purple h4{color:var(--purple)}
+.card.teal{border-top-color:var(--teal)}.card.teal h4{color:var(--teal)}
+.card.orange{border-top-color:var(--orange)}.card.orange h4{color:var(--orange)}
+
+/* 引言框 */
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.1rem 0}
+.hl-box p:last-child{margin-bottom:0}
+.hl-box h4{margin-top:0;color:var(--accent)}
+.hl-box.blue{background:rgba(58,90,140,.05);border-left-color:var(--blue)}.hl-box.blue h4{color:var(--blue)}
+.hl-box.sage{background:rgba(90,110,90,.05);border-left-color:var(--sage)}.hl-box.sage h4{color:var(--sage)}
+.hl-box.gold{background:rgba(184,134,11,.06);border-left-color:var(--gold)}.hl-box.gold h4{color:var(--gold)}
+.hl-box.teal{background:rgba(42,122,110,.06);border-left-color:var(--teal)}.hl-box.teal h4{color:var(--teal)}
+
+/* 概念框 */
+.concept{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(58,90,140,.04));padding:.9rem 1.2rem;border-radius:8px;margin:.8rem 0;border:1px solid rgba(184,134,11,.2)}
+.concept .lead{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent);font-weight:700;margin-bottom:.4rem}
+.concept .body{font-size:.86rem;color:#333;line-height:1.85}
+.concept .body strong{color:var(--accent)}
+
+/* 中央問題列 */
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+
+/* 下一頁 */
+.next-page{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:1.1rem 1.4rem;border-radius:10px;margin-top:2.2rem;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.next-page:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(139,37,0,.3)}
+.np-label{font-size:.72rem;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.np-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.np-arrow{font-size:1.4rem;opacity:.8}
+
+/* Spoiler */
+.spoiler{cursor:pointer;background:linear-gradient(135deg,rgba(90,110,90,.08),rgba(184,134,11,.06));border-left:3px dashed var(--sage);padding:.8rem 1.1rem;border-radius:0 6px 6px 0;font-size:.85rem;color:var(--sage);max-height:46px;overflow:hidden;transition:max-height .5s ease;line-height:1.85;position:relative;margin:.9rem 0}
+.spoiler::after{content:'▼ 點擊展開';position:absolute;right:1rem;top:.85rem;font-size:.72rem;color:var(--muted);font-family:'Source Serif 4',serif;font-style:italic}
+.spoiler.revealed{max-height:1800px;color:#333}
+.spoiler.revealed::after{content:'▲ 點擊收合';color:var(--sage)}
+.spoiler strong{color:var(--accent)}
+.spoiler .sp-title{font-weight:700;color:var(--sage)}
+
+/* Tabs */
+.tabs{display:flex;gap:.3rem;margin:1.1rem 0 .7rem;border-bottom:2px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:.6rem 1.1rem;background:0;border:0;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .25s;white-space:nowrap}
+.tab:hover{color:var(--accent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* 必要 / 充分條件 卡 */
+.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:1.2rem 0}
+.cond-card{background:#fff;border-radius:12px;padding:1.3rem 1.4rem;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:5px solid #888}
+.cond-card.nec{border-top-color:var(--blue)}
+.cond-card.suf{border-top-color:var(--accent)}
+.cond-card.both{border-top-color:var(--gold)}
+.cond-card .cc-tag{display:inline-block;padding:.2rem .7rem;border-radius:12px;font-size:.72rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.cond-card.nec .cc-tag{background:var(--blue)}
+.cond-card.suf .cc-tag{background:var(--accent)}
+.cond-card.both .cc-tag{background:var(--gold)}
+.cond-card .cc-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:800;margin-bottom:.1rem}
+.cond-card.nec .cc-name{color:var(--blue)}
+.cond-card.suf .cc-name{color:var(--accent)}
+.cond-card.both .cc-name{color:#946a09}
+.cond-card .cc-logic{font-family:'Source Serif 4',serif;font-size:1.05rem;font-weight:600;color:var(--ink);background:var(--card-bg);padding:.5rem .8rem;border-radius:6px;margin:.6rem 0;text-align:center;letter-spacing:.02em}
+.cond-card p{font-size:.87rem;line-height:1.8;color:#444;margin-bottom:0}
+.cond-card .cc-eg{margin-top:.6rem;font-size:.82rem;color:#555;font-style:italic;border-top:1px dashed var(--line);padding-top:.5rem}
+
+/* 邏輯表（MSSD / MDSD） */
+.logic-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.07);margin:1.1rem 0;font-size:.85rem}
+.logic-table th{padding:.7rem .6rem;color:#fff;font-weight:700;text-align:center;font-size:.84rem}
+.logic-table th:first-child{text-align:left;background:#1a1a1a;width:96px}
+.logic-table.mssd th:not(:first-child){background:linear-gradient(135deg,#2a7a6e,#3a9080)}
+.logic-table.mdsd th:not(:first-child){background:linear-gradient(135deg,#8b2500,#c4532b)}
+.logic-table td{padding:.6rem .6rem;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle;line-height:1.6}
+.logic-table td:first-child{font-weight:700;color:var(--ink);background:var(--card-bg);text-align:left;font-size:.82rem}
+.logic-table tr:last-child td{border-bottom:0}
+.logic-table .same{color:var(--teal);font-weight:700}
+.logic-table .diff{color:var(--accent);font-weight:700}
+.logic-table .xmark{color:#b85040;font-weight:700;font-size:1rem}
+.logic-table .keyrow td{background:rgba(184,134,11,.12);font-weight:700}
+.logic-table .keyrow td:first-child{background:rgba(184,134,11,.18);color:#946a09}
+.logic-table .resultrow td{background:#1a1a1a;color:#fff;font-weight:700}
+.logic-table .resultrow td:first-child{background:#000;color:var(--gold)}
+
+/* 決策矩陣 */
+.cmp-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.07);margin:1.2rem 0;font-size:.85rem}
+.cmp-table thead th{padding:.85rem .8rem;font-weight:700;color:#fff;text-align:left;font-size:.85rem}
+.cmp-table thead th:first-child{background:#1a1a1a;width:120px}
+.cmp-table thead th.mssd{background:linear-gradient(135deg,#2a7a6e,#3a9080)}
+.cmp-table thead th.mdsd{background:linear-gradient(135deg,#8b2500,#c4532b)}
+.cmp-table td{padding:.7rem .85rem;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+.cmp-table td:first-child{font-weight:700;color:var(--accent);background:var(--card-bg);font-size:.8rem;width:120px}
+.cmp-table td strong{color:var(--ink)}
+.cmp-table tr:last-child td{border-bottom:0}
+.cmp-table tr:hover td:not(:first-child){background:rgba(184,134,11,.04)}
+
+/* 學者卡 */
+.scholar-card{background:linear-gradient(135deg,rgba(58,90,140,.06),rgba(184,134,11,.04));border:1px solid rgba(58,90,140,.14);border-radius:12px;padding:1.2rem 1.3rem;margin:1rem 0;display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap}
+.scholar-portrait{flex-shrink:0;width:96px;text-align:center}
+.scholar-avatar{width:96px;height:96px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:1.7rem;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.scholar-1 .scholar-avatar{background:linear-gradient(135deg,#3a5a8c,#5a7ab0)}
+.scholar-2 .scholar-avatar{background:linear-gradient(135deg,#8b2500,#c4532b)}
+.scholar-3 .scholar-avatar{background:linear-gradient(135deg,#2a7a6e,#3a9080)}
+.scholar-year{font-size:.74rem;color:var(--muted);font-style:italic;margin-top:.4rem}
+.scholar-info{flex:1;min-width:240px}
+.scholar-info .sname{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:800;color:var(--ink);margin-bottom:.1rem}
+.scholar-info .sschool{font-size:.8rem;font-weight:600;margin-bottom:.5rem}
+.scholar-1 .sschool{color:var(--blue)}
+.scholar-2 .sschool{color:var(--accent)}
+.scholar-3 .sschool{color:var(--teal)}
+.scholar-info p{font-size:.87rem;line-height:1.8;color:#444;margin-bottom:.5rem}
+.scholar-info p strong{color:var(--accent)}
+.scholar-cond{display:inline-block;font-size:.78rem;background:#1a1a1a;color:var(--gold);padding:.3rem .8rem;border-radius:8px;font-weight:600}
+
+/* 案例分析 */
+.case-block{background:#fff;border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:4px solid var(--teal)}
+.case-block h4{color:var(--teal);font-family:'Playfair Display',serif;margin:0 0 .4rem}
+.case-block .ce{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.case-block .ct{font-size:.87rem;color:#333;line-height:1.85;margin-bottom:0}
+.case-block .ct strong{color:var(--accent)}
+.case-block.purple{border-top-color:var(--purple)}.case-block.purple h4{color:var(--purple)}
+.case-block.blue{border-top-color:var(--blue)}.case-block.blue h4{color:var(--blue)}
+.case-block.gold{border-top-color:var(--gold)}.case-block.gold h4{color:var(--gold)}
+.case-block.accent{border-top-color:var(--accent)}.case-block.accent h4{color:var(--accent)}
+
+.video-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:.7rem;font-size:.82rem;color:var(--accent);text-decoration:none;background:rgba(139,37,0,.06);padding:.4rem .9rem;border-radius:8px;font-weight:600;transition:all .2s}
+.video-link:hover{background:rgba(139,37,0,.12)}
+
+/* 三大取向 */
+.lens-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.3rem 0}
+.lens-card{background:#fff;border-radius:12px;padding:1.2rem 1.3rem;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:5px solid #888;transition:transform .3s}
+.lens-card:hover{transform:translateY(-4px)}
+.lens-card.macro{border-top-color:var(--macro)}
+.lens-card.meso{border-top-color:var(--meso)}
+.lens-card.micro{border-top-color:var(--micro)}
+.lens-eye{font-size:.7rem;letter-spacing:.13em;color:#999;font-weight:600;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.lens-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:800;color:var(--ink);margin-bottom:.5rem}
+.lens-card.macro .lens-title{color:var(--macro)}.lens-card.meso .lens-title{color:#946a09}.lens-card.micro .lens-title{color:var(--micro)}
+.lens-row{font-size:.82rem;color:#444;line-height:1.7;margin-bottom:.5rem}
+.lens-row b{color:var(--ink)}
+.lens-weeks{font-size:.76rem;background:var(--card-bg);padding:.5rem .7rem;border-radius:6px;color:#555;line-height:1.55}
+.lens-weeks b{color:var(--accent)}
+
+/* 討論題 */
+.discussion-block{background:linear-gradient(135deg,#fff,#faf7f2);border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid rgba(139,37,0,.12)}
+.discussion-eyebrow{display:inline-block;padding:.2rem .7rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem}
+.discussion-q{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin-bottom:.7rem;line-height:1.7}
+.discussion-q em{color:var(--accent);font-style:normal}
+.discussion-block .ctx{font-size:.85rem;color:#555;margin-bottom:.5rem;line-height:1.85}
+.discussion-block .ctx strong{color:var(--accent)}
+
+/* Quiz */
+.quiz-block{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0;border:1px solid #e5e0d6;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative}
+.quiz-q-num{position:absolute;top:-12px;left:1.5rem;background:var(--accent);color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;padding:.25rem .75rem;border-radius:5px;letter-spacing:.05em}
+.quiz-q-num.method{background:var(--teal)}
+.quiz-question{font-size:.95rem;font-weight:600;color:var(--ink);margin:.4rem 0 .9rem;line-height:1.7}
+.quiz-question strong{color:var(--accent)}
+.quiz-options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.7rem}
+.quiz-opt{text-align:left;background:#fafaf6;border:1.5px solid #e0d9c8;border-radius:7px;padding:.7rem 1rem;font-size:.88rem;line-height:1.6;color:#333;cursor:pointer;transition:all .2s;font-family:inherit}
+.quiz-opt:hover{background:#f5f0e8;border-color:#b8860b}
+.quiz-opt.selected-correct{background:linear-gradient(135deg,#d4edd4,#c0e0c0);border-color:#5a8c5a;color:#1e4d1e;font-weight:600}
+.quiz-opt.selected-wrong{background:linear-gradient(135deg,#f8d8d4,#efc4be);border-color:#b85040;color:#7a1a10}
+.quiz-opt.show-correct{background:#eaf5ea;border-color:#5a8c5a;font-weight:500}
+.quiz-explain{font-size:.85rem;line-height:1.8;color:#333;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(90,110,90,.04));padding:.9rem 1.1rem;border-radius:7px;border-left:3px solid var(--sage);display:none}
+.quiz-explain.shown{display:block}
+.quiz-explain strong{color:var(--accent)}
+.quiz-explain em{color:var(--blue);font-style:normal;font-weight:600}
+
+/* 讀物 */
+.reading-card{background:#fff;border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0;border-left:4px solid;display:flex;gap:.9rem;align-items:flex-start;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.reading-card.must{border-left-color:var(--accent)}
+.reading-card.rec{border-left-color:var(--gold)}
+.reading-icon{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;font-family:'Playfair Display',serif}
+.reading-card.must .reading-icon{background:var(--accent)}
+.reading-card.rec .reading-icon{background:var(--gold)}
+.reading-body{flex:1}
+.reading-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:.2rem;line-height:1.5}
+.reading-meta{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:.3rem;font-family:'Source Serif 4',serif}
+.reading-note{font-size:.83rem;color:#444;line-height:1.75}
+.reading-note strong{color:var(--accent)}
+
+/* SVG 圖容器 */
+.fig{background:#fff;border-radius:12px;padding:1.2rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.fig-svg{display:block;width:100%;max-width:720px;margin:0 auto}
+.fig-cap{font-size:.78rem;color:var(--muted);text-align:center;font-style:italic;margin-top:.6rem}
+
+/* ========== MSSD ⟷ MDSD 動態對照 ========== */
+.mm{background:#fff;border-radius:14px;padding:1.4rem 1.3rem 1.2rem;margin:1.2rem 0;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.mm-toggle{display:flex;gap:.6rem;justify-content:center;margin-bottom:1.4rem;flex-wrap:wrap}
+.mm-tbtn{padding:.65rem 1.3rem;border:2px solid var(--line);background:#faf7f2;border-radius:11px;cursor:pointer;font-family:inherit;font-weight:800;font-size:.95rem;color:var(--muted);transition:all .3s;text-align:center;line-height:1.35}
+.mm-tbtn .sub{display:block;font-size:.72rem;font-weight:500;opacity:.85;margin-top:.15rem;letter-spacing:.03em}
+.mm-tbtn:hover{border-color:var(--gold)}
+.mm-tbtn.mssd.active{background:var(--mssd);border-color:var(--mssd);color:#fff;box-shadow:0 4px 14px rgba(42,122,110,.3)}
+.mm-tbtn.mdsd.active{background:var(--mdsd);border-color:var(--mdsd);color:#fff;box-shadow:0 4px 14px rgba(139,37,0,.3)}
+.mm-stage{position:relative}
+.mm-grid{display:grid;grid-template-columns:78px 1fr 1fr 1fr;gap:.55rem;align-items:stretch}
+.mm-corner{display:flex;align-items:flex-end;justify-content:center;font-size:.7rem;color:var(--muted);font-style:italic}
+.mm-caseh{text-align:center;font-weight:700;font-size:.82rem;color:var(--muted);padding-bottom:.25rem}
+.mm-rowlabel{display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;font-size:.82rem;color:var(--ink);background:var(--card-bg);border-radius:9px;padding:.3rem}
+.mm-cell{border-radius:10px;padding:.7rem .4rem;text-align:center;font-weight:800;font-size:.92rem;color:#fff;transition:background-color .55s ease,transform .45s ease;min-height:66px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;background:#bbb}
+.mm-cell .ct{font-size:.74rem;font-weight:600;opacity:.95}
+.mm-cell.pulse{transform:scale(1.06)}
+.mm-arrows{display:flex;justify-content:center;align-items:center;gap:.5rem;margin:1rem 0 .3rem;flex-wrap:wrap}
+.mm-flowbox{background:#1a1a1a;border-radius:12px;padding:1rem 1.2rem;margin:1rem 0 .4rem;display:flex;align-items:center;justify-content:center;gap:.7rem;flex-wrap:wrap;text-align:center}
+.mm-step{font-size:.86rem;color:#d8d0c4;font-weight:600}
+.mm-step b{display:block;font-size:1.02rem;font-family:'Playfair Display',serif;margin-top:.1rem;transition:color .4s}
+.mm-step.bg b{color:#7fd4c5}
+.mm-step.out b{color:#f0b8a8}
+.mm-step.find{background:var(--gold);color:#1a1a1a;border-radius:8px;padding:.35rem .8rem}
+.mm-step.find b{color:#1a1a1a}
+.mm-sep{color:var(--gold);font-size:1.3rem;font-weight:800}
+.mm-mirror{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:1rem 0 .3rem}
+.mm-mline{padding:.7rem .9rem;border-radius:10px;font-size:.84rem;line-height:1.6;border:2px solid transparent;transition:all .35s;opacity:.45}
+.mm-mline.mssd{background:rgba(42,122,110,.07)}
+.mm-mline.mdsd{background:rgba(139,37,0,.06)}
+.mm-mline.on{opacity:1}
+.mm-mline.mssd.on{border-color:var(--mssd)}
+.mm-mline.mdsd.on{border-color:var(--mdsd)}
+.mm-mline .mt{font-weight:800;font-family:'Playfair Display',serif;font-size:.92rem;margin-bottom:.2rem}
+.mm-mline.mssd .mt{color:var(--mssd)}
+.mm-mline.mdsd .mt{color:var(--mdsd)}
+.mm-mline .mlogic b{color:var(--accent)}
+.mm-eg{background:var(--card-bg);border-radius:10px;padding:.8rem 1rem;margin-top:.7rem;font-size:.85rem;line-height:1.7;border-left:4px solid var(--gold);transition:border-color .4s}
+.mm-eg .egt{font-weight:800;font-family:'Playfair Display',serif;margin-bottom:.2rem}
+
+/* ========== 亞洲案例 MSSD/MDSD 實戰互動圖 ========== */
+.cmpx{background:#fff;border-radius:14px;padding:1.3rem;margin:1.2rem 0;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.cmpx-panel{display:none}
+.cmpx-panel.active{display:block;animation:fadeIn .4s}
+.cmpx-intro{font-size:.86rem;line-height:1.7;color:#444;background:var(--card-bg);border-radius:9px;padding:.7rem .95rem;margin-bottom:.5rem}
+.cmpx-intro b{color:var(--accent)}
+.cx-scroll{overflow-x:auto;scrollbar-width:thin}
+.cx-table{width:100%;border-collapse:separate;border-spacing:.4rem;min-width:420px}
+.cx-table th{font-size:.82rem;font-weight:800;color:#fff;background:#1a1a1a;padding:.5rem .4rem;border-radius:8px;text-align:center;line-height:1.35}
+.cx-table th.rowh{background:transparent;width:84px}
+.cx-rh{font-weight:800;color:var(--ink);font-size:.77rem;text-align:left;background:var(--card-bg);border-radius:8px;padding:.5rem .55rem;line-height:1.4;width:84px}
+.cx-table td{padding:.55rem .35rem;border-radius:9px;text-align:center;font-size:.81rem;font-weight:700;line-height:1.45;vertical-align:middle}
+.cx-same{background:#e3f0ec;color:#1d5f53;border:1.5px solid #57a596}
+.cx-diff{background:#f1ecf4;color:#5a3d6b;border:1.5px solid #b39ec4}
+.cx-key{background:linear-gradient(135deg,#fbecc6,#f3dca0);color:#7a5a08;border:1.5px solid #b8860b}
+.cx-dem{background:#dcefd4;color:#1e5a1e;border:1.5px solid #5a9a5a}
+.cx-auth{background:#f6d8d2;color:#8a2418;border:1.5px solid #c4604f}
+.cx-back{background:#fbe8cc;color:#8a5410;border:1.5px solid #d39a4a}
+.cmpx-concl{font-size:.86rem;line-height:1.75;padding:.8rem 1rem;border-radius:10px;margin-top:.6rem}
+.cmpx-concl b{font-weight:800}
+.cmpx-concl.mssd{background:rgba(42,122,110,.08);border-left:4px solid var(--mssd)}
+.cmpx-concl.mssd b{color:var(--mssd)}
+.cmpx-concl.mdsd{background:rgba(139,37,0,.06);border-left:4px solid var(--mdsd)}
+.cmpx-concl.mdsd b{color:var(--mdsd)}
+
+/* RWD */
+@media(max-width:780px){
+  .page{padding:1.8rem 1rem 3rem}
+  .hero-title{font-size:1.9rem}
+  .page h2{font-size:1.45rem}
+  .cond-grid,.lens-grid{grid-template-columns:1fr}
+  .scholar-card{flex-direction:column;align-items:center;text-align:center}
+  .scholar-info{text-align:left}
+  .mm-grid{grid-template-columns:54px 1fr 1fr 1fr;gap:.35rem}
+  .mm-cell{font-size:.78rem;padding:.5rem .25rem;min-height:60px}
+  .mm-cell .ct{font-size:.66rem}
+  .mm-mirror{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="top-nav">
+  <span class="nav-title">W2 研究方法 × 經濟決定論</span>
+  <button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+  <button class="nav-btn" onclick="goPage(1)">1 · 必要vs充分</button>
+  <button class="nav-btn" onclick="goPage(2)">2 · 為何要比較</button>
+  <button class="nav-btn" onclick="goPage(3)">3 · MSSD⟷MDSD</button>
+  <button class="nav-btn" onclick="goPage(4)">4 · 決策矩陣</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(5)">5 · 三大取向</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(6)">6 · 經濟決定論I</button>
+  <button class="nav-btn" onclick="goPage(7)">7 · 亞洲四案例</button>
+  <button class="nav-btn" onclick="goPage(8)">8 · 血與淚</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(9)">9 · 隨堂測驗</button>
+  <button class="nav-btn" onclick="goPage(10)">10 · 讀物小結</button>
+</div>
+
+<div class="page-container">
+
+<div class="page active" data-page="0"><div class="page-inner">
+  <div class="hero">
+    <div class="hero-eyebrow">Political Sociology · Week 2</div>
+    <h1 class="hero-title">如何<span class="mark">證明</span>因果？<br>經濟發展<span class="mark">帶得來</span>民主嗎？</h1>
+    <p class="hero-sub">這週分兩半：上半場練「<strong>研究方法</strong>」的功夫——沒有實驗室，社會科學家怎麼談因果？下半場用它來檢驗一個大哉問：經濟發展，究竟是不是民主的鑰匙？</p>
+    <div class="hero-teacher">授課教師：<strong>林文正</strong>　·　國立臺灣大學</div>
+    <div class="hero-meta">
+      <span>🔑 必要 vs 充分條件</span>
+      <span>🔬 MSSD · MDSD 比較法</span>
+      <span>📈 經濟決定論 I</span>
+    </div>
+  </div>
+
+  <div class="story-lead">
+    上週我們畫好了<strong>三大透鏡的課程地圖</strong>。本週正式戴上<strong>第一把透鏡（宏觀／結構）</strong>。但在分析任何理論之前，得先有一套「<strong>怎麼算數</strong>」的方法論武器——否則我們永遠只能說「我覺得」，而說不出「為什麼」。
+  </div>
+
+  <div class="questions">
+    <h4>📌 本週要解答的核心問題</h4>
+    <ol>
+      <li><strong>「必要條件」和「充分條件」差在哪？</strong>為什麼搞錯這個，整個因果推論都會崩掉？</li>
+      <li><strong>社會科學沒有實驗室，怎麼辦？</strong>Mill 的兩把邏輯利刃——「最大相似法」與「最大差異法」是什麼？</li>
+      <li><strong>Skocpol 怎麼用「比較法」破解了三場大革命的共同密碼？</strong></li>
+      <li><strong>經濟發展是民主化的「必要」還是「充分」條件？</strong>Lipset、Moore、Przeworski 三位大師怎麼說？</li>
+      <li><strong>同樣經濟起飛，為何台灣、南韓走向民主，中國卻沒有？</strong>菲律賓又給了我們什麼警告？</li>
+    </ol>
+  </div>
+
+  <h3><span class="num">📖</span>本週路線圖（兩大主題）</h3>
+  <div class="card-grid">
+    <div class="card teal"><h4>① 方法論：怎麼談因果</h4><p>P1 必要/充分條件 · P2 為何要比較 · P3 最大相似法 · P4 最大差異法 · P5 決策矩陣</p></div>
+    <div class="card"><h4>② 經濟決定論 I</h4><p>P6 三大取向 · P7 三位大師 · P8 亞洲四案例 · P9 民主化的血與淚 · P10 測驗 · P11 讀物</p></div>
+    <div class="card gold"><h4>🎮 互動練習</h4><p>條件判斷器、MSSD/MDSD 邏輯圖、方法選擇器、亞洲四案例切換、<strong>選擇題與問答題</strong>。</p></div>
+    <div class="card blue"><h4>🔭 戴上第一把透鏡</h4><p>本週是「宏觀／結構取向」的開場——之後 W3–W6 都在這把透鏡之下。</p></div>
+  </div>
+
+  <div class="next-page" onclick="goPage(1)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P1 · 兩種條件：必要 vs 充分</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<div class="page" data-page="1"><div class="page-inner">
+  <div class="guide-breadcrumb">方法論 · 第 1 章 · <span>邏輯條件</span></div>
+  <h2>兩種條件<span class="mark">：</span>必要 vs 充分</h2>
+
+  <div class="story-lead">
+    在談「經濟發展<strong>導致</strong>民主」之前，先問一個更基本的問題：這個「導致」到底是什麼意思？是「<strong>沒有它就不行</strong>」，還是「<strong>有它就一定成</strong>」？這兩者天差地遠——搞混了，整個因果推論都會垮掉。
+  </div>
+
+  <div class="cond-grid">
+    <div class="cond-card nec">
+      <span class="cc-tag">Necessary</span>
+      <div class="cc-name">必要條件</div>
+      <div class="cc-logic">沒有 A → 就一定沒有 B</div>
+      <p>A 是 B 的「<strong>地基</strong>」。少了它，B 絕對蓋不起來；但<strong>光有地基，不保證蓋得出房子</strong>。</p>
+      <div class="cc-eg">例：沒有經濟發展，民主難以紮根——但有錢，不等於一定民主。</div>
+    </div>
+    <div class="cond-card suf">
+      <span class="cc-tag">Sufficient</span>
+      <div class="cc-name">充分條件</div>
+      <div class="cc-logic">只要有 A → 就一定有 B</div>
+      <p>A 是 B 的「<strong>啟動開關</strong>」。按下去，B 必然發生；但 B 也可能<strong>被別的開關啟動</strong>。</p>
+      <div class="cc-eg">例：若某組條件齊備（國家轉弱＋社會爆發），轉型就必然啟動。</div>
+    </div>
+  </div>
+
+  <div class="cond-card both" style="margin:1.1rem 0">
+    <span class="cc-tag">Necessary &amp; Sufficient</span>
+    <div class="cc-name">充分且必要條件</div>
+    <div class="cc-logic">若且唯若（iff）有 A，才有 B；且有 A 就一定有 B</div>
+    <p>A 與 B <strong>完全綁定、互為條件</strong>——有你才有我，有我必有你。這在社會科學裡<strong>極其罕見</strong>，因為社會現象幾乎都是「多因」。</p>
+  </div>
+
+  <h3><span class="num">🎯</span>互動判斷：這是哪種條件？</h3>
+  <p class="section-lead">先自己判斷，再點開看解答。</p>
+
+  <div class="spoiler">
+    <span class="sp-title">🤔「氧氣」之於「燃燒」 — 點此看答案</span><br>
+    <strong>必要條件</strong>。沒有氧氣絕對燒不起來（必要）；但空氣中到處是氧氣，東西卻沒在燒（光有氧氣不充分）。所以氧氣是燃燒的<strong>必要</strong>但非充分條件。
+  </div>
+  <div class="spoiler">
+    <span class="sp-title">🤔「把頭砍下來」之於「死亡」 — 點此看答案</span><br>
+    <strong>充分條件</strong>。砍頭必然導致死亡（充分）；但人也可能因疾病、意外而死，不一定要被砍頭（非必要）。所以砍頭是死亡的<strong>充分</strong>但非必要條件。
+  </div>
+  <div class="spoiler">
+    <span class="sp-title">🤔 現代化理論說的「經濟發展」之於「民主」 — 點此看答案</span><br>
+    Lipset 主張它是<strong>必要條件</strong>（沒有經濟發展，民主難以紮根）。但中國 40 年高速成長卻維持威權，證明它<strong>不是充分條件</strong>。這正是本週下半場要深究的核心爭論。
+  </div>
+
+  <h3><span class="num">💡</span>為什麼非搞懂不可？</h3>
+  <div class="card-grid">
+    <div class="card teal"><h4>診斷因果方向</h4><p>釐清哪些是「<strong>基礎設施</strong>」（必要條件），哪些是「<strong>啟動開關</strong>」（充分條件）。</p></div>
+    <div class="card"><h4>避免過度簡化</h4><p>台灣民主化的「充分條件」組合中，除了經濟，<strong>還缺了什麼</strong>？</p></div>
+    <div class="card blue"><h4>反事實推論</h4><p>「如果當年沒有經濟奇蹟，台灣還會民主化嗎？」（<em>Counterfactual</em>）</p></div>
+    <div class="card gold"><h4>辨識關鍵時刻</h4><p>哪些條件的匯合（國家轉弱＋社會不滿爆發）共同構成變遷的充分條件？（<em>Critical Junctures</em>）</p></div>
+  </div>
+
+  <div class="next-page" onclick="goPage(2)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P2 · 沒有實驗室，怎麼談因果？</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<div class="page" data-page="2"><div class="page-inner">
+  <div class="guide-breadcrumb">方法論 · 第 2 章 · <span>比較研究設計</span></div>
+  <h2>社會科學<span class="mark">無法</span>在無菌室裡做實驗</h2>
+
+  <div class="story-lead">
+    化學家可以輕易控制溫度與壓力，把所有變數固定，只動一個。但社會科學家<strong>無法把「文化」或「歷史」從一個國家裡剝離出來</strong>再重做一次。當所有變數糾纏在一起，我們必須仰賴一把替代的手術刀——<strong>比較（Comparison）</strong>。
+  </div>
+
+  <div class="fig">
+    <svg class="fig-svg" viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg">
+      <!-- 無菌室 -->
+      <rect x="30" y="30" width="290" height="150" rx="12" fill="#eef4f8" stroke="#3a5a8c" stroke-width="2"/>
+      <text x="175" y="60" text-anchor="middle" font-size="15" font-weight="800" fill="#3a5a8c">🧪 無菌室（自然科學）</text>
+      <text x="175" y="92" text-anchor="middle" font-size="12.5" fill="#333">完美控制溫度、壓力</text>
+      <text x="175" y="116" text-anchor="middle" font-size="12.5" fill="#333">只變動一個變數</text>
+      <text x="175" y="148" text-anchor="middle" font-size="12.5" fill="#2a7a6e" font-weight="700">→ 乾淨的因果關係</text>
+      <!-- vs -->
+      <text x="360" y="112" text-anchor="middle" font-size="22" font-weight="800" fill="#8b2500">⇄</text>
+      <!-- 真實世界 -->
+      <rect x="400" y="30" width="290" height="150" rx="12" fill="#fbf3ef" stroke="#8b2500" stroke-width="2"/>
+      <text x="545" y="60" text-anchor="middle" font-size="15" font-weight="800" fill="#8b2500">🌍 真實世界（社會科學）</text>
+      <text x="545" y="92" text-anchor="middle" font-size="12.5" fill="#333">歷史、文化、經濟、地理</text>
+      <text x="545" y="116" text-anchor="middle" font-size="12.5" fill="#333">全部糾纏在一起，無法剝離</text>
+      <text x="545" y="148" text-anchor="middle" font-size="12.5" fill="#8b2500" font-weight="700">→ 只能靠「比較」逼近因果</text>
+    </svg>
+    <div class="fig-cap">無法做實驗，就用「精心挑選的比較」來模擬實驗的控制效果</div>
+  </div>
+
+  <h3><span class="num">🔪</span>Mill 的兩把邏輯利刃</h3>
+  <p class="section-lead">現代比較研究法的根基，源自哲學家 J. S. Mill 提出的兩大邏輯方法。</p>
+
+  <div class="cond-grid">
+    <div class="cond-card suf">
+      <span class="cc-tag" style="background:var(--mssd)">Method of Difference</span>
+      <div class="cc-name" style="color:var(--mssd)">求異法</div>
+      <p>當情況<strong>高度相似</strong>，卻產生<strong>不同結果</strong>時——去找那「<strong>唯一不同</strong>」的變數，它就是兇手。</p>
+      <div class="cc-eg">→ 發展成「最大相似法 MSSD」（下一頁）</div>
+    </div>
+    <div class="cond-card nec">
+      <span class="cc-tag" style="background:var(--mdsd)">Method of Agreement</span>
+      <div class="cc-name" style="color:var(--mdsd)">求同法</div>
+      <p>當情況<strong>完全不同</strong>，卻產生<strong>相同結果</strong>時——去找那「<strong>唯一共存</strong>」的因素，它就是通則。</p>
+      <div class="cc-eg">→ 發展成「最大差異法 MDSD」（P4）</div>
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(3)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P3 · 兩把比較法：MSSD ⟷ MDSD 動態對照</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<div class="page" data-page="3"><div class="page-inner">
+  <div class="guide-breadcrumb">方法論 · 第 3 章 · <span>兩把比較法</span></div>
+  <h2>兩把比較法<span class="mark">：</span>MSSD ⟷ MDSD</h2>
+
+  <div class="story-lead">
+    社會科學沒有實驗室，Mill 給了我們兩把替代的手術刀。它們其實是一對<strong>鏡像</strong>：一個<strong>固定背景、找差異</strong>，一個<strong>放任背景、找共通</strong>。下面這張圖會「動」給你看——<strong>切換按鈕，看「同」與「異」如何整個翻轉</strong>。
+  </div>
+
+  <h3><span class="num">🎮</span>動態對照：點按鈕切換，看它變</h3>
+  <p class="section-lead">注意背景列與結果列的顏色如何「同 ⟷ 異」整個對調——這就是兩種方法互為鏡像的關鍵。</p>
+
+  <div class="mm mode-mssd" id="mm">
+    <div class="mm-toggle">
+      <button class="mm-tbtn mssd active" onclick="setMethod('mssd')">最大相似法 MSSD<span class="sub">同中求異</span></button>
+      <button class="mm-tbtn mdsd" onclick="setMethod('mdsd')">最大差異法 MDSD<span class="sub">異中求同</span></button>
+    </div>
+    <div class="mm-stage">
+      <div class="mm-grid">
+        <div class="mm-corner">挑選<br>案例</div>
+        <div class="mm-caseh">案例 A</div>
+        <div class="mm-caseh">案例 B</div>
+        <div class="mm-caseh">案例 C</div>
+
+        <div class="mm-rowlabel">背景<br>條件</div>
+        <div class="mm-cell" id="bg0" style="background:#2a7a6e">相同<span class="ct">背景 ＝</span></div>
+        <div class="mm-cell" id="bg1" style="background:#2a7a6e">相同<span class="ct">背景 ＝</span></div>
+        <div class="mm-cell" id="bg2" style="background:#2a7a6e">相同<span class="ct">背景 ＝</span></div>
+
+        <div class="mm-rowlabel">結果</div>
+        <div class="mm-cell" id="out0" style="background:#3a5a8c">結果 A<span class="ct">≠</span></div>
+        <div class="mm-cell" id="out1" style="background:#d35400">結果 B<span class="ct">≠</span></div>
+        <div class="mm-cell" id="out2" style="background:#6b4c7a">結果 C<span class="ct">≠</span></div>
+      </div>
+    </div>
+
+    <div class="mm-flowbox">
+      <span class="mm-step bg">背景條件<b id="f-bg" style="color:#7fd4c5">相同 ＝</b></span>
+      <span class="mm-sep">→</span>
+      <span class="mm-step out">結果<b id="f-out" style="color:#f0b8a8">不同 ≠</b></span>
+      <span class="mm-sep">→</span>
+      <span class="mm-step find" id="f-find">找：唯一<b>不同</b>的『關鍵變數』</span>
+    </div>
+
+    <div class="mm-mirror">
+      <div class="mm-mline mssd on" id="ml-mssd"><div class="mt">MSSD｜同中求異</div><div class="mlogic">背景【<b>同</b>】→ 結果【<b>異</b>】→ 抓那個【<b>異</b>】的關鍵變數</div></div>
+      <div class="mm-mline mdsd" id="ml-mdsd"><div class="mt">MDSD｜異中求同</div><div class="mlogic">背景【<b>異</b>】→ 結果【<b>同</b>】→ 抓那個【<b>同</b>】的共同法則</div></div>
+    </div>
+
+    <div class="mm-eg" id="mm-eg">
+      <div class="egt">🌲 實例：北歐諸國（最大相似法）</div>
+      地理、福利、經濟水準<b>超級相似</b>，環保政策成效卻<b>差很大</b> → 鎖定那個唯一不同的微觀變數（利益團體遊說、制度細節）。
+    </div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>🪞 一句話看懂這對鏡像</h4>
+    <p>兩種方法都在做同一件事——<strong>把「相同的東西」當控制變數排除掉，讓「唯一不一樣的東西」現形</strong>。差別只在於：MSSD 排除的是<strong>相同的背景</strong>（剩下異的變數＝兇手）；MDSD 排除的是<strong>相異的背景</strong>（剩下同的因素＝通則）。<strong>同與異，恰好對調。</strong></p>
+  </div>
+
+  <h3><span class="num">🔬</span>兩個經典實戰案例</h3>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'case-mssd')">🌲 MSSD · 北歐環保之謎</button>
+    <button class="tab" onclick="switchTab(this,'case-mdsd')">🔥 MDSD · 跨時空革命</button>
+  </div>
+  <div class="tab-panel active" id="case-mssd">
+    <div class="case-block">
+      <div class="ce">MSSD Case · 同中求異</div>
+      <h4>北歐環保政策之謎</h4>
+      <p class="ct">北歐諸國在<strong>地理、福利、經濟水準</strong>上高度相似——便能把這些當成「已控制」的變數一筆排除。那麼，環保成效的落差藏在哪？</p>
+    </div>
+    <div class="spoiler">
+      <span class="sp-title">💭 點此展開 Takeaway</span><br>
+      政策成效的巨大落差，<strong>必定藏在少數不同的「微觀變數」中</strong>——例如<strong>特定利益團體的遊說力道</strong>，或<strong>行政體系與管制設計的微小差異</strong>。<br><br>
+      MSSD 的威力：當宏觀條件都一樣，它逼你<strong>放下大而無當的解釋</strong>（「因為他們有錢」「因為文化好」），轉而去找真正起作用的<strong>微觀兇手</strong>。
+    </div>
+  </div>
+  <div class="tab-panel" id="case-mdsd">
+    <div class="case-block accent">
+      <div class="ce">MDSD Case · 異中求同</div>
+      <h4>跨越時空的社會革命：法國 / 俄國 / 中國</h4>
+      <p class="ct">三場革命的<strong>地理、經濟結構、宗教信仰</strong>全都互異——既然背景都不同，就能一一排除。案例出處：Theda Skocpol（W4 會深入）。那唯一共存的關鍵是？</p>
+    </div>
+    <div class="spoiler">
+      <span class="sp-title">💭 點此展開共同密碼</span><br>
+      <strong>① 舊政權國家機器的崩潰</strong>——常因對外戰爭失利、財政破產，使國家失去鎮壓能力。<br>
+      <strong>② 農民村落群體的廣泛叛亂</strong>——擁有自治傳統的農民共同體，趁國家虛弱時大規模起事。<br><br>
+      地理、經濟、宗教全都不同，唯獨這兩項共存——這就是 MDSD「異中求同」：<strong>跨越巨大差異，淬鍊出普世法則</strong>。
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(4)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P4 · 決策矩陣：什麼時候用哪一把？</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<div class="page" data-page="4"><div class="page-inner">
+  <div class="guide-breadcrumb">方法論 · 第 5 章 · <span>決策矩陣</span></div>
+  <h2>偵探的工具箱<span class="mark">：</span>MSSD vs MDSD</h2>
+
+  <div class="story-lead">
+    兩把利刃各有用武之地。關鍵在於：<strong>你手上的案例，背景是「都很像」還是「都不像」？結果是「不一樣」還是「一樣」？</strong>下表幫你一秒選對工具。
+  </div>
+
+  <table class="cmp-table">
+    <thead><tr><th>比較面向</th><th class="mssd">最大相似法 MSSD ⚙</th><th class="mdsd">最大差異法 MDSD 🎯</th></tr></thead>
+    <tbody>
+      <tr><td>核心口訣</td><td><strong>同</strong>中求<strong>異</strong></td><td><strong>異</strong>中求<strong>同</strong></td></tr>
+      <tr><td>背景條件</td><td>高度相似（＝）</td><td>天差地遠（≠）</td></tr>
+      <tr><td>最終結果</td><td>截然不同（≠）</td><td>完全相同（＝）</td></tr>
+      <tr><td>尋找目標</td><td>導致差異的「<strong>關鍵變數</strong>」</td><td>導致結果的「<strong>共同法則</strong>」</td></tr>
+      <tr><td>適用情境</td><td>排除宏觀因素，找微觀兇手</td><td>跨越巨大差異，找普世通則</td></tr>
+    </tbody>
+  </table>
+
+  <div class="hl-box gold">
+    <h4>🕵 成為切開現象、直達因果的偵探</h4>
+    <p>當一切看似相同卻走向分歧 → 用 <strong>MSSD</strong> 找那個打破平衡的變數。<br>當世界混亂無序卻殊途同歸 → 用 <strong>MDSD</strong> 淬鍊那個貫穿全場的法則。<br>無論你分析的是國家政策、市場行銷，還是社會運動，這兩把手術刀都能幫你精準定位因果。</p>
+  </div>
+
+  <h3><span class="num">🎮</span>方法選擇器：你會用哪一把？</h3>
+  <p class="section-lead">讀完情境，點選你認為該用的方法，再看解析。</p>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num method">M1</div>
+    <div class="quiz-question">研究者想知道：為什麼<strong>德、法、英、義</strong>（都是富裕民主國家）的「長照政策慷慨程度」差這麼多？他該用哪一把？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="true">(A) 最大相似法 MSSD</button>
+      <button class="quiz-opt" data-correct="false">(B) 最大差異法 MDSD</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ MSSD</strong>。這些國家背景<em>高度相似</em>（都富裕、都民主、都歐洲），但結果<em>不同</em>（政策慷慨度有別）——典型的「同中求異」，要去找那個關鍵的微觀差異（如政黨結構、工會力量）。
+    </div>
+  </div>
+  <div class="quiz-block">
+    <div class="quiz-q-num method">M2</div>
+    <div class="quiz-question">研究者發現：<strong>古巴、伊朗、東歐</strong>三地（背景天差地遠）都發生了革命。他想找出革命的共同原因。該用哪一把？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 最大相似法 MSSD</button>
+      <button class="quiz-opt" data-correct="true">(B) 最大差異法 MDSD</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ MDSD</strong>。背景<em>天差地遠</em>、結果卻<em>相同</em>（都革命）——典型的「異中求同」。把所有相異處排除，剩下的共存因素就是通則。這正是 Skocpol 的做法。
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(5)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P5 · 政治社會學的三大分析取向</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<div class="page" data-page="5"><div class="page-inner">
+  <div class="guide-breadcrumb">橋接 · <span>三大分析取向</span></div>
+  <h2>政治社會學的<span class="mark">三大分析取向</span></h2>
+
+  <div class="story-lead">
+    方法論武器備齊，正式進入理論。先把上週的「<strong>三大透鏡</strong>」用「取向（approach）」的語言再講一次——這張表會貫穿整學期。本週要鑽研的「經濟決定論」，就坐落在最左邊的<strong>結構取向</strong>。
+  </div>
+
+  <div class="lens-grid">
+    <div class="lens-card macro">
+      <div class="lens-eye">本週在這裡 ★</div>
+      <div class="lens-title">結構取向</div>
+      <div class="lens-row"><b>核心要素：</b>經濟基礎、國家制度、國際體系、社會階級</div>
+      <div class="lens-row"><b>對變遷的解釋：</b>由宏觀環境（經濟發展、戰爭、國際壓力）決定，個人力量難以撼動。</div>
+      <div class="lens-weeks">經典：<b>現代化理論、國家自主論、Skocpol 革命研究</b></div>
+    </div>
+    <div class="lens-card meso">
+      <div class="lens-eye">中觀</div>
+      <div class="lens-title">行動者與互動取向</div>
+      <div class="lens-row"><b>核心要素：</b>制度約束、策略選擇、社會運動、日常抵抗</div>
+      <div class="lens-row"><b>對變遷的解釋：</b>行動者在既有結構中透過談判、動員與協商，實踐並改變政治。</div>
+      <div class="lens-weeks">經典：<b>新制度主義、日常政治、太陽花學運</b></div>
+    </div>
+    <div class="lens-card micro">
+      <div class="lens-eye">微觀</div>
+      <div class="lens-title">文化與符號取向</div>
+      <div class="lens-row"><b>核心要素：</b>價值認同、集體記憶、文化框架、象徵政治</div>
+      <div class="lens-row"><b>對變遷的解釋：</b>政治行動必須取得「文化正當性」，變遷源於認同重構與意義的翻轉。</div>
+      <div class="lens-weeks">經典：<b>想像共同體、框架理論、認同政治（台灣人）</b></div>
+    </div>
+  </div>
+
+  <div class="hl-box">
+    <h4>🔭 為什麼從「結構取向」開始？</h4>
+    <p>因為它問的是最基本、也最具爭議的問題：<strong>人的命運，到底有多少是被「結構」決定的？</strong>「經濟決定論」是這個提問最經典、最強硬的版本——它主張：先把經濟搞起來，民主自然會來。真的嗎？翻到下一頁。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(6)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P6 · 經濟決定論 I：三位大師怎麼說？</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<div class="page" data-page="6"><div class="page-inner">
+  <div class="guide-breadcrumb">經濟決定論 I · <span>核心理論</span></div>
+  <h2>經濟發展<span class="mark">如何</span>帶來民主？</h2>
+
+  <div class="story-lead">
+    「<strong>經濟決定論</strong>」的核心主張：經濟發展會帶動<strong>教育普及、都市化與中產階級崛起</strong>，進而提升政治寬容度、催生民主。這個直覺很強——但三位大師對它的「邏輯定位」卻各有歧見。
+  </div>
+
+  <h3><span class="num">👤</span>三位繞不開的大師</h3>
+
+  <div class="scholar-card scholar-1">
+    <div class="scholar-portrait"><div class="scholar-avatar">L</div><div class="scholar-year">1959</div></div>
+    <div class="scholar-info">
+      <div class="sname">Seymour M. Lipset</div>
+      <div class="sschool">現代化理論（經典觀點）</div>
+      <p><strong>「經濟發展是民主化的先決條件。」</strong>發展帶動教育、都市化與中產階級崛起，進而提升政治寬容度與民主穩定。</p>
+      <span class="scholar-cond">邏輯定位：必要條件——沒有經濟發展，民主難以紮根</span>
+    </div>
+  </div>
+
+  <div class="scholar-card scholar-2">
+    <div class="scholar-portrait"><div class="scholar-avatar">M</div><div class="scholar-year">1966</div></div>
+    <div class="scholar-info">
+      <div class="sname">Barrington Moore</div>
+      <div class="sschool">階級結構取向（社會起源論）</div>
+      <p><strong>「沒有資產階級，就沒有民主。」</strong>強調地主、資產階級與農民之間的<strong>經濟結構聯盟</strong>，決定了一國最終走向民主、法西斯，還是共產。</p>
+      <span class="scholar-cond">邏輯定位：結構組合——強大的資產階級是民主的必要基礎</span>
+    </div>
+  </div>
+
+  <div class="scholar-card scholar-3">
+    <div class="scholar-portrait"><div class="scholar-avatar">P</div><div class="scholar-year">1997</div></div>
+    <div class="scholar-info">
+      <div class="sname">Przeworski &amp; Limongi</div>
+      <div class="sschool">政體存續論（再評估觀點）</div>
+      <p>經濟發展<strong>不一定會「觸發」民主化</strong>，但能極大程度地<strong>防止已建立的民主制度崩潰</strong>。富裕讓民主「活得久」，而不是讓民主「誕生」。</p>
+      <span class="scholar-cond">邏輯定位：穩定條件——富裕是民主「存續」的充分因素</span>
+    </div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>🔑 把三位大師串起來</h4>
+    <p>Lipset 說經濟是民主的<strong>地基（必要）</strong>；Moore 進一步指出，地基要由<strong>強大的資產階級</strong>來打；Przeworski 則潑了盆冷水：經濟或許不是民主的<strong>產婆</strong>，但它是民主的<strong>保溫箱</strong>。三人合起來，正好示範了 P1 的「必要 / 充分」之辨。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(7)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P7 · 亞洲四案例：同樣起飛，命運不同</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<div class="page" data-page="7"><div class="page-inner">
+  <div class="guide-breadcrumb">經濟決定論 I · <span>亞洲案例</span></div>
+  <h2>亞洲四案例<span class="mark">：</span>同樣起飛，命運不同</h2>
+
+  <div class="story-lead">
+    理論最怕「只挑對自己有利的例子」。亞洲剛好提供了一組天然實驗：四個都經歷高速經濟成長的地方，<strong>結局卻南轅北轍</strong>。這正好是 P3 兩把比較法的<strong>實戰演練場</strong>。
+  </div>
+
+  <h3><span class="num">🔬</span>用兩把比較法實戰分析</h3>
+  <p class="section-lead">點切換鈕：用 MSSD 控制經濟、比較四案例（同中求異）；用 MDSD 比較台韓抗爭、找共同密碼（異中求同）。</p>
+
+  <div class="cmpx" id="cmpx">
+    <div class="mm-toggle">
+      <button class="mm-tbtn mssd active" onclick="setCmpx('mssd')">用 MSSD 看<span class="sub">同中求異 · 四案例</span></button>
+      <button class="mm-tbtn mdsd" onclick="setCmpx('mdsd')">用 MDSD 看<span class="sub">異中求同 · 台韓血淚</span></button>
+    </div>
+
+    <div class="cmpx-panel active" id="cx-mssd">
+      <div class="cmpx-intro">🔬 <b>策略：把「經濟發展」當控制變數。</b>四地都有高速成長（背景視為相同），結果卻分歧——那「兇手」就是那個唯一不同的關鍵變數。</div>
+      <div class="cx-scroll"><table class="cx-table">
+        <tr><th class="rowh"></th><th>🇹🇼 台灣</th><th>🇰🇷 南韓</th><th>🇨🇳 中國</th><th>🇵🇭 菲律賓</th></tr>
+        <tr><td class="cx-rh">經濟發展<br>（背景）</td>
+          <td class="cx-same">高速成長 ＝</td><td class="cx-same">高速成長 ＝</td><td class="cx-same">高速成長 ＝</td><td class="cx-same">曾經成長 ＝</td></tr>
+        <tr><td class="cx-rh">🔑 關鍵變數</td>
+          <td class="cx-key">社會動員<br>成功</td><td class="cx-key">社會動員<br>成功</td><td class="cx-key">國家強力<br>壓制</td><td class="cx-key">分配不均<br>家族壟斷</td></tr>
+        <tr><td class="cx-rh">➡ 政治結果</td>
+          <td class="cx-dem">✓ 民主</td><td class="cx-dem">✓ 民主</td><td class="cx-auth">✗ 威權</td><td class="cx-back">⚠ 倒退</td></tr>
+      </table></div>
+      <div class="cmpx-concl mssd"><b>結論：</b>背景（經濟）相同、結果卻不同 → 經濟發展是<b>必要非充分</b>條件。真正打破平衡的關鍵變數，是<b>社會動員能否突破國家控制</b>。</div>
+    </div>
+
+    <div class="cmpx-panel" id="cx-mdsd">
+      <div class="cmpx-intro">🔥 <b>策略：放任背景天差地遠。</b>台灣黨外與韓國光州的抗爭形式、關鍵場景、動員主體全都互異——既然都不同就一一排除，剩下那個共存的因素，就是共同法則。（詳見 P8）</div>
+      <div class="cx-scroll"><table class="cx-table">
+        <tr><th class="rowh"></th><th>🇹🇼 台灣 · 黨外運動</th><th>🇰🇷 南韓 · 光州事件</th></tr>
+        <tr><td class="cx-rh">抗爭形式</td><td class="cx-diff">黨外選舉＋異議雜誌<br>（漸進、體制邊緣）</td><td class="cx-diff">街頭佔領＋武裝抗爭<br>（爆發、流血清場）</td></tr>
+        <tr><td class="cx-rh">關鍵場景</td><td class="cx-diff">《美麗島》與白色恐怖</td><td class="cx-diff">光州屠殺與媒體封鎖</td></tr>
+        <tr><td class="cx-rh">動員主體</td><td class="cx-diff">知識分子＋農民</td><td class="cx-diff">學生＋市民＋計程車司機</td></tr>
+        <tr><td class="cx-rh">🔑 共同關鍵</td><td class="cx-key">由下而上社會動員<br>＋ 國家暴力</td><td class="cx-key">由下而上社會動員<br>＋ 國家暴力</td></tr>
+        <tr><td class="cx-rh">➡ 結果</td><td class="cx-dem">走向民主化 ＝</td><td class="cx-dem">走向民主化 ＝</td></tr>
+      </table></div>
+      <div class="cmpx-concl mdsd"><b>結論：</b>抗爭形式天差地遠、結果卻相同 → 共同密碼是<b>「由下而上的社會動員」＋「國家暴力反而成為轉型的催化劑與精神圖騰」</b>。</div>
+    </div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>💡 兩把刀，砍出兩個層次的答案</h4>
+    <p><strong>MSSD</strong> 告訴我們「<strong>為什麼結果會分歧</strong>」（關鍵變數＝社會動員 vs 國家控制）；<strong>MDSD</strong> 告訴我們「<strong>成功轉型的共同條件是什麼</strong>」（由下而上動員＋國家暴力催化）。兩者合起來，才完整解釋了亞洲民主化。</p>
+  </div>
+
+  <h3><span class="num">📂</span>四案例詳細資料</h3>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'tw')">🇹🇼 台灣</button>
+    <button class="tab" onclick="switchTab(this,'kr')">🇰🇷 南韓</button>
+    <button class="tab" onclick="switchTab(this,'cn')">🇨🇳 中國</button>
+    <button class="tab" onclick="switchTab(this,'ph')">🇵🇭 菲律賓</button>
+  </div>
+
+  <div class="tab-panel active" id="tw">
+    <div class="case-block">
+      <div class="ce">成功轉型</div>
+      <h4>台灣：經濟奇蹟 → 社會動員 → 轉型</h4>
+      <p class="ct">1960–80 年代的「<strong>經濟奇蹟</strong>」帶動中產階級崛起，隨後在 80 年代爆發社會運動與黨外運動，完成民主轉型。</p>
+    </div>
+    <div class="hl-box teal"><p><strong>邏輯分析：</strong>經濟發展提供了<strong>必要條件</strong>，而社會動員與菁英博弈才構成了<strong>充分條件</strong>。光有經濟，不會自動變民主。</p></div>
+  </div>
+  <div class="tab-panel" id="kr">
+    <div class="case-block blue">
+      <div class="ce">成功轉型</div>
+      <h4>南韓：高速工業化 → 1987 民主化</h4>
+      <p class="ct">與台灣相似，在高速工業化後，社會力量（<strong>學生與中產階級</strong>）於 1987 年促成民主化。</p>
+    </div>
+    <div class="hl-box blue"><p><strong>邏輯分析：</strong>展現了現代化理論中「<strong>經濟帶動政治轉型</strong>」的成功路徑——但同樣是「社會力量」臨門一腳。</p></div>
+  </div>
+  <div class="tab-panel" id="cn">
+    <div class="case-block accent">
+      <div class="ce">反例 · 威權續存</div>
+      <h4>中國：40 年高速成長，威權不墜</h4>
+      <p class="ct">經歷 40 年高速經濟發展，但國家透過<strong>強大的控制能力</strong>與<strong>績效合法性</strong>，維持了威權體制。</p>
+    </div>
+    <div class="hl-box"><p><strong>邏輯分析：</strong>強力證明經濟發展<strong>並非民主的充分條件</strong>；強大的<strong>國家自主性</strong>可能直接阻斷轉型路徑。（呼應 W4 國家自主論）</p></div>
+  </div>
+  <div class="tab-panel" id="ph">
+    <div class="case-block gold">
+      <div class="ce">警告 · 民主倒退</div>
+      <h4>菲律賓：有過民主，卻脆弱反覆</h4>
+      <p class="ct">儘管有過民主化浪潮，但因<strong>經濟分配不均</strong>與<strong>家族政治壟斷</strong>，導致民主制度脆弱，且常有民粹強人出現。</p>
+    </div>
+    <div class="hl-box gold"><p><strong>邏輯分析：</strong>說明若缺乏穩定的<strong>經濟結構分配</strong>與<strong>文化認同</strong>，民主化可能出現<strong>倒退</strong>。呼應 Przeworski 的「存續」問題。</p></div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>📊 四案例給我們的總結論</h4>
+    <p>台灣、南韓 → 經濟是<strong>必要條件</strong>，社會動員是<strong>充分條件</strong>。<br>中國 → 經濟<strong>不是充分條件</strong>，強國家能阻斷轉型。<br>菲律賓 → 經濟結構與認同不穩，民主會<strong>倒退</strong>。<br><strong>結論：經濟決定論只說對了一半——它是地基，但不是整棟房子。</strong></p>
+  </div>
+
+  <div class="next-page" onclick="goPage(8)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P8 · 民主化的血與淚：黨外與光州</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<div class="page" data-page="8"><div class="page-inner">
+  <div class="guide-breadcrumb">經濟決定論 I · <span>歷史現場</span></div>
+  <h2>民主化的<span class="mark">血與淚</span></h2>
+
+  <div class="story-lead">
+    「社會動員」這四個字，在課本裡很輕，在歷史現場卻很重。台灣與南韓的轉型，都不是經濟自動長出來的——而是<strong>無數人用代價換來的</strong>。這正是「充分條件」裡，那個無法被經濟數據取代的部分。
+  </div>
+
+  <h3><span class="num">🇹🇼</span>台灣：1970 年代的黨外運動</h3>
+  <div class="case-block accent">
+    <div class="ce">劇集參照《鹽水大飯店》</div>
+    <h4>當民主從知識分子走向農村</h4>
+    <p class="ct">
+      <strong>地下組織與異議雜誌：</strong>「黨外」人士如何透過《<strong>美麗島</strong>》雜誌等媒體凝聚群眾意識。<br>
+      <strong>國家暴力與白色恐怖：</strong>「鹽水大飯店」其實是句苦澀黑話——指政治犯遭酷刑（如灌辣椒水、鹽水）時對監獄的自嘲，反映威權體制對人權的壓迫。<br>
+      <strong>農民權利覺醒：</strong>主角身為農家子弟，將民主觀念與基層農民權益結合，展現民主運動不只是知識分子的專利，更由廣大基層共同推動。
+    </p>
+    <a class="video-link" href="https://www.youtube.com/watch?v=VekqOktaIPw" target="_blank">▶ 觀看延伸影片</a>
+  </div>
+
+  <h3><span class="num">🇰🇷</span>南韓：1980 年的光州事件</h3>
+  <div class="case-block blue">
+    <div class="ce">韓國民主史的集體創傷</div>
+    <h4>從流血失敗，到精神圖騰</h4>
+    <p class="ct">朴正熙遭刺殺後，全斗煥發動「雙十二政變」奪取軍權；1980/5/17 擴大戒嚴、逮捕異議人士，引發全韓抗爭，<strong>光州最為激烈</strong>。</p>
+  </div>
+  <div class="spoiler">
+    <span class="sp-title">💭 光州事件的四個關鍵面向，點此展開</span><br>
+    <strong>① 市民兵的組成：</strong>抗爭主體不只學生，還有計程車司機、護士、市民甚至流氓——反映基層民眾對自由的樸素追求。<br>
+    <strong>② 國家暴力的展現：</strong>空降部隊對手無寸鐵的市民無差別毆打、開槍，是韓國民主史極沉重的集體創傷，也成為日後轉型正義的核心動能。<br>
+    <strong>③ 媒體封鎖與孤立：</strong>光州被切斷對外通訊，媒體被操控，抗爭者被抹黑為「暴徒」「北韓間諜」——打破資訊壟斷成了運動關鍵。<br>
+    <strong>④ 悲劇性的轉折：</strong>1980/5/27 戒嚴軍武力清場。光州雖以流血失敗告終，卻成為 80 年代韓國民主運動的精神圖騰，直接播下 1987 年「<strong>六月民主抗爭</strong>」的種子。
+  </div>
+  <a class="video-link" href="https://www.youtube.com/watch?v=HmCfZdFMu38" target="_blank">▶ 觀看延伸影片</a>
+
+  <div class="hl-box gold">
+    <h4>🔗 把方法論接回來</h4>
+    <p>用 P3 的兩把刀來看：<strong>台韓 vs 中國</strong>是一組<strong>最大相似法（MSSD）</strong>——經濟背景相似、結果卻不同，逼出「社會動員 vs 國家控制」這個關鍵變數；而<strong>台灣黨外 vs 韓國光州</strong>則是<strong>最大差異法（MDSD）</strong>——抗爭形式天差地遠、卻殊途同歸，淬鍊出「由下而上動員＋國家暴力催化」的共同密碼。<br><br>👉 回到 <strong>P7 的互動圖</strong>，切換兩個模式，就能把這兩層分析一次看清。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(9)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P9 · 隨堂測驗與課堂討論</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<div class="page" data-page="9"><div class="page-inner">
+  <div class="guide-breadcrumb">第 10 章 · <span>隨堂測驗與討論</span></div>
+  <h2>隨堂測驗<span class="mark">：</span>選擇題</h2>
+  <p class="section-lead">點選你認為正確的選項，系統會立刻標出正解並顯示解析。</p>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q1</div>
+    <div class="quiz-question">「<strong>沒有氧氣就不會燃燒</strong>」這句話，氧氣是燃燒的什麼條件？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="true">(A) 必要條件</button>
+      <button class="quiz-opt" data-correct="false">(B) 充分條件</button>
+      <button class="quiz-opt" data-correct="false">(C) 充分且必要條件</button>
+      <button class="quiz-opt" data-correct="false">(D) 既不充分也不必要</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：A（必要條件）</strong><br>
+      「沒有 A 就沒有 B」是<em>必要條件</em>的標準句型。氧氣是燃燒不可或缺的（必要），但空氣中充滿氧氣，東西卻沒在燒——可見光有氧氣<em>不充分</em>。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q2</div>
+    <div class="quiz-question">Skocpol 比較法國、俄國、中國三場革命，背景天差地遠卻都爆發革命。她用的是哪一種比較法？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 最大相似法 MSSD（同中求異）</button>
+      <button class="quiz-opt" data-correct="true">(B) 最大差異法 MDSD（異中求同）</button>
+      <button class="quiz-opt" data-correct="false">(C) 實驗法</button>
+      <button class="quiz-opt" data-correct="false">(D) 問卷調查法</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：B</strong><br>
+      背景<em>互異</em>、結果<em>相同</em>（都革命）＝「異中求同」＝<em>最大差異法</em>。把所有相異處排除後，剩下的共同關鍵（國家機器崩潰＋農民叛亂）就是革命的通則。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q3</div>
+    <div class="quiz-question">中國「40 年高速成長卻維持威權」這個案例，最有力地證明了什麼？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 經濟發展是民主的必要條件</button>
+      <button class="quiz-opt" data-correct="true">(B) 經濟發展不是民主的充分條件</button>
+      <button class="quiz-opt" data-correct="false">(C) 經濟發展與民主毫無關係</button>
+      <button class="quiz-opt" data-correct="false">(D) 民主是經濟發展的必要條件</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：B</strong><br>
+      「有 A（經濟）卻沒有 B（民主）」正好否證了「A 是 B 的<em>充分</em>條件」。中國案例說明：強大的國家自主性可以阻斷轉型，所以經濟<em>不充分</em>。它沒有否證「必要」，也沒說兩者無關。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q4</div>
+    <div class="quiz-question">關於三位大師的主張，下列何者<strong>錯誤</strong>？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) Lipset：經濟發展是民主化的先決（必要）條件</button>
+      <button class="quiz-opt" data-correct="false">(B) Moore：沒有資產階級，就沒有民主</button>
+      <button class="quiz-opt" data-correct="true">(C) Przeworski：經濟發展一定會「觸發」民主化</button>
+      <button class="quiz-opt" data-correct="false">(D) Przeworski：富裕能防止已建立的民主崩潰</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 錯誤的是 C</strong><br>
+      Przeworski &amp; Limongi 的觀點正好相反——經濟發展<em>不一定觸發</em>民主化，但能讓<em>已存在</em>的民主「活得久」。它是民主的「保溫箱」，不是「產婆」。
+    </div>
+  </div>
+
+  <h2 style="margin-top:2rem">課堂討論<span class="mark">：</span>問答題</h2>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 A</span>
+    <div class="discussion-q">經濟發展是民主化的「<em>必要條件</em>」還是「<em>充分條件</em>」？</div>
+    <div class="ctx">請結合台灣、中國兩個案例，用本週 P1 的條件邏輯來論證你的立場。提示：先界定「民主化」指的是「誕生」還是「存續」。</div>
+  </div>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 B</span>
+    <div class="discussion-q">社會結構（中產階級、教育、都市化）在經濟與政治之間，扮演什麼<em>中介</em>角色？</div>
+    <div class="ctx">經濟發展不會「直接」變出民主——它是透過改變社會結構才產生作用的。請畫出一條「經濟 → ? → 民主」的中介路徑。</div>
+  </div>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 C</span>
+    <div class="discussion-q">從<em>三大分析取向</em>來看，「經濟決定論」這個看法忽略了哪些因素？</div>
+    <div class="ctx">提示：行動者取向會問「<strong>人的能動性</strong>哪去了？」；文化取向會問「<strong>認同與正當性</strong>呢？」——試著各補一刀。</div>
+  </div>
+
+  <div class="next-page" onclick="goPage(10)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P10 · 本週讀物與小結</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<div class="page" data-page="10"><div class="page-inner">
+  <div class="guide-breadcrumb">第 11 章 · <span>延伸</span></div>
+  <h2>本週讀物與<span class="mark">小結</span></h2>
+
+  <div class="story-lead">
+    本週的閱讀分兩條線：<strong>方法論</strong>（怎麼談因果）與<strong>經濟決定論</strong>（經濟與民主的關係）。建議先掌握必要/充分條件與 MSSD/MDSD 的口訣，再進入經典文獻。
+  </div>
+
+  <h3><span class="num">①</span>核心文獻</h3>
+  <div class="reading-card must">
+    <div class="reading-icon">📄</div>
+    <div class="reading-body">
+      <div class="reading-title">Lipset, S. M. (1959). "Some Social Requisites of Democracy"</div>
+      <div class="reading-meta"><em>American Political Science Review</em>, 53(1)｜現代化理論奠基之作</div>
+      <div class="reading-note">經濟決定論的起點。重點理解他如何主張經濟發展是民主的「<strong>社會先決條件</strong>」（必要條件邏輯）。</div>
+    </div>
+  </div>
+  <div class="reading-card must">
+    <div class="reading-icon">📚</div>
+    <div class="reading-body">
+      <div class="reading-title">Moore, B. (1966). <em>Social Origins of Dictatorship and Democracy</em></div>
+      <div class="reading-meta">英文專書｜中譯《民主與獨裁的社會起源》</div>
+      <div class="reading-note">「<strong>沒有資產階級，就沒有民主</strong>」的出處。階級結構取向的經典，也是 MDSD 比較法的範例（英、法、美、德、日、中、印）。</div>
+    </div>
+  </div>
+  <div class="reading-card rec">
+    <div class="reading-icon">📄</div>
+    <div class="reading-body">
+      <div class="reading-title">Przeworski, A. &amp; Limongi, F. (1997). "Modernization: Theories and Facts"</div>
+      <div class="reading-meta"><em>World Politics</em>, 49(2)｜對現代化理論的再評估</div>
+      <div class="reading-note">用大量跨國資料挑戰 Lipset：經濟發展讓民主「<strong>存續</strong>」而非「<strong>誕生</strong>」。理解「必要 vs 充分」的最佳實證範例。</div>
+    </div>
+  </div>
+  <div class="reading-card rec">
+    <div class="reading-icon">📘</div>
+    <div class="reading-body">
+      <div class="reading-title">《從經濟發展到民主：現代亞洲轉型之路的不同面貌》</div>
+      <div class="reading-meta">中文專書｜books.com.tw 產品編號 0010988859</div>
+      <div class="reading-note">本週亞洲四案例（台、韓、中、菲）與三大取向整合分析的延伸讀物，適合作為期末報告的案例庫。</div>
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>本週兩個一句話總結</h3>
+  <div class="hl-box teal">
+    <h4>🔬 方法論</h4>
+    <p style="font-family:'Playfair Display',serif;font-size:1.02rem;text-align:center;color:var(--teal);font-weight:700;padding:.8rem;background:#fff;border-radius:8px;margin-top:.5rem;line-height:1.7">
+      沒有實驗室，就用「比較」當手術刀——<br>同中求異（MSSD）找兇手，異中求同（MDSD）找通則。</p>
+  </div>
+  <div class="hl-box gold">
+    <h4>📈 經濟決定論</h4>
+    <p style="font-family:'Playfair Display',serif;font-size:1.02rem;text-align:center;color:var(--accent);font-weight:700;padding:.8rem;background:#fff;border-radius:8px;margin-top:.5rem;line-height:1.7">
+      經濟發展是民主的「地基」，不是「房子」——<br>它讓民主有機會，卻不保證民主會發生。</p>
+  </div>
+
+  <div class="hl-box blue">
+    <h4>🔮 下週預告 · W3 經濟決定論 II</h4>
+    <p>本週談「經濟<strong>能不能</strong>帶來民主」，下週進一步追問：當經濟<strong>真的</strong>改變了社會，<strong>是誰</strong>把這股力量轉化成政治變遷？我們會深入<strong>階級、依賴理論</strong>與經濟決定論的更激進版本。請帶著本週的「必要／充分」工具一起來。</p>
+  </div>
+</div></div>
+
+</div><!-- /page-container -->
+
+<div class="bottom-bar">
+  <div class="page-indicator">第 <span id="cur-page">1</span> / 11 頁</div>
+  <div class="page-dots" id="dots"></div>
+  <div class="arrow-btns">
+    <button class="arrow-btn" id="prev-btn" onclick="goPrev()">←</button>
+    <button class="arrow-btn" id="next-btn" onclick="goNext()">→</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+const totalPages=11;
+let currentPage=0;
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<totalPages;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>goPage(i);
+  dotsEl.appendChild(d);
+}
+function goPage(n){
+  if(n<0||n>=totalPages)return;
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('cur-page').textContent=n+1;
+  document.getElementById('prev-btn').disabled=n===0;
+  document.getElementById('next-btn').disabled=n===totalPages-1;
+  currentPage=n;
+  document.querySelectorAll('.page')[n].scrollTop=0;
+}
+function goPrev(){goPage(currentPage-1);}
+function goNext(){goPage(currentPage+1);}
+function switchTab(btn,panelId){
+  btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const container=btn.closest('.page-inner');
+  container.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id===panelId));
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft')goPrev();
+  if(e.key==='ArrowRight')goNext();
+});
+document.addEventListener('click',e=>{
+  const sp=e.target.closest('.spoiler');
+  if(sp)sp.classList.toggle('revealed');
+});
+document.addEventListener('click',function(e){
+  const btn=e.target.closest('.quiz-opt');
+  if(!btn)return;
+  const block=btn.closest('.quiz-block');
+  if(!block||block.dataset.answered==='1')return;
+  block.dataset.answered='1';
+  const correct=btn.dataset.correct==='true';
+  btn.classList.add(correct?'selected-correct':'selected-wrong');
+  if(!correct){
+    block.querySelectorAll('.quiz-opt').forEach(o=>{if(o.dataset.correct==='true')o.classList.add('show-correct');});
+  }
+  const exp=block.querySelector('.quiz-explain');
+  if(exp)exp.classList.add('shown');
+});
+
+// MSSD <-> MDSD 動態對照
+function setMethod(m){
+  const teal='#2a7a6e', diffs=['#3a5a8c','#d35400','#6b4c7a'];
+  document.querySelectorAll('.mm-tbtn').forEach(b=>b.classList.toggle('active',b.classList.contains(m)));
+  for(let i=0;i<3;i++){
+    const bg=document.getElementById('bg'+i), out=document.getElementById('out'+i);
+    if(!bg||!out)continue;
+    if(m==='mssd'){
+      bg.style.background=teal; bg.innerHTML='相同<span class="ct">背景 ＝</span>';
+      out.style.background=diffs[i]; out.innerHTML='結果 '+['A','B','C'][i]+'<span class="ct">≠</span>';
+    }else{
+      bg.style.background=diffs[i]; bg.innerHTML='背景 '+['A','B','C'][i]+'<span class="ct">互異 ≠</span>';
+      out.style.background=teal; out.innerHTML='相同<span class="ct">結果 ＝</span>';
+    }
+    [bg,out].forEach(c=>{c.classList.add('pulse');setTimeout(()=>c.classList.remove('pulse'),430);});
+  }
+  const fbg=document.getElementById('f-bg'), fout=document.getElementById('f-out'), ff=document.getElementById('f-find');
+  if(fbg){fbg.textContent=m==='mssd'?'相同 ＝':'互異 ≠'; fbg.style.color=m==='mssd'?'#7fd4c5':'#f0b8a8';}
+  if(fout){fout.textContent=m==='mssd'?'不同 ≠':'相同 ＝'; fout.style.color=m==='mssd'?'#f0b8a8':'#7fd4c5';}
+  if(ff)ff.innerHTML=m==='mssd'?'找：唯一<b>不同</b>的『關鍵變數』':'找：唯一<b>相同</b>的『共同法則』';
+  const mlS=document.getElementById('ml-mssd'), mlD=document.getElementById('ml-mdsd');
+  if(mlS)mlS.classList.toggle('on',m==='mssd');
+  if(mlD)mlD.classList.toggle('on',m==='mdsd');
+  const eg=document.getElementById('mm-eg');
+  if(eg){
+    if(m==='mssd'){
+      eg.style.borderLeftColor=teal;
+      eg.innerHTML='<div class="egt">🌲 實例：北歐諸國（最大相似法）</div>地理、福利、經濟水準<b>超級相似</b>，環保政策成效卻<b>差很大</b> → 鎖定那個唯一不同的微觀變數（利益團體遊說、制度細節）。';
+    }else{
+      eg.style.borderLeftColor='#8b2500';
+      eg.innerHTML='<div class="egt">🔥 實例：法國／俄國／中國三場大革命（最大差異法）</div>地理、經濟、宗教<b>天差地遠</b>，卻<b>都爆發社會革命</b> → 淬鍊那個共同法則（舊政權國家機器崩潰＋農民廣泛叛亂）。';
+    }
+  }
+}
+// 亞洲案例 MSSD/MDSD 實戰切換
+function setCmpx(m){
+  document.querySelectorAll('#cmpx .mm-tbtn').forEach(b=>b.classList.toggle('active',b.classList.contains(m)));
+  const s=document.getElementById('cx-mssd'), d=document.getElementById('cx-mdsd');
+  if(s)s.classList.toggle('active',m==='mssd');
+  if(d)d.classList.toggle('active',m==='mdsd');
+}
+document.addEventListener('DOMContentLoaded',()=>{ if(document.getElementById('mm')) setMethod('mssd'); });
+</script>
+</body>
+</html>

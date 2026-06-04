@@ -1,0 +1,66 @@
+{
+  "site": {
+    "title": "政治社會學教材資料庫",
+    "subtitle": "Political Sociology Teaching Materials",
+    "author": "林文正 Wen-Cheng Lin",
+    "intro": "本資料庫收錄政治社會學相關的課堂講義、投影片、圖表與可下載檔案。"
+  },
+  "categories": [
+    { "id": "lecture", "name": "講義", "color": "#2563eb" },
+    { "id": "slides", "name": "投影片", "color": "#7c3aed" },
+    { "id": "chart", "name": "圖表/資料", "color": "#059669" },
+    { "id": "download", "name": "檔案下載", "color": "#d97706" }
+  ],
+  "materials": [
+    {
+      "id": "w1-intro",
+      "title": "第一週 導論：當國家遇見社會",
+      "category": "lecture",
+      "topic": "導論",
+      "date": "2026-09-08",
+      "summary": "政治社會學導論互動講義：國家與社會的交會、核心學科視角與本課地圖。",
+      "tags": ["導論", "國家", "社會", "互動講義"],
+      "url": "lectures/W1_導論_互動講義.html"
+    },
+    {
+      "id": "intro-political-sociology",
+      "title": "導論：什麼是政治社會學",
+      "category": "lecture",
+      "topic": "導論",
+      "date": "2026-02-01",
+      "summary": "政治社會學的研究對象、核心概念與本課程地圖。",
+      "tags": ["導論", "概念"],
+      "url": "lectures/intro-political-sociology.html"
+    },
+    {
+      "id": "sample-slides",
+      "title": "範例投影片：國家與社會",
+      "category": "slides",
+      "topic": "國家理論",
+      "date": "2026-02-08",
+      "summary": "以 reveal.js 製作的範例投影片，示範如何加入新簡報。",
+      "tags": ["國家", "範例"],
+      "url": "slides/sample-slides.html"
+    },
+    {
+      "id": "sample-chart",
+      "title": "範例圖表：民意趨勢",
+      "category": "chart",
+      "topic": "公共輿論",
+      "date": "2026-02-15",
+      "summary": "以 Chart.js 嵌入互動式折線圖的範例頁面。",
+      "tags": ["民意", "資料視覺化"],
+      "url": "lectures/sample-chart.html"
+    },
+    {
+      "id": "sample-reading",
+      "title": "範例下載：課程閱讀清單 (PDF)",
+      "category": "download",
+      "topic": "閱讀材料",
+      "date": "2026-02-15",
+      "summary": "可直接下載的 PDF 範例檔案，放在 downloads 資料夾。",
+      "tags": ["閱讀", "PDF"],
+      "url": "downloads/sample-reading.pdf"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- ========================================================= -->
+<!-- 投影片模板（reveal.js，從 CDN 載入）。                       -->
+<!-- 複製本檔改名 → 修改每個 <section> → 到 catalog.json 加一筆。 -->
+<!-- 操作：方向鍵切換、按 F 全螢幕、按 S 開講者備忘。             -->
+<!-- ========================================================= -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>投影片標題</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css">
+  <style> .reveal h1,.reveal h2,.reveal h3{color:#1e3a8a} </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1>投影片標題</h1>
+        <p>副標題或主題</p>
+        <p style="font-size:.6em;color:#888">林文成 ｜ 2026-00-00</p>
+      </section>
+
+      <section>
+        <h2>第一張</h2>
+        <ul>
+          <li>重點一</li>
+          <li>重點二</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>第二張</h2>
+        <p>內容…</p>
+        <aside class="notes">這裡是講者備忘，按 S 開啟。</aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/notes/notes.min.js"></script>
+  <script>
+    Reveal.initialize({ hash: true, plugins: [ RevealNotes ] });
+  </script>
+</body>
+</html>

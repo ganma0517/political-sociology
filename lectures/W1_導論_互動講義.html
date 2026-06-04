@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政治社會學 W1 — 導論：當國家遇見社會</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;
+  --gold:#b8860b;--sage:#5a6e5a;--muted:#6b6560;--line:#c9c0b4;
+  --card-bg:#faf7f2;--blue:#3a5a8c;--purple:#6b4c7a;--teal:#2a7a6e;
+  --red:#c0392b;--green:#27ae60;--orange:#d35400;
+  /* 四大核心學科色 */
+  --poli:#8b2500; --econ:#b8860b; --socio:#3a5a8c; --culture:#6b4c7a;
+  --nature:#2a7a6e;
+  /* 三大透鏡 */
+  --macro:#8b2500; --meso:#b8860b; --micro:#2c5f7c;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+
+/* ========== 頂部導航 ========== */
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.2rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .9rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.76rem;font-weight:500;color:#888;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#ccc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:var(--paper);background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.88rem;font-weight:700;margin-right:1rem;flex-shrink:0}
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+
+/* ========== 頁面 ========== */
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:920px;margin:0 auto}
+
+/* ========== 底部 ========== */
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+
+/* ========== 標題 ========== */
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,3vw,2.1rem);font-weight:800;color:var(--ink);margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent);position:relative}
+.page h2::after{content:'';position:absolute;left:0;bottom:-2px;width:60px;height:2px;background:var(--gold)}
+.page h2 .mark{color:var(--accent)}
+.page h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent);margin:1.6rem 0 .8rem;display:flex;align-items:center;gap:.5rem}
+.page h3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;font-size:.85rem;font-weight:700;flex-shrink:0}
+.page h4{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin:1rem 0 .5rem}
+.page p{font-size:.92rem;color:#333;margin-bottom:.7rem;line-height:1.95}
+.page p strong{color:var(--accent);font-weight:700}
+.page ul,.page ol{margin:.6rem 0 .9rem 1.5rem}
+.page li{font-size:.9rem;margin-bottom:.35rem;line-height:1.9;color:#333}
+.page li strong{color:var(--ink)}
+.section-lead{font-size:.88rem;color:var(--muted);margin:-.3rem 0 .8rem;font-style:italic;font-family:'Source Serif 4',serif}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;color:var(--ink);line-height:1.1;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:640px;margin:0 auto 1.4rem}
+.hero-teacher{font-size:.9rem;color:#555;margin-bottom:1.4rem}
+.hero-teacher strong{color:var(--accent)}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+
+.story-lead{font-size:.98rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+
+/* ========== 卡片 ========== */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.2rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.1rem 1.2rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card h4{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--accent);margin-bottom:.4rem;margin-top:0}
+.card p{font-size:.84rem;color:#555;margin-bottom:0;line-height:1.75}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.blue{border-top-color:var(--blue)}.card.blue h4{color:var(--blue)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.purple{border-top-color:var(--purple)}.card.purple h4{color:var(--purple)}
+.card.teal{border-top-color:var(--teal)}.card.teal h4{color:var(--teal)}
+.card.orange{border-top-color:var(--orange)}.card.orange h4{color:var(--orange)}
+
+/* ========== 引言／提問框 ========== */
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.1rem 0}
+.hl-box p:last-child{margin-bottom:0}
+.hl-box h4{margin-top:0;color:var(--accent)}
+.hl-box.blue{background:rgba(58,90,140,.05);border-left-color:var(--blue)}
+.hl-box.blue h4{color:var(--blue)}
+.hl-box.sage{background:rgba(90,110,90,.05);border-left-color:var(--sage)}
+.hl-box.sage h4{color:var(--sage)}
+.hl-box.gold{background:rgba(184,134,11,.06);border-left-color:var(--gold)}
+.hl-box.gold h4{color:var(--gold)}
+.hl-box.purple{background:rgba(107,76,122,.05);border-left-color:var(--purple)}
+.hl-box.purple h4{color:var(--purple)}
+
+/* ========== 概念框 ========== */
+.concept{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(58,90,140,.04));padding:.9rem 1.2rem;border-radius:8px;margin:.8rem 0;border:1px solid rgba(184,134,11,.2)}
+.concept .lead{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent);font-weight:700;margin-bottom:.4rem}
+.concept .body{font-size:.86rem;color:#333;line-height:1.85}
+.concept .body strong{color:var(--accent)}
+
+/* ========== 中央問題列 ========== */
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+
+/* ========== 下一頁 ========== */
+.next-page{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:1.1rem 1.4rem;border-radius:10px;margin-top:2.2rem;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.next-page:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(139,37,0,.3)}
+.np-label{font-size:.72rem;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.np-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.np-arrow{font-size:1.4rem;opacity:.8}
+
+/* ========== Spoiler（點擊揭露） ========== */
+.spoiler{cursor:pointer;background:linear-gradient(135deg,rgba(90,110,90,.08),rgba(184,134,11,.06));border-left:3px dashed var(--sage);padding:.8rem 1.1rem;border-radius:0 6px 6px 0;font-size:.85rem;color:var(--sage);max-height:46px;overflow:hidden;transition:max-height .5s ease;line-height:1.85;position:relative;margin:.9rem 0}
+.spoiler::after{content:'▼ 點擊展開';position:absolute;right:1rem;top:.85rem;font-size:.72rem;color:var(--muted);font-family:'Source Serif 4',serif;font-style:italic}
+.spoiler.revealed{max-height:1500px;color:#333}
+.spoiler.revealed::after{content:'▲ 點擊收合';color:var(--sage)}
+.spoiler strong{color:var(--accent)}
+.spoiler .sp-title{font-weight:700;color:var(--sage)}
+
+/* ========== Toggle Tabs 切換 ========== */
+.tabs{display:flex;gap:.3rem;margin:1.1rem 0 .7rem;border-bottom:2px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:.6rem 1.1rem;background:0;border:0;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .25s;white-space:nowrap}
+.tab:hover{color:var(--accent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ========== 互動知識網絡 SVG ========== */
+.netmap{background:#fff;border-radius:12px;padding:1.2rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.netmap-svg{display:block;width:100%;max-width:760px;margin:0 auto}
+.net-node{cursor:pointer;transition:opacity .2s}
+.net-node:hover{opacity:.82}
+.net-node .node-ring{transition:stroke-width .2s}
+.net-node.sel .node-ring{stroke-width:5}
+.net-detail{margin-top:1rem;background:var(--card-bg);border-radius:10px;padding:1.1rem 1.3rem;border-left:4px solid var(--accent);min-height:90px;transition:border-color .3s}
+.net-detail .nd-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:var(--accent);margin-bottom:.15rem}
+.net-detail .nd-en{font-size:.76rem;color:var(--muted);font-style:italic;margin-bottom:.5rem}
+.net-detail .nd-body{font-size:.88rem;color:#333;line-height:1.85}
+.net-detail .nd-body strong{color:var(--accent)}
+.net-hint{font-size:.78rem;color:var(--muted);text-align:center;font-style:italic;margin-top:.5rem}
+
+/* ========== 書本範例卡 ========== */
+.book-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:1.2rem 0}
+.book-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.07);display:flex;flex-direction:column}
+.book-cover{height:150px;display:flex;align-items:center;justify-content:center;text-align:center;padding:1rem;color:#fff;font-family:'Playfair Display',serif}
+.book-card.famine .book-cover{background:linear-gradient(135deg,#5a6e5a,#3a4a3a)}
+.book-card.zombie .book-cover{background:linear-gradient(135deg,#1a1a1a,#3a1a10)}
+.book-cover .bc-cn{font-size:1.4rem;font-weight:900;line-height:1.3;letter-spacing:.05em}
+.book-cover .bc-en{font-size:.72rem;font-style:italic;opacity:.85;margin-top:.4rem}
+.book-body{padding:1rem 1.2rem;flex:1}
+.book-body .bb-meta{font-size:.76rem;color:var(--muted);font-style:italic;margin-bottom:.5rem}
+.book-body ul{margin:.3rem 0 0 1.1rem}
+.book-body li{font-size:.84rem;line-height:1.75;color:#444;margin-bottom:.3rem}
+.book-body li strong{color:var(--accent)}
+
+/* ========== 認識論對照 ========== */
+.epi-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:1.2rem 0}
+.epi-card{background:#fff;border-radius:12px;padding:1.3rem 1.4rem;box-shadow:0 3px 14px rgba(0,0,0,.06);position:relative;overflow:hidden}
+.epi-card.top{border-top:5px solid var(--poli)}
+.epi-card.bottom{border-top:5px solid var(--socio)}
+.epi-dir{font-size:2.2rem;line-height:1;margin-bottom:.3rem;opacity:.9}
+.epi-card.top .epi-dir{color:var(--poli)}
+.epi-card.bottom .epi-dir{color:var(--socio)}
+.epi-disc{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:800;margin-bottom:.1rem}
+.epi-card.top .epi-disc{color:var(--poli)}
+.epi-card.bottom .epi-disc{color:var(--socio)}
+.epi-tag{display:inline-block;padding:.2rem .7rem;border-radius:12px;font-size:.72rem;font-weight:700;color:#fff;margin-bottom:.7rem;letter-spacing:.04em}
+.epi-card.top .epi-tag{background:var(--poli)}
+.epi-card.bottom .epi-tag{background:var(--socio)}
+.epi-card p{font-size:.88rem;line-height:1.85;color:#333;margin-bottom:0}
+.epi-card p strong{color:var(--ink)}
+.epi-key{margin-top:.7rem;padding:.55rem .8rem;background:var(--card-bg);border-radius:6px;font-size:.82rem;color:#444;font-style:italic}
+.epi-bridge{text-align:center;background:linear-gradient(135deg,#1a1a1a,#3a2818);color:#fff;border-radius:10px;padding:1.1rem 1.4rem;margin:1.2rem 0}
+.epi-bridge .eb-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.05rem;font-weight:700;margin-bottom:.4rem}
+.epi-bridge p{font-size:.88rem;color:#d8d0c4;margin:0;line-height:1.85}
+.epi-bridge p strong{color:#fff}
+
+/* ========== 交會點：三欄支柱 ========== */
+.pillar-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:1.2rem 0}
+.pillar-col{background:#fff;border-radius:12px;padding:1.2rem 1.3rem;box-shadow:0 3px 14px rgba(0,0,0,.06)}
+.pillar-col.poli{border-top:5px solid var(--poli)}
+.pillar-col.socio{border-top:5px solid var(--socio)}
+.pillar-head{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:800;margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:1px dashed var(--line)}
+.pillar-col.poli .pillar-head{color:var(--poli)}
+.pillar-col.socio .pillar-head{color:var(--socio)}
+.pillar-item{margin-bottom:.7rem}
+.pillar-item:last-child{margin-bottom:0}
+.pillar-item .pi-name{font-weight:700;font-size:.9rem;color:var(--ink)}
+.pillar-item .pi-en{font-size:.72rem;color:var(--muted);font-style:italic}
+.pillar-item .pi-desc{font-size:.82rem;color:#555;line-height:1.7;margin-top:.15rem}
+.common-box{background:linear-gradient(135deg,rgba(184,134,11,.1),rgba(139,37,0,.05));border:1px solid rgba(184,134,11,.25);border-radius:12px;padding:1.2rem 1.4rem;margin:1.2rem 0}
+.common-box .cb-head{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:800;color:var(--accent);text-align:center;margin-bottom:.9rem}
+.common-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
+.common-item{background:#fff;border-radius:8px;padding:.8rem 1rem;border-left:3px solid var(--gold)}
+.common-item .ci-name{font-weight:700;font-size:.86rem;color:var(--accent);margin-bottom:.2rem}
+.common-item .ci-en{font-size:.7rem;color:var(--muted);font-style:italic}
+.common-item .ci-desc{font-size:.8rem;color:#555;line-height:1.65;margin-top:.2rem}
+
+/* ========== 三大透鏡（課程路線圖） ========== */
+.lens-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.3rem 0}
+.lens-card{background:#fff;border-radius:12px;padding:1.2rem 1.3rem;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:5px solid #888;transition:transform .3s}
+.lens-card:hover{transform:translateY(-4px)}
+.lens-card.macro{border-top-color:var(--macro)}
+.lens-card.meso{border-top-color:var(--meso)}
+.lens-card.micro{border-top-color:var(--micro)}
+.lens-eye{font-size:.7rem;letter-spacing:.15em;color:#999;font-weight:600;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.lens-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:800;color:var(--ink);margin-bottom:.2rem}
+.lens-badge{display:inline-block;padding:.2rem .65rem;border-radius:12px;font-size:.7rem;font-weight:700;color:#fff;margin-bottom:.7rem}
+.lens-card.macro .lens-badge{background:var(--macro)}
+.lens-card.meso .lens-badge{background:var(--meso)}
+.lens-card.micro .lens-badge{background:var(--micro)}
+.lens-concepts{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.7rem}
+.lens-tag{padding:.2rem .6rem;border-radius:6px;font-size:.74rem;font-weight:600}
+.lens-card.macro .lens-tag{background:rgba(139,37,0,.1);color:var(--macro)}
+.lens-card.meso .lens-tag{background:rgba(184,134,11,.12);color:#946a09}
+.lens-card.micro .lens-tag{background:rgba(44,95,124,.1);color:var(--micro)}
+.lens-q{font-size:.82rem;color:#444;line-height:1.7;margin-bottom:.7rem}
+.lens-q strong{color:var(--ink)}
+.lens-weeks{font-size:.76rem;background:var(--card-bg);padding:.55rem .75rem;border-radius:6px;color:#555;line-height:1.6}
+.lens-weeks b{color:var(--accent)}
+.synth-box{text-align:center;background:#1a1a1a;color:#fff;border-radius:12px;padding:1.4rem;margin:1.3rem 0}
+.synth-box .sb-eye{font-size:.74rem;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem}
+.synth-formula{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.6vw,1.5rem);font-weight:800;color:#fff;line-height:1.5;margin-bottom:.6rem}
+.synth-formula .op{color:var(--gold);margin:0 .3rem}
+.synth-box .sb-note{font-size:.85rem;color:#cfc6b8;font-style:italic;margin:0}
+
+/* ========== 案例分析 ========== */
+.case-source{background:#fff;border-radius:10px;padding:1.1rem 1.3rem;margin:1rem 0;border-left:4px solid var(--muted);box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.case-source .cs-tag{display:inline-block;padding:.2rem .7rem;background:#6b6560;color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;margin-bottom:.5rem}
+.case-source p{font-size:.86rem;line-height:1.85;color:#444;margin-bottom:.4rem}
+.case-source p:last-child{margin-bottom:0}
+.gears-box{background:linear-gradient(135deg,#2a2a2a,#1a1a1a);color:#fff;border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0}
+.gears-box .gb-head{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem}
+.gears-box .gb-head .em{color:var(--gold)}
+.gear-item{display:flex;gap:.8rem;margin-bottom:.8rem;align-items:flex-start}
+.gear-item:last-child{margin-bottom:0}
+.gear-ic{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:rgba(184,134,11,.25);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.gear-txt{flex:1;font-size:.86rem;line-height:1.8;color:#d8d0c4}
+.gear-txt strong{color:var(--gold)}
+
+.misogyny-layer{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:1.1rem 0}
+.ml-card{background:#fff;border-radius:10px;padding:1.1rem 1.2rem;box-shadow:0 2px 10px rgba(0,0,0,.05);border-top:4px solid #888}
+.ml-card.l1{border-top-color:var(--macro)}
+.ml-card.l2{border-top-color:var(--meso)}
+.ml-card.l3{border-top-color:var(--micro)}
+.ml-eye{font-size:.7rem;letter-spacing:.12em;color:#999;font-weight:600;font-style:italic;margin-bottom:.3rem;font-family:'Source Serif 4',serif}
+.ml-title{font-weight:700;font-size:.92rem;color:var(--ink);margin-bottom:.5rem}
+.ml-card.l1 .ml-title{color:var(--macro)}
+.ml-card.l2 .ml-title{color:#946a09}
+.ml-card.l3 .ml-title{color:var(--micro)}
+.ml-card p{font-size:.82rem;line-height:1.75;color:#444;margin-bottom:0}
+
+/* ========== 討論題 ========== */
+.discussion-block{background:linear-gradient(135deg,#fff,#faf7f2);border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid rgba(139,37,0,.12)}
+.discussion-eyebrow{display:inline-block;padding:.2rem .7rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem}
+.discussion-q{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin-bottom:.7rem;line-height:1.7}
+.discussion-q em{color:var(--accent);font-style:normal}
+.discussion-block .ctx{font-size:.85rem;color:#555;margin-bottom:.7rem;line-height:1.85}
+.discussion-block .ctx strong{color:var(--accent)}
+
+/* ========== Quiz blocks ========== */
+.quiz-block{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0;border:1px solid #e5e0d6;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative}
+.quiz-q-num{position:absolute;top:-12px;left:1.5rem;background:var(--accent);color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;padding:.25rem .75rem;border-radius:5px;letter-spacing:.05em}
+.quiz-question{font-size:.95rem;font-weight:600;color:var(--ink);margin:.4rem 0 .9rem;line-height:1.7}
+.quiz-question strong{color:var(--accent)}
+.quiz-options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.7rem}
+.quiz-opt{text-align:left;background:#fafaf6;border:1.5px solid #e0d9c8;border-radius:7px;padding:.7rem 1rem;font-size:.88rem;line-height:1.6;color:#333;cursor:pointer;transition:all .2s;font-family:inherit}
+.quiz-opt:hover{background:#f5f0e8;border-color:#b8860b}
+.quiz-opt.selected-correct{background:linear-gradient(135deg,#d4edd4,#c0e0c0);border-color:#5a8c5a;color:#1e4d1e;font-weight:600}
+.quiz-opt.selected-wrong{background:linear-gradient(135deg,#f8d8d4,#efc4be);border-color:#b85040;color:#7a1a10}
+.quiz-opt.show-correct{background:#eaf5ea;border-color:#5a8c5a;font-weight:500}
+.quiz-explain{font-size:.85rem;line-height:1.8;color:#333;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(90,110,90,.04));padding:.9rem 1.1rem;border-radius:7px;border-left:3px solid var(--sage);display:none}
+.quiz-explain.shown{display:block}
+.quiz-explain strong{color:var(--accent)}
+.quiz-explain em{color:var(--blue);font-style:normal;font-weight:600}
+
+/* ========== 本週讀物 ========== */
+.reading-card{background:#fff;border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0;border-left:4px solid;display:flex;gap:.9rem;align-items:flex-start;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.reading-card.must{border-left-color:var(--accent)}
+.reading-card.rec{border-left-color:var(--gold)}
+.reading-icon{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;font-family:'Playfair Display',serif}
+.reading-card.must .reading-icon{background:var(--accent)}
+.reading-card.rec .reading-icon{background:var(--gold)}
+.reading-body{flex:1}
+.reading-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:.2rem;line-height:1.5}
+.reading-meta{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:.3rem;font-family:'Source Serif 4',serif}
+.reading-note{font-size:.83rem;color:#444;line-height:1.75}
+.reading-note strong{color:var(--accent)}
+
+/* ========== 課程地圖時間軸 ========== */
+.roadmap{background:#fff;border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0;box-shadow:0 3px 14px rgba(0,0,0,.06)}
+.rm-block{margin-bottom:1rem}
+.rm-block:last-child{margin-bottom:0}
+.rm-head{display:inline-block;padding:.25rem .8rem;border-radius:6px;font-size:.8rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.rm-block.macro .rm-head{background:var(--macro)}
+.rm-block.meso .rm-head{background:var(--meso)}
+.rm-block.micro .rm-head{background:var(--micro)}
+.rm-weeks{display:flex;flex-wrap:wrap;gap:.45rem}
+.rm-week{font-size:.78rem;padding:.3rem .7rem;background:var(--card-bg);border-radius:6px;color:#444;border:1px solid var(--line)}
+.rm-week b{color:var(--accent)}
+
+/* ========== 交會點關係圖 ========== */
+.relmap{background:#fff;border-radius:12px;padding:1.3rem 1rem .8rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.relmap-svg{display:block;width:100%;max-width:780px;margin:0 auto}
+.rel-line{stroke:#d6cdbe;stroke-width:2;fill:none;transition:all .3s}
+.rel-line.lit{stroke:var(--gold);stroke-width:3.5;opacity:1}
+.rel-line.dim{stroke:#ece5d8;stroke-width:1.5;opacity:.45}
+.rel-pbox{transition:all .25s}
+.rel-pbox.hot{stroke-width:4}
+.rel-pbox.hot.poli{stroke:var(--poli)}
+.rel-pbox.hot.socio{stroke:var(--socio)}
+.rel-cnode{cursor:pointer}
+.rel-cnode .cbox{transition:all .25s}
+.rel-cnode:hover .cbox{filter:brightness(1.07)}
+.rel-cnode.csel .cbox{stroke:#7a3000;stroke-width:4}
+.rel-headL{fill:var(--poli)}.rel-headR{fill:var(--socio)}
+.rel-detail{margin-top:.8rem;background:var(--card-bg);border-radius:10px;padding:1.1rem 1.3rem;border-left:4px solid var(--gold);min-height:96px;transition:border-color .3s}
+.rel-detail .rd-name{font-family:'Playfair Display',serif;font-weight:800;font-size:1.08rem;color:var(--accent);margin-bottom:.1rem}
+.rel-detail .rd-en{font-size:.75rem;color:var(--muted);font-style:italic;margin-bottom:.5rem}
+.rel-detail .rd-cross{font-size:.8rem;color:#555;margin-bottom:.5rem}
+.rel-detail .rd-cross b.p{color:var(--poli)}.rel-detail .rd-cross b.s{color:var(--socio)}
+.rel-detail .rd-body{font-size:.88rem;color:#333;line-height:1.85}
+.rel-detail .rd-body strong{color:var(--accent)}
+.rel-detail .rd-week{display:inline-block;margin-top:.5rem;font-size:.76rem;background:rgba(139,37,0,.08);color:var(--accent);padding:.25rem .7rem;border-radius:12px;font-weight:600}
+.rel-hint{font-size:.78rem;color:var(--muted);text-align:center;font-style:italic;margin-top:.55rem}
+
+/* ========== RWD ========== */
+@media(max-width:780px){
+  .page{padding:1.8rem 1rem 3rem}
+  .hero-title{font-size:2rem}
+  .page h2{font-size:1.5rem}
+  .book-grid,.epi-grid,.pillar-grid,.lens-grid,.misogyny-layer,.common-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- 頂部導航 -->
+<div class="top-nav">
+  <span class="nav-title">W1 政治社會學 · 導論</span>
+  <button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+  <button class="nav-btn" onclick="goPage(1)">1 · 知識網絡</button>
+  <button class="nav-btn" onclick="goPage(2)">2 · 自然的震央</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(3)">3 · 兩種認識論</button>
+  <button class="nav-btn" onclick="goPage(4)">4 · 學科交會點</button>
+  <button class="nav-btn" onclick="goPage(5)">5 · 三大透鏡</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(6)">6 · 案例一·阿富汗</button>
+  <button class="nav-btn" onclick="goPage(7)">7 · 案例二·平權悖論</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(8)">8 · 隨堂測驗</button>
+  <button class="nav-btn" onclick="goPage(9)">9 · 讀物與地圖</button>
+</div>
+
+<div class="page-container">
+
+<!-- ============ P0 封面 ============ -->
+<div class="page active" data-page="0"><div class="page-inner">
+  <div class="hero">
+    <div class="hero-eyebrow">Political Sociology · Week 1 · 導論</div>
+    <h1 class="hero-title">當<span class="mark">國家</span>遇見<span class="mark">社會</span></h1>
+    <p class="hero-sub">政治社會學是一門站在「政治學」與「社會學」交界處的學問。它問的不是「誰當選了」，而是「為什麼是這樣的人、用這樣的方式，掌握了權力」。</p>
+    <div class="hero-teacher">授課教師：<strong>林文正</strong>　·　國立臺灣大學　·　每週兩小時／全 18 週</div>
+    <div class="hero-meta">
+      <span>🌐 知識的立體網絡</span>
+      <span>🔭 由上而下 vs 由下而上</span>
+      <span>🔬 宏觀 · 中觀 · 微觀</span>
+    </div>
+  </div>
+
+  <div class="story-lead">
+    歡迎來到<strong>政治社會學</strong>。這學期我們要做一件事：把「政治」從<strong>立法院、投票所、總統府</strong>裡解放出來，看它如何深植於<strong>社會結構、階級、文化與日常生活</strong>之中。今天這堂導論，先回答三個最基本的問題——這門學問<em>從哪裡來</em>、<em>怎麼看世界</em>、以及<em>這學期要去哪裡</em>。
+  </div>
+
+  <div class="questions">
+    <h4>📌 本週要解答的核心問題</h4>
+    <ol>
+      <li><strong>知識為什麼不能各自為政？</strong>為何理解一場大饑荒、一波疫情，需要政治、經濟、社會、文化「同時上場」？</li>
+      <li><strong>政治學與社會學看世界的方式有何不同？</strong>什麼是「由上而下」與「由下而上」的認識論差異？</li>
+      <li><strong>「政治社會學」到底研究什麼？</strong>國家、權力、合法性、制度，如何與社會結構、階級、認同交會？</li>
+      <li><strong>拆解複雜社會，我們有哪三把「分析透鏡」？</strong>宏觀、中觀、微觀分別回答什麼問題？這如何對應本學期的課程地圖？</li>
+      <li><strong>理論能解釋現實嗎？</strong>用兩個 2026 年的真實案例（阿富汗新法、性別政治）來實際操練一次。</li>
+    </ol>
+  </div>
+
+  <h3><span class="num">📖</span>本週路線圖</h3>
+  <div class="card-grid">
+    <div class="card"><h4>P1 知識的立體網絡</h4><p>社會科學不是一座座孤立的象牙塔。<strong>互動式知識網絡圖</strong>：點擊每個學科，看它如何彼此連結。</p></div>
+    <div class="card teal"><h4>P2 自然界的震央</h4><p>從《饑荒政治》到《國際政治理論與喪屍》——自然現象如何驅動整張知識網絡運轉。</p></div>
+    <div class="card blue"><h4>P3 兩種認識論</h4><p>政治學（由上而下）vs 社會學（由下而上）。政治社會學如何站在兩者之間。</p></div>
+    <div class="card gold"><h4>P4 學科交會點</h4><p>政治學的支柱、社會學的支柱，以及兩者<strong>共同關懷</strong>的四大議題。</p></div>
+    <div class="card"><h4>P5 三大分析透鏡</h4><p>宏觀／中觀／微觀。<strong>本學期的課程地圖</strong>就藏在這三把透鏡裡。</p></div>
+    <div class="card purple"><h4>P6 案例一·阿富汗</h4><p>國家與社會的「<strong>共謀</strong>」：威權國家如何借用父權社會維持統治。</p></div>
+    <div class="card orange"><h4>P7 案例二·平權悖論</h4><p>為何越是性別平等的社會，厭女越強烈？用三大透鏡完整解析。</p></div>
+    <div class="card sage"><h4>P8-P9 測驗與地圖</h4><p><strong>4 題隨堂選擇題</strong>、小組討論題，以及本週讀物與完整課程地圖。</p></div>
+  </div>
+
+  <div class="next-page" onclick="goPage(1)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P1 · 知識的立體網絡：社會科學謎題的複雜性</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+<!-- ============ /P0 ============ -->
+
+
+<!-- ============ P1 知識的立體網絡 ============ -->
+<div class="page" data-page="1"><div class="page-inner">
+  <div class="guide-breadcrumb">第 1 章 · <span>知識的立體網絡</span></div>
+  <h2>社會科學謎題的<span class="mark">複雜性</span></h2>
+
+  <div class="story-lead">
+    知識體系不是一座座孤立的<strong>象牙塔</strong>，而是一張高度互動的<strong>立體網絡</strong>。面對當代社會最棘手的挑戰——氣候變遷、疫情、戰爭、不平等——我們必須透過<strong>跨領域的透鏡</strong>，才能看清全貌。單一學科的視角，已不足以解釋複雜的現實。
+  </div>
+
+  <p>下圖把社會科學排成一張網絡：<strong>四大核心學科</strong>分立四方（政治學、經濟學、社會學、文化／人類學），而<strong>自然界的挑戰</strong>位居正中央，是啟動整張網絡運轉的引擎。學科之間的「<strong>交會地帶</strong>」，正是各種跨領域學門誕生的地方——而我們這門課，就坐落在政治學與社會學之間的那座橋上。</p>
+
+  <div class="netmap">
+    <svg class="netmap-svg" viewBox="0 0 760 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="社會科學知識網絡互動圖">
+      <defs>
+        <marker id="arr2" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><polygon points="0 0,9 4.5,0 9" fill="#2a7a6e"/></marker>
+        <marker id="arrS" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><polygon points="0 0,9 4.5,0 9" fill="#2a7a6e"/></marker>
+      </defs>
+
+      <!-- 外圈 -->
+      <ellipse cx="380" cy="300" rx="368" ry="288" fill="none" stroke="#d8d0c4" stroke-width="1.5" stroke-dasharray="2 6"/>
+
+      <!-- 震央放射線（雙箭頭） -->
+      <line x1="380" y1="258" x2="380" y2="134" stroke="#2a7a6e" stroke-width="4" marker-start="url(#arrS)" marker-end="url(#arr2)"/>
+      <line x1="306" y1="300" x2="208" y2="300" stroke="#2a7a6e" stroke-width="4" marker-start="url(#arrS)" marker-end="url(#arr2)"/>
+      <line x1="454" y1="300" x2="552" y2="300" stroke="#2a7a6e" stroke-width="4" marker-start="url(#arrS)" marker-end="url(#arr2)"/>
+      <line x1="380" y1="342" x2="380" y2="466" stroke="#2a7a6e" stroke-width="4" marker-start="url(#arrS)" marker-end="url(#arr2)"/>
+
+      <!-- 交會橋連接線 -->
+      <line x1="300" y1="120" x2="180" y2="265" stroke="#c9c0b4" stroke-width="1.3"/>
+      <line x1="460" y1="120" x2="580" y2="265" stroke="#c9c0b4" stroke-width="1.3"/>
+      <line x1="180" y1="335" x2="300" y2="480" stroke="#c9c0b4" stroke-width="1.3"/>
+      <line x1="580" y1="335" x2="460" y2="480" stroke="#c9c0b4" stroke-width="1.3"/>
+
+      <!-- 支援學科（虛線小圈） -->
+      <g opacity="0.92">
+        <ellipse cx="95" cy="150" rx="46" ry="28" fill="#f3efe7" stroke="#b3a99a" stroke-width="1.3" stroke-dasharray="4 4"/>
+        <text x="95" y="155" text-anchor="middle" font-size="13" fill="#6b6560" font-weight="600">工程學</text>
+        <ellipse cx="668" cy="150" rx="52" ry="28" fill="#f3efe7" stroke="#b3a99a" stroke-width="1.3" stroke-dasharray="4 4"/>
+        <text x="668" y="155" text-anchor="middle" font-size="13" fill="#6b6560" font-weight="600">公共衛生學</text>
+        <ellipse cx="95" cy="450" rx="46" ry="28" fill="#f3efe7" stroke="#b3a99a" stroke-width="1.3" stroke-dasharray="4 4"/>
+        <text x="95" y="455" text-anchor="middle" font-size="13" fill="#6b6560" font-weight="600">地理學</text>
+        <ellipse cx="668" cy="450" rx="46" ry="28" fill="#f3efe7" stroke="#b3a99a" stroke-width="1.3" stroke-dasharray="4 4"/>
+        <text x="668" y="455" text-anchor="middle" font-size="13" fill="#6b6560" font-weight="600">心理學</text>
+        <ellipse cx="250" cy="235" rx="44" ry="26" fill="#f3efe7" stroke="#b3a99a" stroke-width="1.3" stroke-dasharray="4 4"/>
+        <text x="250" y="240" text-anchor="middle" font-size="13" fill="#6b6560" font-weight="600">歷史學</text>
+      </g>
+
+      <!-- 交會橋 -->
+      <g>
+        <rect x="158" y="167" width="148" height="36" rx="18" fill="#fff" stroke="#b8860b" stroke-width="1.3"/>
+        <text x="232" y="190" text-anchor="middle" font-size="13.5" fill="#946a09" font-weight="700">政治經濟學</text>
+      </g>
+      <g>
+        <rect x="452" y="167" width="150" height="40" rx="20" fill="#b8860b" stroke="#8b2500" stroke-width="2"/>
+        <text x="527" y="184" text-anchor="middle" font-size="14" fill="#fff" font-weight="800">政治社會學</text>
+        <text x="527" y="199" text-anchor="middle" font-size="10" fill="#fff" font-style="italic">★ 本課程</text>
+      </g>
+      <g>
+        <rect x="150" y="397" width="164" height="38" rx="19" fill="#fff" stroke="#6b4c7a" stroke-width="1.3"/>
+        <text x="232" y="415" text-anchor="middle" font-size="12.5" fill="#6b4c7a" font-weight="700">經濟人類學</text>
+        <text x="232" y="429" text-anchor="middle" font-size="11" fill="#6b4c7a">文化經濟學</text>
+      </g>
+      <g>
+        <rect x="446" y="397" width="164" height="38" rx="19" fill="#fff" stroke="#3a5a8c" stroke-width="1.3"/>
+        <text x="528" y="415" text-anchor="middle" font-size="12.5" fill="#3a5a8c" font-weight="700">文化社會學</text>
+        <text x="528" y="429" text-anchor="middle" font-size="11" fill="#3a5a8c">媒體 · 資訊社會學</text>
+      </g>
+
+      <!-- 核心節點（可點擊） -->
+      <g class="net-node" data-key="poli" onclick="selectNode('poli')">
+        <ellipse class="node-ring" cx="380" cy="90" rx="92" ry="44" fill="#8b2500" stroke="#fff" stroke-width="2"/>
+        <text x="380" y="84" text-anchor="middle" font-size="19" fill="#fff" font-weight="800">政治學</text>
+        <text x="380" y="106" text-anchor="middle" font-size="11.5" fill="#f0d8cc">國家 · 比較政治 · 國關</text>
+      </g>
+      <g class="net-node" data-key="econ" onclick="selectNode('econ')">
+        <ellipse class="node-ring" cx="128" cy="300" rx="86" ry="44" fill="#b8860b" stroke="#fff" stroke-width="2"/>
+        <text x="128" y="294" text-anchor="middle" font-size="19" fill="#fff" font-weight="800">經濟學</text>
+        <text x="128" y="316" text-anchor="middle" font-size="11.5" fill="#fbf0d6">成長 · 分配</text>
+      </g>
+      <g class="net-node" data-key="socio" onclick="selectNode('socio')">
+        <ellipse class="node-ring" cx="632" cy="300" rx="92" ry="46" fill="#3a5a8c" stroke="#fff" stroke-width="2"/>
+        <text x="632" y="294" text-anchor="middle" font-size="19" fill="#fff" font-weight="800">社會學</text>
+        <text x="632" y="316" text-anchor="middle" font-size="11" fill="#dbe4f0">不平等 · 階級 · 性別</text>
+      </g>
+      <g class="net-node" data-key="culture" onclick="selectNode('culture')">
+        <ellipse class="node-ring" cx="380" cy="510" rx="104" ry="46" fill="#6b4c7a" stroke="#fff" stroke-width="2"/>
+        <text x="380" y="504" text-anchor="middle" font-size="18" fill="#fff" font-weight="800">文化／人類學</text>
+        <text x="380" y="526" text-anchor="middle" font-size="11" fill="#e4dceb">親屬 · 價值 · 宗教 · 語言</text>
+      </g>
+      <g class="net-node sel" data-key="nature" onclick="selectNode('nature')">
+        <ellipse class="node-ring" cx="380" cy="300" rx="78" ry="46" fill="#2a7a6e" stroke="#fff" stroke-width="4"/>
+        <text x="380" y="290" text-anchor="middle" font-size="13" fill="#fff" font-weight="800">自然（科學）</text>
+        <text x="380" y="308" text-anchor="middle" font-size="10.5" fill="#d2ebe5">共同的「震央」</text>
+        <text x="380" y="323" text-anchor="middle" font-size="10" fill="#d2ebe5">氣候變遷 · 疫情</text>
+      </g>
+    </svg>
+    <div class="net-detail" id="net-detail">
+      <div class="nd-name" style="color:var(--nature)">自然（科學）：共同的震央</div>
+      <div class="nd-en">The Natural Epicenter</div>
+      <div class="nd-body"><strong>氣候變遷與全球疫情</strong>是啟動整張知識網絡運轉的核心引擎。所有社會科學的探問，往往被自然現象所驅動——下一頁我們就用兩本書來說明這件事。</div>
+    </div>
+    <div class="net-hint">👆 點擊圖中任一個彩色節點，看它在知識網絡中扮演的角色</div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>💡 為什麼把「政治社會學」放在政治學與社會學中間？</h4>
+    <p>因為它<strong>同時</strong>關心「國家由上而下的權力運作」和「社會由下而上的結構動力」。它不是政治學的子集、也不是社會學的附庸，而是專門研究<strong>兩者如何相互滲透</strong>的學問——這正是接下來幾頁要展開的核心。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(2)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P2 · 自然界的震央：兩本書帶我們看跨學科</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P2 自然界的震央 ============ -->
+<div class="page" data-page="2"><div class="page-inner">
+  <div class="guide-breadcrumb">第 2 章 · <span>自然界的震央</span></div>
+  <h2>共同的震央，源於<span class="mark">自然界的挑戰</span></h2>
+
+  <div class="story-lead">
+    上一頁我們說，自然現象位居知識網絡的<strong>正中央</strong>。這頁用兩本書來證明：當饑荒、瘟疫這類「自然事件」發生，它從來不只是自然問題——它會<strong>同時驅動</strong>政治、經濟、社會、文化的連鎖反應。
+  </div>
+
+  <div class="book-grid">
+    <div class="book-card famine">
+      <div class="book-cover"><div><div class="bc-cn">饑荒政治</div><div class="bc-en">Mao's Great Famine · 文浩 (Felix Wemheuer)</div></div></div>
+      <div class="book-body">
+        <div class="bb-meta">毛時代中國與蘇聯的比較研究</div>
+        <ul>
+          <li>大饑荒不只是自然災害，更是<strong>高度政治化的政策結果</strong></li>
+          <li>背後機制：<strong>農業集體化、大躍進</strong></li>
+          <li>追求政治績效、意識形態掛帥、<strong>強制收購糧食</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="book-card zombie">
+      <div class="book-cover"><div><div class="bc-cn">國際政治理論<br>與喪屍</div><div class="bc-en">Theories of International Politics and Zombies · D. Drezner</div></div></div>
+      <div class="book-body">
+        <div class="bb-meta">用「喪屍爆發」當思想實驗，檢驗國際關係三大理論</div>
+        <ul>
+          <li><strong>現實主義</strong> → 各國優先軍事手段、自保至上</li>
+          <li><strong>自由主義／國際合作</strong> → 面臨協調崩潰的考驗</li>
+          <li><strong>建構主義（認知與文化）</strong> → 「我們」與「怪物」的界線如何被定義</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="lead">核心洞察</div>
+    <div class="body">一場饑荒、一波疫情（甚至一場虛構的喪屍爆發），都能成為<strong>啟動整張知識網絡</strong>的扳機。社會科學家之所以要跨界，正是因為現實的問題從來不會「乖乖地」只待在一個學科裡。</div>
+  </div>
+
+  <h3><span class="num">🔀</span>當學科邊界開始消融：四種交會</h3>
+  <p class="section-lead">同一張網絡，從不同角度切入，會看見不同的「交會地帶」。點選下方標籤切換。</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'x1')">權力 × 市場 × 社會</button>
+    <button class="tab" onclick="switchTab(this,'x2')">地理 × 歷史 × 公衛</button>
+    <button class="tab" onclick="switchTab(this,'x3')">跨國行動 × 傳播</button>
+    <button class="tab" onclick="switchTab(this,'x4')">權力 × 傳播 × 社會</button>
+  </div>
+  <div class="tab-panel active" id="x1">
+    <div class="hl-box"><p><strong>權力、市場與社會的交匯</strong>：當國家用政策操弄市場（如強制收購糧食）、市場的崩潰又重擊社會底層——這就是<strong>政治經濟學</strong>與<strong>經濟社會學</strong>共同關心的地帶。《饑荒政治》正是這個交會的經典案例。</p></div>
+  </div>
+  <div class="tab-panel" id="x2">
+    <div class="hl-box"><p><strong>地理、歷史與公共衛生的交匯</strong>：疫情如何沿著地理路徑擴散？歷史上的瘟疫如何重塑國家治理？這是<strong>歷史社會學</strong>與<strong>公共衛生</strong>交手的領域——COVID-19 讓全世界重新體會到這件事。</p></div>
+  </div>
+  <div class="tab-panel" id="x3">
+    <div class="hl-box"><p><strong>跨國行動、傳播技術與社會的交匯</strong>：難民流動、跨國 NGO、全球輿論戰，都需要<strong>傳播技術</strong>作為載體。資訊如何跨越國界動員人群？這是<strong>資訊社會學</strong>與國際關係的交會。</p></div>
+  </div>
+  <div class="tab-panel" id="x4">
+    <div class="hl-box"><p><strong>權力、傳播技術與社會的交匯</strong>：社群演算法如何放大特定政治訊息？國家如何透過資訊控制維持統治？這正是<strong>政治傳播</strong>與<strong>政治社會學</strong>最前沿的交會——本學期後段會反覆碰到。</p></div>
+  </div>
+
+  <div class="next-page" onclick="goPage(3)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P3 · 兩種認識論：由上而下 vs 由下而上</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P3 兩種認識論 ============ -->
+<div class="page" data-page="3"><div class="page-inner">
+  <div class="guide-breadcrumb">第 3 章 · <span>研究認識論的差異</span></div>
+  <h2>兩種看世界的方式<span class="mark">：</span>由上而下 vs 由下而上</h2>
+
+  <div class="story-lead">
+    政治社會學坐落在政治學與社會學的交界。但這兩個母學科，其實是用<strong>相反的方向</strong>在觀察同一個世界。理解這個「<strong>認識論（epistemology）的差異</strong>」，是進入這門課最重要的第一步。
+  </div>
+
+  <div class="epi-grid">
+    <div class="epi-card top">
+      <div class="epi-dir">⬇</div>
+      <div class="epi-disc">政治學</div>
+      <span class="epi-tag">由上而下 Top-down</span>
+      <p><strong>正式制度</strong>如何約束人類行為。它強調政治權威如何影響社會資源的分配與權力結構，關注國家是否擁有「<strong>自己的意志</strong>」（即<em>國家自主性</em>）來引導社會變遷。</p>
+      <div class="epi-key">關鍵字：國家、制度、權力、主權、自主性</div>
+    </div>
+    <div class="epi-card bottom">
+      <div class="epi-dir">⬆</div>
+      <div class="epi-disc">社會學</div>
+      <span class="epi-tag">由下而上 Bottom-up</span>
+      <p><strong>社會關係</strong>如何構成政治權威的基礎。社會學家主張，政治現象往往是社會結構（如<em>階級利益、文化價值</em>）的後果，強調從<strong>非正式的社會連結</strong>中尋找政治動力的來源。</p>
+      <div class="epi-key">關鍵字：階級、結構、網絡、文化、公民社會</div>
+    </div>
+  </div>
+
+  <div class="epi-bridge">
+    <div class="eb-title">⇄ 政治社會學的位置</div>
+    <p>政治社會學<strong>拒絕二選一</strong>。它同時追問：國家如何由上而下形塑社會？社會又如何由下而上撐起（或顛覆）國家？——這種「<strong>雙向視角</strong>」，就是接下來整學期反覆操練的核心功夫。</p>
+  </div>
+
+  <div class="hl-box blue">
+    <h4>🧭 一個小提醒</h4>
+    <p>當你之後讀到任何一篇文獻，先問自己：<strong>作者是站在「上」往下看，還是站在「下」往上看？</strong>光是釐清這一點，你對該理論的掌握就已經超過大半同學了。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(4)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P4 · 學科交會點：政治社會學到底研究什麼？</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P4 學科交會點 ============ -->
+<div class="page" data-page="4"><div class="page-inner">
+  <div class="guide-breadcrumb">第 4 章 · <span>政治社會學的交會點</span></div>
+  <h2>政治社會學的<span class="mark">交會點</span></h2>
+
+  <div class="story-lead">
+    既然政治社會學站在兩學科之間，它就同時繼承了兩邊的「<strong>理論支柱</strong>」。下面先看兩邊各自關心的核心概念，再看它們<strong>交會</strong>後激盪出的四個共同議題——這四個議題，幾乎就是這門課的關鍵詞。
+  </div>
+
+  <div class="pillar-grid">
+    <div class="pillar-col poli">
+      <div class="pillar-head">🏛 政治學理論的支柱</div>
+      <div class="pillar-item"><span class="pi-name">國家</span> <span class="pi-en">State</span><div class="pi-desc">政治學的核心單位，研究國家的演進、主權的行使，以及它在國際關係中的角色。</div></div>
+      <div class="pillar-item"><span class="pi-name">權力</span> <span class="pi-en">Power</span><div class="pi-desc">探討權力的來源（暴力、權威、說服）與分配，例如民主與獨裁機制的差異。</div></div>
+      <div class="pillar-item"><span class="pi-name">合法性</span> <span class="pi-en">Legitimacy</span><div class="pi-desc">政治權威的正當基礎——人們為何願意「認可並服從」特定政體或規範。</div></div>
+      <div class="pillar-item"><span class="pi-name">制度</span> <span class="pi-en">Institutions</span><div class="pi-desc">約束行為的正式與非正式機構，也涵蓋政策發展與行政改革。</div></div>
+    </div>
+    <div class="pillar-col socio">
+      <div class="pillar-head">👥 社會學理論的支柱</div>
+      <div class="pillar-item"><span class="pi-name">社會結構</span> <span class="pi-en">Social Structure</span><div class="pi-desc">社會中相對固定的關係模式，影響個體與群體的互動方式。</div></div>
+      <div class="pillar-item"><span class="pi-name">社會階級</span> <span class="pi-en">Social Class</span><div class="pi-desc">基於經濟或社會地位的層級劃分，是研究社會不平等的重要面向。</div></div>
+      <div class="pillar-item"><span class="pi-name">社會網絡</span> <span class="pi-en">Social Network</span><div class="pi-desc">志願組織、社群連結與民間社會的互動網絡，能轉化為「社會資本」。</div></div>
+      <div class="pillar-item"><span class="pi-name">文化與價值</span> <span class="pi-en">Culture &amp; Values</span><div class="pi-desc">歷史、宗教、語言與集體記憶，構成社會意義與認同的基石。</div></div>
+    </div>
+  </div>
+
+  <h3><span class="num">⇄</span>八根支柱，如何在四個「共同關懷」上交會？</h3>
+  <p class="section-lead">左邊是政治學的四根支柱、右邊是社會學的四根支柱。它們<strong>不會各自孤立</strong>——而是兩兩交會，匯流成中間的四個共同關懷。點擊中間任一個金色節點，看是哪些支柱在那裡交會、以及它們的連結邏輯。</p>
+
+  <div class="relmap">
+    <svg class="relmap-svg" viewBox="0 0 780 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="政治社會學交會點關係圖">
+      <!-- 欄標題 -->
+      <text x="94" y="22" text-anchor="middle" font-size="13" font-weight="800" class="rel-headL">政治學的支柱</text>
+      <text x="390" y="22" text-anchor="middle" font-size="13" font-weight="800" fill="#946a09">共同關懷（交會點）</text>
+      <text x="686" y="22" text-anchor="middle" font-size="13" font-weight="800" class="rel-headR">社會學的支柱</text>
+
+      <!-- 連結線（先畫，置於方塊下） -->
+      <g id="rel-lines">
+        <!-- 國家與社會的關係 -->
+        <line class="rel-line" data-c="state-society" x1="170" y1="60"  x2="300" y2="52"/>
+        <line class="rel-line" data-c="state-society" x1="170" y1="405" x2="300" y2="68"/>
+        <line class="rel-line" data-c="state-society" x1="610" y1="60"  x2="480" y2="52"/>
+        <line class="rel-line" data-c="state-society" x1="610" y1="290" x2="480" y2="68"/>
+        <!-- 權力與不平等 -->
+        <line class="rel-line" data-c="power-ineq" x1="170" y1="175" x2="300" y2="175"/>
+        <line class="rel-line" data-c="power-ineq" x1="610" y1="175" x2="480" y2="175"/>
+        <!-- 政治動員 -->
+        <line class="rel-line" data-c="mobilization" x1="170" y1="175" x2="300" y2="283"/>
+        <line class="rel-line" data-c="mobilization" x1="170" y1="405" x2="300" y2="297"/>
+        <line class="rel-line" data-c="mobilization" x1="610" y1="290" x2="480" y2="290"/>
+        <!-- 認同與政治 -->
+        <line class="rel-line" data-c="identity" x1="170" y1="290" x2="300" y2="405"/>
+        <line class="rel-line" data-c="identity" x1="610" y1="405" x2="480" y2="405"/>
+      </g>
+
+      <!-- 左：政治學支柱 -->
+      <g font-family="'Noto Sans TC',sans-serif">
+        <rect id="p-state" class="rel-pbox poli" x="18" y="37"  width="152" height="46" rx="9" fill="#fbf3ef" stroke="#8b2500" stroke-width="1.6"/>
+        <text x="94" y="65"  text-anchor="middle" font-size="15" font-weight="700" fill="#8b2500">國家</text>
+        <rect id="p-power" class="rel-pbox poli" x="18" y="152" width="152" height="46" rx="9" fill="#fbf3ef" stroke="#8b2500" stroke-width="1.6"/>
+        <text x="94" y="180" text-anchor="middle" font-size="15" font-weight="700" fill="#8b2500">權力</text>
+        <rect id="p-legit" class="rel-pbox poli" x="18" y="267" width="152" height="46" rx="9" fill="#fbf3ef" stroke="#8b2500" stroke-width="1.6"/>
+        <text x="94" y="295" text-anchor="middle" font-size="15" font-weight="700" fill="#8b2500">合法性</text>
+        <rect id="p-inst"  class="rel-pbox poli" x="18" y="382" width="152" height="46" rx="9" fill="#fbf3ef" stroke="#8b2500" stroke-width="1.6"/>
+        <text x="94" y="410" text-anchor="middle" font-size="15" font-weight="700" fill="#8b2500">制度</text>
+      </g>
+
+      <!-- 右：社會學支柱 -->
+      <g font-family="'Noto Sans TC',sans-serif">
+        <rect id="p-struct"  class="rel-pbox socio" x="610" y="37"  width="152" height="46" rx="9" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.6"/>
+        <text x="686" y="65"  text-anchor="middle" font-size="15" font-weight="700" fill="#3a5a8c">社會結構</text>
+        <rect id="p-class"   class="rel-pbox socio" x="610" y="152" width="152" height="46" rx="9" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.6"/>
+        <text x="686" y="180" text-anchor="middle" font-size="15" font-weight="700" fill="#3a5a8c">社會階級</text>
+        <rect id="p-network" class="rel-pbox socio" x="610" y="267" width="152" height="46" rx="9" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.6"/>
+        <text x="686" y="295" text-anchor="middle" font-size="15" font-weight="700" fill="#3a5a8c">社會網絡</text>
+        <rect id="p-culture" class="rel-pbox socio" x="610" y="382" width="152" height="46" rx="9" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.6"/>
+        <text x="686" y="410" text-anchor="middle" font-size="15" font-weight="700" fill="#3a5a8c">文化與價值</text>
+      </g>
+
+      <!-- 中：共同關懷（可點擊） -->
+      <g class="rel-cnode csel" data-c="state-society" onclick="selectConcern('state-society')">
+        <rect class="cbox" x="300" y="35" width="180" height="50" rx="10" fill="#b8860b" stroke="#7a3000" stroke-width="4"/>
+        <text x="390" y="65" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">國家與社會的關係</text>
+      </g>
+      <g class="rel-cnode" data-c="power-ineq" onclick="selectConcern('power-ineq')">
+        <rect class="cbox" x="300" y="150" width="180" height="50" rx="10" fill="#b8860b" stroke="#9a7209" stroke-width="1.6"/>
+        <text x="390" y="180" text-anchor="middle" font-size="14.5" font-weight="800" fill="#fff">權力與不平等</text>
+      </g>
+      <g class="rel-cnode" data-c="mobilization" onclick="selectConcern('mobilization')">
+        <rect class="cbox" x="300" y="265" width="180" height="50" rx="10" fill="#b8860b" stroke="#9a7209" stroke-width="1.6"/>
+        <text x="390" y="295" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">政治動員</text>
+      </g>
+      <g class="rel-cnode" data-c="identity" onclick="selectConcern('identity')">
+        <rect class="cbox" x="300" y="380" width="180" height="50" rx="10" fill="#b8860b" stroke="#9a7209" stroke-width="1.6"/>
+        <text x="390" y="410" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">認同與政治</text>
+      </g>
+    </svg>
+
+    <div class="rel-detail" id="rel-detail">
+      <div class="rd-name">國家與社會的關係</div>
+      <div class="rd-en">State–Society Relations</div>
+      <div class="rd-cross"><b class="p">國家 ＋ 制度</b>（政治）　×　<b class="s">社會結構 ＋ 社會網絡</b>（社會）</div>
+      <div class="rd-body">國家不是懸空運作的。它的<strong>制度</strong>必須<strong>嵌入</strong>真實的社會結構與網絡之中，才能課稅、徵兵、推動政策。國家能力的強弱，往往取決於它與社會的連結方式——這就是 Evans 所說的「<strong>嵌入式自主性</strong>」。</div>
+      <span class="rd-week">📅 對應 W4 Skocpol · W5 Tilly · W6 國際環境</span>
+    </div>
+    <div class="rel-hint">👆 點擊中間任一個金色節點，看支柱如何在此交會</div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>🔑 一句話看懂這張圖</h4>
+    <p>政治社會學的價值，不在於各別研究「國家」或「階級」，而在於追問<strong>它們如何彼此牽動</strong>：權力沿著階級堆疊、國家嵌入社會網絡、合法性建立在文化認同之上、動員仰賴社會連結與制度機會。<strong>這四個交會點，正好就是本學期後半段的主軸。</strong></p>
+  </div>
+
+  <div class="next-page" onclick="goPage(5)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P5 · 三大分析透鏡：本學期的課程地圖</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P5 三大透鏡 ============ -->
+<div class="page" data-page="5"><div class="page-inner">
+  <div class="guide-breadcrumb">第 5 章 · <span>三大分析透鏡</span></div>
+  <h2>拆解複雜社會的<span class="mark">三大分析透鏡</span></h2>
+
+  <div class="story-lead">
+    這頁是<strong>整學期最重要的一張地圖</strong>。我們把複雜的社會，用三把不同「焦距」的透鏡來拆解——從<strong>宏觀結構</strong>，到<strong>中觀的制度與行動</strong>，再到<strong>微觀的意義與符號</strong>。本學期的每一週，都會落在這三把透鏡的其中之一。
+  </div>
+
+  <div class="lens-grid">
+    <div class="lens-card macro">
+      <div class="lens-eye">焦距一 · 看得最遠</div>
+      <div class="lens-title">宏觀視角</div>
+      <span class="lens-badge">結構取向</span>
+      <div class="lens-concepts"><span class="lens-tag">經濟決定論</span><span class="lens-tag">國際環境與依賴</span><span class="lens-tag">國家自主性</span></div>
+      <div class="lens-q"><strong>核心提問：</strong>經濟發展是民主化的充分還是必要條件？國家機器是否擁有「自己的意志」？強／弱國家的制度來源為何？</div>
+      <div class="lens-weeks">📅 對應週次：<b>W3</b> 經濟決定論 · <b>W4</b> Skocpol／國家自主性 · <b>W5</b> Tilly／國家形成 · <b>W6</b> 國際環境決定論</div>
+    </div>
+    <div class="lens-card meso">
+      <div class="lens-eye">焦距二 · 看制度與行動</div>
+      <div class="lens-title">中觀視角</div>
+      <span class="lens-badge">行動者與互動取向</span>
+      <div class="lens-concepts"><span class="lens-tag">新制度主義</span><span class="lens-tag">微觀政治</span><span class="lens-tag">社會運動</span></div>
+      <div class="lens-q"><strong>核心提問：</strong>既有制度如何約束或形塑行動者的策略選擇？行動者如何在多重結構中進行無聲反抗或集體動員？</div>
+      <div class="lens-weeks">📅 對應週次：<b>W10</b> 新制度主義 · <b>W11</b> 微觀政治與社會運動</div>
+    </div>
+    <div class="lens-card micro">
+      <div class="lens-eye">焦距三 · 看意義與符號</div>
+      <div class="lens-title">微觀／意義視角</div>
+      <span class="lens-badge">文化與符號取向</span>
+      <div class="lens-concepts"><span class="lens-tag">政治文化</span><span class="lens-tag">社會資本</span><span class="lens-tag">文化框架</span></div>
+      <div class="lens-q"><strong>核心提問：</strong>國族認同（想像的共同體）如何被建構與動員？社會運動如何透過「框架共鳴」獲取正當性？</div>
+      <div class="lens-weeks">📅 對應週次：<b>W12</b> 政治文化與社會信任 · <b>W13</b> 文化框架與動員政治</div>
+    </div>
+  </div>
+
+  <div class="synth-box">
+    <div class="sb-eye">三把透鏡疊加起來</div>
+    <div class="synth-formula">［ 結構 ］<span class="op">×</span>［ 制度與行動 ］<span class="op">×</span>［ 意義與符號 ］</div>
+    <p class="sb-note">不要只看見情緒與事件的表象，要看透權力與制度的運作。</p>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>🎯 怎麼用這張地圖？</h4>
+    <p>之後每週上課，請先問自己：「<strong>這週我們戴的是哪一把透鏡？</strong>」當你能把每一個理論放回它在這張地圖上的位置，你就真正掌握了政治社會學的全貌——而不只是背了一堆零散的人名與概念。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(6)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P6 · 案例一：阿富汗新法與「國家—社會共謀」</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P6 案例一 阿富汗 ============ -->
+<div class="page" data-page="6"><div class="page-inner">
+  <div class="guide-breadcrumb">第 6 章 · <span>案例一</span></div>
+  <h2>案例一<span class="mark">：</span>阿富汗新法允許丈夫毆妻</h2>
+
+  <div class="story-lead">
+    理論講完了，來實際操練。第一個案例談「<strong>國家與社會的關係</strong>」——這正是 P4 提到的共同關懷之一。先讀新聞事實，再用政治社會學的眼光，看出表面之下的權力結構。
+  </div>
+
+  <div class="case-source">
+    <span class="cs-tag">📰 新聞事實 · CNN（2026/1）</span>
+    <p>塔利班政權於 2026 年 1 月頒布一項<strong>限縮女性、兒童權益</strong>的新法令，經非營利組織「阿富汗分析家網路」翻譯成英文披露後，引發國際關注。</p>
+    <p>依該法令，丈夫被允許毆打妻子，除非造成骨折、開放性傷口或瘀青，才會被視為犯罪並求刑 15 天；父親也可對未落實禱告的子女進行體罰。</p>
+    <p>若妻子未經丈夫允許多次返回娘家、經勸說仍未返家，妻子與其親戚均構成犯罪，可遭求刑 3 個月；同性間性行為亦遭嚴格禁止，違者可判死刑。</p>
+  </div>
+
+  <h3><span class="num">🔍</span>政治社會學怎麼看？先想再展開</h3>
+  <p class="section-lead">在點開分析之前，先自己想 30 秒：這究竟是「國家壓迫社會」，還是另有玄機？</p>
+
+  <div class="spoiler">
+    <span class="sp-title">💭 點此展開分析：國家與社會的關係——一場威權的「共謀」</span><br>
+    我們常以為「壓迫」是國家<strong>單方面</strong>強加在社會之上。但本案揭露了更深的結構：<br><br>
+    <strong>① 共謀關係：</strong>國家與社會並非對立，而是<strong>相互依賴的共生體</strong>。塔利班不是在對抗社會，而是與社會中既有的保守勢力結盟。<br>
+    <strong>② 利益交換：</strong>塔利班政權<strong>依賴社會既有的父權保守勢力</strong>，來維持基層的穩定與服從。<br>
+    <strong>③ 微觀獨裁：</strong>國家<strong>賦予男性絕對統治權</strong>（在家庭內），換取整個社會結構對國家機器的絕對服從——權力被「外包」到了每一個家庭。
+  </div>
+
+  <div class="gears-box">
+    <div class="gb-head"><span class="em">⚙</span> 兩個齒輪的咬合</div>
+    <div class="gear-item">
+      <div class="gear-ic">🏛</div>
+      <div class="gear-txt"><strong>威權國家</strong>提供：法律授權、暴力壟斷、意識形態正當性。</div>
+    </div>
+    <div class="gear-item">
+      <div class="gear-ic">👨‍👩‍👧</div>
+      <div class="gear-txt"><strong>父權社會</strong>提供：基層的服從、家戶內的治理、世代再生產的人力。</div>
+    </div>
+    <div class="gear-item">
+      <div class="gear-ic">🔗</div>
+      <div class="gear-txt">兩個齒輪<strong>互相咬合</strong>，犧牲的是夾在中間、最沒有權力的人——這就是「嵌入式」的壓迫結構。</div>
+    </div>
+  </div>
+
+  <div class="hl-box purple">
+    <h4>🧠 帶走這個概念</h4>
+    <p>「<strong>國家自主性</strong>」（W4 Skocpol）的另一面是：國家有時並非自主行動，而是<strong>嵌入</strong>在社會結構中、與特定社會勢力共謀。看待任何壓迫，都要同時問：<em>國家得到了什麼？社會的哪一部分得到了什麼？</em></p>
+  </div>
+
+  <div class="next-page" onclick="goPage(7)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P7 · 案例二：平權悖論——用三大透鏡解析</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P7 案例二 平權悖論 ============ -->
+<div class="page" data-page="7"><div class="page-inner">
+  <div class="guide-breadcrumb">第 7 章 · <span>案例二</span></div>
+  <h2>案例二<span class="mark">：</span>為何越平等的社會，厭女越強烈？</h2>
+
+  <div class="story-lead">
+    第二個案例更燒腦——它是個「<strong>悖論</strong>」：照理說社會越平等、衝突應該越少，但現實卻相反。這正好讓我們把 P5 的<strong>三大透鏡</strong>全部派上用場，做一次完整示範。
+  </div>
+
+  <div class="case-source">
+    <span class="cs-tag">📰 現象 · 從台灣到韓國</span>
+    <p>從台灣網路上的「<strong>母豬教</strong>」論戰，到韓國總統大選——候選人尹錫悅將「<strong>廢除女性家族部</strong>」列為核心政見，不承認韓國存在性別不平等結構，主張低生育率是女權主義造成的。</p>
+    <p>勝選的關鍵，不是靠年長保守男性的支持，而是<strong>操作兩性對立</strong>，獲取年輕右翼男性的選票，在拉鋸戰中成為勝負手。</p>
+  </div>
+
+  <h3><span class="num">🔭</span>用三大透鏡，層層拆解這個悖論</h3>
+  <p class="section-lead">同一個現象，從宏觀、中觀、微觀切入，會看見完全不同的因果層次。</p>
+
+  <div class="misogyny-layer">
+    <div class="ml-card l1">
+      <div class="ml-eye">宏觀 · 結構取向</div>
+      <div class="ml-title">經濟結構焦慮</div>
+      <p>當經濟成長停滯、青年向上流動受阻，年輕男性感受到強烈的「<strong>相對剝奪感</strong>」。平權帶來的競爭加劇，被體驗為「我的位置被搶走了」。</p>
+    </div>
+    <div class="ml-card l2">
+      <div class="ml-eye">中觀 · 制度與行動</div>
+      <div class="ml-title">政治操作 / 體制內抵抗</div>
+      <p>當平權被寫入「制度」（法律、委員會）後，反撲者不再只在體制外叫囂——他們<strong>利用民主機制的包容性與漏洞</strong>，在體制內進行微觀政治角力（如選舉動員）。</p>
+    </div>
+    <div class="ml-card l3">
+      <div class="ml-eye">微觀 · 文化與符號</div>
+      <div class="ml-title">符號與認同操作</div>
+      <p>把「女權主義」<strong>符號化</strong>為「國家的敵人」「不公平的根源」，精準收割相對剝奪感。仇恨被<strong>提煉成選票</strong>，性別對立成了最廉價的政治動員資本。</p>
+    </div>
+  </div>
+
+  <div class="synth-box">
+    <div class="sb-eye">平權悖論的綜合解析</div>
+    <div class="synth-formula">［ 經濟結構焦慮 ］<span class="op">×</span>［ 政治操作 ］<span class="op">×</span>［ 體制內抵抗 ］</div>
+    <p class="sb-note">不要只看見情緒的表象，要看透權力與制度的運作。</p>
+  </div>
+
+  <div class="hl-box blue">
+    <h4>💡 這就是政治社會學的功夫</h4>
+    <p>單看任何一層，都會得到偏頗的答案：只看經濟，會變成宿命論；只看政治操作，會忽略結構根源；只看文化符號，會抓不到物質基礎。<strong>三把透鏡疊加</strong>，才能看見一個現象的完整因果——這正是你這學期要練成的本事。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(8)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P8 · 隨堂測驗與課堂討論</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P8 隨堂測驗 ============ -->
+<div class="page" data-page="8"><div class="page-inner">
+  <div class="guide-breadcrumb">第 8 章 · <span>隨堂測驗與討論</span></div>
+  <h2>隨堂測驗<span class="mark">：</span>檢查今天的觀念</h2>
+  <p class="section-lead">點選你認為正確的選項，系統會立刻標出正解並顯示解析。</p>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q1</div>
+    <div class="quiz-question">關於「政治學」與「社會學」的<strong>認識論差異</strong>，下列敘述何者<strong>正確</strong>？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 政治學由下而上，社會學由上而下</button>
+      <button class="quiz-opt" data-correct="true">(B) 政治學偏向「由上而下」看正式制度，社會學偏向「由下而上」看社會關係</button>
+      <button class="quiz-opt" data-correct="false">(C) 兩者完全相同，只是名稱不同</button>
+      <button class="quiz-opt" data-correct="false">(D) 政治學只研究選舉，社會學只研究家庭</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：B</strong><br>
+      政治學強調<em>正式制度與政治權威</em>如何由上而下約束社會（關注國家自主性）；社會學則主張政治現象往往是<em>社會結構（階級、文化）</em>的後果，由下而上尋找政治動力。政治社會學的價值，就在於同時掌握這兩個方向。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q2</div>
+    <div class="quiz-question">為什麼《饑荒政治》與《國際政治理論與喪屍》能說明「知識網絡」的概念？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 因為它們都是暢銷書</button>
+      <button class="quiz-opt" data-correct="true">(B) 因為它們顯示「自然事件」會同時驅動政治、經濟、社會、文化的連鎖反應</button>
+      <button class="quiz-opt" data-correct="false">(C) 因為它們都在批評某個政黨</button>
+      <button class="quiz-opt" data-correct="false">(D) 因為它們證明自然科學比社會科學重要</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：B</strong><br>
+      饑荒看似天災，其實是<em>集體化、強制徵糧</em>等政策的政治後果；喪屍／疫情則被用來檢驗國際關係三大理論。兩者都說明：自然現象是位居網絡<em>中央的「震央」</em>，會牽動所有學科——這正是跨領域研究的必要性。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q3</div>
+    <div class="quiz-question">用本週框架看阿富汗案例，「國家與社會的<strong>共謀</strong>」最精準的意思是？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 國家單方面壓迫社會，社會完全被動</button>
+      <button class="quiz-opt" data-correct="true">(B) 國家與社會中的父權勢力相互依賴、利益交換，共同維持壓迫結構</button>
+      <button class="quiz-opt" data-correct="false">(C) 社會推翻了國家</button>
+      <button class="quiz-opt" data-correct="false">(D) 國家與社會彼此對立、毫無關係</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：B</strong><br>
+      關鍵在於跳脫「國家 vs 社會」的二元對立。塔利班<em>依賴</em>社會既有的父權保守勢力維持基層穩定，並把統治權「外包」給家戶內的男性——這是一種<em>嵌入式</em>的共生壓迫結構，而非單向施壓。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q4</div>
+    <div class="quiz-question">分析「平權悖論」時，若<strong>只用宏觀經濟視角</strong>，最可能的盲點是？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 過度強調文化符號，忽略物質基礎</button>
+      <button class="quiz-opt" data-correct="true">(B) 落入經濟宿命論，忽略政治操作與符號動員如何「點燃」焦慮</button>
+      <button class="quiz-opt" data-correct="false">(C) 只看選舉結果，忽略經濟數據</button>
+      <button class="quiz-opt" data-correct="false">(D) 沒有盲點，經濟視角足以解釋一切</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：B</strong><br>
+      經濟焦慮是<em>必要條件</em>，但不是充分條件——焦慮要被<em>政治操作</em>（中觀）與<em>符號動員</em>（微觀）所點燃，才會轉化為厭女與選票。這就是為什麼必須<em>三把透鏡疊加</em>，缺一層就會誤判因果。
+    </div>
+  </div>
+
+  <h3><span class="num">💬</span>課堂分組討論</h3>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">討論題 A</span>
+    <div class="discussion-q">挑一則<em>本週的台灣新聞</em>，試著畫出它的「知識網絡」。</div>
+    <div class="ctx">這則新聞同時牽涉了哪些學科（政治、經濟、社會、文化）？哪一個是它的「<strong>震央</strong>」？如果只用單一學科解釋，會漏掉什麼？</div>
+  </div>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">討論題 B</span>
+    <div class="discussion-q">用「<em>三大透鏡</em>」拆解一個你關心的社會爭議。</div>
+    <div class="ctx">例如：居住正義、低薪、少子化、能源政策。請各組分別從<strong>宏觀（結構）、中觀（制度與行動）、微觀（意義與符號）</strong>各提出一個解釋，再討論：哪一層最常被輿論忽略？</div>
+  </div>
+
+  <div class="next-page" onclick="goPage(9)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P9 · 本週讀物與完整課程地圖</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P9 讀物與課程地圖 ============ -->
+<div class="page" data-page="9"><div class="page-inner">
+  <div class="guide-breadcrumb">第 9 章 · <span>延伸</span></div>
+  <h2>本週讀物與<span class="mark">完整課程地圖</span></h2>
+
+  <div class="story-lead">
+    導論週的閱讀重在「<strong>建立視野</strong>」而非細節。先掌握政治社會學的整體框架，後面每一週的理論才有地方安放。
+  </div>
+
+  <h3><span class="num">①</span>本週導讀</h3>
+  <div class="reading-card must">
+    <div class="reading-icon">🗺</div>
+    <div class="reading-body">
+      <div class="reading-title">課程大綱與三大分析透鏡（本週 P5）</div>
+      <div class="reading-meta">課程自編教材｜中文</div>
+      <div class="reading-note">把本週的「<strong>三大透鏡 × 課程地圖</strong>」讀熟。這是貫穿全學期的骨架，建議列印或截圖隨身帶著，每週對照。</div>
+    </div>
+  </div>
+  <div class="reading-card rec">
+    <div class="reading-icon">📚</div>
+    <div class="reading-body">
+      <div class="reading-title">Drezner, D. W. <em>Theories of International Politics and Zombies</em>（中譯《國際政治理論與喪屍》，翁尚均譯）</div>
+      <div class="reading-meta">英文／中譯本皆可｜輕鬆入門</div>
+      <div class="reading-note">用「喪屍爆發」當思想實驗，是體會<strong>不同理論視角如何看同一事件</strong>的最佳入門讀物。讀來有趣，卻能練到跨理論比較的基本功。</div>
+    </div>
+  </div>
+  <div class="reading-card rec">
+    <div class="reading-icon">📰</div>
+    <div class="reading-body">
+      <div class="reading-title">文浩（Felix Wemheuer）《饑荒政治：毛時代中國與蘇聯的比較研究》</div>
+      <div class="reading-meta">中譯本｜香港中文大學出版社</div>
+      <div class="reading-note">對「自然災害如何被政治化」有興趣者推薦。可作為日後 W3–W6（宏觀結構）的暖身案例。</div>
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>本學期完整地圖</h3>
+  <p class="section-lead">每一週都標好了它戴的是哪一把透鏡。本週（W1）是這張地圖本身。</p>
+  <div class="roadmap">
+    <div class="rm-block macro">
+      <span class="rm-head">宏觀 · 結構取向</span>
+      <div class="rm-weeks">
+        <span class="rm-week"><b>W3</b> 經濟決定論</span>
+        <span class="rm-week"><b>W4</b> Skocpol · 國家自主性</span>
+        <span class="rm-week"><b>W5</b> Tilly · 國家形成</span>
+        <span class="rm-week"><b>W6</b> 國際環境決定論</span>
+      </div>
+    </div>
+    <div class="rm-block meso">
+      <span class="rm-head">中觀 · 行動者與互動</span>
+      <div class="rm-weeks">
+        <span class="rm-week"><b>W10</b> 新制度主義</span>
+        <span class="rm-week"><b>W11</b> 微觀政治與社會運動</span>
+      </div>
+    </div>
+    <div class="rm-block micro">
+      <span class="rm-head">微觀 · 文化與符號</span>
+      <div class="rm-weeks">
+        <span class="rm-week"><b>W12</b> 政治文化與社會信任</span>
+        <span class="rm-week"><b>W13</b> 文化框架與動員政治</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>🎯 本週的一句話總結</h4>
+    <p style="font-family:'Playfair Display',serif;font-size:1.05rem;text-align:center;color:var(--accent);font-weight:700;padding:1rem;background:#fff;border-radius:8px;margin-top:.7rem;line-height:1.7">
+      政治不只在投票所裡發生——<br>它藏在每一個家庭的權力、每一場選舉的符號、<br>以及每一次「自然災害」被如何處理的決定之中。
+    </p>
+  </div>
+
+  <div class="hl-box blue">
+    <h4>🔮 下週預告</h4>
+    <p>我們將正式戴上<strong>第一把透鏡（宏觀／結構）</strong>，從「<strong>經濟決定論</strong>」開始：經濟發展究竟是民主化的<em>充分</em>條件，還是只是<em>必要</em>條件？請帶著本週的三大透鏡地圖一起來。</p>
+  </div>
+
+</div></div>
+
+</div><!-- /page-container -->
+
+<div class="bottom-bar">
+  <div class="page-indicator">第 <span id="cur-page">1</span> / 10 頁</div>
+  <div class="page-dots" id="dots"></div>
+  <div class="arrow-btns">
+    <button class="arrow-btn" id="prev-btn" onclick="goPrev()">←</button>
+    <button class="arrow-btn" id="next-btn" onclick="goNext()">→</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+const totalPages = 10;
+let currentPage = 0;
+const dotsEl = document.getElementById('dots');
+for(let i=0;i<totalPages;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>goPage(i);
+  dotsEl.appendChild(d);
+}
+function goPage(n){
+  if(n<0||n>=totalPages)return;
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('cur-page').textContent=n+1;
+  document.getElementById('prev-btn').disabled=n===0;
+  document.getElementById('next-btn').disabled=n===totalPages-1;
+  currentPage=n;
+  document.querySelectorAll('.page')[n].scrollTop=0;
+}
+function goPrev(){goPage(currentPage-1);}
+function goNext(){goPage(currentPage+1);}
+function switchTab(btn,panelId){
+  const tabs=btn.parentElement.querySelectorAll('.tab');
+  tabs.forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const container=btn.closest('.page-inner');
+  container.querySelectorAll('.tab-panel').forEach(p=>{
+    p.classList.toggle('active',p.id===panelId);
+  });
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft')goPrev();
+  if(e.key==='ArrowRight')goNext();
+});
+document.addEventListener('click',e=>{
+  const sp=e.target.closest('.spoiler');
+  if(sp)sp.classList.toggle('revealed');
+});
+document.addEventListener('click',function(e){
+  const btn=e.target.closest('.quiz-opt');
+  if(!btn)return;
+  const block=btn.closest('.quiz-block');
+  if(!block||block.dataset.answered==='1')return;
+  block.dataset.answered='1';
+  const correct=btn.dataset.correct==='true';
+  btn.classList.add(correct?'selected-correct':'selected-wrong');
+  if(!correct){
+    block.querySelectorAll('.quiz-opt').forEach(o=>{
+      if(o.dataset.correct==='true')o.classList.add('show-correct');
+    });
+  }
+  const exp=block.querySelector('.quiz-explain');
+  if(exp)exp.classList.add('shown');
+});
+// 知識網絡互動
+const netData={
+  poli:{name:'政治學',en:'Political Science',body:'研究<strong>國家建構、比較政治與國際關係</strong>。核心單位是「國家」——它如何形成、如何行使主權、如何在國際體系中競爭與合作。本學期 W4–W6 即從這裡出發。'},
+  econ:{name:'經濟學',en:'Economics',body:'探究<strong>經濟表現成功與失敗的原因</strong>。為什麼有些國家富裕、有些貧窮？市場與成長的邏輯，常是政治權力分配的底層驅動力。'},
+  socio:{name:'社會學',en:'Sociology',body:'關注<strong>社會不平等</strong>——人口、階級、性別，以及公民社會。它追問：政治權威的基礎，是否就藏在社會關係與結構之中？'},
+  culture:{name:'文化（人類學／傳播學）',en:'Culture',body:'涵蓋<strong>親屬、價值、宗教、語言</strong>。文化提供了人們理解世界、賦予政治意義與正當性的符號系統。本學期 W12–W13 的政治文化由此切入。'},
+  nature:{name:'自然（科學）：共同的震央',en:'The Natural Epicenter',body:'<strong>氣候變遷與全球疫情</strong>是啟動整張知識網絡運轉的核心引擎。所有社會科學的探問，往往被自然現象所驅動——下一頁我們就用兩本書來說明這件事。'}
+};
+function selectNode(key){
+  document.querySelectorAll('.net-node').forEach(n=>n.classList.toggle('sel',n.dataset.key===key));
+  const d=netData[key];
+  const det=document.getElementById('net-detail');
+  if(!d||!det)return;
+  det.style.borderLeftColor='var(--'+key+')';
+  det.innerHTML='<div class="nd-name" style="color:var(--'+key+')">'+d.name+'</div><div class="nd-en">'+d.en+'</div><div class="nd-body">'+d.body+'</div>';
+}
+// 交會點關係圖互動
+const concernData={
+  'state-society':{name:'國家與社會的關係',en:'State–Society Relations',poli:['state','inst'],socio:['struct','network'],
+    cross:'<b class="p">國家 ＋ 制度</b>（政治）　×　<b class="s">社會結構 ＋ 社會網絡</b>（社會）',
+    body:'國家不是懸空運作的。它的<strong>制度</strong>必須<strong>嵌入</strong>真實的社會結構與網絡之中，才能課稅、徵兵、推動政策。國家能力的強弱，往往取決於它與社會的連結方式——這就是 Evans 所說的「<strong>嵌入式自主性</strong>」。',
+    week:'📅 對應 W4 Skocpol · W5 Tilly · W6 國際環境'},
+  'power-ineq':{name:'權力與不平等',en:'Power & Inequality',poli:['power'],socio:['class'],
+    cross:'<b class="p">權力</b>（政治）　×　<b class="s">社會階級</b>（社會）',
+    body:'政治<strong>權力</strong>從來不是平均分布的——它沿著<strong>社會階級</strong>的斷層線堆疊。誰掌握經濟資源，往往也掌握政治發言權；而政治權力又反過來鞏固既有的不平等。Marx 與 Weber 的階級分析，正是這條連結的源頭。',
+    week:'📅 對應 W3 經濟決定論'},
+  'mobilization':{name:'政治動員',en:'Political Mobilization',poli:['power','inst'],socio:['network'],
+    cross:'<b class="p">權力 ＋ 制度</b>（政治）　×　<b class="s">社會網絡</b>（社會）',
+    body:'當人們想挑戰權力，靠的是<strong>社會網絡</strong>來動員——誰找誰上街、誰信任誰。但運動能否成功，又取決於<strong>制度</strong>開了多大的縫（政治機會結構）。社會運動，就是社會網絡與制度機會的交會點。',
+    week:'📅 對應 W11 微觀政治與社會運動'},
+  'identity':{name:'認同與政治',en:'Identity & Politics',poli:['legit'],socio:['culture'],
+    cross:'<b class="p">合法性</b>（政治）　×　<b class="s">文化與價值</b>（社會）',
+    body:'人們為什麼願意<strong>服從</strong>某個政權？因為它取得了<strong>合法性</strong>——而合法性的根基，深植於<strong>文化與價值</strong>：共同的歷史記憶、宗教、語言與國族認同。當文化認同被動員，它就成了政治正當性的燃料。',
+    week:'📅 對應 W12 政治文化 · W13 文化框架'}
+};
+function selectConcern(key){
+  const d=concernData[key];
+  if(!d)return;
+  document.querySelectorAll('.rel-cnode').forEach(n=>n.classList.toggle('csel',n.dataset.c===key));
+  document.querySelectorAll('.rel-line').forEach(l=>{
+    const on=l.dataset.c===key;
+    l.classList.toggle('lit',on);
+    l.classList.toggle('dim',!on);
+  });
+  document.querySelectorAll('.rel-pbox').forEach(p=>p.classList.remove('hot'));
+  d.poli.forEach(id=>{const e=document.getElementById('p-'+id);if(e)e.classList.add('hot');});
+  d.socio.forEach(id=>{const e=document.getElementById('p-'+id);if(e)e.classList.add('hot');});
+  const det=document.getElementById('rel-detail');
+  if(det)det.innerHTML='<div class="rd-name">'+d.name+'</div><div class="rd-en">'+d.en+'</div><div class="rd-cross">'+d.cross+'</div><div class="rd-body">'+d.body+'</div><span class="rd-week">'+d.week+'</span>';
+}
+</script>
+</body>
+</html>
