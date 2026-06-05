@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政治社會學 W13 — 個人政治濾鏡的鍊成：集體認同、族群政治與象徵政治</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;
+  --gold:#b8860b;--sage:#5a6e5a;--muted:#6b6560;--line:#c9c0b4;
+  --card-bg:#faf7f2;--blue:#3a5a8c;--purple:#6b4c7a;--teal:#2a7a6e;
+  --red:#c0392b;--green:#27ae60;--orange:#d35400;
+  /* 三大學者色 */
+  --scott:#8b2500; --bayat:#2a7a6e; --decerteau:#6b4c7a;
+  /* 太陽花 vs 青鳥 */
+  --sunflower:#d4a017; --bluebird:#3a5a8c;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+
+/* ========== 頂部導航 ========== */
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.2rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .9rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.76rem;font-weight:500;color:#888;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#ccc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:var(--paper);background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.88rem;font-weight:700;margin-right:1rem;flex-shrink:0}
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+
+/* ========== 頁面 ========== */
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:920px;margin:0 auto}
+
+/* ========== 底部 ========== */
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+
+/* ========== 標題 ========== */
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,3vw,2.1rem);font-weight:800;color:var(--ink);margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent);position:relative}
+.page h2::after{content:'';position:absolute;left:0;bottom:-2px;width:60px;height:2px;background:var(--gold)}
+.page h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent);margin:1.6rem 0 .8rem;display:flex;align-items:center;gap:.5rem}
+.page h3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;font-size:.85rem;font-weight:700;flex-shrink:0}
+.page h4{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin:1rem 0 .5rem}
+.page p{font-size:.92rem;color:#333;margin-bottom:.7rem;line-height:1.95}
+.page p strong{color:var(--accent);font-weight:700}
+.page ul,.page ol{margin:.6rem 0 .9rem 1.5rem}
+.page li{font-size:.9rem;margin-bottom:.35rem;line-height:1.9;color:#333}
+.page li strong{color:var(--ink)}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;color:var(--ink);line-height:1.1;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:620px;margin:0 auto 1.8rem}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+
+.story-lead{font-size:.98rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+
+/* ========== 卡片 ========== */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.2rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.1rem 1.2rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card h4{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--accent);margin-bottom:.4rem;margin-top:0}
+.card p{font-size:.84rem;color:#555;margin-bottom:0;line-height:1.75}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.blue{border-top-color:var(--blue)}.card.blue h4{color:var(--blue)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.purple{border-top-color:var(--purple)}.card.purple h4{color:var(--purple)}
+.card.teal{border-top-color:var(--teal)}.card.teal h4{color:var(--teal)}
+.card.orange{border-top-color:var(--orange)}.card.orange h4{color:var(--orange)}
+
+/* ========== 引言／提問框 ========== */
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.1rem 0}
+.hl-box p:last-child{margin-bottom:0}
+.hl-box h4{margin-top:0;color:var(--accent)}
+.hl-box.blue{background:rgba(58,90,140,.05);border-left-color:var(--blue)}
+.hl-box.blue h4{color:var(--blue)}
+.hl-box.sage{background:rgba(90,110,90,.05);border-left-color:var(--sage)}
+.hl-box.sage h4{color:var(--sage)}
+.hl-box.gold{background:rgba(184,134,11,.06);border-left-color:var(--gold)}
+.hl-box.gold h4{color:var(--gold)}
+.hl-box.purple{background:rgba(107,76,122,.05);border-left-color:var(--purple)}
+.hl-box.purple h4{color:var(--purple)}
+
+/* ========== 概念框 ========== */
+.concept{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(58,90,140,.04));padding:.9rem 1.2rem;border-radius:8px;margin:.8rem 0;border:1px solid rgba(184,134,11,.2)}
+.concept .lead{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent);font-weight:700;margin-bottom:.4rem}
+.concept .body{font-size:.86rem;color:#333;line-height:1.85}
+.concept .body strong{color:var(--accent)}
+
+/* ========== 中央問題列 ========== */
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+
+/* ========== 下一頁 ========== */
+.next-page{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:1.1rem 1.4rem;border-radius:10px;margin-top:2.2rem;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.next-page:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(139,37,0,.3)}
+.np-label{font-size:.72rem;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.np-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.np-arrow{font-size:1.4rem;opacity:.8}
+
+/* ========== Spoiler（點擊揭露） ========== */
+.spoiler{cursor:pointer;background:linear-gradient(135deg,rgba(90,110,90,.08),rgba(184,134,11,.06));border-left:3px dashed var(--sage);padding:.8rem 1.1rem;border-radius:0 6px 6px 0;font-size:.85rem;color:var(--sage);max-height:42px;overflow:hidden;transition:max-height .5s ease;line-height:1.85;position:relative}
+.spoiler::after{content:'▼ 點擊展開';position:absolute;right:1rem;top:.75rem;font-size:.72rem;color:var(--muted);font-family:'Source Serif 4',serif;font-style:italic}
+.spoiler.revealed{max-height:1500px;color:#333}
+.spoiler.revealed::after{content:'▲ 點擊收合';color:var(--sage)}
+.spoiler strong{color:var(--accent)}
+
+/* ========== Scholar Card ========== */
+.scholar-card{background:linear-gradient(135deg,rgba(58,90,140,.07),rgba(184,134,11,.05));border:1px solid rgba(58,90,140,.15);border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0}
+.scholar-card h4{margin-top:0;color:var(--blue)}
+.scholar-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+.scholar-tag{padding:.25rem .7rem;background:rgba(58,90,140,.1);color:var(--blue);border-radius:14px;font-size:.74rem;font-weight:600}
+
+/* ========== Scott 大圖卡 ========== */
+.scott-hero{background:linear-gradient(135deg,#1a1a1a,#3a1a10);color:#fff;padding:1.8rem;border-radius:12px;margin:1.3rem 0;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap}
+.scott-portrait{flex-shrink:0;width:120px;height:160px;background:linear-gradient(135deg,var(--accent),var(--accent-light));border-radius:8px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:.8rem;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.scott-portrait .name-cn{font-family:'Playfair Display',serif;font-weight:900;font-size:1.05rem;line-height:1.3;margin-bottom:.3rem}
+.scott-portrait .name-en{font-size:.7rem;opacity:.85;font-style:italic;border-top:1px solid rgba(255,255,255,.3);padding-top:.4rem;margin-top:.3rem;width:100%}
+.scott-portrait .life{font-size:.66rem;opacity:.75;margin-top:.4rem}
+.scott-info{flex:1;min-width:240px}
+.scott-info h3{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--gold);margin:0 0 .4rem;border:none;display:block}
+.scott-info h3::after{display:none}
+.scott-info .scott-sub{font-size:.9rem;color:#d8d0c4;font-style:italic;margin-bottom:.7rem}
+.scott-info p{font-size:.88rem;color:#cfc6b8;margin-bottom:0;line-height:1.85}
+.scott-info p strong{color:#fff}
+.scott-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.7rem}
+.scott-tag{padding:.2rem .65rem;background:rgba(184,134,11,.25);color:#f0d895;border-radius:14px;font-size:.72rem;font-weight:600}
+
+/* ========== 弱者的武器表 ========== */
+.weapons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.7rem;margin:1.1rem 0}
+.weapon-card{background:#fff;border-radius:8px;padding:.9rem 1rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.05);transition:all .3s;cursor:default}
+.weapon-card:hover{transform:translateY(-3px);box-shadow:0 5px 18px rgba(0,0,0,.1)}
+.weapon-emoji{font-size:1.6rem;line-height:1;margin-bottom:.4rem}
+.weapon-name{font-family:'Playfair Display',serif;font-weight:700;color:var(--accent);font-size:.93rem;margin-bottom:.3rem}
+.weapon-desc{font-size:.78rem;color:#555;line-height:1.7}
+
+/* ========== Hidden vs Public Transcript ========== */
+.transcript-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:1.2rem 0}
+.tr-col{padding:1.1rem 1.2rem;border-radius:10px;position:relative;border:1px solid}
+.tr-col.public{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(184,134,11,.03));border-color:rgba(184,134,11,.25)}
+.tr-col.hidden{background:linear-gradient(135deg,rgba(58,90,140,.08),rgba(107,76,122,.05));border-color:rgba(58,90,140,.25)}
+.tr-label{display:inline-block;padding:.2rem .7rem;border-radius:14px;font-size:.72rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem;text-transform:uppercase;color:#fff}
+.tr-col.public .tr-label{background:var(--gold)}
+.tr-col.hidden .tr-label{background:var(--blue)}
+.tr-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.4rem}
+.tr-col.public .tr-title{color:var(--gold)}
+.tr-col.hidden .tr-title{color:var(--blue)}
+.tr-text{font-size:.85rem;color:#444;line-height:1.85}
+.tr-text strong{color:var(--ink)}
+.tr-eg{margin-top:.6rem;padding:.5rem .8rem;background:rgba(255,255,255,.6);border-radius:6px;font-size:.8rem;font-style:italic;color:#555}
+
+/* ========== 三巨頭比較表 ========== */
+.cmp-three{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1.2rem 0}
+.cmp-three-card{background:#fff;border-radius:10px;padding:1.1rem 1.1rem;border-top:4px solid;box-shadow:0 3px 14px rgba(0,0,0,.06);transition:transform .3s}
+.cmp-three-card:hover{transform:translateY(-4px)}
+.cmp-three-card.scott{border-top-color:var(--scott)}
+.cmp-three-card.bayat{border-top-color:var(--bayat)}
+.cmp-three-card.decerteau{border-top-color:var(--decerteau)}
+.cmp-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin-bottom:.2rem}
+.cmp-three-card.scott .cmp-name{color:var(--scott)}
+.cmp-three-card.bayat .cmp-name{color:var(--bayat)}
+.cmp-three-card.decerteau .cmp-name{color:var(--decerteau)}
+.cmp-three-card .yr{font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.55rem}
+.cmp-three-card .concept-line{font-weight:700;color:var(--ink);font-size:.87rem;margin-bottom:.5rem;padding:.4rem .6rem;background:var(--card-bg);border-radius:5px;line-height:1.5}
+.cmp-three-card .desc{font-size:.82rem;color:#444;line-height:1.8}
+.cmp-three-card .desc strong{color:var(--accent)}
+
+/* ========== 蕭蘋論述對照 ========== */
+.discourse-box{background:#fff;border-radius:12px;overflow:hidden;margin:1.3rem 0;box-shadow:0 4px 16px rgba(0,0,0,.07)}
+.discourse-head{padding:1rem 1.3rem;background:linear-gradient(135deg,#1a1a1a,#3a2818);color:#fff}
+.discourse-head h4{margin:0;color:#fff;font-family:'Playfair Display',serif;font-size:1.05rem}
+.discourse-head .sub{font-size:.78rem;color:#bfb6a8;font-style:italic;margin-top:.2rem}
+.discourse-body{padding:1.2rem 1.3rem}
+.discourse-era{margin-bottom:.9rem;padding:.8rem 1rem;background:var(--card-bg);border-radius:7px;border-left:3px solid var(--accent)}
+.discourse-era:last-child{margin-bottom:0}
+.discourse-era .era-label{display:inline-block;padding:.15rem .6rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;margin-bottom:.4rem;letter-spacing:.05em}
+.discourse-era.e1 .era-label{background:#6b6560}
+.discourse-era.e2 .era-label{background:var(--accent)}
+.discourse-era.e3 .era-label{background:var(--gold)}
+.discourse-era.e4 .era-label{background:var(--blue)}
+.discourse-era .era-title{font-weight:700;color:var(--ink);font-size:.92rem;margin-bottom:.35rem}
+.discourse-era .era-text{font-size:.85rem;color:#444;line-height:1.85}
+.discourse-era .era-text strong{color:var(--accent)}
+
+/* ========== 太陽花 vs 青鳥比較表 ========== */
+.vs-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.07);margin:1.3rem 0;font-size:.84rem}
+.vs-table thead th{padding:.85rem .8rem;font-weight:700;color:#fff;text-align:left;font-size:.85rem}
+.vs-table thead th:first-child{background:#1a1a1a;width:140px}
+.vs-table thead th.sun{background:linear-gradient(135deg,#d4a017,#b8860b)}
+.vs-table thead th.blue{background:linear-gradient(135deg,#3a5a8c,#5a7ab0)}
+.vs-table td{padding:.75rem .85rem;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.75}
+.vs-table td:first-child{font-weight:700;color:var(--accent);background:var(--card-bg);font-size:.8rem;width:140px}
+.vs-table td strong{color:var(--ink)}
+.vs-table tr:last-child td{border-bottom:0}
+.vs-table tr:hover td:not(:first-child){background:rgba(184,134,11,.04)}
+
+/* ========== Toggle Tabs 切換 ========== */
+.tabs{display:flex;gap:.3rem;margin:1.1rem 0 .7rem;border-bottom:2px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:.6rem 1.1rem;background:0;border:0;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .25s;white-space:nowrap}
+.tab:hover{color:var(--accent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ========== 圖示展示 ========== */
+.icon-row{display:flex;gap:.8rem;flex-wrap:wrap;margin:1rem 0}
+.icon-item{flex:1;min-width:130px;text-align:center;padding:.9rem .8rem;background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.icon-item .ic{font-size:1.8rem;line-height:1;margin-bottom:.4rem}
+.icon-item .lb{font-weight:700;color:var(--accent);font-size:.85rem;margin-bottom:.3rem}
+.icon-item .ds{font-size:.76rem;color:#666;line-height:1.65}
+
+/* ========== 案例分析（躺平內卷） ========== */
+.case-block{background:#fff;border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:4px solid var(--teal)}
+.case-block h4{color:var(--teal);font-family:'Playfair Display',serif;margin:0 0 .4rem}
+.case-block .ce{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.case-block .ct{font-size:.86rem;color:#333;line-height:1.85;margin-bottom:0}
+.case-block .ct strong{color:var(--accent)}
+.case-block.purple{border-top-color:var(--purple)}.case-block.purple h4{color:var(--purple)}
+.case-block.blue{border-top-color:var(--blue)}.case-block.blue h4{color:var(--blue)}
+.case-block.gold{border-top-color:var(--gold)}.case-block.gold h4{color:var(--gold)}
+
+/* ========== 討論題 ========== */
+.discussion-block{background:linear-gradient(135deg,#fff,#faf7f2);border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid rgba(139,37,0,.12)}
+.discussion-eyebrow{display:inline-block;padding:.2rem .7rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem}
+.discussion-q{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin-bottom:.7rem;line-height:1.7}
+.discussion-q em{color:var(--accent);font-style:normal}
+.discussion-block .ctx{font-size:.85rem;color:#555;margin-bottom:.7rem;line-height:1.85}
+.discussion-block .ctx strong{color:var(--accent)}
+
+/* ========== 本週讀物 ========== */
+.reading-card{background:#fff;border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0;border-left:4px solid;display:flex;gap:.9rem;align-items:flex-start;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.reading-card.must{border-left-color:var(--accent)}
+.reading-card.rec{border-left-color:var(--gold)}
+.reading-icon{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;font-family:'Playfair Display',serif}
+.reading-card.must .reading-icon{background:var(--accent)}
+.reading-card.rec .reading-icon{background:var(--gold)}
+.reading-body{flex:1}
+.reading-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:.2rem;line-height:1.5}
+.reading-meta{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:.3rem;font-family:'Source Serif 4',serif}
+.reading-note{font-size:.83rem;color:#444;line-height:1.75}
+
+/* ========== 銜接關係圖 SVG ========== */
+.linkmap{background:#fff;border-radius:12px;padding:1.5rem;margin:1.3rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.linkmap-svg{display:block;width:100%;max-width:780px;margin:0 auto}
+
+/* ========== RWD ========== */
+@media(max-width:700px){
+  .page{padding:1.8rem 1rem 3rem}
+  .hero-title{font-size:2rem}
+  .page h2{font-size:1.5rem}
+  .scott-hero{flex-direction:column;align-items:center;text-align:center}
+  .scott-info{text-align:left}
+  .transcript-grid{grid-template-columns:1fr}
+  .cmp-three{grid-template-columns:1fr}
+  .vs-table thead th:first-child,.vs-table td:first-child{width:auto}
+  .weapons-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* === W11 新增元件樣式 === */
+.layer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0 2rem}
+.layer-card{background:#fff;border-radius:10px;padding:1.2rem;border-top:4px solid #888;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.layer-macro{border-top-color:var(--accent)}
+.layer-meso{border-top-color:#b8860b}
+.layer-micro{border-top-color:#2c5f7c}
+.layer-tag{font-size:.7rem;letter-spacing:.15em;color:#888;font-weight:600;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.layer-title{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.6rem}
+.layer-list{margin:.3rem 0 .8rem;padding-left:1.2rem;font-size:.86rem;line-height:1.7;color:#444}
+.layer-list li{margin-bottom:.1rem}
+.layer-scholar{font-size:.78rem;color:#666;border-top:1px dashed #ddd;padding-top:.6rem;font-style:italic}
+
+.lineage-map,.lineage-tree{background:#fff;border:1px solid #e5e0d6;border-radius:10px;padding:1.2rem;margin:1rem 0 2rem;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+
+.transition-box{background:linear-gradient(135deg,#fdf8ef,#f5f0e8);border-radius:10px;padding:.4rem 1.4rem;margin:1.2rem 0 2rem;border:1px solid #e0d9c8}
+.trans-row{padding:1rem 0;border-bottom:1px dashed #d4cfc4}
+.trans-row:last-child{border-bottom:0}
+.trans-q{font-size:.95rem;font-weight:700;color:var(--accent);margin-bottom:.5rem;line-height:1.5}
+.trans-a{font-size:.88rem;line-height:1.8;color:#333}
+
+.inst-vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0 1.5rem}
+.inst-card{background:#fff;border-radius:10px;padding:1.3rem 1.4rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.inst-formal{border-top:5px solid #2c5f7c}
+.inst-informal{border-top:5px solid #8b2500}
+.inst-tag{font-size:.7rem;letter-spacing:.18em;font-weight:600;color:#888;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.inst-title{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.8rem}
+.inst-list{padding-left:.2rem;list-style:none;margin:0 0 .8rem;font-size:.88rem;line-height:1.9}
+.inst-list li{margin-bottom:.3rem}
+.inst-foot{font-size:.82rem;background:#f8f5ee;padding:.6rem .8rem;border-radius:6px;border-left:3px solid #b8860b;color:#444}
+
+.callout{border-radius:10px;padding:1rem 1.3rem;margin:1.2rem 0}
+.callout-amber{background:linear-gradient(135deg,#fef6e3,#fbecc6);border-left:4px solid #b8860b}
+.callout-blue{background:linear-gradient(135deg,#eef4f8,#dbe7ee);border-left:4px solid #2c5f7c}
+.callout-eyebrow{font-size:.72rem;letter-spacing:.15em;font-weight:600;color:#666;margin-bottom:.5rem;font-family:'Source Serif 4',serif;font-style:italic}
+.callout p{margin:.4rem 0;font-size:.92rem;line-height:1.75;color:#333}
+.callout-list{font-size:.9rem;line-height:1.85;color:#333;margin:.5rem 0 0;padding-left:1.4rem}
+.callout-list li{margin-bottom:.4rem}
+
+.connect-box{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0 1.5rem;border:1px solid #e0d9c8;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.connect-box p{font-size:.92rem;line-height:1.8;color:#333;margin:.4rem 0}
+.connect-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:1rem 0 .5rem}
+.connect-item{display:flex;gap:.7rem;background:#fafaf6;padding:.9rem;border-radius:8px;border-left:3px solid var(--accent)}
+.connect-num{font-size:1.4rem;font-weight:800;color:var(--accent);font-family:'Playfair Display',serif;line-height:1}
+.connect-text{flex:1;font-size:.86rem;line-height:1.6}
+.connect-sub{display:block;color:#666;font-size:.78rem;margin-top:.3rem;line-height:1.55}
+.connect-foot{font-size:.85rem;color:#666;font-style:italic;margin-top:.6rem;padding-top:.6rem;border-top:1px dashed #ddd}
+
+.media-impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1rem 0 1.6rem}
+.impact-card{background:#fff;border-radius:10px;padding:1.3rem 1.4rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.impact-inst{border-top:5px solid #2c5f7c}
+.impact-noninst{border-top:5px solid #8b2500}
+.impact-tag{font-size:.72rem;letter-spacing:.15em;font-weight:600;color:#888;margin-bottom:.3rem;font-family:'Source Serif 4',serif;font-style:italic}
+.impact-title{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.9rem;line-height:1.4}
+.impact-list{padding-left:0;list-style:none;margin:0 0 .8rem;font-size:.88rem;line-height:1.75}
+.impact-list li{margin-bottom:.7rem;padding-left:0}
+.impact-sub{display:block;color:#666;font-size:.78rem;margin-top:.15rem;line-height:1.55}
+.impact-foot{font-size:.83rem;background:#f8f5ee;padding:.55rem .8rem;border-radius:6px;border-left:3px solid #b8860b;color:#444}
+
+.blur-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1rem 0 1.5rem}
+.blur-card{background:#fff;border-radius:10px;padding:1.1rem 1.2rem;border-left:4px solid var(--sage);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.blur-eye{font-size:.7rem;letter-spacing:.15em;color:var(--sage);font-weight:600;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.blur-title{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:.5rem;line-height:1.4}
+.blur-text{font-size:.85rem;line-height:1.7;color:#444}
+
+/* === Quiz blocks === */
+.quiz-block{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0;border:1px solid #e5e0d6;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative}
+.quiz-q-num{position:absolute;top:-12px;left:1.5rem;background:var(--accent);color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;padding:.25rem .75rem;border-radius:5px;letter-spacing:.05em}
+.quiz-question{font-size:.95rem;font-weight:600;color:var(--ink);margin:.4rem 0 .9rem;line-height:1.7}
+.quiz-options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.7rem}
+.quiz-opt{text-align:left;background:#fafaf6;border:1.5px solid #e0d9c8;border-radius:7px;padding:.7rem 1rem;font-size:.88rem;line-height:1.6;color:#333;cursor:pointer;transition:all .2s;font-family:inherit}
+.quiz-opt:hover{background:#f5f0e8;border-color:#b8860b}
+.quiz-opt.selected-correct{background:linear-gradient(135deg,#d4edd4,#c0e0c0);border-color:#5a8c5a;color:#1e4d1e;font-weight:600}
+.quiz-opt.selected-wrong{background:linear-gradient(135deg,#f8d8d4,#efc4be);border-color:#b85040;color:#7a1a10}
+.quiz-opt.show-correct{background:#eaf5ea;border-color:#5a8c5a;font-weight:500}
+.quiz-explain{font-size:.85rem;line-height:1.8;color:#333;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(90,110,90,.04));padding:.9rem 1.1rem;border-radius:7px;border-left:3px solid var(--sage);display:none}
+.quiz-explain.shown{display:block}
+.quiz-explain strong{color:var(--accent)}
+
+@media(max-width:780px){
+  .layer-grid,.inst-vs-grid,.media-impact-grid,.blur-grid,.connect-grid{grid-template-columns:1fr}
+}
+
+
+/* === W13 新增元件 === */
+.sch-node{cursor:pointer;transition:opacity .25s}
+.sch-node:hover{opacity:.82}
+.sch-detail{background:#fff;border:1px solid #e5e0d6;border-left:5px solid var(--accent);border-radius:10px;padding:1.2rem 1.4rem;margin:.6rem 0 1rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.sch-detail .sd-name{font-family:'Playfair Display',serif;font-weight:800;font-size:1.12rem;margin-bottom:.5rem}
+.sch-detail p{font-size:.88rem;line-height:1.85;margin:.35rem 0;color:#333}
+.sch-hint{font-size:.78rem;color:var(--muted);font-style:italic;text-align:center;margin:.3rem 0 .8rem}
+.imagined-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin:1.1rem 0 1.4rem}
+.imagined-card{background:#fff;border-radius:10px;padding:1rem .9rem;border-top:4px solid var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.05);text-align:center}
+.imagined-card .ig-en{font-family:'Source Serif 4',serif;font-style:italic;font-size:.72rem;letter-spacing:.05em;color:var(--gold);margin-bottom:.25rem}
+.imagined-card .ig-cn{font-family:'Playfair Display',serif;font-weight:700;color:var(--accent);font-size:.95rem;margin-bottom:.4rem}
+.imagined-card .ig-tx{font-size:.78rem;color:#555;line-height:1.65}
+@media(max-width:780px){.imagined-grid{grid-template-columns:1fr 1fr}}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="top-nav">
+  <span class="nav-title">W13 集體認同 ⇄ 象徵政治</span>
+  <button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+  <button class="nav-btn" onclick="goPage(1)">1 · 政治濾鏡</button>
+  <button class="nav-btn" onclick="goPage(2)">2 · 想像的共同體</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(3)">3 · 理論譜系（互動圖）</button>
+  <button class="nav-btn" onclick="goPage(4)">4 · 族群·語言·Smith</button>
+  <button class="nav-btn" onclick="goPage(5)">5 · 象徵與記憶政治</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(6)">6 · 台灣Ⅰ·課綱與認同</button>
+  <button class="nav-btn" onclick="goPage(7)">7 · 台灣Ⅱ·象徵·記憶·認知戰</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(8)">8 · 隨堂測驗</button>
+  <button class="nav-btn" onclick="goPage(9)">9 · 討論與讀物</button>
+</div>
+
+<div class="page-container">
+
+<!-- ============ P0 封面 ============ -->
+<div class="page active" data-page="0"><div class="page-inner">
+  <div class="hero">
+    <div class="hero-eyebrow">Political Sociology · Week 14（檔名 W13）</div>
+    <h1 class="hero-title">個人政治濾鏡<span class="mark">的</span>鍊成</h1>
+    <p class="hero-sub">國家，為何<strong>必然</strong>會產生「共同體」的想像？──集體認同、族群政治與象徵政治</p>
+    <div class="hero-meta">
+      <span>🌏 Anderson · 想像的共同體</span>
+      <span>🏛 Smith · 族裔象徵論</span>
+      <span>🎌 象徵政治與記憶政治</span>
+    </div>
+  </div>
+
+  <div class="story-lead">
+    上週（文化框架與動員政治）我們看到：運動者要把議題「<strong>框架</strong>」得讓人願意行動，框架必須能<strong>共鳴（resonance）</strong>。但共鳴接上的是什麼？——接上人們早已內建的<strong>認同</strong>與<strong>情感</strong>。本週把鏡頭轉到更深的一層：這層「<strong>政治濾鏡</strong>」是怎麼被<strong>鍊成</strong>的？它如何讓我們對同一件事，產生不同的政治判讀？
+  </div>
+
+  <p style="text-align:center;font-family:'Playfair Display',serif;font-weight:700;color:#8b2500;font-size:1.05rem;margin:1.4rem 0 -.2rem">框架 × 認同 × 情感：動員如何發生？</p>
+  <div class="lineage-map">
+    <svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Noto Sans TC',sans-serif">
+      <!-- 三角形邊（墊底，代表三者的兩兩關係） -->
+      <line x1="380" y1="94" x2="145" y2="314" stroke="#d8cfc0" stroke-width="2"/>
+      <line x1="380" y1="94" x2="615" y2="314" stroke="#d8cfc0" stroke-width="2"/>
+      <line x1="235" y1="342" x2="525" y2="342" stroke="#d8cfc0" stroke-width="2"/>
+
+      <!-- 邊標籤：兩兩關係 -->
+      <g><rect x="120" y="244" width="150" height="24" rx="5" fill="#faf7f2" stroke="#e5dccd"/><text x="195" y="260" text-anchor="middle" font-size="11" fill="#8b2500" font-weight="600">①框架須對齊認同</text></g>
+      <g><rect x="490" y="244" width="150" height="24" rx="5" fill="#faf7f2" stroke="#e5dccd"/><text x="565" y="260" text-anchor="middle" font-size="11" fill="#3a5a8c" font-weight="600">③框架調動情感</text></g>
+      <g><rect x="282" y="356" width="196" height="24" rx="5" fill="#faf7f2" stroke="#e5dccd"/><text x="380" y="372" text-anchor="middle" font-size="11" fill="#b8860b" font-weight="600">②認同承載並共享情感</text></g>
+
+      <!-- 中心：三者對齊 ⇒ 共鳴 ⇒ 動員 -->
+      <rect x="300" y="200" width="160" height="54" rx="10" fill="#1a1a1a"/>
+      <text x="380" y="223" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">共鳴 Resonance</text>
+      <text x="380" y="242" text-anchor="middle" font-size="11" fill="#f0d9cf">→ 動員 · 政治行動</text>
+
+      <!-- 三頂點 -->
+      <rect x="300" y="38" width="160" height="56" rx="10" fill="#8b2500"/>
+      <text x="380" y="64" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">框架 Frame</text>
+      <text x="380" y="83" text-anchor="middle" font-size="10" fill="#f0d9cf">如何「包裝」議題</text>
+
+      <rect x="55" y="314" width="180" height="56" rx="10" fill="#b8860b"/>
+      <text x="145" y="340" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">認同 Identity</text>
+      <text x="145" y="359" text-anchor="middle" font-size="10" fill="#fbeecb">「我們是誰」的歸屬</text>
+
+      <rect x="525" y="314" width="180" height="56" rx="10" fill="#3a5a8c"/>
+      <text x="615" y="340" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">情感 Emotion</text>
+      <text x="615" y="359" text-anchor="middle" font-size="10" fill="#d7e1f0">驕傲 · 悲情 · 受威脅</text>
+
+      <text x="380" y="412" text-anchor="middle" font-size="11.5" fill="#888">三者對齊 ⇒ 共鳴 ⇒ 動員（這正是「政治濾鏡」運作的入口）</text>
+    </svg>
+  </div>
+  <p style="font-size:.86rem;color:#555;text-align:center;margin:-.2rem 0 1.4rem;line-height:1.75">
+    框架之所以能動員，不是因為它「說了真話」，而是因為它<strong style="color:#8b2500">撥動了人們早已內建的認同與情感</strong>。<br>本週要往下挖的，正是這層被長年鍊成的<strong style="color:#8b2500">政治濾鏡</strong>。
+  </p>
+
+  <div class="questions">
+    <h4>📌 本週要解答的五個核心問題</h4>
+    <ol>
+      <li><strong>國家為什麼「必然」會產生共同體的想像？</strong>什麼是 Anderson 的「想像的共同體」？它為何是「想像」的，卻又如此真實有力？</li>
+      <li><strong>族群、語言、地域</strong>有何差異？民族主義是「自古就有」，還是被<strong>建構</strong>出來的？</li>
+      <li>何謂<strong>象徵政治</strong>？國旗、國歌、博物館、教科書如何形塑我們的認同與忠誠？</li>
+      <li>有沒有<strong>具體證據</strong>顯示「文化建構」真的能改變一代人的認同？（劇透：有，而且來自台灣）</li>
+      <li>當象徵被推到極致——<strong>後真相、認知作戰</strong>——會不會反而失效、引發反感或政治冷漠？</li>
+    </ol>
+  </div>
+
+  <h3><span class="num">📖</span>本週路線圖</h3>
+  <div class="card-grid">
+    <div class="card"><h4>P1 政治濾鏡</h4><p>從張軒豪（2024）後真相政治切入：為什麼「事實查核」救不了爭論？認同如何先於事實。</p></div>
+    <div class="card blue"><h4>P2 想像的共同體</h4><p>Anderson：國族作為文化建構、印刷資本主義、「想像 ≠ 虛假」。</p></div>
+    <div class="card gold"><h4>P3 理論譜系（互動圖）</h4><p><strong>可點擊</strong>的民族主義理論譜系：原生論 → 現代建構論 → 族裔象徵論 → 台灣應用。</p></div>
+    <div class="card sage"><h4>P4 族群·語言·Smith</h4><p>認同的多層次；Smith 為何說「歐洲認同」難以凝聚？公民 vs 族裔民族主義。</p></div>
+    <div class="card teal"><h4>P5 象徵與記憶政治</h4><p>象徵政治的運作；Crooke：紀念博物館與物質文化如何「展示」記憶。</p></div>
+    <div class="card purple"><h4>P6 台灣Ⅰ：課綱與認同</h4><p>Chen, Lin &amp; Yang（2023）的因果證據＋「我是台灣人」長期趨勢（分頁面板）。</p></div>
+    <div class="card orange"><h4>P7 台灣Ⅱ：象徵·記憶·認知戰</h4><p>轉型正義、國旗國歌爭議、認知作戰與後真相——象徵政治的限制與反效果。</p></div>
+    <div class="card"><h4>P8–P9 測驗與討論</h4><p><strong>4 題隨堂選擇題</strong>＋小組討論／申論題＋本週指定讀物。</p></div>
+  </div>
+
+  <div class="next-page" onclick="goPage(1)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P1 · 政治濾鏡：為什麼「查事實」往往沒用？</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P1 政治濾鏡 ============ -->
+<div class="page" data-page="1"><div class="page-inner">
+  <div class="guide-breadcrumb">第 1 章 · <span>導論</span></div>
+  <h2>政治濾鏡：為什麼同樣的事實，不同人看到不同政治？</h2>
+  <p class="lede">
+    兩個人看同一則新聞、同一份統計、同一段影片，卻得出完全相反的政治結論。這不只是「資訊不足」——更關鍵的是，每個人都戴著一副<strong>政治濾鏡</strong>在解讀世界。本週要問的是：<em>這副濾鏡是怎麼被鍊成的？</em>
+  </p>
+
+  <h3><span class="num">①</span>從後真相政治說起（張軒豪 2024）</h3>
+  <div class="hl-box gold">
+    <h4>📰 指定閱讀：為何「後真相政治」的解藥不能只靠「事實查核」？</h4>
+    <p>
+      我們常以為，假訊息的解方就是「<strong>查核事實</strong>」——把錯的指出來，大家就會回到正軌。但張軒豪（2024，菜市場政治學）提醒：事實查核常常<strong>無效，甚至反效果</strong>。為什麼？因為在政治判斷裡，<strong>「我是誰／我們是誰」往往先於「事實是什麼」</strong>。當一則事實威脅到我所屬群體的立場，我的大腦傾向<em>重新詮釋事實</em>，而不是修正立場。
+    </p>
+  </div>
+
+  <div class="concept">
+    <div class="lead">關鍵概念：認同保護型認知（identity-protective cognition）／動機性推理（motivated reasoning）</div>
+    <div class="body">
+      人不是中立的「資訊處理器」，而是<strong>有立場的詮釋者</strong>。當證據與我的群體認同衝突，我會花更多力氣去<strong>挑剔、淡化、繞過</strong>它；當證據符合我方，我則照單全收。換句話說，<strong>認同會「過濾」事實</strong>——這就是「政治濾鏡」的心理機制。
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>那麼，這副濾鏡從哪裡來？</h3>
+  <p>
+    心理機制解釋了濾鏡<strong>如何運作</strong>，但沒解釋濾鏡的<strong>內容</strong>從何而來。為什麼有人的濾鏡是「我是台灣人」，有人是「我是中國人」，有人是「都是」？答案藏在<strong>集體認同的社會建構</strong>裡——這正是本週三大主軸：
+  </p>
+  <div class="connect-grid">
+    <div class="connect-item"><div class="connect-num">1</div><div class="connect-text"><strong>集體認同</strong><span class="connect-sub">「我們」是誰？國族／民族如何被想像出來（Anderson）。</span></div></div>
+    <div class="connect-item"><div class="connect-num">2</div><div class="connect-text"><strong>族群政治</strong><span class="connect-sub">族群、語言、地域的差異與競逐；認同的素材庫（Smith）。</span></div></div>
+    <div class="connect-item"><div class="connect-num">3</div><div class="connect-text"><strong>象徵政治</strong><span class="connect-sub">旗幟、儀式、博物館、教科書如何把認同<em>寫進</em>日常（Crooke）。</span></div></div>
+  </div>
+
+  <h3><span class="num">③</span>政治社會學怎麼切入？三層濾鏡 ＝ 三個分析尺度</h3>
+  <p>
+    政治社會學研究「<strong>社會如何形塑政治</strong>」。它的三個分析尺度——<strong>宏觀（結構）、中觀（群體）、微觀（個人）</strong>——正好是政治濾鏡的三層鏡片。你「看到」的政治，是<strong>事實之光</strong>穿過這三層、被層層<strong>研磨與上色</strong>後的成像。<strong>點擊任一層</strong>，看它由哪些學者奠基、又過濾掉了什麼。
+  </p>
+  <div class="lineage-map">
+    <svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Noto Sans TC',sans-serif">
+      <defs><marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#999"/></marker></defs>
+      <text x="18" y="200" font-size="13" font-weight="700" fill="#6b6560">事實／事件</text>
+      <line x1="20" y1="212" x2="112" y2="212" stroke="#bbb" stroke-width="2" marker-end="url(#ar2)"/>
+      <line x1="20" y1="234" x2="112" y2="234" stroke="#bbb" stroke-width="2" marker-end="url(#ar2)"/>
+      <circle class="sch-node" onclick="showLens(0)" cx="320" cy="215" r="185" fill="#8b2500" opacity="0.9"/>
+      <circle class="sch-node" onclick="showLens(1)" cx="320" cy="215" r="126" fill="#b8860b" opacity="0.96"/>
+      <circle class="sch-node" onclick="showLens(2)" cx="320" cy="215" r="70" fill="#3a5a8c"/>
+      <circle cx="320" cy="215" r="34" fill="#1a1a1a" pointer-events="none"/>
+      <text x="320" y="60" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" pointer-events="none">宏觀濾鏡 · 國族</text>
+      <text x="320" y="78" text-anchor="middle" font-size="10.5" fill="#f0d9cf" pointer-events="none">Anderson · Smith · Gellner</text>
+      <text x="320" y="120" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" pointer-events="none">中觀濾鏡 · 族群象徵</text>
+      <text x="320" y="137" text-anchor="middle" font-size="10" fill="#fbeecb" pointer-events="none">框架 · 記憶 · 文化民族主義</text>
+      <text x="320" y="170" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff" pointer-events="none">微觀 · 認知</text>
+      <text x="320" y="211" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" pointer-events="none">個人</text>
+      <text x="320" y="227" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" pointer-events="none">政治判讀</text>
+      <line x1="510" y1="215" x2="598" y2="215" stroke="#999" stroke-width="2" marker-end="url(#ar2)"/>
+      <text x="610" y="206" font-size="12.5" font-weight="700" fill="#8b2500">你「看到」的政治</text>
+      <text x="610" y="226" font-size="10" fill="#777">＝穿過三層濾鏡的成像</text>
+      <text x="320" y="418" text-anchor="middle" font-size="11.5" fill="#888">↑ 點擊任一層鏡片，下方展開差異</text>
+    </svg>
+  </div>
+  <div class="sch-hint">（預設顯示「宏觀濾鏡」；點擊任一層切換）</div>
+  <div class="sch-detail" id="lensCard" style="border-left-color:#8b2500">
+    <div class="sd-name" style="color:#8b2500">宏觀濾鏡 · 國族與結構</div>
+    <p><strong>核心提問：</strong>「我們」的最大邊界在哪？我屬於哪個共同體？</p>
+    <p><strong>奠基學者：</strong>Anderson（想像的共同體）、Smith（族裔象徵論）、Gellner、Hobsbawm。</p>
+    <p><strong>過濾作用：</strong>決定你把世界切成哪一組「我們 vs 他們」——這是濾鏡最外、最廣的一層。</p>
+    <p><strong>台灣成像：</strong>「我是台灣人／中國人／都是」，就是這層濾鏡的成像。</p>
+  </div>
+
+  <div class="hl-box blue">
+    <h4>🔗 與上週的接點</h4>
+    <p>上週說：好的<strong>框架</strong>要能「共鳴」。本週補上後半句——<strong>共鳴之所以可能，是因為人們早已被鍊成某種認同與情感結構</strong>。框架不是無中生有，而是去<em>撥動</em>既有的認同琴弦。所以：理解動員，必須先理解認同。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(2)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P2 · 想像的共同體：國族是怎麼被「想像」出來的？</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P2 想像的共同體 ============ -->
+<div class="page" data-page="2"><div class="page-inner">
+  <div class="guide-breadcrumb">第 2 章 · <span>理論基礎</span></div>
+  <h2>想像的共同體：Benedict Anderson</h2>
+
+  <div class="scott-hero">
+    <div class="scott-portrait">
+      <div class="name-cn">安德森</div>
+      <div class="name-en">Benedict Anderson</div>
+      <div class="life">1936–2015</div>
+    </div>
+    <div class="scott-info">
+      <h3>Imagined Communities（1983）</h3>
+      <div class="scott-sub">「民族是一個想像的政治共同體——而且是被想像成本質上有限的、且擁有主權的共同體。」</div>
+      <p>
+        Anderson 是研究東南亞的政治學者。他要回答一個謎題：<strong>素未謀面的數百萬人，為什麼會願意為「同胞」而死？</strong>他的答案震撼了整個民族主義研究：民族不是自古就在的「自然」單位，而是<strong>被「想像」出來的現代共同體</strong>。
+      </p>
+      <div class="scott-tags">
+        <span class="scott-tag">想像 imagined</span>
+        <span class="scott-tag">印刷資本主義</span>
+        <span class="scott-tag">現代建構論</span>
+      </div>
+    </div>
+  </div>
+
+  <h3><span class="num">①</span>拆解定義：民族是「想像／有限／有主權的／共同體」</h3>
+  <div class="imagined-grid">
+    <div class="imagined-card"><div class="ig-en">Imagined</div><div class="ig-cn">想像的</div><div class="ig-tx">成員彼此一生不會相見，心中卻有「同屬一體」的圖像。</div></div>
+    <div class="imagined-card"><div class="ig-en">Limited</div><div class="ig-cn">有限的</div><div class="ig-tx">再大的民族也有邊界，邊界之外是「別的民族」。</div></div>
+    <div class="imagined-card"><div class="ig-en">Sovereign</div><div class="ig-cn">有主權的</div><div class="ig-tx">誕生於王權與神授崩解的年代，民族要求自己當家作主。</div></div>
+    <div class="imagined-card"><div class="ig-en">Community</div><div class="ig-cn">共同體</div><div class="ig-tx">不論內部多不平等，仍被想像為深刻、平等的「同志愛」。</div></div>
+  </div>
+
+  <h3><span class="num">②</span>引擎：印刷資本主義（print capitalism）</h3>
+  <p>
+    Anderson 問：是什麼<strong>技術條件</strong>讓「想像」成為可能？他的答案是<strong>印刷資本主義</strong>——報紙、小說、白話印刷品的大量流通。
+  </p>
+  <ul>
+    <li><strong>同時性的想像</strong>：當千萬人每天早上讀同一份報紙，他們會意識到「<em>此刻，還有許多我不認識的人正在做同一件事</em>」——民族於是被體驗為一個「同步前進的群體」。</li>
+    <li><strong>標準語的形成</strong>：印刷把零散方言固定為標準書面語，劃出「誰讀得懂／誰是我們」的邊界。</li>
+    <li><strong>由市場驅動</strong>：出版商為了賣書，需要夠大的閱讀市場——資本主義因而意外地「製造」了民族。</li>
+  </ul>
+
+  <div class="callout callout-amber">
+    <div class="callout-eyebrow">最常見的誤解，必須澄清</div>
+    <p><strong>「想像」不等於「虛假、捏造、不存在」。</strong>Anderson 的「想像」指的是<strong>建構的方式</strong>，不是<strong>真假</strong>。民族是真實的社會事實——它能讓人流淚、參戰、投票、犧牲。說它「被想像」，是說它<em>被人們共同創造與維繫</em>，而不是說它是幻覺。把「想像」聽成「假的」，是讀 Anderson 的頭號錯誤。</p>
+  </div>
+
+  <div class="spoiler">
+    <strong>想一想：</strong>那台灣呢？──當你每天滑同一個社群平台、看同一批迷因、為同一場選舉焦慮、為同一支球隊吶喊……（點我展開）　台灣這個「想像的共同體」，正透過<strong>新的印刷／數位媒介</strong>持續被想像與再想像。從報紙到 PTT、從電視到短影音，媒介換了，但「製造同時性、劃定我們／他們」的邏輯沒變。這也是為什麼<strong>媒體與演算法</strong>會成為認同政治的兵家必爭之地——下週我們會再回到這點。
+  </div>
+
+  <div class="next-page" onclick="goPage(3)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P3 · 互動圖：民族主義理論的三大門派與一場世紀辯論</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P3 理論譜系（互動圖） ============ -->
+<div class="page" data-page="3"><div class="page-inner">
+  <div class="guide-breadcrumb">第 3 章 · <span>理論譜系</span></div>
+  <h2>民族主義理論的三大門派：一場世紀辯論</h2>
+  <p class="section-lead">
+    Anderson 不是孤軍。民族主義研究有三大門派，彼此<strong>針鋒相對、互相修正</strong>。下圖是它們的譜系與爭論——<strong>點擊任一節點</strong>，看它的主張、論敵，以及對台灣的啟示。
+  </p>
+
+  <div class="lineage-map">
+    <svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Noto Sans TC',sans-serif">
+      <!-- 連線 -->
+      <defs>
+        <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#999"/></marker>
+      </defs>
+      <line x1="230" y1="100" x2="350" y2="90" stroke="#999" stroke-width="1.6" marker-end="url(#ar)"/>
+      <text x="250" y="78" font-size="11" fill="#8b2500" font-weight="600">批判</text>
+      <line x1="570" y1="90" x2="690" y2="100" stroke="#999" stroke-width="1.6" marker-end="url(#ar)"/>
+      <text x="600" y="78" font-size="11" fill="#b8860b" font-weight="600">修正／調和</text>
+      <line x1="460" y1="135" x2="460" y2="245" stroke="#999" stroke-width="1.6" marker-end="url(#ar)"/>
+      <text x="470" y="195" font-size="11" fill="#3a5a8c" font-weight="600">應用於台灣</text>
+      <line x1="700" y1="135" x2="560" y2="250" stroke="#ccc" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+
+      <!-- A 原生論 -->
+      <g class="sch-node" onclick="showSchool(0)">
+        <rect x="50" y="70" width="180" height="70" rx="9" fill="#6b6560"/>
+        <text x="140" y="100" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">原生論</text>
+        <text x="140" y="121" text-anchor="middle" font-size="10.5" fill="#e8e4dd">Primordialism · 早期</text>
+      </g>
+      <!-- B 現代建構論 -->
+      <g class="sch-node" onclick="showSchool(1)">
+        <rect x="350" y="55" width="220" height="80" rx="9" fill="#8b2500"/>
+        <text x="460" y="86" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">現代建構論</text>
+        <text x="460" y="107" text-anchor="middle" font-size="10.5" fill="#f0d9cf">Gellner · Anderson · Hobsbawm</text>
+        <text x="460" y="124" text-anchor="middle" font-size="10" fill="#f0d9cf">1983</text>
+      </g>
+      <!-- C 族裔象徵論 -->
+      <g class="sch-node" onclick="showSchool(2)">
+        <rect x="690" y="70" width="180" height="70" rx="9" fill="#b8860b"/>
+        <text x="780" y="100" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">族裔象徵論</text>
+        <text x="780" y="121" text-anchor="middle" font-size="10.5" fill="#fbeecb">Smith · 1986–92</text>
+      </g>
+      <!-- D 台灣應用 -->
+      <g class="sch-node" onclick="showSchool(3)">
+        <rect x="350" y="250" width="220" height="76" rx="9" fill="#3a5a8c"/>
+        <text x="460" y="280" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">台灣文化民族主義</text>
+        <text x="460" y="301" text-anchor="middle" font-size="10.5" fill="#d7e1f0">蕭阿勤 Hsiau · 2003</text>
+      </g>
+
+      <text x="460" y="370" text-anchor="middle" font-size="11.5" fill="#888">↑ 點擊任一門派，下方展開詳解</text>
+    </svg>
+  </div>
+
+  <div class="sch-hint">（預設顯示「現代建構論」；點擊上方節點切換）</div>
+  <div class="sch-detail" id="schCard">
+    <div class="sd-name" style="color:#8b2500">現代建構論（Modernism / Constructivism）</div>
+    <p><strong>代表：</strong>Gellner、Anderson、Hobsbawm（皆 1983 年出版關鍵著作，學界戲稱「1983 三劍客」）。</p>
+    <p><strong>核心主張：</strong>民族與民族主義是<strong>現代</strong>的產物，由工業化、印刷資本主義、國家義務教育、官僚體系所建構。名言：「<em>不是民族創造了民族主義，而是民族主義創造了民族</em>。」</p>
+    <p><strong>論戰位置：</strong>向上<strong>批判原生論</strong>（你把「現代才形成的東西」誤當成「自古就有的自然事物」）；但被族裔象徵論質疑：太強調斷裂與發明，<strong>忽略了前現代的文化延續</strong>。</p>
+    <p><strong>對台灣的啟示：</strong>印刷、教育、媒體、選舉如何「製造」並維繫「台灣」這個想像共同體。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(4)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P4 · 族群、語言、地域 ── 以及 Smith 的「歐洲認同」難題</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P4 族群·語言·Smith ============ -->
+<div class="page" data-page="4"><div class="page-inner">
+  <div class="guide-breadcrumb">第 4 章 · <span>族群與認同</span></div>
+  <h2>族群、語言、地域：認同的多層次與 Smith 的難題</h2>
+
+  <h3><span class="num">①</span>先把概念分清楚</h3>
+  <p>認同從來不是單一的，而是<strong>層層套疊</strong>的。下面這張組織圖把「認同」拆解成不同層面——<strong>點擊任一節點</strong>，比較它們在<strong>範圍、取得方式、邊界彈性、連帶基礎</strong>上的差異。</p>
+  <div class="lineage-map">
+    <svg viewBox="0 0 880 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Noto Sans TC',sans-serif">
+      <line x1="330" y1="60" x2="200" y2="110" stroke="#c9c0b4" stroke-width="1.6"/>
+      <line x1="330" y1="60" x2="460" y2="110" stroke="#c9c0b4" stroke-width="1.6"/>
+      <line x1="460" y1="158" x2="190" y2="250" stroke="#c9c0b4" stroke-width="1.6"/>
+      <line x1="460" y1="158" x2="370" y2="250" stroke="#c9c0b4" stroke-width="1.6"/>
+      <line x1="460" y1="158" x2="550" y2="250" stroke="#c9c0b4" stroke-width="1.6"/>
+      <line x1="460" y1="158" x2="730" y2="250" stroke="#c9c0b4" stroke-width="1.6"/>
+      <rect x="280" y="18" width="100" height="42" rx="8" fill="#1a1a1a"/>
+      <text x="330" y="44" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">認同 Identity</text>
+      <g class="sch-node" onclick="showIdentity(0)">
+        <rect x="120" y="110" width="160" height="48" rx="8" fill="#6b6560"/>
+        <text x="200" y="132" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">個人認同</text>
+        <text x="200" y="149" text-anchor="middle" font-size="9.5" fill="#e6e2da">Personal · 我是誰</text>
+      </g>
+      <rect x="380" y="110" width="160" height="48" rx="8" fill="#7a7066"/>
+      <text x="460" y="132" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">集體認同</text>
+      <text x="460" y="149" text-anchor="middle" font-size="9.5" fill="#e6e2da">Collective · 我們是誰</text>
+      <g class="sch-node" onclick="showIdentity(1)">
+        <rect x="110" y="250" width="160" height="62" rx="8" fill="#8b2500"/>
+        <text x="190" y="276" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">國族認同</text>
+        <text x="190" y="295" text-anchor="middle" font-size="9.5" fill="#f0d9cf">公民式 / 族裔式</text>
+      </g>
+      <g class="sch-node" onclick="showIdentity(2)">
+        <rect x="290" y="250" width="160" height="62" rx="8" fill="#b8860b"/>
+        <text x="370" y="276" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">族群認同</text>
+        <text x="370" y="295" text-anchor="middle" font-size="9" fill="#fbeecb">閩南·客家·原民·外省·新住民</text>
+      </g>
+      <g class="sch-node" onclick="showIdentity(3)">
+        <rect x="470" y="250" width="160" height="62" rx="8" fill="#2a7a6e"/>
+        <text x="550" y="276" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">語言認同</text>
+        <text x="550" y="295" text-anchor="middle" font-size="9.5" fill="#d6efe9">母語 / 標準語</text>
+      </g>
+      <g class="sch-node" onclick="showIdentity(4)">
+        <rect x="650" y="250" width="160" height="62" rx="8" fill="#3a5a8c"/>
+        <text x="730" y="276" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">地域認同</text>
+        <text x="730" y="295" text-anchor="middle" font-size="9.5" fill="#d7e1f0">家鄉 / 城鄉 / 原鄉</text>
+      </g>
+      <text x="440" y="350" text-anchor="middle" font-size="11.5" fill="#888">↑ 點擊任一節點，下方比較不同層面的差異</text>
+    </svg>
+  </div>
+  <div class="sch-hint">（預設顯示「族群認同」；點擊節點切換）</div>
+  <div class="sch-detail" id="idCard" style="border-left-color:#b8860b">
+    <div class="sd-name" style="color:#b8860b">族群認同（Ethnic identity）</div>
+    <p><strong>範圍：</strong>以共同祖先、文化記憶為核心的群體。</p>
+    <p><strong>取得方式：</strong>多為先賦（出身），但邊界可協商、可流動。</p>
+    <p><strong>邊界彈性：</strong>看似固定，實則被歷史地建構與重劃。</p>
+    <p><strong>連帶基礎：</strong>血緣想像、文化記憶與共同歷史經驗。</p>
+    <p><strong>台灣對照：</strong>閩南、客家、原住民、外省、新住民——分類本身即政治史的產物。</p>
+  </div>
+  <p>關鍵洞見：這些層次<strong>不會自動疊合</strong>。同樣說閩南語的人，國族認同可能南轅北轍。認同政治的角力，往往就發生在「<strong>哪一層該優先</strong>」這個問題上。</p>
+
+  <h3><span class="num">②</span>Smith 的提問：為什麼「歐洲認同」這麼難凝聚？</h3>
+  <div class="scholar-card">
+    <h4>Anthony D. Smith（1992）National Identity and the Idea of European Unity</h4>
+    <p style="font-size:.9rem;line-height:1.85;color:#333;margin:.5rem 0">
+      Smith 接受建構論的部分觀點——現代民族確實是被打造的——但他反問：<strong>為什麼有些認同打造得起來，有些卻打造不起來？</strong>他的答案是<strong>族裔象徵論（ethno-symbolism）</strong>：成功的民族認同，幾乎都建立在一個前現代的<strong>族裔核心（ethnie）</strong>之上——共享的<strong>神話、記憶、象徵、歷史與土地情感</strong>。
+    </p>
+    <p style="font-size:.9rem;line-height:1.85;color:#333;margin:.5rem 0">
+      用這把尺看「歐洲認同」：歐盟可以制定共同貨幣、護照、議會（<strong>公民／制度</strong>的層面），卻很難讓人「<em>為歐洲熱淚盈眶</em>」。因為歐洲缺乏一套<strong>共享的族裔象徵與集體記憶</strong>——它的神話、英雄、苦難記憶大多仍是<strong>各民族各自的</strong>。象徵與記憶的「深層情感」無法靠行政命令速成。
+    </p>
+    <div class="scholar-meta">
+      <span class="scholar-tag">ethnie 族裔核心</span>
+      <span class="scholar-tag">神話·記憶·象徵</span>
+      <span class="scholar-tag">調和原生論與建構論</span>
+    </div>
+  </div>
+
+  <h3><span class="num">③</span>兩種民族主義：公民的 vs 族裔的</h3>
+  <div class="inst-vs-grid">
+    <div class="inst-card inst-formal">
+      <div class="inst-tag">CIVIC</div>
+      <div class="inst-title">公民民族主義</div>
+      <ul class="inst-list">
+        <li>成員資格＝<strong>認同憲政與公民身分</strong></li>
+        <li>原則上對所有居民開放</li>
+        <li>連帶來自<strong>共享制度與價值</strong></li>
+      </ul>
+      <div class="inst-foot">範例論述：「認同台灣這塊土地與民主價值的，就是台灣人。」</div>
+    </div>
+    <div class="inst-card inst-informal">
+      <div class="inst-tag">ETHNIC</div>
+      <div class="inst-title">族裔民族主義</div>
+      <ul class="inst-list">
+        <li>成員資格＝<strong>血緣、語言、祖先</strong></li>
+        <li>邊界較封閉、難以後天加入</li>
+        <li>連帶來自<strong>共同出身與文化</strong></li>
+      </ul>
+      <div class="inst-foot">範例論述：「同文同種、血濃於水。」</div>
+    </div>
+  </div>
+  <div class="callout callout-blue">
+    <div class="callout-eyebrow">為什麼這個區分很重要</div>
+    <p>真實世界的民族主義往往是<strong>兩者的混合</strong>。台灣認同論述裡，<em>公民式</em>（民主、土地、生活方式）與<em>族裔式</em>（語言、族群、歷史）的成分同時存在、彼此拉扯——這正是台灣族群政治既複雜又有彈性的原因。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(5)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P5 · 象徵政治與記憶政治：認同怎麼被「展示」出來</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P5 象徵與記憶政治 ============ -->
+<div class="page" data-page="5"><div class="page-inner">
+  <div class="guide-breadcrumb">第 5 章 · <span>象徵政治</span></div>
+  <h2>象徵政治與記憶政治：認同如何被「展示」</h2>
+
+  <h3><span class="num">①</span>什麼是象徵政治（symbolic politics）？</h3>
+  <div class="concept">
+    <div class="lead">象徵政治：政治不只是分配資源，也是分配「意義」</div>
+    <div class="body">
+      政治很大一部分是透過<strong>象徵</strong>運作的——旗幟、國歌、儀式、紀念日、銅像、地名、節慶。象徵的力量在於：它<strong>把抽象的「我們」變成可看、可唱、可觸摸、可參與的東西</strong>，因而能<strong>凝聚情感、界定敵我、賦予正當性</strong>。象徵不只是「裝飾」，它是認同被製造與動員的<strong>主要管道</strong>。
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>象徵的載體：認同藏在這些日常物件裡</h3>
+  <div class="icon-row">
+    <div class="icon-item"><div class="ic">🎌</div><div class="lb">國旗·國歌</div><div class="ds">最濃縮的國族象徵，也最容易成為爭議引爆點。</div></div>
+    <div class="icon-item"><div class="ic">🏛</div><div class="lb">博物館·紀念碑</div><div class="ds">把「該記得什麼」固定下來的官方記憶裝置。</div></div>
+    <div class="icon-item"><div class="ic">📚</div><div class="lb">教科書·課綱</div><div class="ds">官方記憶發行量最大的通路，直達下一代。</div></div>
+    <div class="icon-item"><div class="ic">📅</div><div class="lb">節日·儀式</div><div class="ds">用週期性重演，把記憶寫進身體與時間。</div></div>
+  </div>
+
+  <h3><span class="num">③</span>記憶政治與物質文化（Crooke 2019）</h3>
+  <div class="scholar-card">
+    <h4>Elizabeth Crooke（2019）Memory Politics and Material Culture: Display in the Memorial Museum</h4>
+    <p style="font-size:.9rem;line-height:1.85;color:#333;margin:.5rem 0">
+      Crooke 研究<strong>紀念博物館（memorial museum）</strong>——那些紀念戰爭、屠殺、威權迫害的場館。她的重點是「<strong>展示（display）</strong>」這個動作本身就是政治：<em>展什麼、不展什麼、怎麼擺、配什麼說明文字</em>，都在塑造參觀者「該如何記得這段歷史、該對誰產生同情或譴責」。
+    </p>
+    <p style="font-size:.9rem;line-height:1.85;color:#333;margin:.5rem 0">
+      <strong>物質文化（material culture）</strong>是關鍵：一件遺物、一張囚房床板、一面刻滿名字的牆，比抽象口號更能觸動情感、更難被反駁。博物館因此成為<strong>集體記憶與國族認同的鍊成場</strong>——這也是為什麼「<em>誰來管、怎麼展</em>」常引發激烈爭論。
+    </p>
+    <div class="scholar-meta">
+      <span class="scholar-tag">memorial museum</span>
+      <span class="scholar-tag">display 展示即政治</span>
+      <span class="scholar-tag">material culture</span>
+    </div>
+  </div>
+
+  <div class="hl-box">
+    <h4>🔗 串起來看</h4>
+    <p>Anderson 說國族要被「<strong>想像</strong>」，Smith 說想像需要「<strong>族裔象徵素材</strong>」，而象徵政治與記憶政治正是<strong>生產與分配這些素材的工廠</strong>。下一頁，我們進入台灣，看這套機制如何留下<strong>可測量的因果痕跡</strong>。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(6)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P6 · 台灣案例Ⅰ：課綱真的改變了一代人的認同嗎？</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P6 台灣Ⅰ 課綱與認同 ============ -->
+<div class="page" data-page="6"><div class="page-inner">
+  <div class="guide-breadcrumb">第 6 章 · <span>台灣案例Ⅰ</span></div>
+  <h2>台灣案例Ⅰ：課綱、教科書與認同變遷</h2>
+  <p class="section-lead">理論講完了，來看<strong>證據</strong>。象徵政治真的能改變認同嗎？台灣剛好提供了一個近乎「自然實驗」的難得案例。</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'t6a')">①《認識台灣》課綱的因果證據</button>
+    <button class="tab" onclick="switchTab(this,'t6b')">②「我是台灣人」長期趨勢</button>
+    <button class="tab" onclick="switchTab(this,'t6c')">③ 教科書作為象徵載體</button>
+  </div>
+
+  <div class="tab-panel active" id="t6a">
+    <div class="case-block">
+      <div class="ce">EVIDENCE · Chen, Lin &amp; Yang (2023, JDE)</div>
+      <h4>📊 1997《認識台灣》課綱改革：一場意外的自然實驗</h4>
+      <p class="ct">
+        1997 年 9 月起入學國中的學生，開始使用導入<strong>台灣本位史觀</strong>的新教科書《認識台灣》；在那之前入學的學生則用舊教材。<strong>入學時間</strong>幾乎像一條隨機的分界線——研究者用<strong>回歸不連續設計（RDD）</strong>＋全國代表性調查，比較分界線兩側的人，藉此估計「課本內容」對認同的<strong>因果效果</strong>。
+      </p>
+    </div>
+    <div class="callout callout-amber">
+      <div class="callout-eyebrow">主要發現（請精確理解，別過度延伸）</div>
+      <ul class="callout-list">
+        <li>接觸新課本的世代，更可能持<strong>「單一台灣人」認同</strong>，而非「台灣人也是中國人」的<strong>雙重認同</strong>。</li>
+        <li>效果在<strong>學術分流（升學導向）學生</strong>、以及<strong>原本台灣人認同較低的社區</strong>更明顯。</li>
+        <li>然而，新課綱對<strong>台獨等政治偏好</strong>的影響<strong>有限</strong>——<em>改變「我是誰」，不等於直接改變「我支持什麼政策」</em>。</li>
+        <li>長期而言，舊課本世代的台灣人認同比例會與新課本世代<strong>逐漸收斂</strong>——因為整體社會風向本身也在變。</li>
+      </ul>
+    </div>
+    <div class="hl-box gold">
+      <h4>🎯 為什麼這個研究這麼重要？</h4>
+      <p>它把 Anderson／Smith／象徵政治的抽象主張，變成<strong>可量化的因果證據</strong>：<strong>國家透過教科書，確實能形塑一代人的集體認同</strong>。但它也提醒我們<strong>邊界</strong>——認同 ≠ 政策偏好，且效果會被更大的社會環境稀釋。這是「象徵政治有力，但非萬能」的最佳教材。</p>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="t6b">
+    <div class="case-block">
+      <div class="ce">TREND · 認同變遷</div>
+      <h4>📈「台灣人／中國人／都是」的長期消長</h4>
+      <p class="ct">
+        根據長期追蹤的民意調查（如政大選舉研究中心的趨勢資料），自 1990 年代以來，自認「<strong>是台灣人</strong>」的比例<strong>顯著上升</strong>，「<strong>都是</strong>（台灣人也是中國人）」的雙重認同<strong>下降</strong>，「<strong>是中國人</strong>」則降到很低。<br><br>
+        把它接回理論：這條曲線不是「自然發生」的，而是<strong>民主化、媒體、教育、選舉動員、兩岸關係</strong>等多重象徵與制度力量長期作用的結果——<strong>認同是被持續鍊成、且會變動的</strong>。
+      </p>
+    </div>
+    <div class="spoiler">
+      <strong>批判思考：</strong>認同上升，是「教育灌輸」還是「自由選擇」？（點我展開）　兩者都對，也都不完整。Chen et al. 顯示課本<em>有</em>因果作用（建構面）；但認同同時也回應人們<em>親身經歷</em>的民主生活與兩岸互動（能動面）。最穩健的說法是：<strong>結構在提供素材，個人在其中詮釋與選擇</strong>——這正是政治社會學「結構 vs 能動」張力的具體展現。
+    </div>
+  </div>
+
+  <div class="tab-panel" id="t6c">
+    <div class="case-block">
+      <div class="ce">SYMBOL · 教科書即象徵</div>
+      <h4>📚 課綱之爭，本質是「下一代要被鍊成什麼認同」之爭</h4>
+      <p class="ct">
+        歷史教科書是<strong>發行量最大的官方記憶</strong>。「中國史為主／台灣史為主」「日治 vs 日據」「課綱微調」等爭議，表面是用詞，底層是<strong>象徵與記憶政治</strong>：誰有權決定「我們共同記得什麼」。<br><br>
+        對照本週理論：教科書同時是 Anderson 的「<strong>印刷／同時性</strong>」載體、Smith 的「<strong>族裔象徵素材庫</strong>」、Crooke 的「<strong>展示即政治</strong>」——而 Chen et al.（2023）已用數據證明：<strong>它真的有效</strong>。你今天的史觀，很可能就是某一版課綱的產物。
+      </p>
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(7)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P7 · 台灣案例Ⅱ：轉型正義、國旗爭議與認知作戰</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P7 台灣Ⅱ 象徵·記憶·認知戰 ============ -->
+<div class="page" data-page="7"><div class="page-inner">
+  <div class="guide-breadcrumb">第 7 章 · <span>台灣案例Ⅱ</span></div>
+  <h2>台灣案例Ⅱ：象徵的競逐、記憶的政治、與象徵的反效果</h2>
+  <p class="section-lead">象徵政治不只「建構」，也會「<strong>競逐</strong>」與「<strong>反噬</strong>」。三個台灣現場，看象徵政治的力量與限制。</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'t7a')">① 轉型正義與記憶博物館</button>
+    <button class="tab" onclick="switchTab(this,'t7b')">② 國旗·國歌爭議</button>
+    <button class="tab" onclick="switchTab(this,'t7c')">③ 認知作戰與後真相</button>
+  </div>
+
+  <div class="tab-panel active" id="t7a">
+    <div class="case-block">
+      <div class="ce">CASE · 記憶政治（呼應 Crooke）</div>
+      <h4>🕯 轉型正義：誰來決定「該記得什麼」</h4>
+      <p class="ct">
+        國家人權博物館（白色恐怖景美、綠島園區）、二二八紀念館、乃至中正紀念堂的存廢與轉型，都是 Crooke 意義下的<strong>記憶政治現場</strong>。<br><br>
+        <strong>象徵分析的角度</strong>：同一處空間，可以被「展示」成<strong>哀悼受難者的紀念地</strong>，也可以被維持為<strong>緬懷強人的殿堂</strong>——<em>怎麼展、留什麼、配什麼說明</em>，就是在替全社會的集體記憶定調。物質文化（囚房、文物、名牆）讓抽象的歷史變得可觸、難以否認，因而也最具爭議。
+      </p>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="t7b">
+    <div class="case-block">
+      <div class="ce">CASE · 象徵的競逐</div>
+      <h4>🎌 國旗、國歌：為什麼一面旗能引爆情緒？</h4>
+      <p class="ct">
+        國旗國歌是<strong>最濃縮的國族象徵</strong>，也因此最容易成為認同衝突的引爆點：國際賽事能不能舉旗、國歌歌詞的政黨色彩、奧運「中華台北」的旗與歌……<br><br>
+        <strong>象徵分析的角度</strong>：爭議的核心從來不只是「布料與旋律」，而是<strong>「這個象徵代表的『我們』是誰、不包含誰」</strong>。不同世代、族群對同一象徵的情感天差地別——這正是 Smith 所說「象徵承載著各自不同的記憶」的台灣版。
+      </p>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="t7c">
+    <div class="case-block">
+      <div class="ce">CASE · 象徵政治的限制與反效果</div>
+      <h4>🛰 認知作戰與後真相：當象徵被「武器化」</h4>
+      <p class="ct">
+        象徵與認同也會被<strong>外部行為者刻意操作</strong>。境外資訊操作（disinformation）、軍機擾台的<strong>象徵性施壓</strong>、放大內部對立的敘事，都是試圖<strong>重塑或撕裂「我們是誰」</strong>的認知作戰。<br><br>
+        接回 P1 的張軒豪（2024）：正因為認同<strong>先於</strong>事實，單靠「事實查核」難以奏效——操作者瞄準的本來就不是事實，而是<strong>認同與情緒</strong>。
+      </p>
+    </div>
+    <div class="callout callout-amber">
+      <div class="callout-eyebrow">關鍵反轉：象徵政治會「反效果」嗎？</div>
+      <ul class="callout-list">
+        <li><strong>過度操作 → 反感</strong>：當宣傳痕跡太露骨，反而激起反向認同（「越打壓越團結」）。</li>
+        <li><strong>象徵疲乏 → 政治冷漠</strong>：象徵被濫用、無限上綱，民眾可能選擇抽離、不再投入。</li>
+        <li><strong>韌性來自素養</strong>：對抗認知作戰，靠的不只是查核，更是<strong>媒體識讀</strong>與<strong>健全的民主信任</strong>（呼應 W12 政治文化與社會信任）。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(8)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P8 · 隨堂測驗：4 題檢核你的理解</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P8 隨堂測驗 ============ -->
+<div class="page" data-page="8"><div class="page-inner">
+  <div class="guide-breadcrumb">第 8 章 · <span>隨堂測驗</span></div>
+  <h2>隨堂選擇題（4 題）</h2>
+  <p class="section-lead">點選你的答案，系統會即時標出正解並展開解析。</p>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q1</div>
+    <div class="quiz-question">關於 Anderson「<strong>想像的共同體</strong>」，下列何者<em>最正確</em>？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 民族是虛假、捏造的，根本不存在</button>
+      <button class="quiz-opt" data-correct="true">(B) 成員彼此不相識，卻共享「同屬一體」的想像；它是建構的，但真實有力</button>
+      <button class="quiz-opt" data-correct="false">(C) 民族自古即有，是血緣的自然延伸</button>
+      <button class="quiz-opt" data-correct="false">(D) 只有小國才需要「想像」，大國不必</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>正解 (B)。</strong>「想像」指的是<strong>建構的方式</strong>，不是真假。把「想像」聽成「虛假」(A) 是讀 Anderson 的頭號錯誤。(C) 是原生論立場，正是 Anderson 要反駁的；(D) 與理論無關。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q2</div>
+    <div class="quiz-question">關於 Anthony D. Smith 的<strong>族裔象徵論</strong>，下列敘述何者<em>正確</em>？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 完全否定建構論，主張民族純屬自古天生</button>
+      <button class="quiz-opt" data-correct="true">(B) 民族建構需立基於前現代的「族裔核心（ethnie）」——共享的神話、記憶與象徵</button>
+      <button class="quiz-opt" data-correct="false">(C) 主張只要有共同貨幣與護照，認同就會自然凝聚</button>
+      <button class="quiz-opt" data-correct="false">(D) 認為象徵與記憶對認同毫無作用</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>正解 (B)。</strong>Smith 調和原生論與建構論：民族是被建構的，但要建構成功，得有前現代的族裔象徵素材。也因此他主張「歐洲認同」難凝聚——光有制度 (C) 而缺乏共享族裔象徵核心。(A)(D) 都誤解了他的立場。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q3</div>
+    <div class="quiz-question">Chen, Lin &amp; Yang（2023）研究 1997《認識台灣》課綱，主要發現<em>最接近</em>下列何者？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 課綱對認同毫無影響</button>
+      <button class="quiz-opt" data-correct="true">(B) 接觸新課本者更傾向「單一台灣人」認同（而非雙重認同），但對台獨偏好影響有限</button>
+      <button class="quiz-opt" data-correct="false">(C) 課綱直接、永久地使人支持台獨</button>
+      <button class="quiz-opt" data-correct="false">(D) 課綱使學生更傾向認同自己是中國人</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>正解 (B)。</strong>用 RDD 估得的因果效果是：新課本世代更可能持<strong>單一台灣人認同</strong>而非雙重認同；但<strong>對台獨等政策偏好影響有限</strong>，且長期會收斂。關鍵教訓：<em>改變認同 ≠ 改變政策偏好</em>，象徵政治有力但非萬能。(A)(C)(D) 都偏離原文。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q4</div>
+    <div class="quiz-question">張軒豪（2024）指出，對抗後真相「<strong>不能只靠事實查核</strong>」，最主要的理由是？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 事實查核的技術還不夠成熟</button>
+      <button class="quiz-opt" data-correct="false">(B) 民眾普遍看不懂查核報告</button>
+      <button class="quiz-opt" data-correct="true">(C) 認同往往先於事實；人會用既有政治濾鏡重新詮釋甚至排斥不利的事實（動機性推理）</button>
+      <button class="quiz-opt" data-correct="false">(D) 查核會違反言論自由</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>正解 (C)。</strong>當事實威脅到「我們」的立場，人傾向<strong>重新詮釋事實、而非修正立場</strong>——這就是認同保護型認知／動機性推理。所以治本之道還包含媒體識讀與健全的社會信任，而非只丟出正確資訊。
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(9)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P9 · 小組討論、申論題與本週讀物</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P9 討論與讀物 ============ -->
+<div class="page" data-page="9"><div class="page-inner">
+  <div class="guide-breadcrumb">第 9 章 · <span>討論與讀物</span></div>
+  <h2>小組討論與申論題</h2>
+
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">討論一 · 概念與機制</span>
+    <div class="discussion-q">什麼是「<em>想像共同體</em>」？這個概念如何幫助我們理解<em>國族認同的形成</em>？</div>
+    <p class="ctx">
+      請依序回應：<strong>(1)</strong> 族群、語言、地域與國族有何差異？民族主義又是如何被「建構」的？<strong>(2)</strong> 何謂<strong>象徵政治</strong>？它如何影響群體認同與忠誠？請舉一個具體案例說明其作用。<strong>(3)</strong> 在傳統媒體或社群媒體中，哪些<strong>圖像、詞彙或敘事</strong>強化了特定政治立場或正當性？<strong>(4)</strong> 象徵政治是否可能<strong>反效果</strong>，引發反感、反抗或政治冷漠？
+    </p>
+  </div>
+
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">討論二 · 台灣分析</span>
+    <div class="discussion-q">台灣當前的<em>國族認同與族群政治</em>，能否從「想像社群」的角度分析？</div>
+    <p class="ctx">
+      請依序回應：<strong>(1)</strong> 哪些<strong>文化建構</strong>（語言、教育、歷史教科書、國旗等）可能扮演關鍵角色？<strong>(2)</strong> 如何解釋「<strong>同屬一國／族</strong>」的認知在不同族群間的競逐？<strong>(3)</strong> 台灣哪些議題（如<strong>轉型正義、國旗國歌爭議</strong>）特別適合做象徵分析？試結合本週 Chen et al.（2023）、Crooke（2019）的觀點。
+    </p>
+  </div>
+
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">討論三 · 認同的邊界與更深層的衝突</span>
+    <div class="discussion-q">移工：誰被劃進「我們」，誰被留在邊界之外？</div>
+    <p class="ctx">
+      台灣有數十萬<strong>移工</strong>（來自印尼、越南、菲律賓、泰國等），長期支撐製造業、漁業與長照體系，卻幾乎被排除在「國族共同體」之外。請用本週理論分析：<strong>(1)</strong> 從 Anderson「想像的共同體是<em>有限的（limited）</em>」來看，共同體必有邊界——移工被劃在哪一側？是誰、用什麼方式劃下這條線？<strong>(2)</strong> 關於移工的爭論常被<em>框架</em>成經濟（工資、搶工作）、治安或管理問題；但若往下挖，是否其實是一場「<strong>誰屬於我們</strong>」的認同衝突？<strong>(3)</strong> 對照公民 vs 族裔民族主義：同為外來者，為何「<strong>新住民</strong>」（婚姻移民）逐漸被納入族群想像，移工卻多半被排除？這條納入／排除的界線，反映台灣國族認同由哪一種成分主導？<strong>(4)</strong> 象徵角度：從「外勞」到「移工」的稱呼轉變、移工在公共空間與媒體中的（不）可見性，如何鬆動或鞏固這條邊界？
+    </p>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-eyebrow">核心論點：為什麼「認同衝突」往往是更深層的衝突來源？</div>
+    <p>許多看似關於<strong>資源、政策、經濟</strong>的衝突，往下挖其實是<strong>認同衝突</strong>——爭的不是「怎麼分」，而是「<strong>誰算我們</strong>」。關鍵差別在於：<strong>分配衝突可以折衷</strong>（多分一點、補償一點，總有談判空間），但<strong>認同衝突常是不可切分、近乎零和的</strong>——它牽動「我們是誰」的根本界定，一旦被觸動就帶來存在性的威脅感，極難妥協。這正呼應本週主軸：當政治穿過<strong>認同濾鏡</strong>，連純經濟議題都會被重新讀成「自己人 vs 外人」之爭。移工、族群、統獨——表層議題各異，底層常是同一道<strong>認同斷層線</strong>。這也是為什麼政治社會學主張：要理解一個社會最頑固的衝突，往往得先看它如何劃定「我們」的邊界。</p>
+  </div>
+
+  <div class="callout callout-blue">
+    <div class="callout-eyebrow">給報告同學的分析提示</div>
+    <p>好的象徵分析不只是「描述爭議」，而要追問三件事：這個象徵<strong>代表的「我們」是誰、排除了誰</strong>？它<strong>動員了什麼情感</strong>？以及——它<strong>有沒有反效果</strong>？把 Anderson（想像）、Smith（族裔象徵素材）、Crooke（展示即政治）當成三把不同的解剖刀。</p>
+  </div>
+
+  <h2 style="margin-top:2.4rem">本週指定與延伸讀物</h2>
+
+  <div class="reading-card must">
+    <div class="reading-icon">必</div>
+    <div class="reading-body">
+      <div class="reading-title">張軒豪（2024）《為何「後真相政治」的解藥不能只靠「事實查核」？》</div>
+      <div class="reading-meta">菜市場政治學，2024/10/24（中文短文）</div>
+      <div class="reading-note">本週入門：說明認同為何先於事實，銜接「政治濾鏡」核心命題。</div>
+    </div>
+  </div>
+  <div class="reading-card must">
+    <div class="reading-icon">必</div>
+    <div class="reading-body">
+      <div class="reading-title">Anderson, B. (2020). “Imagined Communities: Reflections on the Origin and Spread of Nationalism.”</div>
+      <div class="reading-meta">In <em>The New Social Theory Reader</em>, pp. 282–288. Routledge.</div>
+      <div class="reading-note">理論基石：想像／有限／主權／共同體；印刷資本主義。</div>
+    </div>
+  </div>
+  <div class="reading-card must">
+    <div class="reading-icon">必</div>
+    <div class="reading-body">
+      <div class="reading-title">Smith, A. D. (1992). “National Identity and the Idea of European Unity.”</div>
+      <div class="reading-meta"><em>International Affairs</em>, 68(1): 55–76.</div>
+      <div class="reading-note">族裔象徵論；以「歐洲認同難題」對照建構論的限制。</div>
+    </div>
+  </div>
+  <div class="reading-card must">
+    <div class="reading-icon">必</div>
+    <div class="reading-body">
+      <div class="reading-title">Chen, W. L., Lin, M. J., &amp; Yang, T. T. (2023). “Curriculum and National Identity: Evidence from the 1997 Curriculum Reform in Taiwan.”</div>
+      <div class="reading-meta"><em>Journal of Development Economics</em>, 163: 103078.</div>
+      <div class="reading-note">台灣因果證據：課綱→認同的 RDD 研究（注意效果的邊界與長期收斂）。</div>
+    </div>
+  </div>
+  <div class="reading-card rec">
+    <div class="reading-icon">延</div>
+    <div class="reading-body">
+      <div class="reading-title">Crooke, E. (2019). “Memory Politics and Material Culture: Display in the Memorial Museum.”</div>
+      <div class="reading-meta"><em>Memory Studies</em>, 12(6): 617–629.</div>
+      <div class="reading-note">記憶政治與物質文化；「展示即政治」，對接轉型正義案例。</div>
+    </div>
+  </div>
+  <div class="reading-card rec">
+    <div class="reading-icon">延</div>
+    <div class="reading-body">
+      <div class="reading-title">Hsiau, A. C. (2003). <em>Contemporary Taiwanese Cultural Nationalism</em>.</div>
+      <div class="reading-meta">Routledge.</div>
+      <div class="reading-note">台灣文化民族主義：母語運動、鄉土文學、歷史再詮釋。</div>
+    </div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>🎯 本週的一句話總結</h4>
+    <p style="font-family:'Playfair Display',serif;font-size:1.05rem;text-align:center;color:var(--accent);font-weight:700;padding:1rem;background:#fff;border-radius:8px;margin-top:.7rem;line-height:1.7">
+      你以為你只是「在看事實」——<br>其實你戴著一副被<strong>認同、族群與象徵</strong>長年鍊成的<strong>政治濾鏡</strong>。<br>政治社會學的工作，就是把這副濾鏡<strong>拿下來，看清楚它</strong>。
+    </p>
+  </div>
+</div></div>
+
+</div><!-- /page-container -->
+
+<div class="bottom-bar">
+  <div class="page-indicator">第 <span id="cur-page">1</span> / 10 頁</div>
+  <div class="page-dots" id="dots"></div>
+  <div class="arrow-btns">
+    <button class="arrow-btn" id="prev-btn" onclick="goPrev()">←</button>
+    <button class="arrow-btn" id="next-btn" onclick="goNext()">→</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+const totalPages = 10;
+let currentPage = 0;
+const dotsEl = document.getElementById('dots');
+for(let i=0;i<totalPages;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>goPage(i);
+  dotsEl.appendChild(d);
+}
+function goPage(n){
+  if(n<0||n>=totalPages)return;
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('cur-page').textContent=n+1;
+  document.getElementById('prev-btn').disabled=n===0;
+  document.getElementById('next-btn').disabled=n===totalPages-1;
+  currentPage=n;
+  document.querySelectorAll('.page')[n].scrollTop=0;
+}
+function goPrev(){goPage(currentPage-1);}
+function goNext(){goPage(currentPage+1);}
+function switchTab(btn,panelId){
+  const tabs=btn.parentElement.querySelectorAll('.tab');
+  tabs.forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const container=btn.closest('.page-inner');
+  container.querySelectorAll('.tab-panel').forEach(p=>{
+    p.classList.toggle('active',p.id===panelId);
+  });
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft')goPrev();
+  if(e.key==='ArrowRight')goNext();
+});
+document.addEventListener('click',e=>{
+  const sp=e.target.closest('.spoiler');
+  if(sp)sp.classList.toggle('revealed');
+});
+document.addEventListener('click',function(e){
+  const btn=e.target.closest('.quiz-opt');
+  if(!btn)return;
+  const block=btn.closest('.quiz-block');
+  if(!block||block.dataset.answered==='1')return;
+  block.dataset.answered='1';
+  const correct=btn.dataset.correct==='true';
+  btn.classList.add(correct?'selected-correct':'selected-wrong');
+  if(!correct){
+    block.querySelectorAll('.quiz-opt').forEach(o=>{if(o.dataset.correct==='true')o.classList.add('show-correct');});
+  }
+  const exp=block.querySelector('.quiz-explain');
+  if(exp)exp.classList.add('shown');
+});
+
+// 民族主義理論譜系：點擊節點
+const schoolData=[
+  {name:'原生論（Primordialism）',color:'#6b6560',
+   scholars:'早期觀點，常與 Geertz 的「原生連帶（primordial attachments）」相連。',
+   claim:'認同是與生俱來、自古即有的，根植於血緣、語言、宗教、土地的「自然」情感。',
+   debate:'被現代建構論嚴厲批判：把「歷史的結果」誤當成「自然的起源」。',
+   taiwan:'「我們自古就是一家／同文同種」這類說法，常帶有原生論色彩。'},
+  {name:'現代建構論（Modernism / Constructivism）',color:'#8b2500',
+   scholars:'Gellner、Anderson、Hobsbawm（皆 1983 年出版關鍵著作，史稱「1983 三劍客」）。',
+   claim:'民族與民族主義是現代產物，由工業化、印刷資本主義、國家教育所建構。「不是民族創造民族主義，而是民族主義創造民族。」',
+   debate:'向上批判原生論；但被族裔象徵論質疑：太強調斷裂與發明，忽略了前現代的文化延續。',
+   taiwan:'印刷、教育、媒體、選舉如何「製造」並維繫「台灣」這個想像共同體。'},
+  {name:'族裔象徵論（Ethno-symbolism）',color:'#b8860b',
+   scholars:'Anthony D. Smith（1986、1991、1992）。',
+   claim:'現代民族確實是被建構的，但必須立基於前現代的「族裔核心（ethnie）」——共享的神話、記憶、象徵與土地情感；沒有素材，認同建構不起來。',
+   debate:'調和原生論與建構論；用以解釋「為何歐洲認同難以凝聚」——缺乏共享的族裔象徵核心。',
+   taiwan:'台灣認同的「素材庫」：共同記憶（戒嚴、民主化）、象徵、土地情感與在地經驗。'},
+  {name:'台灣文化民族主義（蕭阿勤 Hsiau, 2003）',color:'#3a5a8c',
+   scholars:'蕭阿勤（A. C. Hsiau），<em>Contemporary Taiwanese Cultural Nationalism</em>。',
+   claim:'戰後台灣的文化民族主義，透過母語（語言）、鄉土文學、歷史的重新詮釋被逐步建構出來。',
+   debate:'把建構論與族裔象徵論結合，落實在台灣個案上。',
+   taiwan:'母語運動、鄉土文學論戰、課綱改革，都是文化民族主義的具體戰場。'}
+];
+function showSchool(idx){
+  const d=schoolData[idx];
+  const card=document.getElementById('schCard');
+  card.style.borderLeftColor=d.color;
+  card.innerHTML=
+    '<div class="sd-name" style="color:'+d.color+'">'+d.name+'</div>'+
+    '<p><strong>代表：</strong>'+d.scholars+'</p>'+
+    '<p><strong>核心主張：</strong>'+d.claim+'</p>'+
+    '<p><strong>論戰位置：</strong>'+d.debate+'</p>'+
+    '<p><strong>對台灣的啟示：</strong>'+d.taiwan+'</p>';
+}
+
+const lensData=[
+ {name:'宏觀濾鏡 · 國族與結構',color:'#8b2500',q:'「我們」的最大邊界在哪？我屬於哪個共同體？',scholars:'Anderson（想像的共同體）、Smith（族裔象徵論）、Gellner、Hobsbawm。',filter:'決定你把世界切成哪一組「我們 vs 他們」——這是濾鏡最外、最廣的一層。',taiwan:'「我是台灣人／中國人／都是」，就是這層濾鏡的成像。'},
+ {name:'中觀濾鏡 · 族群·運動·象徵',color:'#b8860b',q:'哪個群體的故事、框架與象徵，正在替事件「定調」？',scholars:'Snow & Benford（文化框架）、Crooke（記憶與物質文化）、蕭阿勤（文化民族主義）。',filter:'群體的框架與象徵，把同一事件詮釋成「受害／正義／主權」等不同版本；介於結構與個人之間。',taiwan:'太陽花把服貿框架成主權問題；轉型正義博物館替記憶定調；國旗成為競逐的象徵。'},
+ {name:'微觀濾鏡 · 個人認知',color:'#3a5a8c',q:'當事實威脅到我方立場，我的大腦怎麼處理它？',scholars:'動機性推理／認同保護型認知；張軒豪（2024，後真相政治）。',filter:'最內層、最貼近知覺：把不利的事實重新詮釋、淡化或排斥——「認同先於事實」。',taiwan:'同一份事實查核，不同陣營各自解讀，甚至更堅定原本立場。'}
+];
+function showLens(i){var d=lensData[i];var c=document.getElementById('lensCard');c.style.borderLeftColor=d.color;c.innerHTML='<div class="sd-name" style="color:'+d.color+'">'+d.name+'</div>'+'<p><strong>核心提問：</strong>'+d.q+'</p>'+'<p><strong>奠基學者：</strong>'+d.scholars+'</p>'+'<p><strong>過濾作用：</strong>'+d.filter+'</p>'+'<p><strong>台灣成像：</strong>'+d.taiwan+'</p>';}
+
+const idData=[
+ {name:'個人認同（Personal identity）',color:'#6b6560',scope:'個體層次的「我是誰」。',acquire:'高度個人化，隨生命經驗變動。',boundary:'最有彈性，可自我敘事重塑。',base:'個人記憶與選擇。',taiwan:'與集體認同交織——個人「選擇」站進哪一個「我們」。'},
+ {name:'國族認同（National identity）',color:'#8b2500',scope:'最大的政治共同體「我們是誰」。',acquire:'兼具先賦與後致；可分公民式（認同價值與制度）與族裔式（血緣與文化）。',boundary:'受主權、制度與動員強烈形塑。',base:'想像的共同體（Anderson）＋族裔象徵素材（Smith）。',taiwan:'台灣人／中國人／都是；公民式與族裔式成分並存、彼此拉扯。'},
+ {name:'族群認同（Ethnic identity）',color:'#b8860b',scope:'以共同祖先、文化記憶為核心的群體。',acquire:'多為先賦（出身），但邊界可協商、可流動。',boundary:'看似固定，實則被歷史地建構與重劃。',base:'血緣想像、文化記憶與共同歷史經驗。',taiwan:'閩南、客家、原住民、外省、新住民——分類本身即政治史的產物。'},
+ {name:'語言認同（Linguistic identity）',color:'#2a7a6e',scope:'以語言／母語為標記的歸屬。',acquire:'母語先賦，但「標準語／國語」是後天政治選定。',boundary:'常被當作族群與國族的「天然」標記。',base:'日常溝通與情感記憶。',taiwan:'母語運動、國語政策、本土語言入課綱——語言即戰場（蕭阿勤）。'},
+ {name:'地域認同（Regional identity）',color:'#3a5a8c',scope:'以居住地、家鄉、土地連帶為基礎。',acquire:'多由在地生活經驗累積。',boundary:'可以、但不必然等於國族認同。',base:'土地情感與在地生活。',taiwan:'南北、城鄉、原鄉認同；可被動員，也可超越或低於國族層次。'}
+];
+function showIdentity(i){var d=idData[i];var c=document.getElementById('idCard');c.style.borderLeftColor=d.color;c.innerHTML='<div class="sd-name" style="color:'+d.color+'">'+d.name+'</div>'+'<p><strong>範圍：</strong>'+d.scope+'</p>'+'<p><strong>取得方式：</strong>'+d.acquire+'</p>'+'<p><strong>邊界彈性：</strong>'+d.boundary+'</p>'+'<p><strong>連帶基礎：</strong>'+d.base+'</p>'+'<p><strong>台灣對照：</strong>'+d.taiwan+'</p>';}
+</script>
+</body>
+</html>

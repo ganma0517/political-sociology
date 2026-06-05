@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政治社會學 W11 — 微觀政治與協商行動：社會運動的醞釀與興起</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;
+  --gold:#b8860b;--sage:#5a6e5a;--muted:#6b6560;--line:#c9c0b4;
+  --card-bg:#faf7f2;--blue:#3a5a8c;--purple:#6b4c7a;--teal:#2a7a6e;
+  --red:#c0392b;--green:#27ae60;--orange:#d35400;
+  /* 三大學者色 */
+  --scott:#8b2500; --bayat:#2a7a6e; --decerteau:#6b4c7a;
+  /* 太陽花 vs 青鳥 */
+  --sunflower:#d4a017; --bluebird:#3a5a8c;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+
+/* ========== 頂部導航 ========== */
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.2rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .9rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.76rem;font-weight:500;color:#888;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#ccc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:var(--paper);background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.88rem;font-weight:700;margin-right:1rem;flex-shrink:0}
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+
+/* ========== 頁面 ========== */
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:920px;margin:0 auto}
+
+/* ========== 底部 ========== */
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+
+/* ========== 標題 ========== */
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,3vw,2.1rem);font-weight:800;color:var(--ink);margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent);position:relative}
+.page h2::after{content:'';position:absolute;left:0;bottom:-2px;width:60px;height:2px;background:var(--gold)}
+.page h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent);margin:1.6rem 0 .8rem;display:flex;align-items:center;gap:.5rem}
+.page h3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;font-size:.85rem;font-weight:700;flex-shrink:0}
+.page h4{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin:1rem 0 .5rem}
+.page p{font-size:.92rem;color:#333;margin-bottom:.7rem;line-height:1.95}
+.page p strong{color:var(--accent);font-weight:700}
+.page ul,.page ol{margin:.6rem 0 .9rem 1.5rem}
+.page li{font-size:.9rem;margin-bottom:.35rem;line-height:1.9;color:#333}
+.page li strong{color:var(--ink)}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;color:var(--ink);line-height:1.1;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:620px;margin:0 auto 1.8rem}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+
+.story-lead{font-size:.98rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+
+/* ========== 卡片 ========== */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.2rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.1rem 1.2rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card h4{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--accent);margin-bottom:.4rem;margin-top:0}
+.card p{font-size:.84rem;color:#555;margin-bottom:0;line-height:1.75}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.blue{border-top-color:var(--blue)}.card.blue h4{color:var(--blue)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.purple{border-top-color:var(--purple)}.card.purple h4{color:var(--purple)}
+.card.teal{border-top-color:var(--teal)}.card.teal h4{color:var(--teal)}
+.card.orange{border-top-color:var(--orange)}.card.orange h4{color:var(--orange)}
+
+/* ========== 引言／提問框 ========== */
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.1rem 0}
+.hl-box p:last-child{margin-bottom:0}
+.hl-box h4{margin-top:0;color:var(--accent)}
+.hl-box.blue{background:rgba(58,90,140,.05);border-left-color:var(--blue)}
+.hl-box.blue h4{color:var(--blue)}
+.hl-box.sage{background:rgba(90,110,90,.05);border-left-color:var(--sage)}
+.hl-box.sage h4{color:var(--sage)}
+.hl-box.gold{background:rgba(184,134,11,.06);border-left-color:var(--gold)}
+.hl-box.gold h4{color:var(--gold)}
+.hl-box.purple{background:rgba(107,76,122,.05);border-left-color:var(--purple)}
+.hl-box.purple h4{color:var(--purple)}
+
+/* ========== 概念框 ========== */
+.concept{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(58,90,140,.04));padding:.9rem 1.2rem;border-radius:8px;margin:.8rem 0;border:1px solid rgba(184,134,11,.2)}
+.concept .lead{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent);font-weight:700;margin-bottom:.4rem}
+.concept .body{font-size:.86rem;color:#333;line-height:1.85}
+.concept .body strong{color:var(--accent)}
+
+/* ========== 中央問題列 ========== */
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+
+/* ========== 下一頁 ========== */
+.next-page{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:1.1rem 1.4rem;border-radius:10px;margin-top:2.2rem;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.next-page:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(139,37,0,.3)}
+.np-label{font-size:.72rem;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.np-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.np-arrow{font-size:1.4rem;opacity:.8}
+
+/* ========== Spoiler（點擊揭露） ========== */
+.spoiler{cursor:pointer;background:linear-gradient(135deg,rgba(90,110,90,.08),rgba(184,134,11,.06));border-left:3px dashed var(--sage);padding:.8rem 1.1rem;border-radius:0 6px 6px 0;font-size:.85rem;color:var(--sage);max-height:42px;overflow:hidden;transition:max-height .5s ease;line-height:1.85;position:relative}
+.spoiler::after{content:'▼ 點擊展開';position:absolute;right:1rem;top:.75rem;font-size:.72rem;color:var(--muted);font-family:'Source Serif 4',serif;font-style:italic}
+.spoiler.revealed{max-height:1500px;color:#333}
+.spoiler.revealed::after{content:'▲ 點擊收合';color:var(--sage)}
+.spoiler strong{color:var(--accent)}
+
+/* ========== Scholar Card ========== */
+.scholar-card{background:linear-gradient(135deg,rgba(58,90,140,.07),rgba(184,134,11,.05));border:1px solid rgba(58,90,140,.15);border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0}
+.scholar-card h4{margin-top:0;color:var(--blue)}
+.scholar-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+.scholar-tag{padding:.25rem .7rem;background:rgba(58,90,140,.1);color:var(--blue);border-radius:14px;font-size:.74rem;font-weight:600}
+
+/* ========== Scott 大圖卡 ========== */
+.scott-hero{background:linear-gradient(135deg,#1a1a1a,#3a1a10);color:#fff;padding:1.8rem;border-radius:12px;margin:1.3rem 0;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap}
+.scott-portrait{flex-shrink:0;width:120px;height:160px;background:linear-gradient(135deg,var(--accent),var(--accent-light));border-radius:8px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:.8rem;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.scott-portrait .name-cn{font-family:'Playfair Display',serif;font-weight:900;font-size:1.05rem;line-height:1.3;margin-bottom:.3rem}
+.scott-portrait .name-en{font-size:.7rem;opacity:.85;font-style:italic;border-top:1px solid rgba(255,255,255,.3);padding-top:.4rem;margin-top:.3rem;width:100%}
+.scott-portrait .life{font-size:.66rem;opacity:.75;margin-top:.4rem}
+.scott-info{flex:1;min-width:240px}
+.scott-info h3{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--gold);margin:0 0 .4rem;border:none;display:block}
+.scott-info h3::after{display:none}
+.scott-info .scott-sub{font-size:.9rem;color:#d8d0c4;font-style:italic;margin-bottom:.7rem}
+.scott-info p{font-size:.88rem;color:#cfc6b8;margin-bottom:0;line-height:1.85}
+.scott-info p strong{color:#fff}
+.scott-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.7rem}
+.scott-tag{padding:.2rem .65rem;background:rgba(184,134,11,.25);color:#f0d895;border-radius:14px;font-size:.72rem;font-weight:600}
+
+/* ========== 弱者的武器表 ========== */
+.weapons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.7rem;margin:1.1rem 0}
+.weapon-card{background:#fff;border-radius:8px;padding:.9rem 1rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.05);transition:all .3s;cursor:default}
+.weapon-card:hover{transform:translateY(-3px);box-shadow:0 5px 18px rgba(0,0,0,.1)}
+.weapon-emoji{font-size:1.6rem;line-height:1;margin-bottom:.4rem}
+.weapon-name{font-family:'Playfair Display',serif;font-weight:700;color:var(--accent);font-size:.93rem;margin-bottom:.3rem}
+.weapon-desc{font-size:.78rem;color:#555;line-height:1.7}
+
+/* ========== Hidden vs Public Transcript ========== */
+.transcript-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:1.2rem 0}
+.tr-col{padding:1.1rem 1.2rem;border-radius:10px;position:relative;border:1px solid}
+.tr-col.public{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(184,134,11,.03));border-color:rgba(184,134,11,.25)}
+.tr-col.hidden{background:linear-gradient(135deg,rgba(58,90,140,.08),rgba(107,76,122,.05));border-color:rgba(58,90,140,.25)}
+.tr-label{display:inline-block;padding:.2rem .7rem;border-radius:14px;font-size:.72rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem;text-transform:uppercase;color:#fff}
+.tr-col.public .tr-label{background:var(--gold)}
+.tr-col.hidden .tr-label{background:var(--blue)}
+.tr-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.4rem}
+.tr-col.public .tr-title{color:var(--gold)}
+.tr-col.hidden .tr-title{color:var(--blue)}
+.tr-text{font-size:.85rem;color:#444;line-height:1.85}
+.tr-text strong{color:var(--ink)}
+.tr-eg{margin-top:.6rem;padding:.5rem .8rem;background:rgba(255,255,255,.6);border-radius:6px;font-size:.8rem;font-style:italic;color:#555}
+
+/* ========== 三巨頭比較表 ========== */
+.cmp-three{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1.2rem 0}
+.cmp-three-card{background:#fff;border-radius:10px;padding:1.1rem 1.1rem;border-top:4px solid;box-shadow:0 3px 14px rgba(0,0,0,.06);transition:transform .3s}
+.cmp-three-card:hover{transform:translateY(-4px)}
+.cmp-three-card.scott{border-top-color:var(--scott)}
+.cmp-three-card.bayat{border-top-color:var(--bayat)}
+.cmp-three-card.decerteau{border-top-color:var(--decerteau)}
+.cmp-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin-bottom:.2rem}
+.cmp-three-card.scott .cmp-name{color:var(--scott)}
+.cmp-three-card.bayat .cmp-name{color:var(--bayat)}
+.cmp-three-card.decerteau .cmp-name{color:var(--decerteau)}
+.cmp-three-card .yr{font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.55rem}
+.cmp-three-card .concept-line{font-weight:700;color:var(--ink);font-size:.87rem;margin-bottom:.5rem;padding:.4rem .6rem;background:var(--card-bg);border-radius:5px;line-height:1.5}
+.cmp-three-card .desc{font-size:.82rem;color:#444;line-height:1.8}
+.cmp-three-card .desc strong{color:var(--accent)}
+
+/* ========== 蕭蘋論述對照 ========== */
+.discourse-box{background:#fff;border-radius:12px;overflow:hidden;margin:1.3rem 0;box-shadow:0 4px 16px rgba(0,0,0,.07)}
+.discourse-head{padding:1rem 1.3rem;background:linear-gradient(135deg,#1a1a1a,#3a2818);color:#fff}
+.discourse-head h4{margin:0;color:#fff;font-family:'Playfair Display',serif;font-size:1.05rem}
+.discourse-head .sub{font-size:.78rem;color:#bfb6a8;font-style:italic;margin-top:.2rem}
+.discourse-body{padding:1.2rem 1.3rem}
+.discourse-era{margin-bottom:.9rem;padding:.8rem 1rem;background:var(--card-bg);border-radius:7px;border-left:3px solid var(--accent)}
+.discourse-era:last-child{margin-bottom:0}
+.discourse-era .era-label{display:inline-block;padding:.15rem .6rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;margin-bottom:.4rem;letter-spacing:.05em}
+.discourse-era.e1 .era-label{background:#6b6560}
+.discourse-era.e2 .era-label{background:var(--accent)}
+.discourse-era.e3 .era-label{background:var(--gold)}
+.discourse-era.e4 .era-label{background:var(--blue)}
+.discourse-era .era-title{font-weight:700;color:var(--ink);font-size:.92rem;margin-bottom:.35rem}
+.discourse-era .era-text{font-size:.85rem;color:#444;line-height:1.85}
+.discourse-era .era-text strong{color:var(--accent)}
+
+/* ========== 太陽花 vs 青鳥比較表 ========== */
+.vs-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.07);margin:1.3rem 0;font-size:.84rem}
+.vs-table thead th{padding:.85rem .8rem;font-weight:700;color:#fff;text-align:left;font-size:.85rem}
+.vs-table thead th:first-child{background:#1a1a1a;width:140px}
+.vs-table thead th.sun{background:linear-gradient(135deg,#d4a017,#b8860b)}
+.vs-table thead th.blue{background:linear-gradient(135deg,#3a5a8c,#5a7ab0)}
+.vs-table td{padding:.75rem .85rem;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.75}
+.vs-table td:first-child{font-weight:700;color:var(--accent);background:var(--card-bg);font-size:.8rem;width:140px}
+.vs-table td strong{color:var(--ink)}
+.vs-table tr:last-child td{border-bottom:0}
+.vs-table tr:hover td:not(:first-child){background:rgba(184,134,11,.04)}
+
+/* ========== Toggle Tabs 切換 ========== */
+.tabs{display:flex;gap:.3rem;margin:1.1rem 0 .7rem;border-bottom:2px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:.6rem 1.1rem;background:0;border:0;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .25s;white-space:nowrap}
+.tab:hover{color:var(--accent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ========== 圖示展示 ========== */
+.icon-row{display:flex;gap:.8rem;flex-wrap:wrap;margin:1rem 0}
+.icon-item{flex:1;min-width:130px;text-align:center;padding:.9rem .8rem;background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.icon-item .ic{font-size:1.8rem;line-height:1;margin-bottom:.4rem}
+.icon-item .lb{font-weight:700;color:var(--accent);font-size:.85rem;margin-bottom:.3rem}
+.icon-item .ds{font-size:.76rem;color:#666;line-height:1.65}
+
+/* ========== 案例分析（躺平內卷） ========== */
+.case-block{background:#fff;border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:4px solid var(--teal)}
+.case-block h4{color:var(--teal);font-family:'Playfair Display',serif;margin:0 0 .4rem}
+.case-block .ce{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.case-block .ct{font-size:.86rem;color:#333;line-height:1.85;margin-bottom:0}
+.case-block .ct strong{color:var(--accent)}
+.case-block.purple{border-top-color:var(--purple)}.case-block.purple h4{color:var(--purple)}
+.case-block.blue{border-top-color:var(--blue)}.case-block.blue h4{color:var(--blue)}
+.case-block.gold{border-top-color:var(--gold)}.case-block.gold h4{color:var(--gold)}
+
+/* ========== 討論題 ========== */
+.discussion-block{background:linear-gradient(135deg,#fff,#faf7f2);border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid rgba(139,37,0,.12)}
+.discussion-eyebrow{display:inline-block;padding:.2rem .7rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem}
+.discussion-q{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin-bottom:.7rem;line-height:1.7}
+.discussion-q em{color:var(--accent);font-style:normal}
+.discussion-block .ctx{font-size:.85rem;color:#555;margin-bottom:.7rem;line-height:1.85}
+.discussion-block .ctx strong{color:var(--accent)}
+
+/* ========== 本週讀物 ========== */
+.reading-card{background:#fff;border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0;border-left:4px solid;display:flex;gap:.9rem;align-items:flex-start;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.reading-card.must{border-left-color:var(--accent)}
+.reading-card.rec{border-left-color:var(--gold)}
+.reading-icon{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;font-family:'Playfair Display',serif}
+.reading-card.must .reading-icon{background:var(--accent)}
+.reading-card.rec .reading-icon{background:var(--gold)}
+.reading-body{flex:1}
+.reading-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:.2rem;line-height:1.5}
+.reading-meta{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:.3rem;font-family:'Source Serif 4',serif}
+.reading-note{font-size:.83rem;color:#444;line-height:1.75}
+
+/* ========== 銜接關係圖 SVG ========== */
+.linkmap{background:#fff;border-radius:12px;padding:1.5rem;margin:1.3rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.linkmap-svg{display:block;width:100%;max-width:780px;margin:0 auto}
+
+/* ========== RWD ========== */
+@media(max-width:700px){
+  .page{padding:1.8rem 1rem 3rem}
+  .hero-title{font-size:2rem}
+  .page h2{font-size:1.5rem}
+  .scott-hero{flex-direction:column;align-items:center;text-align:center}
+  .scott-info{text-align:left}
+  .transcript-grid{grid-template-columns:1fr}
+  .cmp-three{grid-template-columns:1fr}
+  .vs-table thead th:first-child,.vs-table td:first-child{width:auto}
+  .weapons-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* === W11 新增元件樣式 === */
+.layer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0 2rem}
+.layer-card{background:#fff;border-radius:10px;padding:1.2rem;border-top:4px solid #888;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.layer-macro{border-top-color:var(--accent)}
+.layer-meso{border-top-color:#b8860b}
+.layer-micro{border-top-color:#2c5f7c}
+.layer-tag{font-size:.7rem;letter-spacing:.15em;color:#888;font-weight:600;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.layer-title{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.6rem}
+.layer-list{margin:.3rem 0 .8rem;padding-left:1.2rem;font-size:.86rem;line-height:1.7;color:#444}
+.layer-list li{margin-bottom:.1rem}
+.layer-scholar{font-size:.78rem;color:#666;border-top:1px dashed #ddd;padding-top:.6rem;font-style:italic}
+
+.lineage-map,.lineage-tree{background:#fff;border:1px solid #e5e0d6;border-radius:10px;padding:1.2rem;margin:1rem 0 2rem;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+
+.transition-box{background:linear-gradient(135deg,#fdf8ef,#f5f0e8);border-radius:10px;padding:.4rem 1.4rem;margin:1.2rem 0 2rem;border:1px solid #e0d9c8}
+.trans-row{padding:1rem 0;border-bottom:1px dashed #d4cfc4}
+.trans-row:last-child{border-bottom:0}
+.trans-q{font-size:.95rem;font-weight:700;color:var(--accent);margin-bottom:.5rem;line-height:1.5}
+.trans-a{font-size:.88rem;line-height:1.8;color:#333}
+
+.inst-vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0 1.5rem}
+.inst-card{background:#fff;border-radius:10px;padding:1.3rem 1.4rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.inst-formal{border-top:5px solid #2c5f7c}
+.inst-informal{border-top:5px solid #8b2500}
+.inst-tag{font-size:.7rem;letter-spacing:.18em;font-weight:600;color:#888;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.inst-title{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.8rem}
+.inst-list{padding-left:.2rem;list-style:none;margin:0 0 .8rem;font-size:.88rem;line-height:1.9}
+.inst-list li{margin-bottom:.3rem}
+.inst-foot{font-size:.82rem;background:#f8f5ee;padding:.6rem .8rem;border-radius:6px;border-left:3px solid #b8860b;color:#444}
+
+.callout{border-radius:10px;padding:1rem 1.3rem;margin:1.2rem 0}
+.callout-amber{background:linear-gradient(135deg,#fef6e3,#fbecc6);border-left:4px solid #b8860b}
+.callout-blue{background:linear-gradient(135deg,#eef4f8,#dbe7ee);border-left:4px solid #2c5f7c}
+.callout-eyebrow{font-size:.72rem;letter-spacing:.15em;font-weight:600;color:#666;margin-bottom:.5rem;font-family:'Source Serif 4',serif;font-style:italic}
+.callout p{margin:.4rem 0;font-size:.92rem;line-height:1.75;color:#333}
+.callout-list{font-size:.9rem;line-height:1.85;color:#333;margin:.5rem 0 0;padding-left:1.4rem}
+.callout-list li{margin-bottom:.4rem}
+
+.connect-box{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0 1.5rem;border:1px solid #e0d9c8;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.connect-box p{font-size:.92rem;line-height:1.8;color:#333;margin:.4rem 0}
+.connect-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:1rem 0 .5rem}
+.connect-item{display:flex;gap:.7rem;background:#fafaf6;padding:.9rem;border-radius:8px;border-left:3px solid var(--accent)}
+.connect-num{font-size:1.4rem;font-weight:800;color:var(--accent);font-family:'Playfair Display',serif;line-height:1}
+.connect-text{flex:1;font-size:.86rem;line-height:1.6}
+.connect-sub{display:block;color:#666;font-size:.78rem;margin-top:.3rem;line-height:1.55}
+.connect-foot{font-size:.85rem;color:#666;font-style:italic;margin-top:.6rem;padding-top:.6rem;border-top:1px dashed #ddd}
+
+.media-impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1rem 0 1.6rem}
+.impact-card{background:#fff;border-radius:10px;padding:1.3rem 1.4rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.impact-inst{border-top:5px solid #2c5f7c}
+.impact-noninst{border-top:5px solid #8b2500}
+.impact-tag{font-size:.72rem;letter-spacing:.15em;font-weight:600;color:#888;margin-bottom:.3rem;font-family:'Source Serif 4',serif;font-style:italic}
+.impact-title{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.9rem;line-height:1.4}
+.impact-list{padding-left:0;list-style:none;margin:0 0 .8rem;font-size:.88rem;line-height:1.75}
+.impact-list li{margin-bottom:.7rem;padding-left:0}
+.impact-sub{display:block;color:#666;font-size:.78rem;margin-top:.15rem;line-height:1.55}
+.impact-foot{font-size:.83rem;background:#f8f5ee;padding:.55rem .8rem;border-radius:6px;border-left:3px solid #b8860b;color:#444}
+
+.blur-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1rem 0 1.5rem}
+.blur-card{background:#fff;border-radius:10px;padding:1.1rem 1.2rem;border-left:4px solid var(--sage);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.blur-eye{font-size:.7rem;letter-spacing:.15em;color:var(--sage);font-weight:600;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.blur-title{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:.5rem;line-height:1.4}
+.blur-text{font-size:.85rem;line-height:1.7;color:#444}
+
+/* === Quiz blocks === */
+.quiz-block{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0;border:1px solid #e5e0d6;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative}
+.quiz-q-num{position:absolute;top:-12px;left:1.5rem;background:var(--accent);color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;padding:.25rem .75rem;border-radius:5px;letter-spacing:.05em}
+.quiz-question{font-size:.95rem;font-weight:600;color:var(--ink);margin:.4rem 0 .9rem;line-height:1.7}
+.quiz-options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.7rem}
+.quiz-opt{text-align:left;background:#fafaf6;border:1.5px solid #e0d9c8;border-radius:7px;padding:.7rem 1rem;font-size:.88rem;line-height:1.6;color:#333;cursor:pointer;transition:all .2s;font-family:inherit}
+.quiz-opt:hover{background:#f5f0e8;border-color:#b8860b}
+.quiz-opt.selected-correct{background:linear-gradient(135deg,#d4edd4,#c0e0c0);border-color:#5a8c5a;color:#1e4d1e;font-weight:600}
+.quiz-opt.selected-wrong{background:linear-gradient(135deg,#f8d8d4,#efc4be);border-color:#b85040;color:#7a1a10}
+.quiz-opt.show-correct{background:#eaf5ea;border-color:#5a8c5a;font-weight:500}
+.quiz-explain{font-size:.85rem;line-height:1.8;color:#333;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(90,110,90,.04));padding:.9rem 1.1rem;border-radius:7px;border-left:3px solid var(--sage);display:none}
+.quiz-explain.shown{display:block}
+.quiz-explain strong{color:var(--accent)}
+
+@media(max-width:780px){
+  .layer-grid,.inst-vs-grid,.media-impact-grid,.blur-grid,.connect-grid{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- 頂部導航 -->
+<div class="top-nav">
+  <span class="nav-title">W11 微觀政治 ⇄ 社會運動</span>
+  <button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+  <button class="nav-btn" onclick="goPage(1)">1 · 從結構到行動</button>
+  <button class="nav-btn" onclick="goPage(2)">2 · 社運理論譜系</button>
+  <button class="nav-btn" onclick="goPage(3)">3 · 公民還是暴民</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(4)">4 · Scott與弱者武器</button>
+  <button class="nav-btn" onclick="goPage(5)">5 · 日常政治三巨頭</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(6)">6 · 太陽花vs青鳥</button>
+  <button class="nav-btn" onclick="goPage(7)">7 · 躺平與安靜離職</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(8)">8 · 討論題</button>
+  <button class="nav-btn" onclick="goPage(9)">9 · 本週讀物</button>
+</div>
+
+<div class="page-container">
+
+<!-- P0 封面 -->
+<div class="page active" data-page="0"><div class="page-inner">
+  <div class="hero">
+    <div class="hero-eyebrow">Political Sociology · Week 11</div>
+    <h1 class="hero-title">微觀政治<span class="mark">與</span>協商行動</h1>
+    <p class="hero-sub">社會運動的醞釀與興起 ── 當底層民眾「不抗議」也是一種政治</p>
+    <div class="hero-meta">
+      <span>🌱 Scott · 弱者的武器</span>
+      <span>🕊 蕭蘋 · 公民/暴民</span>
+      <span>🌻 太陽花 → 青鳥</span>
+    </div>
+  </div>
+
+  <div class="story-lead">
+    上週我們進入了<strong>行動者—制度</strong>的對話：制度不是水泥牆，而是行動者協商出來的暫時平衡。本週繼續推進——當制度<strong>對某些人關閉了</strong>正式管道（沒投票權、沒組織、沒資源），他們會怎麼做？是真的「無聲」嗎？還是用我們聽不見的方式說話？
+  </div>
+
+  <div class="questions">
+    <h4>📌 本週要解答的五個核心問題</h4>
+    <ol>
+      <li><strong>James C. Scott 是誰？</strong>他為什麼說底層民眾用的不是「武器」，而是「<strong>弱者的武器</strong>」？</li>
+      <li><strong>什麼是「日常政治」（Everyday Politics）？</strong>它如何在不開槍、不上街、不投票的情況下，挑戰權力？</li>
+      <li><strong>社會運動一定要有「組織化」與「明確領導者」嗎？</strong>當運動沒有大台、沒有總指揮，它還能成功嗎？</li>
+      <li><strong>新媒體把人民變成「公民」還是「暴民」？</strong>蕭蘋的提問，今天還適用嗎？</li>
+      <li><strong>「太陽花」、「青鳥」、「躺平」、「安靜離職」、「內卷」</strong>——這些看起來不像同一件事的現象，背後是否有共同的政治社會學邏輯？</li>
+    </ol>
+  </div>
+
+  <h3><span class="num">📖</span>本週路線圖</h3>
+  <div class="card-grid">
+    <div class="card"><h4>P1 從結構到行動</h4><p>研究觀點為什麼會轉變？學者關係圖：環境變化 vs 技術變化的雙重推力。</p></div>
+    <div class="card blue"><h4>P2 社運理論譜系</h4><p>四代學者譜系圖：從集體行為論到日常政治派。<strong>制度性 vs 非制度性</strong>社運的概念。</p></div>
+    <div class="card gold"><h4>P3 公民還是暴民</h4><p>蕭蘋（2014）+ 新媒體如何<em>同時</em>改變制度面（連署、罷免）與非制度面（迷因、無大台）。</p></div>
+    <div class="card sage"><h4>P4 Scott 與弱者的武器</h4><p>農民人類學家 James C. Scott。隱藏文本、公開文本、infrapolitics。</p></div>
+    <div class="card teal"><h4>P5 日常政治三巨頭</h4><p>Scott × de Certeau × Bayat。三種「無聲政治」的對照。</p></div>
+    <div class="card orange"><h4>P6 太陽花 vs 青鳥</h4><p>何明修（2024）+ <strong>4 題隨堂選擇題</strong>。從大台到去中心化的十年演進。</p></div>
+    <div class="card purple"><h4>P7 躺平與安靜離職</h4><p>當運動「沒人想參加」+ <strong>4 題隨堂選擇題</strong>。日常政治的當代變形。</p></div>
+    <div class="card"><h4>P8-P9 討論與讀物</h4><p>小組討論題與本週指定／推薦閱讀。</p></div>
+  </div>
+
+  <div class="next-page" onclick="goPage(1)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P1 · 從結構到行動：研究觀點為什麼會轉變？</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P1 從結構到行動 -->
+<div class="page" data-page="1"><div class="page-inner">
+  <div class="guide-breadcrumb">第 1 章 · 路徑</div>
+  <h2 class="page-h2">從結構到行動<span class="mark">：</span>研究觀點為什麼會轉變？</h2>
+  <p class="lede">
+    從 W4 的 Skocpol（國家自主性）、W5 的 Tilly（國家形成）、到 W10 的新制度論——我們一直在問<strong>「結構如何塑造行動」</strong>。
+    但本週開始，問題反過來了：<em>當結構看似牢不可破，普通人還能做什麼？</em>
+  </p>
+
+  <!-- 三層分析格 -->
+  <h3 class="section-h3">🔍 政治社會學的三層分析尺度</h3>
+  <div class="layer-grid">
+    <div class="layer-card layer-macro">
+      <div class="layer-tag">宏觀 MACRO</div>
+      <div class="layer-title">結構 · 制度 · 國家</div>
+      <ul class="layer-list">
+        <li>國家形成、革命、戰爭</li>
+        <li>世界體系、資本主義</li>
+        <li>正式制度與規則</li>
+      </ul>
+      <div class="layer-scholar">代表：Skocpol、Tilly、Mann</div>
+    </div>
+    <div class="layer-card layer-meso">
+      <div class="layer-tag">中觀 MESO</div>
+      <div class="layer-title">組織 · 運動 · 網絡</div>
+      <ul class="layer-list">
+        <li>政黨、工會、社會運動</li>
+        <li>資源動員、政治機會</li>
+        <li>集體認同與動員結構</li>
+      </ul>
+      <div class="layer-scholar">代表：McAdam、Tarrow、Tilly（後期）</div>
+    </div>
+    <div class="layer-card layer-micro">
+      <div class="layer-tag">微觀 MICRO</div>
+      <div class="layer-title">日常 · 身體 · 話語</div>
+      <ul class="layer-list">
+        <li>日常抵抗、隱藏腳本</li>
+        <li>協商、迴避、戰術</li>
+        <li>身體姿態、沉默、流言</li>
+      </ul>
+      <div class="layer-scholar">代表：Scott、de Certeau、Bayat</div>
+    </div>
+  </div>
+
+  <!-- 學者關係圖：從結構到日常的研究發展路徑 -->
+  <h3 class="section-h3">🗺️ 學者關係圖：政治社會學的研究路徑</h3>
+  <p class="section-lead">
+    下圖呈現政治社會學從 <strong>1960s 結構分析</strong> 到 <strong>2010s 日常政治</strong> 的學術發展軌跡。
+    每一代學者都在「回應上一代未解決的問題」。
+  </p>
+  <div class="lineage-map">
+    <svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Noto Sans TC',sans-serif">
+      <!-- 時間軸 -->
+      <line x1="60" y1="420" x2="840" y2="420" stroke="#999" stroke-width="1.5"/>
+      <text x="60" y="445" font-size="11" fill="#666">1960s</text>
+      <text x="240" y="445" font-size="11" fill="#666">1970s</text>
+      <text x="420" y="445" font-size="11" fill="#666">1980s–90s</text>
+      <text x="620" y="445" font-size="11" fill="#666">2000s</text>
+      <text x="790" y="445" font-size="11" fill="#666">2010s–</text>
+
+      <!-- 第一層：宏觀結構 -->
+      <rect x="50" y="40" width="170" height="80" rx="8" fill="#8b2500" opacity="0.92"/>
+      <text x="135" y="65" text-anchor="middle" font-size="12" font-weight="600" fill="#fff">宏觀結構派</text>
+      <text x="135" y="86" text-anchor="middle" font-size="10.5" fill="#fff">Skocpol · Mann</text>
+      <text x="135" y="103" text-anchor="middle" font-size="10.5" fill="#fff">Moore · Wallerstein</text>
+
+      <!-- 第二層：政治過程派 -->
+      <rect x="245" y="40" width="170" height="80" rx="8" fill="#b8860b" opacity="0.92"/>
+      <text x="330" y="65" text-anchor="middle" font-size="12" font-weight="600" fill="#fff">政治過程派</text>
+      <text x="330" y="86" text-anchor="middle" font-size="10.5" fill="#fff">Tilly · Tarrow</text>
+      <text x="330" y="103" text-anchor="middle" font-size="10.5" fill="#fff">McAdam · Zald</text>
+
+      <!-- 第三層：文化轉向 -->
+      <rect x="440" y="40" width="170" height="80" rx="8" fill="#5a6e5a" opacity="0.92"/>
+      <text x="525" y="65" text-anchor="middle" font-size="12" font-weight="600" fill="#fff">文化轉向</text>
+      <text x="525" y="86" text-anchor="middle" font-size="10.5" fill="#fff">Polletta · Jasper</text>
+      <text x="525" y="103" text-anchor="middle" font-size="10.5" fill="#fff">框架 / 認同 / 情緒</text>
+
+      <!-- 第四層：日常政治 -->
+      <rect x="640" y="40" width="170" height="80" rx="8" fill="#2c5f7c" opacity="0.92"/>
+      <text x="725" y="65" text-anchor="middle" font-size="12" font-weight="600" fill="#fff">日常政治派</text>
+      <text x="725" y="86" text-anchor="middle" font-size="10.5" fill="#fff">Scott · de Certeau</text>
+      <text x="725" y="103" text-anchor="middle" font-size="10.5" fill="#fff">Bayat · Ho（何明修）</text>
+
+      <!-- 中段：研究主題 -->
+      <text x="135" y="170" text-anchor="middle" font-size="11" fill="#444">📌 國家、革命、戰爭</text>
+      <text x="135" y="190" text-anchor="middle" font-size="11" fill="#444">📌 結構決定行動</text>
+      <text x="330" y="170" text-anchor="middle" font-size="11" fill="#444">📌 政治機會、資源</text>
+      <text x="330" y="190" text-anchor="middle" font-size="11" fill="#444">📌 組織如何動員</text>
+      <text x="525" y="170" text-anchor="middle" font-size="11" fill="#444">📌 框架、情感、認同</text>
+      <text x="525" y="190" text-anchor="middle" font-size="11" fill="#444">📌 意義如何被建構</text>
+      <text x="725" y="170" text-anchor="middle" font-size="11" fill="#444">📌 沒組織的抵抗</text>
+      <text x="725" y="190" text-anchor="middle" font-size="11" fill="#444">📌 數位、青年、無大台</text>
+
+      <!-- 箭頭：研究轉向的推力 -->
+      <path d="M 220 80 L 245 80" stroke="#333" stroke-width="2" marker-end="url(#arr1)"/>
+      <path d="M 415 80 L 440 80" stroke="#333" stroke-width="2" marker-end="url(#arr1)"/>
+      <path d="M 610 80 L 640 80" stroke="#333" stroke-width="2" marker-end="url(#arr1)"/>
+
+      <defs>
+        <marker id="arr1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <polygon points="0 0, 8 4, 0 8" fill="#333"/>
+        </marker>
+      </defs>
+
+      <!-- 下方：驅動轉向的力量 -->
+      <rect x="50" y="240" width="780" height="150" rx="10" fill="#f5f0e8" stroke="#d4cfc4" stroke-width="1.5"/>
+      <text x="440" y="265" text-anchor="middle" font-size="13" font-weight="700" fill="#8b2500">⚡ 推動觀點轉變的兩大力量</text>
+
+      <!-- 環境因素 -->
+      <text x="220" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#5a6e5a">🌏 環境變化</text>
+      <text x="220" y="318" text-anchor="middle" font-size="10.5" fill="#444">• 後冷戰與民主化浪潮</text>
+      <text x="220" y="335" text-anchor="middle" font-size="10.5" fill="#444">• 新自由主義、零工經濟</text>
+      <text x="220" y="352" text-anchor="middle" font-size="10.5" fill="#444">• 工會衰退、組織式動員失靈</text>
+      <text x="220" y="369" text-anchor="middle" font-size="10.5" fill="#444">• 全球青年「無前景感」</text>
+
+      <!-- 分隔線 -->
+      <line x1="440" y1="285" x2="440" y2="378" stroke="#d4cfc4" stroke-width="1"/>
+
+      <!-- 技術因素 -->
+      <text x="660" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#2c5f7c">💻 技術變化</text>
+      <text x="660" y="318" text-anchor="middle" font-size="10.5" fill="#444">• 智慧手機普及（2010 後）</text>
+      <text x="660" y="335" text-anchor="middle" font-size="10.5" fill="#444">• 社群平台改變動員邏輯</text>
+      <text x="660" y="352" text-anchor="middle" font-size="10.5" fill="#444">• 直播、迷因、演算法</text>
+      <text x="660" y="369" text-anchor="middle" font-size="10.5" fill="#444">• 個體可不靠組織也能發聲</text>
+    </svg>
+  </div>
+
+  <!-- 觀點轉變說明 -->
+  <h3 class="section-h3">🤔 為什麼研究會從結構走向日常？</h3>
+  <div class="transition-box">
+    <div class="trans-row">
+      <div class="trans-q">為什麼 1960s 的結構派<strong>看不見日常</strong>？</div>
+      <div class="trans-a">因為當時的政治社會學想解釋的是<em>「為什麼會革命」、「為什麼國家會強大」</em>——
+      宏大事件需要宏大解釋。日常瑣事被視為「噪音」。</div>
+    </div>
+    <div class="trans-row">
+      <div class="trans-q">為什麼 1970s 後出現政治過程派？</div>
+      <div class="trans-a">結構派<em>無法解釋「人怎麼動起來」</em>。Tilly 從歐洲歷史中發現：抗爭有<strong>劇碼（repertoire）</strong>、
+      有<strong>動員結構</strong>。研究焦點從「為什麼有革命」轉到「<em>抗爭如何被組織</em>」。</div>
+    </div>
+    <div class="trans-row">
+      <div class="trans-q">為什麼 1980s 後出現文化轉向？</div>
+      <div class="trans-a">資源動員論<em>過度理性化</em>——好像人只要有錢、有組織就會動員。但東歐革命、女權運動讓人發現：
+      <strong>意義、情感、認同</strong>同樣關鍵。「為什麼有人願意冒生命危險上街？」不是純粹理性計算。</div>
+    </div>
+    <div class="trans-row">
+      <div class="trans-q">為什麼 2000 年後出現日常政治派？</div>
+      <div class="trans-a">兩個變化同時發生——<br>
+      <strong>① 環境變化：</strong>傳統工會、政黨衰退，但<em>不滿並沒有消失</em>，只是換了形式（躺平、辭職、移民）。<br>
+      <strong>② 技術變化：</strong>智慧手機讓個體不需要組織也能<em>發聲、串連、嘲諷</em>。
+      Scott 1985 年寫《弱者的武器》時還沒有 Twitter，但他發現的「無組織抵抗」邏輯，在 2010 年後反而成了主流。</div>
+    </div>
+  </div>
+
+  <!-- 本週路徑預告 -->
+  <div class="callout callout-blue">
+    <div class="callout-eyebrow">📍 本週路線圖</div>
+    <p>本週講義的順序，就是<strong>「制度性 → 非制度性 → 微觀日常」</strong>的順序：</p>
+    <ol class="callout-list">
+      <li><strong>P2 社運理論譜系：</strong>看四代學者如何重新定義「什麼算社運」</li>
+      <li><strong>P3 公民還是暴民：</strong>看新媒體如何同時改變制度面與非制度面</li>
+      <li><strong>P4 Scott 與弱者武器：</strong>進入真正的微觀層次</li>
+      <li><strong>P5 三巨頭：</strong>Scott × de Certeau × Bayat 比較</li>
+      <li><strong>P6–P7 台灣案例：</strong>太陽花、青鳥、躺平、內卷</li>
+    </ol>
+  </div>
+
+  <div class="next-page" onclick="goPage(2)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P2 · 社運理論譜系：從制度走向非制度</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P2 社運理論譜系（移自原 P4）-->
+<div class="page" data-page="2"><div class="page-inner">
+  <div class="guide-breadcrumb">第 2 章 · 譜系</div>
+  <h2 class="page-h2">社運理論譜系<span class="mark">：</span>從制度性到非制度性</h2>
+  <p class="lede">
+    社會運動理論的發展，可以視為一場<strong>關於「什麼算政治參與」的爭辯史</strong>。
+    從早期把抗議當成「異常行為」，到當代承認「日常迴避也是政治」——這段路走了 60 年。
+  </p>
+
+  <!-- 關鍵概念對照：制度性 vs 非制度性 -->
+  <h3 class="section-h3">⚖️ 核心概念：制度性 vs 非制度性社會運動</h3>
+  <div class="inst-vs-grid">
+    <div class="inst-card inst-formal">
+      <div class="inst-tag">制度性 INSTITUTIONAL</div>
+      <div class="inst-title">在規則之內爭取改變</div>
+      <ul class="inst-list">
+        <li>📜 透過<strong>正式管道</strong>表達訴求</li>
+        <li>🗳️ 投票、連署、請願、公聽會</li>
+        <li>🏛️ 政黨、工會、利益團體</li>
+        <li>⚖️ 訴訟、立法遊說、罷免</li>
+        <li>📢 合法集會遊行、公開抗議</li>
+      </ul>
+      <div class="inst-foot">
+        🧠 <strong>研究預設：</strong>運動目標是「進入」體制、改變政策
+      </div>
+    </div>
+    <div class="inst-card inst-informal">
+      <div class="inst-tag">非制度性 NON-INSTITUTIONAL</div>
+      <div class="inst-title">在規則之外（或之下）施壓</div>
+      <ul class="inst-list">
+        <li>🏃 <strong>體制外</strong>的行動形式</li>
+        <li>🚧 佔領、罷工、堵路、靜坐</li>
+        <li>🎭 行為藝術、迷因、嘲諷</li>
+        <li>🤫 怠工、消極順從、不合作</li>
+        <li>📱 無大台動員、去中心化串連</li>
+      </ul>
+      <div class="inst-foot">
+        🧠 <strong>研究預設：</strong>當體制阻塞時，行動才會「跳出」既有規則
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-eyebrow">⚠️ 重要提醒</div>
+    <p>「制度／非制度」<strong>不是運動的本質屬性</strong>，而是<em>運動光譜上的兩端</em>。
+    同一場運動可能<strong>同時</strong>使用兩種策略——青鳥行動既上街佔領（非制度），也推動罷免連署（制度）。
+    判斷的關鍵不是「合法 vs 違法」，而是「<strong>在現有規則內 vs 試圖改變遊戲規則</strong>」。</p>
+  </div>
+
+  <!-- 四代理論譜系圖 -->
+  <h3 class="section-h3">🌳 四代社會運動理論譜系</h3>
+  <p class="section-lead">
+    每一代理論都在回應前一代的盲點。下圖呈現核心問題、代表學者、與「制度／非制度」立場的演變。
+  </p>
+
+  <div class="lineage-tree">
+    <svg viewBox="0 0 900 720" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Noto Sans TC',sans-serif">
+      <!-- 中軸線 -->
+      <line x1="450" y1="50" x2="450" y2="700" stroke="#d4cfc4" stroke-width="2" stroke-dasharray="4 4"/>
+
+      <!-- ====== 第一代 ====== -->
+      <rect x="80" y="40" width="740" height="135" rx="10" fill="#fdf8ef" stroke="#b8860b" stroke-width="2"/>
+      <text x="100" y="68" font-size="12" font-weight="700" fill="#b8860b">第一代 · 1950s–60s</text>
+      <text x="100" y="90" font-size="15" font-weight="700" fill="#333">集體行為論（Collective Behavior）</text>
+      <text x="100" y="113" font-size="11" fill="#555">代表學者：Le Bon · Blumer · Smelser · Kornhauser</text>
+      <text x="100" y="135" font-size="11" fill="#555">核心問題：群眾為何「失控」？</text>
+      <text x="100" y="155" font-size="11" fill="#8b2500" font-weight="600">⚠️ 視抗議為「病理」、「非理性」、「失序」</text>
+      <!-- 制度立場 -->
+      <rect x="650" y="80" width="155" height="70" rx="6" fill="#5a6e5a" opacity="0.92"/>
+      <text x="727" y="103" text-anchor="middle" font-size="10" fill="#fff">立場</text>
+      <text x="727" y="123" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">運動 = 體制外亂象</text>
+      <text x="727" y="143" text-anchor="middle" font-size="10" fill="#fff">應該被「導正」回制度</text>
+
+      <!-- 箭頭 -->
+      <path d="M 450 180 L 450 210" stroke="#888" stroke-width="2" marker-end="url(#larr)"/>
+      <text x="465" y="200" font-size="10" fill="#666" font-style="italic">回應：抗爭明明是理性的！</text>
+
+      <!-- ====== 第二代 ====== -->
+      <rect x="80" y="215" width="740" height="135" rx="10" fill="#fdf8ef" stroke="#8b2500" stroke-width="2"/>
+      <text x="100" y="243" font-size="12" font-weight="700" fill="#8b2500">第二代 · 1970s</text>
+      <text x="100" y="265" font-size="15" font-weight="700" fill="#333">資源動員論（Resource Mobilization）</text>
+      <text x="100" y="288" font-size="11" fill="#555">代表學者：McCarthy · Zald · Oberschall</text>
+      <text x="100" y="310" font-size="11" fill="#555">核心問題：運動需要什麼條件才能組織起來？</text>
+      <text x="100" y="330" font-size="11" fill="#2c5f7c" font-weight="600">💡 重點：金錢、人力、組織、領袖、媒體曝光</text>
+      <rect x="650" y="255" width="155" height="70" rx="6" fill="#5a6e5a" opacity="0.92"/>
+      <text x="727" y="278" text-anchor="middle" font-size="10" fill="#fff">立場</text>
+      <text x="727" y="298" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">運動 = 理性組織</text>
+      <text x="727" y="318" text-anchor="middle" font-size="10" fill="#fff">但<tspan font-weight="700">仍是制度外</tspan>行動</text>
+
+      <path d="M 450 355 L 450 385" stroke="#888" stroke-width="2" marker-end="url(#larr)"/>
+      <text x="465" y="375" font-size="10" fill="#666" font-style="italic">回應：光有資源不夠，還要等「機會」！</text>
+
+      <!-- ====== 第三代 ====== -->
+      <rect x="80" y="390" width="740" height="135" rx="10" fill="#fdf8ef" stroke="#2c5f7c" stroke-width="2"/>
+      <text x="100" y="418" font-size="12" font-weight="700" fill="#2c5f7c">第三代 · 1980s–90s</text>
+      <text x="100" y="440" font-size="15" font-weight="700" fill="#333">政治過程論（Political Process）</text>
+      <text x="100" y="463" font-size="11" fill="#555">代表學者：Tilly · Tarrow · McAdam · Goldstone</text>
+      <text x="100" y="485" font-size="11" fill="#555">核心問題：什麼時候政治機會打開、運動就會爆發？</text>
+      <text x="100" y="505" font-size="11" fill="#2c5f7c" font-weight="600">💡 重點：政治機會結構、抗爭劇碼、菁英分裂</text>
+      <rect x="650" y="430" width="155" height="70" rx="6" fill="#5a6e5a" opacity="0.92"/>
+      <text x="727" y="453" text-anchor="middle" font-size="10" fill="#fff">立場</text>
+      <text x="727" y="473" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">制度 ⇄ 非制度</text>
+      <text x="727" y="493" text-anchor="middle" font-size="10" fill="#fff">兩者互相牽動</text>
+
+      <path d="M 450 530 L 450 560" stroke="#888" stroke-width="2" marker-end="url(#larr)"/>
+      <text x="465" y="550" font-size="10" fill="#666" font-style="italic">回應：那「沒組織、沒動員」的人呢？</text>
+
+      <!-- ====== 第四代 ====== -->
+      <rect x="80" y="565" width="740" height="135" rx="10" fill="#fdf8ef" stroke="#5a6e5a" stroke-width="2"/>
+      <text x="100" y="593" font-size="12" font-weight="700" fill="#5a6e5a">第四代 · 2000s–至今</text>
+      <text x="100" y="615" font-size="15" font-weight="700" fill="#333">文化、網絡與日常政治</text>
+      <text x="100" y="638" font-size="11" fill="#555">代表學者：Scott · de Certeau · Bayat · Castells · Polletta · 何明修</text>
+      <text x="100" y="660" font-size="11" fill="#555">核心問題：沒有組織、沒有領袖的抵抗，算不算政治？</text>
+      <text x="100" y="680" font-size="11" fill="#8b2500" font-weight="600">💡 重點：日常生活、迷因、無大台、隱藏腳本、平台演算法</text>
+      <rect x="650" y="605" width="155" height="70" rx="6" fill="#8b2500" opacity="0.92"/>
+      <text x="727" y="628" text-anchor="middle" font-size="10" fill="#fff">立場</text>
+      <text x="727" y="648" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">擴大「政治」定義</text>
+      <text x="727" y="668" text-anchor="middle" font-size="10" fill="#fff">非制度也是核心舞台</text>
+
+      <defs>
+        <marker id="larr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+          <polygon points="0 0, 10 5, 0 10" fill="#888"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- 與 W10 新制度論的連結 -->
+  <h3 class="section-h3">🔗 與 W10 新制度論的對話</h3>
+  <div class="connect-box">
+    <p><strong>W10 新制度論提醒我們：</strong>制度不是中立的，它<em>偏好某些行動者、排除某些行動者</em>。</p>
+    <p><strong>本週要進一步問：</strong>那<em>被排除的人</em>怎麼辦？他們會：</p>
+    <div class="connect-grid">
+      <div class="connect-item">
+        <div class="connect-num">①</div>
+        <div class="connect-text">
+          <strong>嘗試進入制度</strong><br>
+          <span class="connect-sub">→ 形成「制度性社運」<br>例：勞工組工會、性別團體推動立法</span>
+        </div>
+      </div>
+      <div class="connect-item">
+        <div class="connect-num">②</div>
+        <div class="connect-text">
+          <strong>跳出制度抗爭</strong><br>
+          <span class="connect-sub">→ 形成「非制度性社運」<br>例：佔領運動、太陽花、青鳥</span>
+        </div>
+      </div>
+      <div class="connect-item">
+        <div class="connect-num">③</div>
+        <div class="connect-text">
+          <strong>退到日常迴避</strong><br>
+          <span class="connect-sub">→ 進入「日常政治」<br>例：躺平、內卷、安靜離職</span>
+        </div>
+      </div>
+    </div>
+    <p class="connect-foot">這三條路徑<strong>不是互斥的</strong>。同一群人、同一個議題，可能在不同時刻採取不同策略。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(3)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P3 · 公民還是暴民：新媒體如何重塑社運</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P3 公民還是暴民（移自原 P5）-->
+<div class="page" data-page="3"><div class="page-inner">
+  <div class="guide-breadcrumb">第 3 章 · 命名 · 媒介</div>
+  <h2 class="page-h2">公民還是暴民<span class="mark">？</span>新媒體如何重塑社運</h2>
+  <p class="lede">
+    每一場抗議出現時，<em>怎麼稱呼參與者</em>，就是一場政治戰役。「公民」聽起來理性正當，「暴民」聽起來危險失序——
+    <strong>命名本身就是政治</strong>。而誰能掌握命名權，<em>正在被新媒體徹底改寫</em>。
+  </p>
+
+  <!-- 蕭蘋四階段歷史 -->
+  <h3 class="section-h3">📜 蕭蘋（2014）：台灣「公民／暴民」命名史四階段</h3>
+  <p class="section-lead">
+    蕭蘋指出：什麼叫「公民」、什麼叫「暴民」，<em>從來不是字典定義</em>——
+    它隨著國家結構、媒體技術、社會分歧而不斷改寫。
+  </p>
+
+  <div class="discourse-box">
+    <div class="discourse-stage">
+      <div class="ds-num">①</div>
+      <div class="ds-body">
+        <div class="ds-era">戒嚴時期 · 1949–1987</div>
+        <div class="ds-title">「群眾」是被教化的對象</div>
+        <div class="ds-text">國民黨體制下，<em>沒有「公民」這個主體</em>，只有需要被啟蒙、被動員的「民眾」。
+        街頭抗議幾乎不存在，僅有的反對行動立刻被貼上「叛亂分子」標籤。</div>
+      </div>
+    </div>
+    <div class="discourse-stage">
+      <div class="ds-num">②</div>
+      <div class="ds-body">
+        <div class="ds-era">解嚴後 · 1987–2000</div>
+        <div class="ds-title">「抗爭者 = 暴民」的主流敘事</div>
+        <div class="ds-text">解嚴後街頭運動爆發（環保、勞工、原住民、婦女）。主流媒體（三台、大報）
+        多由國民黨間接掌控，將抗爭者描繪為<strong>「暴民」、「製造社會動亂」</strong>。
+        參與抗議在社會印象中=不理性。</div>
+      </div>
+    </div>
+    <div class="discourse-stage">
+      <div class="ds-num">③</div>
+      <div class="ds-body">
+        <div class="ds-era">政黨輪替後 · 2000–2010</div>
+        <div class="ds-title">「公民」概念在地化</div>
+        <div class="ds-text">隨民主鞏固，「公民」逐漸成為<em>正當主體</em>。NGO、學界、獨立媒體
+        開始用「<strong>公民社會</strong>」、「<strong>公民參與</strong>」重新定義抗爭——
+        從「破壞秩序」轉為「<em>監督政府</em>」。</div>
+      </div>
+    </div>
+    <div class="discourse-stage discourse-highlight">
+      <div class="ds-num">④</div>
+      <div class="ds-body">
+        <div class="ds-era">數位媒體時代 · 2010s 至今</div>
+        <div class="ds-title">命名權「下放」到網民手中</div>
+        <div class="ds-text"><strong>新媒體徹底改寫了誰能命名運動</strong>。
+        參與者可以即時自我發聲、自我命名，不再等主流媒體框架。
+        2014 太陽花、2024 青鳥都是在<em>網路上先被命名、才被主流媒體跟進</em>。
+        但同時：「暴民」、「網軍」、「被動員的人」<em>也透過社群網絡再生產</em>。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新媒體對社運的影響：制度面 vs 非制度面 -->
+  <h3 class="section-h3">📱 新媒體對社運的雙重衝擊</h3>
+  <p class="section-lead">
+    這是本章核心：<strong>新媒體並沒有「讓社運更民主」或「更激進」這麼簡單</strong>，
+    它<em>同時改寫了制度面與非制度面</em>，而且兩者邊界變得模糊。
+  </p>
+
+  <div class="media-impact-grid">
+    <!-- 制度面 -->
+    <div class="impact-card impact-inst">
+      <div class="impact-tag">🏛️ 制度面影響</div>
+      <div class="impact-title">新媒體強化「制度性社運」的工具</div>
+      <ul class="impact-list">
+        <li>
+          <strong>數位連署、線上請願</strong><br>
+          <span class="impact-sub">公共政策網路參與平台、change.org —— 過去要街頭擺攤一週，現在 48 小時破萬</span>
+        </li>
+        <li>
+          <strong>罷免動員的低成本化</strong><br>
+          <span class="impact-sub">2024 大罷免動員可在 LINE 群組、社團頁面即時擴散，傳統需要組織、車隊、傳單</span>
+        </li>
+        <li>
+          <strong>立法遊說的「眾包」</strong><br>
+          <span class="impact-sub">公民可即時追蹤法案、施壓立委，例：婚姻平權、《跟騷法》</span>
+        </li>
+        <li>
+          <strong>監督政府透明化</strong><br>
+          <span class="impact-sub">直播議會、公開預算、人臉辨識國會——降低監督成本</span>
+        </li>
+      </ul>
+      <div class="impact-foot">
+        ✅ <strong>效果：</strong>傳統制度管道<em>更容易進入</em>，門檻下降
+      </div>
+    </div>
+
+    <!-- 非制度面 -->
+    <div class="impact-card impact-noninst">
+      <div class="impact-tag">🚧 非制度面影響</div>
+      <div class="impact-title">新媒體創造「無大台」的新動員模式</div>
+      <ul class="impact-list">
+        <li>
+          <strong>去中心化、無領袖動員</strong><br>
+          <span class="impact-sub">青鳥行動、香港反送中——沒有「總指揮」，靠社群網絡自我協調</span>
+        </li>
+        <li>
+          <strong>迷因政治、嘲諷武器化</strong><br>
+          <span class="impact-sub">王世堅「沒出息」、「藍白拖」、「綠共」——一張迷因勝過千言萬語</span>
+        </li>
+        <li>
+          <strong>即時直播改變抗議性質</strong><br>
+          <span class="impact-sub">警察執法被即時錄影上傳，抗議者也被監控，<em>雙向監視</em></span>
+        </li>
+        <li>
+          <strong>演算法決定誰被看見</strong><br>
+          <span class="impact-sub">FB「青鳥」名稱就是為了繞過演算法審查——抗議連<em>「自己叫什麼」</em>都被平台規則影響</span>
+        </li>
+      </ul>
+      <div class="impact-foot">
+        ⚠️ <strong>效果：</strong>動員<em>更快、更廣</em>，但也<em>更脆弱、更難持續</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- 制度／非制度的界線正在模糊 -->
+  <h3 class="section-h3">🌀 真正的關鍵：兩者界線正在模糊</h3>
+  <div class="blur-grid">
+    <div class="blur-card">
+      <div class="blur-eye">案例 1</div>
+      <div class="blur-title">青鳥行動的「同時兩線作戰」</div>
+      <div class="blur-text">非制度面：佔領立院、無大台、迷因迭出；制度面：同時推動<strong>大罷免連署</strong>、向監察院舉發。
+      <em>同一群人、同一週內</em>，跨越制度／非制度。</div>
+    </div>
+    <div class="blur-card">
+      <div class="blur-eye">案例 2</div>
+      <div class="blur-title">數位連署 = 制度，還是非制度？</div>
+      <div class="blur-text">「公共政策網路參與平台」是政府開的<em>制度</em>管道，但動員力量來自<em>非制度的網路社群</em>。
+      新媒體讓這種<strong>「制度殼、非制度動員」</strong>變得普遍。</div>
+    </div>
+    <div class="blur-card">
+      <div class="blur-eye">案例 3</div>
+      <div class="blur-title">迷因進入正式政治</div>
+      <div class="blur-text">「館長」、「Cheap」、「八炯」——這些 YouTuber 既是<em>非制度</em>的網路紅人，
+      也擁有<em>實質的政治影響力</em>，甚至參與選舉、為候選人站台。網紅政治模糊了傳統政治參與的邊界。</div>
+    </div>
+  </div>
+
+  <!-- 思考題 -->
+  <div class="discussion-block">
+    <div class="discussion-eyebrow">💭 想一想</div>
+    <div class="discussion-q">
+      蕭蘋說「命名就是政治」。那麼當 2024 年青鳥行動時，<em>不同媒體</em>分別怎麼稱呼參與者？
+      （主流電視台、PTT、Threads、藍營粉專、綠營粉專、TikTok…）
+      <strong>這些不同命名，反映了哪些政治立場？</strong>
+    </div>
+    <div class="spoiler">
+      📝 思考方向<br><br>
+      • <strong>主流電視台</strong>：傾向用「群眾」、「民眾」、「抗議人士」——保留中立感<br>
+      • <strong>支持方社群</strong>：「青鳥」、「公民」、「守護民主的人」——正當化<br>
+      • <strong>反對方社群</strong>：「暴民」、「綠共」、「被動員的網軍」——污名化<br>
+      • <strong>PTT/Threads</strong>：往往透過迷因、戲謔（如「上街看自由」）——介於兩者間<br><br>
+      <em>重點：</em>同一群肉身，在不同媒體被命名為完全不同的政治主體。新媒體讓「命名戰場」<strong>多元化、平行化、即時化</strong>——
+      不再有單一主流敘事，而是<em>多個敘事社群並存</em>。這正是蕭蘋說的「公民／暴民論述的當代轉型」。
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(4)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P4 · James C. Scott 與弱者的武器</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P4 Scott 與弱者的武器（移自原 P2）-->
+<div class="page" data-page="4"><div class="page-inner">
+  <div class="guide-breadcrumb">第 4 章 · 微觀</div>
+  <h2 class="page-h2">James C. Scott<span class="mark">與</span>「弱者的武器」</h2>
+
+  <div class="story-lead">
+    在介紹理論之前，先讓我們認識這位學者本人。Scott 並不是傳統的政治社會學家——他是一個<strong>走進田野的人類學家</strong>，蹲在馬來西亞鄉下的稻田旁，聽農民抱怨、聊天、講笑話，<strong>聽出了一整套關於權力的理論</strong>。
+  </div>
+
+  <h3><span class="num">①</span>學者介紹：Scott 是誰？</h3>
+
+  <div class="scott-hero">
+    <div class="scott-portrait">
+      <div class="name-cn">詹姆斯·斯科特</div>
+      <div class="name-en">James C. Scott</div>
+      <div class="life">1936 – 2024</div>
+    </div>
+    <div class="scott-info">
+      <h3>耶魯大學政治學/人類學教授</h3>
+      <div class="scott-sub">一個討厭國家、同情農民、躲到山上的學者</div>
+      <p>
+        <strong>學術定位</strong>：身分上是政治學家，但實質上是政治人類學家。長期蹲點馬來西亞與東南亞高地，研究農民、無國家社會與抵抗策略。<br><br>
+        <strong>研究關懷</strong>：他一輩子問同一個問題——「<strong>當你沒有力量改變制度時，你還能怎麼做？</strong>」他的答案不是「揭竿而起」，而是「<strong>持續、低度、不被看見的抵抗</strong>」。<br><br>
+        <strong>代表作</strong>：《農民的道德經濟學》(1976)、<em>《弱者的武器》(1985)</em>、《支配與抵抗的藝術》(1990)、《國家的視角》(1998)、《不被統治的藝術》(2009)。<br><br>
+        <strong>晚年逸事</strong>：他自己住在 Connecticut 的小農場，養綿羊與牛，自嘲：「我這是在實踐我的研究——遠離國家。」
+      </p>
+      <div class="scott-tags">
+        <span class="scott-tag">政治人類學</span>
+        <span class="scott-tag">無政府主義同情者</span>
+        <span class="scott-tag">東南亞研究</span>
+        <span class="scott-tag">弱者抵抗理論</span>
+        <span class="scott-tag">耶魯大學</span>
+      </div>
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>核心概念：弱者的武器（Weapons of the Weak）</h3>
+
+  <p>1985 年出版的《弱者的武器》是 Scott 的成名作。書中他追問：在馬來西亞 Sedaka 村，農民面對綠色革命後地主階級的剝削，<strong>為什麼沒有像馬克思預測那樣集體起義？</strong>他蹲點兩年觀察出的答案令人意外——</p>
+
+  <div class="concept">
+    <div class="lead">🔑 Scott 的核心洞見</div>
+    <div class="body">底層民眾對國家的榨取或強勢體制，<strong>通常不採取公開的集體反抗</strong>。他們會透過<strong>「偷懶、裝傻、扯謊、迴避責任、假裝順從」</strong>等日常形式，<strong>心照不宣地進行低風險的抵抗</strong>，從中維護自身利益。這就是「弱者的武器」。</div>
+  </div>
+
+  <div class="weapons-grid">
+    <div class="weapon-card">
+      <div class="weapon-emoji">🦥</div>
+      <div class="weapon-name">偷懶</div>
+      <div class="weapon-desc">磨洋工、放慢工作節奏。看起來只是「沒效率」，實際是有意識的怠工。</div>
+    </div>
+    <div class="weapon-card">
+      <div class="weapon-emoji">🤡</div>
+      <div class="weapon-name">裝傻</div>
+      <div class="weapon-desc">「老闆我聽不懂」、「我不會用電腦」。把責任推回給上級。</div>
+    </div>
+    <div class="weapon-card">
+      <div class="weapon-emoji">🤥</div>
+      <div class="weapon-name">扯謊</div>
+      <div class="weapon-desc">虛報收成、低報稅基、假裝沒收到通知。資訊不對稱就是武器。</div>
+    </div>
+    <div class="weapon-card">
+      <div class="weapon-emoji">🚪</div>
+      <div class="weapon-name">迴避</div>
+      <div class="weapon-desc">能拖就拖、能躲就躲。沒到場就沒辦法被使喚。</div>
+    </div>
+    <div class="weapon-card">
+      <div class="weapon-emoji">🎭</div>
+      <div class="weapon-name">假裝順從</div>
+      <div class="weapon-desc">表面服從、私下罵聲不絕。是最高明也最普遍的策略。</div>
+    </div>
+    <div class="weapon-card">
+      <div class="weapon-emoji">🔥</div>
+      <div class="weapon-name">小破壞</div>
+      <div class="weapon-desc">弄壞工具、燒掉收成、放走牲口。「不小心」是最好的藉口。</div>
+    </div>
+    <div class="weapon-card">
+      <div class="weapon-emoji">📢</div>
+      <div class="weapon-name">流言蜚語</div>
+      <div class="weapon-desc">在背後說壞話、編歌謠取笑統治者。讓對方失去尊嚴。</div>
+    </div>
+    <div class="weapon-card">
+      <div class="weapon-emoji">⛪</div>
+      <div class="weapon-name">宗教/迷信</div>
+      <div class="weapon-desc">把抵抗包裝成宗教義務，國家無法直接禁止。</div>
+    </div>
+  </div>
+
+  <div class="hl-box sage">
+    <h4>🎯 三個關鍵特徵</h4>
+    <ul>
+      <li><strong>低風險</strong>：個別行為的成本極低，被抓到也很難被定罪（「不小心」、「不知情」）。</li>
+      <li><strong>不需要組織</strong>：每個人自己做就有效，不需要會議、組織章程、會員費。</li>
+      <li><strong>累積效果驚人</strong>：當一個村莊的人都這樣做，地主／國家根本管不過來。</li>
+    </ul>
+  </div>
+
+  <h3><span class="num">③</span>進階概念：公開文本 vs. 隱藏文本（1990）</h3>
+
+  <p>到了 1990 年的《支配與抵抗的藝術》，Scott 進一步提出一組對照——<strong>公開文本</strong>（public transcript）與<strong>隱藏文本</strong>（hidden transcript）。這組概念，可以幫我們理解為什麼<strong>大爆發前夕，社會看起來「平靜無事」</strong>。</p>
+
+  <div class="transcript-grid">
+    <div class="tr-col public">
+      <span class="tr-label">Public Transcript</span>
+      <div class="tr-title">公開文本：戴上面具的世界</div>
+      <div class="tr-text">
+        統治者與被統治者<strong>面對面互動時的劇本</strong>。被統治者表現出尊敬、服從、忠誠；統治者表現出威嚴、寬厚、公正。<br><br>
+        <strong>這是「劇場」，不是真實</strong>——每個人都知道自己在演戲，但每個人都得演。
+      </div>
+      <div class="tr-eg">員工在老闆面前說「老闆英明」、農民見到地主時鞠躬、選民在投票所外對立委微笑</div>
+    </div>
+    <div class="tr-col hidden">
+      <span class="tr-label">Hidden Transcript</span>
+      <div class="tr-title">隱藏文本：脫下面具的真心</div>
+      <div class="tr-text">
+        被統治者<strong>私下、彼此之間講的話</strong>——髒話、嘲諷、譏笑、編造的歌謠、酒後吐真言。<br><br>
+        <strong>這才是真話</strong>。但只能在「<strong>後台</strong>」說——廚房、田裡、廁所、宿舍、Line 群組。
+      </div>
+      <div class="tr-eg">員工在群組裡罵主管、農民在田裡編歌取笑地主、年輕人在 PTT 上對政治人物冷嘲熱諷</div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="lead">💥 為什麼這組概念重要？</div>
+    <div class="body">當「<strong>隱藏文本爆出來、變成公開文本</strong>」的那一刻，就是<strong>社會運動的引爆點</strong>。法國大革命前夕、太陽花前夕、青鳥行動前夕，社會表面平靜，但隱藏文本早已沸騰。<strong>運動不是無中生有，是隱藏文本的公開化。</strong></div>
+  </div>
+
+  <h3><span class="num">④</span>infrapolitics（次表層政治）</h3>
+
+  <p>Scott 還有一個沒被中文翻得很好的概念：<strong>infrapolitics</strong>。可以理解為「<strong>位於政治雷達之下的政治</strong>」——這些行為不會出現在報紙、不會被選舉統計到、不會被歷史學家寫入大事年表，但它們<strong>持續地、累積地</strong>改變權力關係。</p>
+
+  <div class="hl-box blue">
+    <h4>🇹🇼 在台灣可以看到的 infrapolitics</h4>
+    <ul>
+      <li><strong>學生時代</strong>：服儀違規、上課滑手機、抄作業、考試傳小抄、找各種理由請假——這些都是面對教育體制的「弱者武器」。</li>
+      <li><strong>職場</strong>：摸魚、上班滑手機、開不必要的會議、不接非上班時間的電話、Quiet Quitting（安靜離職）——對抗 996、過勞文化的日常抵抗。</li>
+      <li><strong>公民身分</strong>：對選舉冷漠、不去投票、棄領罷免票、對所有政治人物表達厭惡——看似「政治冷感」，其實是對既有政黨體制的集體棄絕。</li>
+      <li><strong>消費</strong>：自主性買非主流品牌、拒絕中國製產品、選擇本土小農——日常消費被賦予政治意義。</li>
+    </ul>
+  </div>
+
+  <div class="discussion-block">
+    <div class="discussion-eyebrow">💭 想一想</div>
+    <div class="discussion-q">回想<em>你過去一週</em>的生活——你或你身邊的人，有沒有做過任何符合「弱者武器」邏輯的事？這些行為，<em>真的不是政治嗎？</em></div>
+    <div class="spoiler">
+      📝 思考方向<br><br>
+      <strong>可以從幾個角度想：</strong><br>
+      • <strong>在校園裡</strong>：你有沒有對「必修課」表現出某種「最低成本的服從」？例如不參與討論、繳交達標就好的作業、選擇 P/F 而非評分制？這些選擇加總起來，會不會改變大學的教學文化？<br><br>
+      • <strong>在打工/實習場域</strong>：你有沒有「對老闆說一套、私下說一套」的經驗？這個「隱藏文本」如果有一天集體爆發，會變成什麼？（提示：勞動條件改革、工會運動）<br><br>
+      • <strong>在家庭裡</strong>：你有沒有對某些長輩的政治意見「假裝順從、表面附和」？這算不算「弱者的武器」？如果整個世代都這樣做，會發生什麼？<br><br>
+      <strong>關鍵反思</strong>：Scott 的洞見在於，他逼我們重新定義「政治」——政治不只在投票所、立法院、街頭。<strong>政治在你選擇何時假裝聽不到老闆叫你的那一刻</strong>。
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(5)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P5 · 日常政治三巨頭：Scott × de Certeau × Bayat</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P5 日常政治三巨頭（移自原 P3）-->
+<div class="page" data-page="5"><div class="page-inner">
+  <div class="guide-breadcrumb">第 5 章 · 比較</div>
+  <h2 class="page-h2">日常政治三巨頭<span class="mark">：</span>Scott × Bayat × de Certeau</h2>
+
+  <div class="story-lead">
+    Scott 並不是「日常政治」這個傳統的唯一代表。在他之前，法國思想家 <strong>de Certeau</strong> 從都市文化的角度提出了類似看法；在他之後，伊朗裔社會學家 <strong>Asef Bayat</strong> 把這個視角帶到中東與全球城市。三人雖然身處不同學術脈絡，但都在問同一個問題——<strong>沒有組織的人，如何改變社會？</strong>
+  </div>
+
+  <h3><span class="num">①</span>三位學者並置：相同提問、不同解答</h3>
+
+  <div class="cmp-three">
+    <div class="cmp-three-card decerteau">
+      <div class="cmp-name">Michel de Certeau</div>
+      <div class="yr">法國 · 1925–1986 · 《日常生活的實踐》(1980)</div>
+      <div class="concept-line">關鍵概念：<strong>戰術 vs. 戰略</strong></div>
+      <div class="desc">
+        <strong>權力者擁有「戰略」</strong>——可以掌控空間、規劃城市、設計制度。<strong>弱者只能用「戰術」</strong>——在他人設計的空間中找縫隙。<br><br>
+        舉例：行人在城市中<strong>抄捷徑</strong>，不走規劃好的人行道；上班族在公司電腦<strong>偷看新聞、處理私事</strong>——這就是「戰術」。
+      </div>
+    </div>
+    <div class="cmp-three-card scott">
+      <div class="cmp-name">James C. Scott</div>
+      <div class="yr">美國 · 1936–2024 · 《弱者的武器》(1985)</div>
+      <div class="concept-line">關鍵概念：<strong>弱者的武器 / 隱藏文本</strong></div>
+      <div class="desc">
+        從<strong>農民田野</strong>出發，看到馬來西亞貧農用「<strong>偷懶、裝傻、扯謊</strong>」對抗地主。提出：<strong>無聲的抵抗也是政治</strong>。<br><br>
+        關鍵貢獻：把「公開文本／隱藏文本」這組概念給了我們，<strong>解釋大爆發前的「平靜」</strong>。
+      </div>
+    </div>
+    <div class="cmp-three-card bayat">
+      <div class="cmp-name">Asef Bayat</div>
+      <div class="yr">伊朗裔 · 1954– · 《作為政治的生活》(2010)</div>
+      <div class="concept-line">關鍵概念：<strong>非運動 / 安靜的侵蝕</strong></div>
+      <div class="desc">
+        研究中東城市裡的<strong>窮人、女性、青年</strong>。提出「<strong>非運動（non-movement）</strong>」概念——百萬個各自為政的人，做著類似的事，加總起來就改變了城市。<br><br>
+        關鍵貢獻：解釋了<strong>阿拉伯之春為什麼會發生</strong>——日常累積的「安靜侵蝕」一旦爆發，就是革命。
+      </div>
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>de Certeau：戰術—戰略的對立</h3>
+
+  <p>de Certeau 是法國神學家出身的文化研究者。他在 1980 年的 <em>The Practice of Everyday Life</em> 中提出一個經典的對照：</p>
+
+  <div class="transcript-grid">
+    <div class="tr-col public">
+      <span class="tr-label">Strategy · 戰略</span>
+      <div class="tr-title">屬於有權者的</div>
+      <div class="tr-text">
+        擁有自己的<strong>「位置」</strong>——一個可以從中發號施令的空間。能規劃、能設計、能<strong>把意圖刻進物理環境</strong>。<br><br>
+        例如：城市規劃師、政府、企業、學校。他們的權力寫在<strong>建築、地圖、規則手冊</strong>裡。
+      </div>
+    </div>
+    <div class="tr-col hidden">
+      <span class="tr-label">Tactic · 戰術</span>
+      <div class="tr-title">屬於弱者的</div>
+      <div class="tr-text">
+        沒有自己的「位置」，只能<strong>在他人的空間裡見縫插針</strong>。靠的是<strong>機智、時機、即興</strong>。<br><br>
+        例如：行人抄捷徑、員工摸魚、學生上課傳紙條、外送員在禁停區短暫停留——<strong>把空間用出設計者沒想到的用法</strong>。
+      </div>
+    </div>
+  </div>
+
+  <div class="hl-box purple">
+    <h4>🇹🇼 台灣的「戰術」</h4>
+    <ul>
+      <li><strong>夜市攤販</strong>：在不允許擺攤的區域，用「機動」、「快速收攤」、「跟警察打游擊」的方式做生意——這是經典的 de Certeau 戰術。</li>
+      <li><strong>外送員</strong>：用「臨停 30 秒」、「機車鑽車陣」、「人行道短暫停車」這些灰色地帶完成工作。法律上有問題，但城市運轉沒了他們會崩潰。</li>
+      <li><strong>學生 KTV／聚會</strong>：在不該喝酒的場合喝酒、在禁菸的地方抽菸——年輕世代用「越線」確認自己的邊界。</li>
+    </ul>
+  </div>
+
+  <h3><span class="num">③</span>Bayat：非運動與安靜的侵蝕</h3>
+
+  <p>Bayat 是當代日常政治理論最有影響力的繼承者。他在伊朗、埃及、土耳其長期田野，發展出 Scott 的進階版——<strong>「非運動」（non-movement）</strong>。</p>
+
+  <div class="concept">
+    <div class="lead">📖 什麼是「非運動」（non-movement）？</div>
+    <div class="body">「<strong>數百萬個非集體行動者的集體行動</strong>」——這是 Bayat 的定義。他們<strong>沒有組織、沒有領導者、沒有正式訴求</strong>，但因為大家都在做<strong>同一件事</strong>（侵佔公共空間、不戴頭巾、在禁區擺攤），其總和效果<strong>改變了社會規範與政治可能性</strong>。</div>
+  </div>
+
+  <p>Bayat 最著名的個案是「<strong>安靜的侵蝕</strong>」（quiet encroachment of the ordinary）——</p>
+
+  <div class="icon-row">
+    <div class="icon-item">
+      <div class="ic">🏚</div>
+      <div class="lb">違建</div>
+      <div class="ds">開羅的窮人在政府土地上一棟一棟蓋房，最後政府只能承認既成事實，加裝水電。</div>
+    </div>
+    <div class="icon-item">
+      <div class="ic">🧕</div>
+      <div class="lb">不戴頭巾</div>
+      <div class="ds">伊朗女性一個一個「不小心」讓頭巾滑下來，最後變成集體現象，警察抓不勝抓。</div>
+    </div>
+    <div class="icon-item">
+      <div class="ic">🛒</div>
+      <div class="lb">街頭擺攤</div>
+      <div class="ds">禁區裡擺攤，被趕了再擺，最後變成「實際存在的市場」。</div>
+    </div>
+    <div class="icon-item">
+      <div class="ic">⚡</div>
+      <div class="lb">偷接電</div>
+      <div class="ds">貧民區的居民集體從電線桿上偷接電源——個別違法，但整片社區都這樣做，誰也管不了。</div>
+    </div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>🌪 從「非運動」到「革命」</h4>
+    <p>Bayat 的洞見之一是：<strong>2011 年阿拉伯之春不是憑空爆發的</strong>。在革命之前，埃及、突尼西亞的城市裡，已經有十年以上的「非運動」在累積——年輕人侵佔公共空間、女性挑戰宗教規範、窮人逃避稅務、攤販與警察打游擊。<strong>當這些「無組織的個體」突然找到共同的敵人，「非運動」就在一夜之間變成了「運動」。</strong></p>
+  </div>
+
+  <h3><span class="num">④</span>三人比較表：相似與差異</h3>
+
+  <table class="vs-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th style="background:linear-gradient(135deg,#6b4c7a,#8a6a9c)">de Certeau</th>
+        <th style="background:linear-gradient(135deg,#8b2500,#c4532b)">Scott</th>
+        <th style="background:linear-gradient(135deg,#2a7a6e,#4a9a8e)">Bayat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>研究場域</td>
+        <td>歐洲都市、文化消費</td>
+        <td>東南亞農村</td>
+        <td>中東城市、伊朗、埃及</td>
+      </tr>
+      <tr>
+        <td>核心對象</td>
+        <td>都市居民、消費者</td>
+        <td>農民、貧戶</td>
+        <td>窮人、女性、青年</td>
+      </tr>
+      <tr>
+        <td>關鍵概念</td>
+        <td><strong>戰術</strong>（tactic）</td>
+        <td><strong>弱者的武器</strong> / 隱藏文本</td>
+        <td><strong>非運動</strong> / 安靜的侵蝕</td>
+      </tr>
+      <tr>
+        <td>抵抗模式</td>
+        <td>在他人設計的空間中找縫隙</td>
+        <td>偷懶、裝傻、扯謊、假裝順從</td>
+        <td>無數個體的同步行動</td>
+      </tr>
+      <tr>
+        <td>對運動的看法</td>
+        <td>不直接談運動，談「生活風格的抵抗」</td>
+        <td>抵抗可以不變成運動，但是運動的基礎</td>
+        <td>「非運動」可以演變為大規模運動</td>
+      </tr>
+      <tr>
+        <td>政治意涵</td>
+        <td>消費文化中的微權力</td>
+        <td>大爆發前的「平靜」其實不平靜</td>
+        <td>累積到臨界點就是革命</td>
+      </tr>
+      <tr>
+        <td>台灣對應</td>
+        <td>夜市攤販、外送員的城市游擊</td>
+        <td>學生抗拒服儀、員工安靜離職</td>
+        <td>年輕世代躺平、不婚不生、不買房</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="hl-box">
+    <h4>🎯 為什麼三人都有貢獻？</h4>
+    <p>政治社會學需要這三組工具的<strong>三層分析</strong>——de Certeau 給我們看<strong>個別行動者的微觀策略</strong>；Scott 告訴我們<strong>劇場與真心的落差如何累積</strong>；Bayat 告訴我們<strong>這些累積何時、如何引爆為運動</strong>。三者不是競爭關係，而是<strong>互補的鏡頭</strong>。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(6)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P6 · 太陽花 vs 青鳥：兩場運動的對照</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P6 太陽花 vs 青鳥 -->
+<div class="page" data-page="6"><div class="page-inner">
+  <div class="guide-breadcrumb">第 6 章 · 案例</div>
+  <h2 class="page-h2">從「太陽花」到「青鳥行動」<span class="mark">：</span>十年公民運動的演進</h2>
+
+  <div class="story-lead">
+    何明修老師（台大社會系）是台灣社會運動研究的權威。在 2024 年 7 月的這篇短文中，他用十年觀察的視角，比較了 2014 太陽花與 2024 青鳥行動的<strong>相似與差異</strong>。<strong>同樣是反對藍營主導下「黑箱程序」通過爭議法案</strong>，但兩場運動的形態、參與者、組織方式卻有極大不同——這個比較，正是政治社會學最好的「<strong>自然實驗</strong>」。
+  </div>
+
+  <h3><span class="num">①</span>共同點：危機感激發的公民抗爭</h3>
+
+  <div class="hl-box">
+    <h4>🤝 兩場運動的相似性</h4>
+    <ul>
+      <li><strong>政治程序的危機</strong>：太陽花反對「30 秒通過服貿」；青鳥反對「3 分鐘審議＋不記名投票」。兩者都呼喊「<strong>沒有討論、不是民主</strong>」。</li>
+      <li><strong>中國因素催化</strong>：太陽花面對的是<em>服貿協議＝經濟一中</em>；青鳥的背景是<em>傅崐萁訪中＋王滬寧接見＋兩天軍演</em>。兩場運動的危機感都包含「<strong>中國因素</strong>」。</li>
+      <li><strong>公民組織帶頭</strong>：太陽花由公投盟、黑色島國青年陣線等發起；青鳥由「<strong>經濟民主連合</strong>」（賴中強律師）發起——而經民連<strong>正是 2013 年反服貿的同一批人</strong>。</li>
+      <li><strong>「自己國家、自己救」</strong>：兩場運動都有強烈的<strong>主體焦慮</strong>——擔心台灣的民主與主權正在被侵蝕。</li>
+    </ul>
+  </div>
+
+  <h3><span class="num">②</span>差異：十年來的結構變化</h3>
+
+  <p>但是，何明修強調——兩場運動有<strong>巨大差異</strong>。這些差異不是偶然，而是反映了台灣公民社會在這十年間的結構性變化。</p>
+
+  <table class="vs-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th class="sun">太陽花運動 · 2014</th>
+        <th class="blue">青鳥行動 · 2024</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>佔領形態</td>
+        <td>佔領立法院議場 24 天</td>
+        <td>院外集結 + 全國各地響應</td>
+      </tr>
+      <tr>
+        <td>組織模式</td>
+        <td><strong>有大台</strong>：學生領袖核心、四大訴求、總指揮、決策內場</td>
+        <td><strong>無大台 / 弱大台</strong>：經民連架空間有限的舞台、群眾外溢到中山南路自主集結</td>
+      </tr>
+      <tr>
+        <td>領導者形象</td>
+        <td>學生領袖（陳為廷、林飛帆等）成為「明星」，受全國關注</td>
+        <td><strong>沒有「明星」</strong>，多元素人短講、高中生第一次發言</td>
+      </tr>
+      <tr>
+        <td>參與者平均年齡</td>
+        <td><strong>28 歲</strong>（學生為主）</td>
+        <td><strong>35 歲</strong>（太陽花世代已長大）</td>
+      </tr>
+      <tr>
+        <td>學生角色</td>
+        <td>學生<strong>打頭陣</strong>，校園動員力強</td>
+        <td>學生<strong>少數參與</strong>，2020 年後學運長期消沉</td>
+      </tr>
+      <tr>
+        <td>動員平台</td>
+        <td>Facebook 為主，輔以 PTT、YouTube 直播</td>
+        <td>Facebook、Threads、IG、TikTok、LINE 群組多平台分散；<strong>「青鳥」名稱來自 FB 演算法降觸及率後的化名</strong></td>
+      </tr>
+      <tr>
+        <td>物資支援</td>
+        <td>現場捐款箱、群眾募資</td>
+        <td>Uber Eats / Foodpanda 外送、線上「<strong>課金阿公阿嬤</strong>」認養「<strong>民主金孫</strong>」</td>
+      </tr>
+      <tr>
+        <td>文化表現</td>
+        <td>學生運動的傳統符號（太陽花、布條、口號）</td>
+        <td><strong>動漫梗、cosplay、自製手燈、AI 創作</strong>（如《葬送的芙莉蓮》「勇者欣梅爾」看板）</td>
+      </tr>
+      <tr>
+        <td>政治機會</td>
+        <td>馬政府支持率 9%、國民黨內鬥（馬王政爭）</td>
+        <td>賴清德剛上任、藍白控制立院、選民不希望民進黨全面執政（民進黨少了「全面執政」的正當性）</td>
+      </tr>
+      <tr>
+        <td>運動策略</td>
+        <td>公民不服從（佔領立法院）→ 受到民意支持</td>
+        <td>避免激進佔領—「<strong>別被煽動亂沖！誰沖誰共匪！</strong>」</td>
+      </tr>
+      <tr>
+        <td>運動結果</td>
+        <td>服貿擱置、2016 政黨輪替、催生時代力量</td>
+        <td>法案通過（雖然後續有覆議與司法介入）；運動能量轉向罷免</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3><span class="num">③</span>關鍵概念：「無大台」與去中心化</h3>
+
+  <div class="concept">
+    <div class="lead">📖 什麼是「無大台」？</div>
+    <div class="body">「<strong>無大台</strong>」一詞源自香港 2019 年的反送中運動——刻意拒絕中央領導核心、追求<strong>去中心化、機動高的「如水革命」</strong>。它是 2014 年雨傘運動學生大台失敗經驗的反思。<br><br>
+    在台灣，青鳥行動展現了<strong>類似的去中心化趨勢</strong>——舞台變小、群眾外溢、素人發言、自發性流動。<strong>這代表社會運動正在進入新的形態。</strong></div>
+  </div>
+
+  <h3><span class="num">④</span>何明修：青鳥的限制與未來</h3>
+
+  <p>何明修並不一面倒地讚美青鳥的「進步」。他指出了青鳥的<strong>結構性限制</strong>——</p>
+
+  <div class="card-grid">
+    <div class="card orange">
+      <h4>⚠ 公民社會沒有變壯</h4>
+      <p>架設大台的「經民連」是<strong>10 年前同一批人</strong>。在全國性層級，台灣公民組織<strong>沒有明顯成長</strong>——這值得警惕。</p>
+    </div>
+    <div class="card purple">
+      <h4>⚠ 青年運動長期消沉</h4>
+      <p>2020 年新冠後，台灣<strong>沒有出現重大青年動員事件</strong>。大學異議性社團活動減少、學生會選舉冷清——這對<strong>運動傳承</strong>是警訊。</p>
+    </div>
+    <div class="card blue">
+      <h4>✓ 地方在地化是新亮點</h4>
+      <p>太陽花後，部分青年運動者<strong>返鄉經營在地社團</strong>。這個「<strong>地方基礎</strong>」讓青鳥能快速擴散至中南部——這是 2014 沒有的優勢。</p>
+    </div>
+    <div class="card sage">
+      <h4>✓ 去中心化的潛在優勢</h4>
+      <p>多元、開放的參與，可能<strong>引發更多未曾參與者投入</strong>——是否能完成太陽花「<strong>遍地開花</strong>」的未竟理想，值得觀察。</p>
+    </div>
+  </div>
+
+  <h3><span class="num">⑤</span>理論回應：用本週工具分析</h3>
+
+  <p>讓我們用本週學到的工具，重新理解這兩場運動的差異：</p>
+
+  <div class="hl-box gold">
+    <h4>🔬 理論再分析</h4>
+    <ul style="margin-top:.5rem">
+      <li><strong>用「政治機會結構」（POS）看</strong>：太陽花有「馬政府支持率 9%、國民黨內鬥」的<strong>大機會</strong>，青鳥則面對「民進黨剛大選獲勝但失去國會多數」的<strong>較弱機會</strong>——這部分解釋了為何兩場運動規模不同。</li>
+      <li><strong>用「資源動員論」看</strong>：太陽花有<strong>學生組織網絡</strong>作為動員骨幹（野草莓世代累積的網絡）；青鳥則靠<strong>數位平台+在地社團+太陽花世代的舊網絡</strong>——資源型態不同。</li>
+      <li><strong>用「框架理論」看</strong>：太陽花把<strong>「服貿」框架為「主權危機 + 黑箱程序」</strong>，動員力強；青鳥的框架是<strong>「國會擴權 + 親中疑慮」</strong>——後者更<strong>程序性</strong>，較難引發普羅大眾共鳴。</li>
+      <li><strong>用「日常政治」（Scott / Bayat）看</strong>：青鳥的「<strong>外送員送物資</strong>」、「<strong>素人短講</strong>」、「<strong>cosplay 上街</strong>」——這些都是<strong>「日常生活的政治化」</strong>。每個個體用<strong>自己日常熟悉的方式</strong>參與運動——這比 2014 年「學生領袖大講台」更接近 Bayat 的「<strong>百萬個非集體行動者的集體行動</strong>」。</li>
+      <li><strong>用「制度化抗爭」（何明修 & 丁元君 2024）看</strong>：兩場運動都沒有暴力衝突、警民協調順暢——這證明台灣抗爭已<strong>高度制度化</strong>。「<strong>禮貌的革命</strong>」是民主成熟的標誌，但也可能<strong>削弱運動的衝擊力</strong>。</li>
+    </ul>
+  </div>
+
+  <div class="discussion-block">
+    <div class="discussion-eyebrow">🔍 進階思考</div>
+    <div class="discussion-q">何明修在文中提到，「<em>青鳥行動是否更有可能產生在地回應，引發更多未曾參與者之投入？</em>」——你認為呢？<strong>去中心化的運動模式，到底是民主深化的標誌，還是運動衰弱的徵兆？</strong></div>
+    <div class="spoiler">
+      📝 兩面論述方向<br><br>
+      <strong>論點 A · 「去中心化＝民主深化」</strong>：<br>
+      • 沒有大台，意味著<strong>權力下放</strong>——每個人都可以成為發言人、行動者。<br>
+      • 「<strong>素人短講</strong>」、「<strong>外送員送物資</strong>」、「<strong>阿公阿嬤線上認養</strong>」——這些是太陽花時代沒有的<strong>多元參與形態</strong>。<br>
+      • 對應 Bayat 的「<strong>非運動</strong>」概念——當每個人用自己的方式參與，總和效果可能更穩固、更難被打壓。<br>
+      • 對應 Bennett & Segerberg 的「<strong>連結性行動</strong>」——數位時代的運動本質就是個人化、扁平化的。<br><br>
+      <strong>論點 B · 「去中心化＝運動衰弱」</strong>：<br>
+      • 沒有大台，意味著<strong>沒有決策能力</strong>——青鳥無法像太陽花那樣形成「光榮出關」的明確終點。<br>
+      • 全國性公民組織<strong>10 年沒有成長</strong>，這是嚴重的<strong>結構性問題</strong>。<br>
+      • 大學異議性社團衰退、學生運動消沉——<strong>運動傳承斷裂</strong>。<br>
+      • 「去中心化」的迷思可能掩蓋<strong>真正的組織失敗</strong>——當下一個更嚴重的危機來臨，台灣公民社會還有能力動員嗎？<br><br>
+      <strong>整合性思考</strong>：去中心化既是「<strong>新形態的優勢</strong>」也是「<strong>舊組織能量耗盡的結果</strong>」。<strong>關鍵不是去中心化好不好，而是去中心化的同時，台灣是否在累積新的「組織基礎建設」？</strong>地方社團、KOL 網絡、跨議題聯盟、數位平台的政治化——這些是否在補足正在消失的傳統 SMO？這才是真正的研究問題。
+    </div>
+  </div>
+
+  
+  <!-- 隨堂選擇題 -->
+  <h3 class="section-h3">🎯 隨堂選擇題：太陽花 vs 青鳥</h3>
+  <p class="section-lead">點選你認為正確的選項，再點「看解析」確認。</p>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q1</div>
+    <div class="quiz-question">下列何者<strong>最能</strong>解釋為什麼 2024 青鳥行動採取「無大台」模式？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 青年世代普遍缺乏組織能力</button>
+      <button class="quiz-opt" data-correct="false">(B) 政府禁止社運團體擔任領袖</button>
+      <button class="quiz-opt" data-correct="true">(C) 太陽花後對「大台壟斷論述」的反思 + 社群媒體去中心化邏輯</button>
+      <button class="quiz-opt" data-correct="false">(D) 警察會優先逮捕領袖，所以不能有領袖</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：C</strong><br>
+      何明修（2024）明確指出，青鳥的「無大台」既是<em>對太陽花「九人決策小組」被批評壟斷論述</em>的反省，
+      也是<em>社群媒體本身就傾向去中心化動員</em>的結果。A 把世代差異本質化；B 是錯誤事實；
+      D 是次要因素而非主因——香港反送中也是無大台，但起因更接近 C。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q2</div>
+    <div class="quiz-question">關於太陽花與青鳥的<strong>動員結構差異</strong>，下列敘述何者<em>錯誤</em>？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 太陽花有明確的「九人決策小組」，青鳥則無</button>
+      <button class="quiz-opt" data-correct="false">(B) 太陽花參與者平均年齡較青鳥年輕</button>
+      <button class="quiz-opt" data-correct="true">(C) 青鳥比太陽花更依賴傳統社運組織（如工會、學運社團）</button>
+      <button class="quiz-opt" data-correct="false">(D) 青鳥的物資供應主要靠 Uber Eats、超商外送等市場機制</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 錯誤的是 C</strong><br>
+      事實正好相反——青鳥<em>較少依賴</em>傳統社運組織，反而更多是<strong>個人化、原子化</strong>的參與。
+      何明修觀察到青鳥出現大量「課金阿公阿嬤」、cosplay 群體、寵物友善區等<em>非傳統社運</em>面孔。
+      A、B、D 都是何明修記載的事實——太陽花 28 歲、青鳥 35 歲。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q3</div>
+    <div class="quiz-question">以本週的<strong>「制度／非制度」框架</strong>來看，青鳥行動最具特色之處是？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 完全是制度性運動（只走連署、罷免）</button>
+      <button class="quiz-opt" data-correct="false">(B) 完全是非制度性運動（只佔領、不走體制）</button>
+      <button class="quiz-opt" data-correct="true">(C) 在「街頭佔領（非制度）」與「罷免連署（制度）」之間同時展開雙線作戰</button>
+      <button class="quiz-opt" data-correct="false">(D) 完全脫離制度，只在網路上發生</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：C</strong><br>
+      青鳥行動的關鍵特徵是<strong>跨越制度／非制度邊界</strong>——
+      實體街頭抗議 + 線上罷免連署 + 公投提案 + 國會直播 + 監察院舉發，
+      <em>同一群人、同一週內</em>運用了多種制度與非制度的工具。這正是新媒體時代社運的典型形態：<strong>制度／非制度的邊界正在模糊</strong>。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q4</div>
+    <div class="quiz-question">「青鳥」這個名稱的由來，反映了下列哪個現象？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 參與者自由選擇的詩意名稱</button>
+      <button class="quiz-opt" data-correct="true">(B) Facebook 演算法審查迫使運動更換名稱以避免被降觸及</button>
+      <button class="quiz-opt" data-correct="false">(C) 政府要求運動使用特定符號</button>
+      <button class="quiz-opt" data-correct="false">(D) 太陽花世代刻意延續花鳥意象的傳承</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：B</strong><br>
+      「青鳥」名稱來自 FB 平台對某些原始關鍵字（如「立法院抗議」、「國會擴權」相關詞）的演算法降觸及，
+      動員者改用<em>無害字眼</em>來繞過審查。這是一個極具理論意義的案例：
+      <strong>連抗議的「名字」都被平台規則間接決定</strong>——這是傳統社運理論從未處理過的問題。
+      它也呼應了 W10 新制度論的洞見：制度（這裡是平台規則）<em>形塑了行動者可說、可做什麼</em>。
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(7)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P7 · 躺平、安靜離職、內卷：日常的政治</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P7 躺平、安靜離職、內卷 -->
+<div class="page" data-page="7"><div class="page-inner">
+  <div class="guide-breadcrumb">第 7 章 · 當代</div>
+  <h2 class="page-h2">躺平、安靜離職、內卷<span class="mark">：</span>日常政治的當代變形</h2>
+
+  <div class="story-lead">
+    這一頁我們要做一個<strong>政治社會學的逆向工程</strong>——把看似「不政治」的當代現象，拆解為「<strong>日常政治</strong>」。<strong>躺平、安靜離職、內卷</strong>——這些網路流行詞，乍看之下只是個人選擇或生活風格，但 Scott、Bayat、de Certeau 的工具會告訴我們：它們<strong>本質上都是政治</strong>，而且可能是這個世代<strong>最重要的政治表態</strong>。
+  </div>
+
+  <h3><span class="num">①</span>當代「無聲政治」三劍客</h3>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'tang')">🛋 躺平（中國/台灣）</button>
+    <button class="tab" onclick="switchTab(this,'quiet')">😴 安靜離職（全球）</button>
+    <button class="tab" onclick="switchTab(this,'invol')">🔄 內卷（中國/東亞）</button>
+  </div>
+
+  <div class="tab-panel active" id="tang">
+    <div class="case-block">
+      <div class="ce">CASE · 躺平 / Lying Flat</div>
+      <h4>🛋 躺平：不買房、不結婚、不生子、不消費、不奮鬥</h4>
+      <p class="ct">
+        <strong>起源</strong>：2021 年中國網友駱華忠（網名「好心的旅行家」）在百度貼吧發文〈躺平即正義〉。他自稱兩年沒工作、過著最低消費的生活，引發中國年輕人廣泛共鳴。<br><br>
+        <strong>核心主張</strong>：「<strong>我不結婚、不買房、不生子、不消費，只維持最低生存。你們的內卷遊戲，我不玩了。</strong>」躺平派拒絕「<strong>996</strong>」工作文化、拒絕房地產綁架、拒絕成為消費機器。<br><br>
+        <strong>政治意涵（Scott 視角）</strong>：這是典型的「<strong>弱者的武器</strong>」——當你無法改變遊戲規則時，你<strong>退出遊戲</strong>就是最強的抵抗。中國官方媒體很快批判「躺平可恥」，正說明它觸動了某條神經。<br><br>
+        <strong>政治意涵（Bayat 視角）</strong>：當「躺平」從個人選擇變成<strong>百萬人的共同生活方式</strong>，它就成了「<strong>非運動</strong>」——沒有組織、沒有領導，但<strong>動搖了整個經濟與政治體系的勞動力前提</strong>。<br><br>
+        <strong>🇹🇼 台灣版</strong>：「<strong>低欲望世代</strong>」、「<strong>厭世代</strong>」、「<strong>FIRE 族</strong>」（Financial Independence, Retire Early）。對房價無望、對薪資失望、對政治冷感——這些不是「沒志氣」，而是<strong>對既有體制的徹底退場宣告</strong>。
+      </p>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="quiet">
+    <div class="case-block purple">
+      <div class="ce">CASE · Quiet Quitting</div>
+      <h4>😴 安靜離職：上班但只做最低限度的事</h4>
+      <p class="ct">
+        <strong>起源</strong>：2022 年由美國 TikTok 用戶 @zaidleppelin 推紅。在中國則早就有「<strong>摸魚</strong>」、「<strong>划水</strong>」等同義詞。<br><br>
+        <strong>核心策略</strong>：<strong>不離職、不抱怨、不對抗</strong>，但<strong>把工作降到最低限度</strong>——不加班、不接非上班時間的電話、不主動承擔分外工作、不去公司聚餐、不參與「同事文化」。<br><br>
+        <strong>政治意涵（Scott 視角）</strong>：這就是<strong>「弱者的武器」現代版</strong>——「偷懶」、「裝傻」、「假裝順從」全部到齊。員工<strong>表面上服從公司</strong>，但<strong>實際上抗拒「公司文化」的全面侵入</strong>。<br><br>
+        <strong>政治意涵（de Certeau 視角）</strong>：這是經典的<strong>「戰術」</strong>——員工沒有改變公司制度的權力（戰略），但他們<strong>在公司設計的工作空間中找到了縫隙</strong>。「我準時下班」不是違規，但「<strong>所有人都準時下班</strong>」就改變了公司文化。<br><br>
+        <strong>結構性問題</strong>：安靜離職的盛行，反映的是<strong>整個世代對「工作 = 自我實現」這個現代神話的破滅</strong>。當薪資追不上房價、年金可能領不到、加班升不了官，<strong>「為公司賣命」的契約失效了</strong>。<br><br>
+        <strong>🇹🇼 台灣版</strong>：「<strong>佛系工作</strong>」、「<strong>下班斷線</strong>」、「<strong>不接 LINE</strong>」——年輕世代對職場「無限延長」的抗拒。
+      </p>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="invol">
+    <div class="case-block blue">
+      <div class="ce">CASE · 內卷 / Involution</div>
+      <h4>🔄 內卷：無意義的內部競爭</h4>
+      <p class="ct">
+        <strong>起源</strong>：原為人類學概念（Clifford Geertz 研究爪哇農業），2020 年在中國成為流行語。形容<strong>大家明明知道沒有意義，但為了避免落後，仍持續投入更多努力</strong>的死循環。<br><br>
+        <strong>典型案例</strong>：<br>
+        • <strong>教育內卷</strong>：補習班從幼兒園開始，每個家庭都不敢不補，結果整體升學競爭加劇，但<strong>人均收益沒有增加</strong>。<br>
+        • <strong>職場內卷</strong>：「<strong>主動加班</strong>」變成隱性標準，每個人都被迫延長工時，但生產力沒有提升。<br>
+        • <strong>學術內卷</strong>：論文發表數量越來越多，但<strong>每篇被引用次數下降</strong>，學術社群陷入「越努力越貶值」的陷阱。<br><br>
+        <strong>政治意涵</strong>：內卷與躺平是<strong>同一現象的兩面</strong>——<strong>內卷是「逃不出去」，躺平是「乾脆不玩了」</strong>。<br><br>
+        <strong>Scott / Bayat 視角</strong>：內卷不是「弱者的武器」——它恰好<strong>沒有武器</strong>，是<strong>被困住的狀態</strong>。但<strong>對內卷的反抗</strong>（躺平、安靜離職）就是<strong>典型的日常政治</strong>。<br><br>
+        <strong>🇹🇼 台灣版</strong>：教育版的「<strong>明星高中 → 補習</strong>」、「<strong>學測五科 → 七科</strong>」；職場版的「<strong>學歷通膨</strong>」、「<strong>過勞文化</strong>」、「<strong>表演式加班</strong>」。內卷是<strong>整個東亞</strong>共同的結構困境。
+      </p>
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>用三個鏡頭看「躺平」</h3>
+
+  <p>「躺平」最有趣的地方，是它<strong>同時可以被三位學者解釋</strong>，但各自看到不同層次：</p>
+
+  <div class="cmp-three">
+    <div class="cmp-three-card decerteau">
+      <div class="cmp-name">de Certeau 看躺平</div>
+      <div class="yr">戰術視角</div>
+      <div class="concept-line">「躺平」是一種戰術</div>
+      <div class="desc">
+        在 996/內卷/房價的「<strong>戰略</strong>」結構下，年輕人沒有改變制度的權力，但他們找到了<strong>「不參與」的縫隙</strong>。<br><br>
+        關鍵：戰略是<strong>「全民拼經濟」</strong>，戰術是<strong>「我選擇低欲望生活」</strong>。
+      </div>
+    </div>
+    <div class="cmp-three-card scott">
+      <div class="cmp-name">Scott 看躺平</div>
+      <div class="yr">弱者武器視角</div>
+      <div class="concept-line">「躺平」是隱藏文本的公開化</div>
+      <div class="desc">
+        年輕人對「<strong>努力就會成功</strong>」這套<strong>公開文本</strong>早就不信了——但過去只在 PTT、群組裡偷罵。<br><br>
+        「躺平宣言」把<strong>隱藏文本變成公開文本</strong>。當「躺平」成為流行語，<strong>整個世代的不滿被「命名」了</strong>。
+      </div>
+    </div>
+    <div class="cmp-three-card bayat">
+      <div class="cmp-name">Bayat 看躺平</div>
+      <div class="yr">非運動視角</div>
+      <div class="concept-line">「躺平」是當代的「非運動」</div>
+      <div class="desc">
+        躺平派<strong>沒有組織、沒有領袖、沒有訴求清單</strong>，但<strong>數百萬人在做同一件事</strong>——降低消費、推遲婚育、拒絕加班。<br><br>
+        這是「<strong>安靜的侵蝕</strong>」——當大家都不買房，房價結構崩；當大家都不生子，人口結構崩。
+      </div>
+    </div>
+  </div>
+
+  <h3><span class="num">③</span>連結回前面所學：政治經濟的結構問題</h3>
+
+  <div class="hl-box blue">
+    <h4>🔗 W3 + W11：經濟結構 → 日常政治</h4>
+    <p>本週的「躺平／安靜離職／內卷」與 W3 經濟決定論可以串接起來——<strong>當經濟結構（高房價、低薪、過勞、貧富差距）長期惡化時，年輕世代的政治回應不一定是「集體抗爭」，而可能是「集體退出」</strong>。<br><br>
+    這個視角下，<strong>「躺平」與「太陽花／青鳥」是同一個世代對同一個結構問題的兩種回應</strong>：<br>
+    • <strong>太陽花／青鳥</strong>：用「<strong>公民</strong>」身分上街，要求改革<br>
+    • <strong>躺平／安靜離職</strong>：用「<strong>個體</strong>」身分退場，拒絕配合<br><br>
+    哪一個更有政治效果？這是一個<strong>沒有定論的問題</strong>——但 Scott 與 Bayat 提醒我們：<strong>不要低估「退場」的政治力量</strong>。當足夠多人選擇不買房、不生子、不加班，整個經濟政治體系都會被迫改變。</p>
+  </div>
+
+  <h3><span class="num">④</span>批判性反思：日常政治的限制</h3>
+
+  <p>讚美完日常政治後，我們也要提出<strong>批判性的問題</strong>——日常政治真的可以替代傳統抗爭嗎？</p>
+
+  <div class="card-grid">
+    <div class="card orange">
+      <h4>⚠ 限制 1：可能被收編</h4>
+      <p>「安靜離職」可能<strong>不會改變制度</strong>，反而被資本家視為「<strong>新型勞動風格</strong>」，被收編為「<strong>彈性工時</strong>」、「<strong>零工經濟</strong>」——個體更脆弱。</p>
+    </div>
+    <div class="card purple">
+      <h4>⚠ 限制 2：個體承擔成本</h4>
+      <p>躺平的人<strong>個別承擔了退場的成本</strong>——失去職涯發展、社會連結、未來保障。集體行動才能<strong>把成本轉嫁給制度</strong>。</p>
+    </div>
+    <div class="card blue">
+      <h4>⚠ 限制 3：缺乏正面議程</h4>
+      <p>日常政治擅長「<strong>對抗</strong>」與「<strong>退出</strong>」，但很難提出「<strong>我們要什麼</strong>」的<strong>正面建設方案</strong>。改革仍需傳統運動。</p>
+    </div>
+    <div class="card sage">
+      <h4>✓ 但…仍是重要的政治</h4>
+      <p>即使有限制，<strong>日常政治改變了「政治」的定義</strong>——它讓我們看到，<strong>沒有制度資源的人也在做政治</strong>。這是研究範式的革命。</p>
+    </div>
+  </div>
+
+  <div class="discussion-block">
+    <div class="discussion-eyebrow">🪞 自我反思</div>
+    <div class="discussion-q">你身邊有沒有「<em>躺平</em>」、「<em>安靜離職</em>」或正在<em>「內卷」</em>裡掙扎的人？（或者你自己就是？）<strong>如果這些是「日常政治」，那這個世代的政治表態是什麼？</strong></div>
+    <div class="spoiler">
+      📝 思考方向<br><br>
+      <strong>從個人到結構的轉換</strong>：當我們把「躺平」從「個人選擇」重新理解為「<strong>政治表態</strong>」，會發現幾個重要訊息——<br><br>
+      <strong>1. 對「努力／成功」契約的不信任</strong>：上一代相信「努力就有回報」，這個世代不信。這不是「<strong>懶</strong>」，是<strong>對社會契約破裂的回應</strong>。<br><br>
+      <strong>2. 對「消費主義」的疏離</strong>：父母輩透過買房、升職、消費獲得認同；這個世代發現這條路<strong>結構性地不通了</strong>。低欲望不是「<strong>沒志氣</strong>」，是<strong>對消費社會的去神聖化</strong>。<br><br>
+      <strong>3. 對「制度回應能力」的失望</strong>：太陽花過了 10 年，房價更高、薪資沒漲、過勞依舊。<strong>當體制無法回應結構問題</strong>，個體只能用「退場」表達抗議。<br><br>
+      <strong>4. 但「退場」是政治嗎？</strong>這是真正的難題。<strong>退場可能是政治的最後手段，也可能是政治的失敗</strong>——當沒人相信集體行動可以改變什麼，民主本身就受了傷。<br><br>
+      <strong>關鍵反思</strong>：政治社會學研究這些現象，不是為了讚美或譴責，而是為了<strong>看到結構</strong>——當一個世代普遍「躺平」，我們該問的不是「<strong>他們怎麼這樣？</strong>」而是「<strong>社會怎麼了？</strong>」
+    </div>
+  </div>
+
+  
+  <!-- 隨堂選擇題 -->
+  <h3 class="section-h3">🎯 隨堂選擇題：日常生活中的「不動之動」</h3>
+  <p class="section-lead">用本週理論工具解讀當代世代現象。</p>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q1</div>
+    <div class="quiz-question">用 James C. Scott 的「<strong>弱者的武器</strong>」框架來看，「<em>安靜離職</em>（quiet quitting）」最接近哪一種武器？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 公開的罷工</button>
+      <button class="quiz-opt" data-correct="true">(B) 怠工 + 假裝順從</button>
+      <button class="quiz-opt" data-correct="false">(C) 武裝叛亂</button>
+      <button class="quiz-opt" data-correct="false">(D) 組工會集體談判</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：B</strong><br>
+      「安靜離職」<em>表面上仍在上班、領薪水</em>（假裝順從），但<em>實際只做最低限度的工作</em>（怠工）。
+      Scott 在《弱者的武器》中將此類「日常、不公開、無組織」的抵抗稱為 <strong>infrapolitics（基層政治／隱藏政治）</strong>。
+      A、C 是公開對抗；D 是制度性抗爭——都<em>不是</em>「弱者的武器」典型形式。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q2</div>
+    <div class="quiz-question">中國年輕人的「<strong>躺平</strong>」現象，從 Asef Bayat 的觀點來看，最接近：</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 一場有組織的社會運動</button>
+      <button class="quiz-opt" data-correct="true">(B) 「非運動的政治」（non-movement）——數百萬人各自的不合作</button>
+      <button class="quiz-opt" data-correct="false">(C) 政府主導的社會工程</button>
+      <button class="quiz-opt" data-correct="false">(D) 西方文化的輸入</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：B</strong><br>
+      Bayat 在《Life as Politics》中提出「<strong>quiet encroachment of the ordinary</strong>」（日常的悄悄侵蝕）概念，
+      用來描述<em>數百萬無組織、無領袖的個體</em>透過日常選擇所累積的政治效應。
+      躺平者沒有開會、沒有宣言、沒有領袖，但<em>集體性地拒絕配合既有遊戲規則</em>——這正是 Bayat 所謂的「非運動」。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q3</div>
+    <div class="quiz-question">「<strong>內卷</strong>」（involution）與「躺平」是<em>同一現象的兩面</em>嗎？下列哪個說法<strong>最準確</strong>？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 完全相同，都是年輕人偷懶的藉口</button>
+      <button class="quiz-opt" data-correct="false">(B) 完全相反，內卷是努力、躺平是不努力</button>
+      <button class="quiz-opt" data-correct="true">(C) 是同一結構問題的兩種回應——內卷是「過度競爭」，躺平是「拒絕競爭」</button>
+      <button class="quiz-opt" data-correct="false">(D) 內卷只發生在中國，躺平只發生在台灣</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：C</strong><br>
+      內卷與躺平都源自<em>同一個結構問題</em>：經濟成長停滯 + 階級流動凍結 + 制度回報下降。
+      面對相同壓力，部分人選擇<strong>過度競爭、自我剝削</strong>（內卷），另一部分人選擇<strong>拒絕競爭、降低慾望</strong>（躺平）。
+      用本週理論看：兩者都是<em>體制無法回應時的非制度回應</em>——但選擇了不同的「弱者的武器」。
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q4</div>
+    <div class="quiz-question">如果一位學生問：「躺平算政治嗎？又沒有上街、沒有訴求！」<br>
+    請用本週理論<strong>反駁</strong>，下列哪個回應<em>最完整</em>？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 對，躺平不算政治，只是個人選擇</button>
+      <button class="quiz-opt" data-correct="false">(B) 算，因為躺平者其實有秘密組織</button>
+      <button class="quiz-opt" data-correct="true">(C) 算——當數百萬人「不合作」會改變勞動市場、生育率、消費；Scott 與 Bayat 都指出，「不動」也是一種集體政治效應</button>
+      <button class="quiz-opt" data-correct="false">(D) 算，因為躺平就是反對共產黨的革命</button>
+    </div>
+    <div class="quiz-explain">
+      <strong>✅ 答案：C</strong><br>
+      C 的回應同時用了 Scott（個體的「弱者武器」累積成集體效應）和 Bayat（非運動的政治）兩個視角。
+      A 把政治窄化為「公開行動」，正是本週要反駁的觀點。
+      B 是事實錯誤——躺平正是因為<em>沒有組織</em>才有理論意義。
+      D 過度政治化、把躺平浪漫化為革命，反而誤讀了現象的<em>消極性、無領袖性</em>。
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(8)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P8 · 課堂討論題</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P8 課堂討論題 -->
+<div class="page" data-page="8"><div class="page-inner">
+  <div class="guide-breadcrumb">第 8 章 · 討論</div>
+  <h2 class="page-h2">課堂討論<span class="mark">：</span>用本週工具分析</h2>
+
+  <div class="story-lead">
+    本頁的討論題對應課程大綱中 W11 的兩道核心問題。每題附有「<strong>申論方向提示</strong>」，預設為收合狀態——請先<strong>自己思考三分鐘</strong>，再點開檢視。沒有「正確答案」，重要的是<strong>論證的清楚與證據的充分</strong>。
+  </div>
+
+  <h3><span class="num">①</span>討論題一：日常政治的政治意涵</h3>
+
+  <div class="discussion-block">
+    <div class="discussion-eyebrow">📝 課程大綱題 1</div>
+    <div class="discussion-q">什麼是「<em>日常政治</em>」？為何它能夠挑戰既有權力與制度？<strong>社會運動是否需要組織化，或明確的領導者</strong>？「無聲的政治」如何運作？請以<strong>近期的社會運動</strong>為例，解析該事件的發展與後果。</div>
+
+    <div class="ctx">
+      <strong>解題拆解（建議論述四個層次）</strong>：<br>
+      1. <strong>定義</strong>：什麼是「日常政治」？（Scott / Bayat / de Certeau 的核心概念）<br>
+      2. <strong>機制</strong>：它為什麼能挑戰權力？（隱藏文本 → 公開文本、累積效應、非運動）<br>
+      3. <strong>理論辯論</strong>：運動需不需要組織？（第二/三代 vs. 第四代社運理論）<br>
+      4. <strong>個案</strong>：用一場近期運動（太陽花、青鳥、罷免、同婚、勞權…）作驗證
+    </div>
+
+    <div class="spoiler">
+      📝 申論方向提示<br><br>
+      <strong>建議的論證結構（5 段式）</strong>：<br><br>
+      <strong>① 開場：什麼是日常政治</strong><br>
+      引用 Scott 的「<strong>弱者的武器</strong>」與 Bayat 的「<strong>非運動</strong>」。核心定義：<strong>沒有制度資源的人，透過日常生活中的累積行動影響政治</strong>。重點不是「<strong>大事</strong>」，而是「<strong>小事的累積</strong>」。<br><br>
+      <strong>② 機制：為何能挑戰權力？</strong><br>
+      （a）<strong>低風險、高累積</strong>：個別行為被抓不會被定罪，但加總起來改變結構（Bayat 的「<strong>安靜的侵蝕</strong>」）。<br>
+      （b）<strong>隱藏文本 → 公開文本</strong>：日常政治讓「<strong>私下不滿</strong>」逐漸<strong>公開化</strong>——當不滿達到臨界點，就會引爆為大規模運動。Scott 強調，<strong>看似平靜的社會其實不平靜</strong>。<br><br>
+      <strong>③ 理論辯論：運動需要組織嗎？</strong><br>
+      • <strong>傳統觀點</strong>（McCarthy & Zald 資源動員論、McAdam 政治過程論）：運動需要組織、資源、領導、機會結構。<br>
+      • <strong>當代觀點</strong>（Bennett & Segerberg 連結性行動論）：數位時代讓「<strong>無組織動員</strong>」變得可能。香港反送中「<strong>如水革命</strong>」、台灣青鳥「<strong>無大台</strong>」就是例證。<br>
+      • <strong>折衷觀點</strong>：去中心化運動可能仍有「<strong>隱藏的組織骨幹</strong>」——青鳥背後的經民連、太陽花校友網絡——只是不像傳統 SMO 那樣顯眼。<br><br>
+      <strong>④ 個案：用青鳥行動驗證</strong><br>
+      套用本週的工具分析青鳥的<strong>三層特徵</strong>：<br>
+      • 表面：<strong>10 萬人上街</strong>（傳統運動觀）<br>
+      • 中層：<strong>外送員送物資、線上認養民主金孫、cosplay 上街</strong>（連結性行動）<br>
+      • 底層：<strong>太陽花世代成為 35 歲社會中堅，把日常生活的政治化內化為慣習</strong>（日常政治的累積成果）<br>
+      → 青鳥不只是一場運動，是<strong>太陽花十年來「日常政治」的階段性結算</strong>。<br><br>
+      <strong>⑤ 結論：日常政治的雙重性</strong><br>
+      日常政治<strong>既是大規模運動的基礎</strong>（隱藏文本累積），<strong>也是大規模運動之外的替代路徑</strong>（躺平、安靜離職）。它<strong>不取代</strong>傳統運動，但<strong>擴大了我們對「政治」的理解</strong>——政治不只在街頭與議場，也在每個人的廚房、職場、社群媒體裡。
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>討論題二：服儀解禁與安靜離職的政治社會學</h3>
+
+  <div class="discussion-block">
+    <div class="discussion-eyebrow">📝 課程大綱題 2</div>
+    <div class="discussion-q">如何解釋台灣<strong>校園中的「服儀解禁」運動</strong>，或<strong>職場中的「安靜離職」發展</strong>？這兩個現象，看起來一個是「<em>制度內的改革</em>」，一個是「<em>制度外的退場</em>」——它們在政治社會學上，<strong>有什麼共通邏輯</strong>？</div>
+
+    <div class="ctx">
+      <strong>解題拆解</strong>：這題的關鍵在於<strong>「比較分析」</strong>——找出兩個看似不同的現象的共同政治社會學邏輯。建議從以下四個面向比較：<br>
+      • 抵抗對象（誰是被反抗的權威？）<br>
+      • 抵抗策略（用什麼方式抵抗？）<br>
+      • 制度回應（體制如何回應？）<br>
+      • 政治後果（產生了什麼改變？）
+    </div>
+
+    <div class="spoiler">
+      📝 申論方向提示<br><br>
+      <strong>結構性比較（套用 Scott / Bayat 框架）</strong>：<br><br>
+      <table style="width:100%;border-collapse:collapse;margin:.8rem 0;font-size:.85rem">
+        <tr style="background:rgba(139,37,0,.08)"><td style="padding:.6rem;font-weight:700;border:1px solid var(--line)">面向</td><td style="padding:.6rem;font-weight:700;border:1px solid var(--line)">服儀解禁</td><td style="padding:.6rem;font-weight:700;border:1px solid var(--line)">安靜離職</td></tr>
+        <tr><td style="padding:.6rem;border:1px solid var(--line);font-weight:600">抵抗對象</td><td style="padding:.6rem;border:1px solid var(--line)">學校 / 教育部</td><td style="padding:.6rem;border:1px solid var(--line)">資方 / 過勞文化</td></tr>
+        <tr><td style="padding:.6rem;border:1px solid var(--line);font-weight:600">公開文本</td><td style="padding:.6rem;border:1px solid var(--line)">「<strong>制服培養紀律</strong>」</td><td style="padding:.6rem;border:1px solid var(--line)">「<strong>工作就是自我實現</strong>」</td></tr>
+        <tr><td style="padding:.6rem;border:1px solid var(--line);font-weight:600">隱藏文本</td><td style="padding:.6rem;border:1px solid var(--line)">「<strong>制服是身體控制</strong>」</td><td style="padding:.6rem;border:1px solid var(--line)">「<strong>工作只是賣勞力</strong>」</td></tr>
+        <tr><td style="padding:.6rem;border:1px solid var(--line);font-weight:600">抵抗策略</td><td style="padding:.6rem;border:1px solid var(--line)">把襪子拉低、領帶歪一邊、社群連署、個別申訴</td><td style="padding:.6rem;border:1px solid var(--line)">準時下班、不接群組、不接非工時電話、降低投入</td></tr>
+        <tr><td style="padding:.6rem;border:1px solid var(--line);font-weight:600">日常政治屬性</td><td style="padding:.6rem;border:1px solid var(--line)">Scott 的「<strong>偷懶+假裝順從</strong>」</td><td style="padding:.6rem;border:1px solid var(--line)">Scott + Bayat 的「<strong>非運動</strong>」</td></tr>
+        <tr><td style="padding:.6rem;border:1px solid var(--line);font-weight:600">制度回應</td><td style="padding:.6rem;border:1px solid var(--line)">部分改革（教育部 2016 函釋）</td><td style="padding:.6rem;border:1px solid var(--line)">至今未有顯著制度回應</td></tr>
+        <tr><td style="padding:.6rem;border:1px solid var(--line);font-weight:600">最終結果</td><td style="padding:.6rem;border:1px solid var(--line)">部分成功——日常政治 → 集體運動 → 制度改革</td><td style="padding:.6rem;border:1px solid var(--line)">未明——日常政治仍在「侵蝕」階段</td></tr>
+      </table>
+
+      <strong>共通邏輯（這是申論的關鍵段落）</strong>：<br><br>
+      雖然一個發生在校園、一個發生在職場，兩者有<strong>三個共通的政治社會學邏輯</strong>——<br><br>
+      <strong>① 都是「無權力者」面對「全面性權威」的抵抗</strong>：<br>
+      學生面對學校（無投票權、無罷課權）；員工面對資方（有勞動權但個體無力）。當<strong>正式制度管道無效時</strong>，日常生活就成為抵抗的場域。<br><br>
+      <strong>② 都是「身體層次」的政治</strong>：<br>
+      服儀解禁爭的是<strong>「我能否自主決定如何穿著」</strong>；安靜離職爭的是<strong>「我能否自主決定如何使用我的時間與精力」</strong>。兩者都是<strong>對「身體被體制完全徵用」的拒絕</strong>。這呼應了 Foucault 的「生命政治」（biopolitics）。<br><br>
+      <strong>③ 都呈現「集體個人主義」的特徵</strong>：<br>
+      每個學生／員工<strong>個別行動</strong>，但加總起來<strong>形成集體效應</strong>。這正是 Bayat 的「<strong>非運動</strong>」——百萬個非集體行動者的集體行動。<br><br>
+      <strong>關鍵啟發</strong>：當代政治社會學的一個重要發現是——<strong>政治不只在「政治場域」發生</strong>。學校與職場這些被認為「<strong>非政治</strong>」的空間，其實是<strong>當代日常政治最重要的戰場</strong>。
+    </div>
+  </div>
+
+  <h3><span class="num">③</span>整合題：本週理論工具的應用</h3>
+
+  <div class="discussion-block">
+    <div class="discussion-eyebrow">🧩 整合應用題</div>
+    <div class="discussion-q">假設你是<em>政治社會學研究者</em>，要用 250 字向社會學會發表會發表一篇<em>關於 2024 青鳥行動的觀察筆記</em>。<strong>請至少整合本週的三個概念工具</strong>，提出你的核心論點。</div>
+
+    <div class="ctx">
+      <strong>本週可用的概念工具清單</strong>：<br>
+      • Scott：弱者的武器、公開文本／隱藏文本、infrapolitics<br>
+      • Bayat：非運動、安靜的侵蝕<br>
+      • de Certeau：戰術 vs. 戰略<br>
+      • McAdam 等：政治機會結構、抗爭曲目、框架理論<br>
+      • 何明修：去中心化、無大台、運動的制度化<br>
+      • 蕭蘋：命名政治、新媒體的公民性
+    </div>
+
+    <div class="spoiler">
+      📝 範例答案（不是標準答案）<br><br>
+      <strong>〈青鳥行動：當「非運動」遇上「無大台」〉</strong><br><br>
+      青鳥行動展現了當代台灣社會運動的<strong>三層結構</strong>。表面上，它是一場由「<strong>經濟民主連合</strong>」發起、針對國會擴權法案的<strong>抗爭運動</strong>——這呼應 McAdam 的「<strong>政治機會結構</strong>」：賴清德剛上任、藍白控制立院、傅崐萁訪中的背景，創造了動員的時機。中層上，它呈現了<strong>「無大台」的去中心化形態</strong>——舞台空間有限、群眾自主外溢、素人短講盛行，呼應香港反送中以來的「<strong>如水革命</strong>」典範。底層上，它則是<strong>Bayat 意義上的「非運動」</strong>——數十萬個體用<strong>自己日常熟悉的方式</strong>參與政治：外送員送物資、阿公阿嬤線上認養民主金孫、動漫宅 cosplay 上街、高中生第一次發言。<br><br>
+      這三層的疊加揭示一個重要訊息：<strong>2024 年的青鳥不只是「另一場太陽花」，它是太陽花十年來「日常政治」的階段性結算</strong>——當「公民身分」被日常實踐持續重新定義，「<strong>命名政治</strong>」也在悄悄轉移：今天的「<strong>暴民</strong>」（在 KMT/TPP 媒體話語中）就是十年後的「<strong>公民</strong>」。<br><br>
+      <strong>研究議程</strong>：未來需要追蹤「無大台」運動的<strong>後續制度化路徑</strong>——青鳥能否轉化為持久的政治力量，取決於它能否在沒有傳統 SMO 的情況下，建構新的<strong>運動基礎建設</strong>。
+    </div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>🎓 本週學習目標檢查</h4>
+    <p>讀完本週講義並參與課堂討論後，你應該能夠——</p>
+    <ul style="margin-top:.5rem">
+      <li>✅ 解釋 Scott 的「<strong>弱者的武器</strong>」、「<strong>隱藏文本／公開文本</strong>」概念，並舉出三個台灣個案</li>
+      <li>✅ 比較 Scott、Bayat、de Certeau 三人「<strong>日常政治</strong>」理論的相似與差異</li>
+      <li>✅ 區分社運理論四代的核心關懷，並識別青鳥行動分別對應哪一代</li>
+      <li>✅ 用蕭蘋的「<strong>命名政治</strong>」分析台灣現實中的爭議事件</li>
+      <li>✅ 用「<strong>政治機會結構</strong>」+「<strong>無大台</strong>」+「<strong>非運動</strong>」三個概念，分析太陽花與青鳥的差異</li>
+      <li>✅ 解釋「<strong>躺平／安靜離職</strong>」如何被理解為一種日常政治</li>
+    </ul>
+  </div>
+
+  <div class="next-page" onclick="goPage(9)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P9 · 本週讀物與延伸資源</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P9 本週讀物 -->
+<div class="page" data-page="9"><div class="page-inner">
+  <div class="guide-breadcrumb">第 9 章 · 延伸</div>
+  <h2 class="page-h2">本週讀物與延伸資源</h2>
+
+  <div class="story-lead">
+    本週的閱讀分為三層：<strong>必讀（▶）</strong>是課堂討論的基礎；<strong>推薦（＊）</strong>幫你建構理論視野；<strong>延伸資源</strong>則用於有興趣的同學自學或期末報告主題。<br><br>
+    <strong>📝 閱讀策略建議</strong>：先讀蕭蘋（2014）與何明修（2024）兩篇短文（10 分鐘可讀完），建立議題框架；再進入 Scott 的核心文本與其他選讀。
+  </div>
+
+  <h3><span class="num">①</span>必讀文獻（▶）</h3>
+
+  <div class="reading-card must">
+    <div class="reading-icon">📰</div>
+    <div class="reading-body">
+      <div class="reading-title">蕭蘋（2014）。是公民？還是暴民？新媒體的公民政治</div>
+      <div class="reading-meta">巷仔口社會學, 2014/3/24｜中文｜短文約 3000 字</div>
+      <div class="reading-note">課程指定讀物。提供了本週討論「公民／暴民」<strong>命名政治</strong>的核心框架。重點不在「結論」，而在<strong>歷史變遷的視角</strong>——同一群人在不同國家結構下被如何「命名」。</div>
+    </div>
+  </div>
+
+  <div class="reading-card must">
+    <div class="reading-icon">📰</div>
+    <div class="reading-body">
+      <div class="reading-title">何明修（2024）。從「太陽花」到「青鳥行動」臺灣公民運動的演進</div>
+      <div class="reading-meta">巷仔口社會學, 2024/7/11｜中文｜短文約 4000 字</div>
+      <div class="reading-note">當代台灣社運最重要的觀察文章之一。注意何明修不是「歡呼青鳥」，而是<strong>嚴肅地指出青鳥的結構性限制</strong>——這才是政治社會學的態度。重點段落：「<strong>朝向無大台的趨勢</strong>」。</div>
+    </div>
+  </div>
+
+  <div class="reading-card must">
+    <div class="reading-icon">📚</div>
+    <div class="reading-body">
+      <div class="reading-title">Scott, James C. (1985). <em>Weapons of the Weak: Everyday Forms of Peasant Resistance</em>. Yale UP. <strong>(Ch.1-2)</strong></div>
+      <div class="reading-meta">英文專書｜重點：前兩章｜中譯本：《弱者的武器：農民反抗的日常形式》（鄭廣懷等譯，譯林出版社）</div>
+      <div class="reading-note">本週理論核心。Ch.1 是 Scott 對主流社運理論的批判；Ch.2 介紹 Sedaka 村田野與「弱者武器」的具體形式。<strong>強烈建議讀英文原文</strong>——Scott 的英文非常流暢，是政治人類學寫作的典範。</div>
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>推薦閱讀（＊）— 深化理論視野</h3>
+
+  <div class="reading-card rec">
+    <div class="reading-icon">📚</div>
+    <div class="reading-body">
+      <div class="reading-title">Bayat, Asef (2010). <em>Life as Politics: How Ordinary People Change the Middle East</em>. Stanford UP. <strong>(Ch.1; Ch.8)</strong></div>
+      <div class="reading-meta">英文專書｜重點：Ch.1（概念介紹）、Ch.8（街頭政治）</div>
+      <div class="reading-note">Scott 理論的中東城市版。Ch.1 介紹「<strong>quiet encroachment of the ordinary</strong>」與「<strong>non-movement</strong>」概念；Ch.8 分析街頭作為政治抗爭場域。<strong>對理解阿拉伯之春的成因不可或缺</strong>。</div>
+    </div>
+  </div>
+
+  <div class="reading-card rec">
+    <div class="reading-icon">📄</div>
+    <div class="reading-body">
+      <div class="reading-title">Ho, M. S. (2020). "How Protests Evolve: Hong Kong's Anti-extradition Movement and Lessons Learned from the Umbrella Movement"</div>
+      <div class="reading-meta"><em>Mobilization: An International Quarterly</em>, 25(SI): 711-728</div>
+      <div class="reading-note">何明修對香港兩波運動的比較分析。雨傘運動（2014）的「大台」如何過渡到反送中（2019）的「<strong>無大台</strong>」？這篇是<strong>理解 2024 青鳥「去中心化」的學術背景</strong>。</div>
+    </div>
+  </div>
+
+  <div class="reading-card rec">
+    <div class="reading-icon">📄</div>
+    <div class="reading-body">
+      <div class="reading-title">Ho, M. S., & Ting, Y. C. (2024). "Contentious Institutionalization of Protests under Democracy: The Evidence from Taiwan, 1986–2016"</div>
+      <div class="reading-meta"><em>Government and Opposition</em>, 59(3): 825-844</div>
+      <div class="reading-note">運用 1986-2016 三十年抗爭事件資料，分析台灣抗爭如何從「<strong>暴力衝突</strong>」走向「<strong>制度化抗爭</strong>」。這篇文章是<strong>連結 W10 新制度論與 W11 社運</strong>的最佳橋樑。</div>
+    </div>
+  </div>
+
+  <h3><span class="num">③</span>延伸資源 — 對特定主題有興趣可以追</h3>
+
+  <div class="card-grid">
+    <div class="card sage">
+      <h4>📚 Scott 進階作品</h4>
+      <p>• <em>Domination and the Arts of Resistance</em> (1990) — 公開文本／隱藏文本的理論專著<br>
+      • <em>Seeing Like a State</em> (1998) — 國家如何「<strong>簡化</strong>」社會以利統治<br>
+      • <em>The Art of Not Being Governed</em> (2009) — 東南亞高地民族的反抗史</p>
+    </div>
+    <div class="card blue">
+      <h4>📚 社運理論經典</h4>
+      <p>• Tilly, C. (1978). <em>From Mobilization to Revolution</em><br>
+      • Tarrow, S. (2011). <em>Power in Movement</em> (3rd ed.)<br>
+      • McAdam, D., Tarrow, S., & Tilly, C. (2001). <em>Dynamics of Contention</em></p>
+    </div>
+    <div class="card purple">
+      <h4>🎬 何明修中文專書</h4>
+      <p>• 何明修（2019）<em>《為什麼要佔領街頭？從太陽花、雨傘，到反送中運動》</em>（左岸文化）<br>
+      • 何明修（2023）<em>《支離破碎的團結：戰後台灣煉油業與糖業工人》</em>（左岸文化）</p>
+    </div>
+    <div class="card orange">
+      <h4>📱 當代議題追蹤</h4>
+      <p>• Bennett & Segerberg (2013). <em>The Logic of Connective Action</em>（連結性行動論）<br>
+      • Castells, M. (2012). <em>Networks of Outrage and Hope</em>（網絡社會運動論）<br>
+      • 「<strong>躺平學</strong>」相關中文資料：可從 The China Story、端傳媒等查找</p>
+    </div>
+  </div>
+
+  <h3><span class="num">④</span>下週銜接預告</h3>
+
+  <div class="hl-box blue">
+    <h4>🔮 W12：文化如何建構政治的正當性基礎</h4>
+    <p>本週我們處理了「<strong>沒有資源的人怎麼做政治</strong>」（日常政治）。下週我們轉向：「<strong>政治權威是怎麼被認為「合理」的</strong>」？——也就是<strong>正當性（legitimacy）</strong>與<strong>政治文化（political culture）</strong>的問題。<br><br>
+    從 Weber 的「<strong>合法統治的三種類型</strong>」（傳統、卡里斯瑪、法理）出發，我們會探討：<strong>為什麼有些國家的人民「信任」政府，有些不信任？</strong>台灣的政治文化在這十年又有什麼變化？<br><br>
+    👉 下週指定閱讀：辜樹仁（2018）〈經濟學人認證！台灣民主退步，政治文化 10 年沒起色〉，《天下雜誌》。</p>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>🎯 本週的一句話總結</h4>
+    <p style="font-family:'Playfair Display',serif;font-size:1.05rem;text-align:center;color:var(--accent);font-weight:700;padding:1rem;background:#fff;border-radius:8px;margin-top:.7rem;line-height:1.7">
+      政治不只發生在<strong>立法院</strong>、不只發生在<strong>投票所</strong>、不只發生在<strong>街頭</strong>——<br>
+      政治也發生在你<strong>選擇何時假裝聽不到老闆叫你</strong>的那一刻。
+    </p>
+  </div>
+
+</div></div>
+
+
+</div><!-- /page-container -->
+
+<!-- 底部 -->
+<div class="bottom-bar">
+  <div class="page-indicator">第 <span id="cur-page">1</span> / 10 頁</div>
+  <div class="page-dots" id="dots"></div>
+  <div class="arrow-btns">
+    <button class="arrow-btn" id="prev-btn" onclick="goPrev()">←</button>
+    <button class="arrow-btn" id="next-btn" onclick="goNext()">→</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+const totalPages = 10;
+let currentPage = 0;
+
+const dotsEl = document.getElementById('dots');
+for(let i=0; i<totalPages; i++){
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.onclick = () => goPage(i);
+  dotsEl.appendChild(d);
+}
+
+function goPage(n){
+  if(n<0||n>=totalPages) return;
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('cur-page').textContent = n+1;
+  document.getElementById('prev-btn').disabled = n===0;
+  document.getElementById('next-btn').disabled = n===totalPages-1;
+  currentPage = n;
+  document.querySelectorAll('.page')[n].scrollTop = 0;
+}
+
+function goPrev(){ goPage(currentPage-1); }
+function goNext(){ goPage(currentPage+1); }
+
+// Tab 切換
+function switchTab(btn, panelId){
+  const tabs = btn.parentElement.querySelectorAll('.tab');
+  tabs.forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  // 找到同層的 panel
+  const container = btn.closest('.page-inner');
+  container.querySelectorAll('.tab-panel').forEach(p=>{
+    if(p.id===panelId) p.classList.add('active');
+    else p.classList.remove('active');
+  });
+}
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowLeft') goPrev();
+  if(e.key==='ArrowRight') goNext();
+});
+
+// Spoiler 點擊展開
+document.addEventListener('click', e=>{
+  const sp = e.target.closest('.spoiler');
+  if(sp) sp.classList.toggle('revealed');
+});
+
+// 選擇題互動
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('.quiz-opt');
+  if(!btn) return;
+  const block = btn.closest('.quiz-block');
+  if(!block) return;
+  // 已回答則不重複處理
+  if(block.dataset.answered === '1') return;
+  block.dataset.answered = '1';
+  const correct = btn.dataset.correct === 'true';
+  btn.classList.add(correct ? 'selected-correct' : 'selected-wrong');
+  // 把正解標出來
+  if(!correct){
+    block.querySelectorAll('.quiz-opt').forEach(o=>{
+      if(o.dataset.correct === 'true') o.classList.add('show-correct');
+    });
+  }
+  // 顯示解析
+  const exp = block.querySelector('.quiz-explain');
+  if(exp) exp.classList.add('shown');
+});
+
+</script>
+</body>
+</html>

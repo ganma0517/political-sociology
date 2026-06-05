@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政治社會學 W12 — 文化、信任與框架：政治正當性與社會運動的動員</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;
+  --gold:#b8860b;--sage:#5a6e5a;--muted:#6b6560;--line:#c9c0b4;
+  --card-bg:#faf7f2;--blue:#3a5a8c;--purple:#6b4c7a;--teal:#2a7a6e;
+  --red:#c0392b;--green:#27ae60;--orange:#d35400;
+  /* 文化政治學者色 */
+  --almond:#8b2500; --putnam:#2a7a6e; --inglehart:#6b4c7a;
+  /* 信任 / 框架 */
+  --trust:#2a7a6e; --frame:#3a5a8c;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+
+/* ========== 頂部導航 ========== */
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.2rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .9rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.76rem;font-weight:500;color:#888;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#ccc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:var(--paper);background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.88rem;font-weight:700;margin-right:1rem;flex-shrink:0}
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+
+/* ========== 頁面 ========== */
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:920px;margin:0 auto}
+
+/* ========== 底部 ========== */
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+
+/* ========== 標題 ========== */
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,3vw,2.1rem);font-weight:800;color:var(--ink);margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent);position:relative}
+.page h2::after{content:'';position:absolute;left:0;bottom:-2px;width:60px;height:2px;background:var(--gold)}
+.page h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent);margin:1.6rem 0 .8rem;display:flex;align-items:center;gap:.5rem}
+.page h3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;font-size:.85rem;font-weight:700;flex-shrink:0}
+.page h4{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin:1rem 0 .5rem}
+.page p{font-size:.92rem;color:#333;margin-bottom:.7rem;line-height:1.95}
+.page p strong{color:var(--accent);font-weight:700}
+.page ul,.page ol{margin:.6rem 0 .9rem 1.5rem}
+.page li{font-size:.9rem;margin-bottom:.35rem;line-height:1.9;color:#333}
+.page li strong{color:var(--ink)}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;color:var(--ink);line-height:1.1;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:640px;margin:0 auto 1.8rem}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+
+.story-lead{font-size:.98rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+
+/* ========== 卡片 ========== */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.2rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.1rem 1.2rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card h4{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--accent);margin-bottom:.4rem;margin-top:0}
+.card p{font-size:.84rem;color:#555;margin-bottom:0;line-height:1.75}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.blue{border-top-color:var(--blue)}.card.blue h4{color:var(--blue)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.purple{border-top-color:var(--purple)}.card.purple h4{color:var(--purple)}
+.card.teal{border-top-color:var(--teal)}.card.teal h4{color:var(--teal)}
+.card.orange{border-top-color:var(--orange)}.card.orange h4{color:var(--orange)}
+
+/* ========== 引言／提問框 ========== */
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.1rem 0}
+.hl-box p:last-child{margin-bottom:0}
+.hl-box h4{margin-top:0;color:var(--accent)}
+.hl-box.blue{background:rgba(58,90,140,.05);border-left-color:var(--blue)}
+.hl-box.blue h4{color:var(--blue)}
+.hl-box.sage{background:rgba(90,110,90,.05);border-left-color:var(--sage)}
+.hl-box.sage h4{color:var(--sage)}
+.hl-box.gold{background:rgba(184,134,11,.06);border-left-color:var(--gold)}
+.hl-box.gold h4{color:var(--gold)}
+.hl-box.purple{background:rgba(107,76,122,.05);border-left-color:var(--purple)}
+.hl-box.purple h4{color:var(--purple)}
+
+/* ========== 概念框 ========== */
+.concept{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(58,90,140,.04));padding:.9rem 1.2rem;border-radius:8px;margin:.8rem 0;border:1px solid rgba(184,134,11,.2)}
+.concept .lead{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent);font-weight:700;margin-bottom:.4rem}
+.concept .body{font-size:.86rem;color:#333;line-height:1.85}
+.concept .body strong{color:var(--accent)}
+
+/* ========== 中央問題列 ========== */
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+
+/* ========== 下一頁 ========== */
+.next-page{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:1.1rem 1.4rem;border-radius:10px;margin-top:2.2rem;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.next-page:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(139,37,0,.3)}
+.np-label{font-size:.72rem;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.np-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.np-arrow{font-size:1.4rem;opacity:.8}
+
+/* ========== Spoiler（點擊揭露） ========== */
+.spoiler{cursor:pointer;background:linear-gradient(135deg,rgba(90,110,90,.08),rgba(184,134,11,.06));border-left:3px dashed var(--sage);padding:.8rem 1.1rem;border-radius:0 6px 6px 0;font-size:.85rem;color:var(--sage);max-height:42px;overflow:hidden;transition:max-height .5s ease;line-height:1.85;position:relative}
+.spoiler::after{content:'▼ 點擊展開';position:absolute;right:1rem;top:.75rem;font-size:.72rem;color:var(--muted);font-family:'Source Serif 4',serif;font-style:italic}
+.spoiler.revealed{max-height:1500px;color:#333}
+.spoiler.revealed::after{content:'▲ 點擊收合';color:var(--sage)}
+.spoiler strong{color:var(--accent)}
+
+/* ========== Scholar Card ========== */
+.scholar-card{background:linear-gradient(135deg,rgba(58,90,140,.07),rgba(184,134,11,.05));border:1px solid rgba(58,90,140,.15);border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0}
+.scholar-card h4{margin-top:0;color:var(--blue)}
+.scholar-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+.scholar-tag{padding:.25rem .7rem;background:rgba(58,90,140,.1);color:var(--blue);border-radius:14px;font-size:.74rem;font-weight:600}
+
+/* ========== 學者大圖卡 ========== */
+.scott-hero{background:linear-gradient(135deg,#1a1a1a,#3a1a10);color:#fff;padding:1.8rem;border-radius:12px;margin:1.3rem 0;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap}
+.scott-portrait{flex-shrink:0;width:120px;height:160px;background:linear-gradient(135deg,var(--accent),var(--accent-light));border-radius:8px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:.8rem;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.scott-portrait .name-cn{font-family:'Playfair Display',serif;font-weight:900;font-size:1.05rem;line-height:1.3;margin-bottom:.3rem}
+.scott-portrait .name-en{font-size:.7rem;opacity:.85;font-style:italic;border-top:1px solid rgba(255,255,255,.3);padding-top:.4rem;margin-top:.3rem;width:100%}
+.scott-portrait .life{font-size:.66rem;opacity:.75;margin-top:.4rem}
+.scott-info{flex:1;min-width:240px}
+.scott-info h3{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--gold);margin:0 0 .4rem;border:none;display:block}
+.scott-info h3::after{display:none}
+.scott-info .scott-sub{font-size:.9rem;color:#d8d0c4;font-style:italic;margin-bottom:.7rem}
+.scott-info p{font-size:.88rem;color:#cfc6b8;margin-bottom:0;line-height:1.85}
+.scott-info p strong{color:#fff}
+.scott-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.7rem}
+.scott-tag{padding:.2rem .65rem;background:rgba(184,134,11,.25);color:#f0d895;border-radius:14px;font-size:.72rem;font-weight:600}
+
+/* ========== 信任類型 / 圖示 ========== */
+.weapons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.7rem;margin:1.1rem 0}
+.weapon-card{background:#fff;border-radius:8px;padding:.9rem 1rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.05);transition:all .3s;cursor:default}
+.weapon-card:hover{transform:translateY(-3px);box-shadow:0 5px 18px rgba(0,0,0,.1)}
+.weapon-emoji{font-size:1.6rem;line-height:1;margin-bottom:.4rem}
+.weapon-name{font-family:'Playfair Display',serif;font-weight:700;color:var(--accent);font-size:.93rem;margin-bottom:.3rem}
+.weapon-desc{font-size:.78rem;color:#555;line-height:1.7}
+
+/* ========== 雙欄對照 ========== */
+.transcript-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:1.2rem 0}
+.tr-col{padding:1.1rem 1.2rem;border-radius:10px;position:relative;border:1px solid}
+.tr-col.public{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(184,134,11,.03));border-color:rgba(184,134,11,.25)}
+.tr-col.hidden{background:linear-gradient(135deg,rgba(58,90,140,.08),rgba(107,76,122,.05));border-color:rgba(58,90,140,.25)}
+.tr-label{display:inline-block;padding:.2rem .7rem;border-radius:14px;font-size:.72rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem;text-transform:uppercase;color:#fff}
+.tr-col.public .tr-label{background:var(--gold)}
+.tr-col.hidden .tr-label{background:var(--blue)}
+.tr-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.4rem}
+.tr-col.public .tr-title{color:var(--gold)}
+.tr-col.hidden .tr-title{color:var(--blue)}
+.tr-text{font-size:.85rem;color:#444;line-height:1.85}
+.tr-text strong{color:var(--ink)}
+.tr-eg{margin-top:.6rem;padding:.5rem .8rem;background:rgba(255,255,255,.6);border-radius:6px;font-size:.8rem;font-style:italic;color:#555}
+
+/* ========== 三巨頭比較表 ========== */
+.cmp-three{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1.2rem 0}
+.cmp-three-card{background:#fff;border-radius:10px;padding:1.1rem 1.1rem;border-top:4px solid;box-shadow:0 3px 14px rgba(0,0,0,.06);transition:transform .3s}
+.cmp-three-card:hover{transform:translateY(-4px)}
+.cmp-three-card.scott{border-top-color:var(--almond)}
+.cmp-three-card.bayat{border-top-color:var(--putnam)}
+.cmp-three-card.decerteau{border-top-color:var(--inglehart)}
+.cmp-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin-bottom:.2rem}
+.cmp-three-card.scott .cmp-name{color:var(--almond)}
+.cmp-three-card.bayat .cmp-name{color:var(--putnam)}
+.cmp-three-card.decerteau .cmp-name{color:var(--inglehart)}
+.cmp-three-card .yr{font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.55rem}
+.cmp-three-card .concept-line{font-weight:700;color:var(--ink);font-size:.87rem;margin-bottom:.5rem;padding:.4rem .6rem;background:var(--card-bg);border-radius:5px;line-height:1.5}
+.cmp-three-card .desc{font-size:.82rem;color:#444;line-height:1.8}
+.cmp-three-card .desc strong{color:var(--accent)}
+
+/* ========== 論述演進框 ========== */
+.discourse-box{background:#fff;border-radius:12px;overflow:hidden;margin:1.3rem 0;box-shadow:0 4px 16px rgba(0,0,0,.07)}
+.discourse-head{padding:1rem 1.3rem;background:linear-gradient(135deg,#1a1a1a,#3a2818);color:#fff}
+.discourse-head h4{margin:0;color:#fff;font-family:'Playfair Display',serif;font-size:1.05rem}
+.discourse-head .sub{font-size:.78rem;color:#bfb6a8;font-style:italic;margin-top:.2rem}
+.discourse-body{padding:1.2rem 1.3rem}
+.discourse-era{margin-bottom:.9rem;padding:.8rem 1rem;background:var(--card-bg);border-radius:7px;border-left:3px solid var(--accent)}
+.discourse-era:last-child{margin-bottom:0}
+.discourse-era .era-label{display:inline-block;padding:.15rem .6rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;margin-bottom:.4rem;letter-spacing:.05em}
+.discourse-era.e1 .era-label{background:#6b6560}
+.discourse-era.e2 .era-label{background:var(--accent)}
+.discourse-era.e3 .era-label{background:var(--gold)}
+.discourse-era.e4 .era-label{background:var(--blue)}
+.discourse-era .era-title{font-weight:700;color:var(--ink);font-size:.92rem;margin-bottom:.35rem}
+.discourse-era .era-text{font-size:.85rem;color:#444;line-height:1.85}
+.discourse-era .era-text strong{color:var(--accent)}
+
+/* ========== 比較表 ========== */
+.vs-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.07);margin:1.3rem 0;font-size:.84rem}
+.vs-table thead th{padding:.85rem .8rem;font-weight:700;color:#fff;text-align:left;font-size:.85rem}
+.vs-table thead th:first-child{background:#1a1a1a;width:140px}
+.vs-table thead th.sun{background:linear-gradient(135deg,#d4a017,#b8860b)}
+.vs-table thead th.blue{background:linear-gradient(135deg,#3a5a8c,#5a7ab0)}
+.vs-table td{padding:.75rem .85rem;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.75}
+.vs-table td:first-child{font-weight:700;color:var(--accent);background:var(--card-bg);font-size:.8rem;width:140px}
+.vs-table td strong{color:var(--ink)}
+.vs-table tr:last-child td{border-bottom:0}
+.vs-table tr:hover td:not(:first-child){background:rgba(184,134,11,.04)}
+
+/* ========== Toggle Tabs ========== */
+.tabs{display:flex;gap:.3rem;margin:1.1rem 0 .7rem;border-bottom:2px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:.6rem 1.1rem;background:0;border:0;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .25s;white-space:nowrap}
+.tab:hover{color:var(--accent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ========== 圖示展示 ========== */
+.icon-row{display:flex;gap:.8rem;flex-wrap:wrap;margin:1rem 0}
+.icon-item{flex:1;min-width:130px;text-align:center;padding:.9rem .8rem;background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.icon-item .ic{font-size:1.8rem;line-height:1;margin-bottom:.4rem}
+.icon-item .lb{font-weight:700;color:var(--accent);font-size:.85rem;margin-bottom:.3rem}
+.icon-item .ds{font-size:.76rem;color:#666;line-height:1.65}
+
+/* ========== 案例分析 ========== */
+.case-block{background:#fff;border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:4px solid var(--teal)}
+.case-block h4{color:var(--teal);font-family:'Playfair Display',serif;margin:0 0 .4rem}
+.case-block .ce{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.case-block .ct{font-size:.86rem;color:#333;line-height:1.85;margin-bottom:0}
+.case-block .ct strong{color:var(--accent)}
+.case-block.purple{border-top-color:var(--purple)}.case-block.purple h4{color:var(--purple)}
+.case-block.blue{border-top-color:var(--blue)}.case-block.blue h4{color:var(--blue)}
+.case-block.gold{border-top-color:var(--gold)}.case-block.gold h4{color:var(--gold)}
+
+/* ========== 討論題 ========== */
+.discussion-block{background:linear-gradient(135deg,#fff,#faf7f2);border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid rgba(139,37,0,.12)}
+.discussion-eyebrow{display:inline-block;padding:.2rem .7rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem}
+.discussion-q{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin-bottom:.7rem;line-height:1.7}
+.discussion-q em{color:var(--accent);font-style:normal}
+.discussion-block .ctx{font-size:.85rem;color:#555;margin-bottom:.7rem;line-height:1.85}
+.discussion-block .ctx strong{color:var(--accent)}
+
+/* ========== 本週讀物 ========== */
+.reading-card{background:#fff;border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0;border-left:4px solid;display:flex;gap:.9rem;align-items:flex-start;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.reading-card.must{border-left-color:var(--accent)}
+.reading-card.rec{border-left-color:var(--gold)}
+.reading-icon{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;font-family:'Playfair Display',serif}
+.reading-card.must .reading-icon{background:var(--accent)}
+.reading-card.rec .reading-icon{background:var(--gold)}
+.reading-body{flex:1}
+.reading-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:.2rem;line-height:1.5}
+.reading-meta{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:.3rem;font-family:'Source Serif 4',serif}
+.reading-note{font-size:.83rem;color:#444;line-height:1.75}
+
+/* ========== 關係圖 ========== */
+.linkmap{background:#fff;border-radius:12px;padding:1.5rem;margin:1.3rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.linkmap-svg{display:block;width:100%;max-width:820px;margin:0 auto}
+
+/* ========== 框架診斷三件套 ========== */
+.frame-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1.2rem 0}
+.frame-card{background:#fff;border-radius:10px;padding:1.1rem 1.2rem;border-top:4px solid var(--frame);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.frame-card .fk{font-size:.72rem;letter-spacing:.12em;color:var(--frame);font-weight:600;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.frame-card .ft{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.5rem;font-family:'Playfair Display',serif}
+.frame-card .fd{font-size:.82rem;color:#444;line-height:1.8}
+.frame-card .fd strong{color:var(--accent)}
+.frame-card .feg{margin-top:.6rem;padding:.5rem .7rem;background:var(--card-bg);border-radius:6px;font-size:.78rem;color:#555;font-style:italic;line-height:1.6}
+
+/* ========== 信任儀表 SVG 容器 ========== */
+.trust-panel{background:#fff;border-radius:12px;padding:1.4rem;margin:1.2rem 0;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+
+/* === Quiz blocks === */
+.quiz-block{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0;border:1px solid #e5e0d6;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative}
+.quiz-q-num{position:absolute;top:-12px;left:1.5rem;background:var(--accent);color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;padding:.25rem .75rem;border-radius:5px;letter-spacing:.05em}
+.quiz-question{font-size:.95rem;font-weight:600;color:var(--ink);margin:.4rem 0 .9rem;line-height:1.7}
+.quiz-options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.7rem}
+.quiz-opt{text-align:left;background:#fafaf6;border:1.5px solid #e0d9c8;border-radius:7px;padding:.7rem 1rem;font-size:.88rem;line-height:1.6;color:#333;cursor:pointer;transition:all .2s;font-family:inherit}
+.quiz-opt:hover{background:#f5f0e8;border-color:#b8860b}
+.quiz-opt.selected-correct{background:linear-gradient(135deg,#d4edd4,#c0e0c0);border-color:#5a8c5a;color:#1e4d1e;font-weight:600}
+.quiz-opt.selected-wrong{background:linear-gradient(135deg,#f8d8d4,#efc4be);border-color:#b85040;color:#7a1a10}
+.quiz-opt.show-correct{background:#eaf5ea;border-color:#5a8c5a;font-weight:500}
+.quiz-explain{font-size:.85rem;line-height:1.8;color:#333;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(90,110,90,.04));padding:.9rem 1.1rem;border-radius:7px;border-left:3px solid var(--sage);display:none}
+.quiz-explain.shown{display:block}
+.quiz-explain strong{color:var(--accent)}
+
+/* ========== 週次分隔旗 ========== */
+.week-flag{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .9rem;border-radius:20px;font-size:.78rem;font-weight:700;letter-spacing:.04em;margin-bottom:.9rem}
+.week-flag.w12{background:rgba(42,122,110,.12);color:var(--teal)}
+.week-flag.w13{background:rgba(58,90,140,.12);color:var(--blue)}
+
+@media(max-width:780px){
+  .cmp-three,.frame-trio,.connect-grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .page{padding:1.8rem 1rem 3rem}
+  .hero-title{font-size:2rem}
+  .page h2{font-size:1.5rem}
+  .scott-hero{flex-direction:column;align-items:center;text-align:center}
+  .scott-info{text-align:left}
+  .transcript-grid{grid-template-columns:1fr}
+  .weapons-grid{grid-template-columns:repeat(2,1fr)}
+  .vs-table thead th:first-child,.vs-table td:first-child{width:auto}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- 頂部導航 -->
+<div class="top-nav">
+  <span class="nav-title">W12 文化 · 信任 · 框架</span>
+  <button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+  <button class="nav-btn" onclick="goPage(1)">1 · 為何談文化</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(2)">2 · 政治文化</button>
+  <button class="nav-btn" onclick="goPage(3)">3 · 社會信任</button>
+  <button class="nav-btn" onclick="goPage(4)">4 · 正當性</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(5)">5 · 框架理論</button>
+  <button class="nav-btn" onclick="goPage(6)">6 · 框架動員（隨堂）</button>
+  <button class="nav-btn" onclick="goPage(7)">7 · 台灣案例（隨堂）</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(8)">8 · 討論題</button>
+  <button class="nav-btn" onclick="goPage(9)">9 · 本週讀物</button>
+</div>
+
+<div class="page-container">
+
+<!-- ============ P0 封面 ============ -->
+<div class="page active" data-page="0"><div class="page-inner">
+  <div class="hero">
+    <div class="hero-eyebrow">Political Sociology · Week 12–13</div>
+    <h1 class="hero-title">文化、信任<span class="mark">與</span>框架</h1>
+    <p class="hero-sub">政治的正當性從哪裡來？人民為什麼願意「相信」一個政府、一場運動？──當權力不靠武力，而靠「人心」運作</p>
+    <div class="hero-meta">
+      <span>🏛 政治文化 · Almond &amp; Verba</span>
+      <span>🤝 社會信任 · Putnam</span>
+      <span>🪧 文化框架 · Snow &amp; Benford</span>
+    </div>
+  </div>
+
+  <div class="story-lead">
+    過去幾週我們看了<strong>結構</strong>（國家、經濟、國際環境）與<strong>行動</strong>（社會運動、日常政治）。但有一個問題始終懸而未決：為什麼有些政府「叫得動」人民，有些卻一聲令下沒人理會？為什麼同一份政策，換個說法，支持度就翻轉？本週把焦點轉向<strong>文化</strong>——權力要能「運作」，光有槍桿和錢袋不夠，還需要人民「打從心裡覺得它是對的、可信的」。這就是<strong>正當性（legitimacy）</strong>的問題。
+  </div>
+
+  <div class="questions">
+    <h4>📌 本週（W12+W13）要解答的核心問題</h4>
+    <ol>
+      <li><strong>什麼是「政治文化」？</strong>一個社會對權力、權威、參與的共同態度，如何撐起或瓦解一個政治體制？</li>
+      <li><strong>「社會信任」為什麼是政治資本？</strong>為什麼信任高的社會，民主與治理品質往往比較好？</li>
+      <li><strong>正當性（legitimacy）</strong>有哪幾種來源？為什麼它比「服從」更深一層？</li>
+      <li><strong>社會運動如何「說服」人民？</strong>什麼是「框架（frame）」？同一件事為什麼換個框架就能動員出截然不同的群眾？</li>
+      <li><strong>從太陽花到反核、到罷免</strong>——這些運動各自打出了什麼「框架」？哪些框架成功「對上」了台灣社會的政治文化？</li>
+    </ol>
+  </div>
+
+  <h3><span class="num">🗺</span>本週路線圖（兩週合併講義）</h3>
+  <p style="font-size:.85rem;color:#666;margin-bottom:.8rem">本講義整合 <strong>W12（政治文化與社會信任）</strong> 與 <strong>W13（文化框架與動員）</strong>。前半（P2–P4）建立「文化如何撐起正當性」的理論基礎；後半（P5–P7）進入「運動如何用文化框架去動員」的應用層。</p>
+  <div class="card-grid">
+    <div class="card teal"><h4>P1 為何談文化</h4><p>從「結構/行動」轉向「意義」。權力為何需要被「相信」？正當性的問題意識。</p></div>
+    <div class="card"><h4>P2 政治文化</h4><p>Almond &amp; Verba 的三類政治文化；Inglehart 的價值變遷。台灣是哪一種？</p></div>
+    <div class="card teal"><h4>P3 社會信任</h4><p>Putnam 的社會資本；人際信任 vs 制度信任。為何信任是「看不見的基礎建設」。</p></div>
+    <div class="card gold"><h4>P4 正當性</h4><p>Weber 三種正當支配；正當性 ≠ 服從。同意如何被製造、也可能崩解。</p></div>
+    <div class="card blue"><h4>P5 框架理論</h4><p>Goffman → Snow &amp; Benford。診斷框架／預後框架／動員框架的三件套。</p></div>
+    <div class="card blue"><h4>P6 框架動員 + 隨堂</h4><p>共鳴、橋接、延伸、轉換；框架競爭。<strong>4 題隨堂選擇題</strong>。</p></div>
+    <div class="card purple"><h4>P7 台灣案例 + 隨堂</h4><p>太陽花、反核、婚姻平權、罷免的框架戰。<strong>4 題隨堂選擇題</strong>。</p></div>
+    <div class="card"><h4>P8–P9 討論與讀物</h4><p>小組討論題與本週指定／推薦閱讀。</p></div>
+  </div>
+
+  <div class="next-page" onclick="goPage(1)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P1 · 為什麼政治社會學要談「文化」？</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P1 為何談文化 ============ -->
+<div class="page" data-page="1"><div class="page-inner">
+  <div class="guide-breadcrumb">本週路線 · <span>P1 從結構到意義</span></div>
+  <h2>為什麼政治社會學要談「文化」？</h2>
+
+  <p>回顧這學期的分析層次：我們先看<strong>結構</strong>（國家自主性、經濟基礎、國際環境決定了「能做什麼」），再看<strong>行動</strong>（社會運動、日常政治探討人們「實際做了什麼」）。但兩者之間有一個關鍵的「轉接層」常被忽略——<strong>意義（meaning）</strong>：人們如何「理解」自己的處境，又如何「相信」某種秩序是合理的。這就是文化進場的地方。</p>
+
+  <div class="linkmap">
+    <svg class="linkmap-svg" viewBox="0 0 800 230" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#8b2500"/>
+        </marker>
+      </defs>
+      <!-- 結構 -->
+      <rect x="30" y="80" width="180" height="70" rx="10" fill="#f5f0e8" stroke="#8b2500" stroke-width="2"/>
+      <text x="120" y="108" text-anchor="middle" font-family="'Playfair Display',serif" font-weight="700" font-size="17" fill="#8b2500">結構 Structure</text>
+      <text x="120" y="130" text-anchor="middle" font-family="'Noto Sans TC'" font-size="12" fill="#666">國家 · 經濟 · 國際環境</text>
+      <!-- 文化（中間，放大） -->
+      <rect x="290" y="60" width="220" height="110" rx="12" fill="#2a7a6e" stroke="#1c5a51" stroke-width="2"/>
+      <text x="400" y="100" text-anchor="middle" font-family="'Playfair Display',serif" font-weight="900" font-size="22" fill="#fff">文化 Culture</text>
+      <text x="400" y="126" text-anchor="middle" font-family="'Noto Sans TC'" font-size="13" fill="#d6efe9">意義 · 信任 · 正當性</text>
+      <text x="400" y="148" text-anchor="middle" font-family="'Noto Sans TC'" font-size="11" fill="#bfe3db">「人心」如何被組織起來</text>
+      <!-- 行動 -->
+      <rect x="590" y="80" width="180" height="70" rx="10" fill="#f5f0e8" stroke="#3a5a8c" stroke-width="2"/>
+      <text x="680" y="108" text-anchor="middle" font-family="'Playfair Display',serif" font-weight="700" font-size="17" fill="#3a5a8c">行動 Action</text>
+      <text x="680" y="130" text-anchor="middle" font-family="'Noto Sans TC'" font-size="12" fill="#666">社會運動 · 動員</text>
+      <!-- 箭頭 -->
+      <line x1="212" y1="115" x2="285" y2="115" stroke="#8b2500" stroke-width="2.5" marker-end="url(#arrow)"/>
+      <line x1="512" y1="115" x2="585" y2="115" stroke="#8b2500" stroke-width="2.5" marker-end="url(#arrow)"/>
+      <text x="400" y="30" text-anchor="middle" font-family="'Noto Sans TC'" font-size="13" font-weight="700" fill="#8b2500">結構提供條件，文化賦予意義，意義驅動行動</text>
+      <text x="248" y="200" text-anchor="middle" font-family="'Noto Sans TC'" font-size="11" fill="#888" font-style="italic">同樣的結構，不同的文化詮釋 → 不同的政治結果</text>
+    </svg>
+  </div>
+
+  <h3><span class="num">①</span>同樣的事實，不同的「理解」</h3>
+  <p>結構決定論最大的盲點是：相同的客觀條件，可能導向完全相反的政治行為。經濟衰退時，有人歸咎政府而上街抗議，有人歸咎外國人而支持排外政黨，也有人歸咎自己而「躺平」。<strong>差別不在結構，而在人們用什麼「框架」去理解這個結構。</strong>這正是 W13 要處理的主題。</p>
+
+  <div class="hl-box teal">
+    <h4>🔑 核心轉向：從「客觀條件」到「主觀理解」</h4>
+    <p style="margin-bottom:0">政治社會學的文化轉向（cultural turn）提醒我們：權力不只是「強迫」，更是「說服」。一個能讓人民<strong>自願服從</strong>、甚至<strong>覺得理所當然</strong>的秩序，遠比靠警察和軍隊維持的秩序穩固。這種「讓人覺得理所當然」的能力，就是<strong>正當性</strong>，而它建立在政治文化與社會信任之上。</p>
+  </div>
+
+  <h3><span class="num">②</span>兩週的分工：撐起來 vs 動起來</h3>
+  <div class="transcript-grid">
+    <div class="tr-col public">
+      <span class="tr-label">Week 12</span>
+      <div class="tr-title">文化如何「撐起」秩序</div>
+      <div class="tr-text">處理<strong>靜態</strong>的問題：一個社會的政治文化、社會信任，如何構成政治正當性的「地基」。為什麼有些社會的民主穩固、治理有效，有些卻動盪？<br>關鍵詞：政治文化、社會資本、信任、正當性。</div>
+    </div>
+    <div class="tr-col hidden">
+      <span class="tr-label">Week 13</span>
+      <div class="tr-title">文化如何讓人「動起來」</div>
+      <div class="tr-text">處理<strong>動態</strong>的問題：社會運動如何運用文化資源（符號、論述、框架）去說服、號召、動員群眾。為什麼有些訴求一呼百應，有些卻乏人問津？<br>關鍵詞：框架、框架共鳴、集體認同、動員。</div>
+    </div>
+  </div>
+  <p style="font-size:.85rem;color:#666">一句話總結兩週的關係：<strong style="color:var(--teal)">W12 講「正當性的庫存」，W13 講「如何把庫存提取出來變成行動」。</strong>運動者要動員，憑藉的正是社會既有的政治文化與信任結構——他們不是無中生有，而是「對上」了人民心中已有的價值。</p>
+
+  <div class="next-page" onclick="goPage(2)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P2 · 政治文化：一個社會如何「看待」權力</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P2 政治文化 ============ -->
+<div class="page" data-page="2"><div class="page-inner">
+  <div class="week-flag w12">📘 Week 12 · 政治文化與社會信任</div>
+  <h2>政治文化：一個社會如何「看待」權力</h2>
+
+  <div class="concept">
+    <div class="lead">概念定義｜政治文化 Political Culture</div>
+    <div class="body">指一個社會成員對於<strong>政治體系、權威、自身政治角色</strong>所共享的態度、信念與情感取向。它不是個別的政治意見，而是「<strong>瀰漫在整個社會、被視為理所當然的政治心理底色</strong>」。簡單說：人民「習慣怎麼看政府」「覺得自己跟政治有沒有關係」。</div>
+  </div>
+
+  <h3><span class="num">①</span>Almond &amp; Verba：三種政治文化</h3>
+  <p>政治學者 Gabriel Almond 與 Sidney Verba 在《公民文化》（<em>The Civic Culture</em>, 1963）中，依人民對政治體系的「認知—參與」程度，分出三種理想型：</p>
+
+  <div class="cmp-three">
+    <div class="cmp-three-card scott">
+      <div class="cmp-name">地方型</div>
+      <div class="yr">Parochial</div>
+      <div class="concept-line">「政治？那是上面的事，跟我無關。」</div>
+      <div class="desc">人民對國家層級的政治缺乏認知與期待，生活以宗族、村落為單位。<strong>低參與、低認知</strong>。常見於傳統社會或威權早期。</div>
+    </div>
+    <div class="cmp-three-card bayat">
+      <div class="cmp-name">臣屬型</div>
+      <div class="yr">Subject</div>
+      <div class="concept-line">「我知道有政府，我服從，但我不參與。」</div>
+      <div class="desc">人民知道政治體系存在、也接受其權威，但只是被動的「受治者」，不認為自己能影響決策。<strong>高認知、低參與</strong>。典型的威權順民文化。</div>
+    </div>
+    <div class="cmp-three-card decerteau">
+      <div class="cmp-name">參與型</div>
+      <div class="yr">Participant</div>
+      <div class="concept-line">「政治是我的事，我有權也有責任參與。」</div>
+      <div class="desc">人民既認知政治體系，也認為自己是<strong>主動的參與者</strong>，能透過投票、結社、抗議去影響它。<strong>高認知、高參與</strong>。民主社會的理想公民。</div>
+    </div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>⚖️ 「公民文化」是混合體，不是純參與型</h4>
+    <p style="margin-bottom:0">Almond &amp; Verba 的重要洞見是：最穩定的民主，<strong>不是全民都狂熱參與，而是三種取向的「平衡混合」</strong>——有足夠的參與意識撐住問責，又有足夠的服從與信任讓政府能治理。過度動員（人人上街、誰都不讓步）反而可能讓民主失能。這個張力，正是台灣近年的真實課題。</p>
+  </div>
+
+  <h3><span class="num">②</span>台灣是哪一種政治文化？（點擊思考）</h3>
+  <div class="spoiler"><strong>台灣的政治文化在三、四十年間經歷劇烈轉型。</strong> 戒嚴時期是典型的<strong>臣屬型</strong>——人民認知威權國家、被動服從。解嚴與民主化後，快速朝<strong>參與型</strong>移動：高投票率、活躍的公民社會、頻繁的社會運動（從野百合、太陽花到青鳥）。但學界也指出，台灣同時殘留「政治冷感」與「對政黨的低信任」，呈現一種<strong>「高參與但低信任」</strong>的混合狀態——人民熱衷選舉與運動，卻普遍不信任政治人物與制度。這種組合，使台灣的政治既充滿活力，也容易陷入動員過熱與對立。</div>
+
+  <h3><span class="num">③</span>Inglehart：政治文化會「世代變遷」</h3>
+  <div class="scholar-card">
+    <h4>Ronald Inglehart — 後物質主義價值轉變</h4>
+    <p style="font-size:.88rem;color:#444;line-height:1.85;margin-bottom:0">Inglehart 主張：當一個社會的物質安全（溫飽、人身安全）長期被滿足後，新世代會從重視<strong>物質價值</strong>（經濟成長、秩序、國防）轉向<strong>後物質價值</strong>（自我實現、環境、性別平權、言論自由、生活品質）。這個世代性的價值轉移，能解釋為什麼許多富裕民主國家的青年世代，更關心氣候、人權與認同政治。</p>
+    <div class="scholar-meta">
+      <span class="scholar-tag">物質 → 後物質</span>
+      <span class="scholar-tag">世代取代</span>
+      <span class="scholar-tag">World Values Survey</span>
+    </div>
+  </div>
+  <p>把 Inglehart 帶到台灣：年輕世代對<strong>同婚、環境、勞動權益、居住正義</strong>的高度關注，正符合後物質價值的興起。這也預告了 W13——這些後物質價值，正是當代社會運動最常援引的「框架資源」。</p>
+
+  <div class="next-page" onclick="goPage(3)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P3 · 社會信任：看不見的政治基礎建設</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P3 社會信任 ============ -->
+<div class="page" data-page="3"><div class="page-inner">
+  <div class="week-flag w12">📘 Week 12 · 政治文化與社會信任</div>
+  <h2>社會信任：看不見的政治基礎建設</h2>
+
+  <p>如果政治文化是「人民怎麼看權力」，那麼<strong>社會信任</strong>就是「人民彼此之間、以及對制度，願不願意先給出善意」。信任聽起來抽象，卻是民主與治理能否運作的隱形地基。</p>
+
+  <h3><span class="num">①</span>Putnam：社會資本與「使民主運轉起來」</h3>
+  <div class="scott-hero">
+    <div class="scott-portrait">
+      <div class="name-cn">普特南</div>
+      <div class="name-en">Robert D. Putnam</div>
+      <div class="life">b. 1941 · 政治學者</div>
+    </div>
+    <div class="scott-info">
+      <h3>社會資本（Social Capital）</h3>
+      <div class="scott-sub">《使民主運轉起來》(1993)、《獨自打保齡球》(2000)</div>
+      <p>Putnam 研究義大利不同地區政府績效的差異，發現關鍵不在經濟或制度設計，而在<strong>社會資本</strong>——人與人之間的<strong>信任、互惠規範、公民網絡</strong>（如社團、合唱團、志工組織）。社會資本豐厚的地區，民主治理品質明顯較高。他後來警告：美國的社會資本正在流失（人們「獨自打保齡球」，不再參加社團），危及民主活力。</p>
+      <div class="scott-tags">
+        <span class="scott-tag">信任 Trust</span>
+        <span class="scott-tag">互惠 Reciprocity</span>
+        <span class="scott-tag">公民網絡 Civic Networks</span>
+      </div>
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>兩種信任：人際 vs 制度</h3>
+  <div class="transcript-grid">
+    <div class="tr-col public">
+      <span class="tr-label">人際信任</span>
+      <div class="tr-title">Interpersonal Trust</div>
+      <div class="tr-text">對「<strong>一般他人</strong>」的信任：陌生人會不會騙我？鄰居、同事可不可靠？這是社會合作的潤滑劑。<br>進一步可分為對「自己人」的<strong>緊密信任（bonding）</strong>與對「外人」的<strong>橋接信任（bridging）</strong>——後者才是多元社會運作的關鍵。</div>
+      <div class="tr-eg">例：撿到錢包願不願意歸還、能不能跟不同立場的人合作</div>
+    </div>
+    <div class="tr-col hidden">
+      <span class="tr-label">制度信任</span>
+      <div class="tr-title">Institutional Trust</div>
+      <div class="tr-text">對「<strong>制度與機構</strong>」的信任：法院公不公正？選舉算不算數？警察、媒體、政府可不可信？<br>制度信任是<strong>政治正當性的溫度計</strong>——當人民普遍不信任司法或選舉，再合法的政府也會被質疑。</div>
+      <div class="tr-eg">例：相不相信法院判決、選舉結果、官方統計數據</div>
+    </div>
+  </div>
+
+  <div class="trust-panel">
+    <h4 style="margin-top:0;color:var(--teal);font-family:'Playfair Display',serif">信任的「複利效應」與「惡性循環」</h4>
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;max-width:760px;margin:0 auto">
+      <defs>
+        <marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#2a7a6e"/></marker>
+        <marker id="ar3" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#c0392b"/></marker>
+      </defs>
+      <!-- 良性 -->
+      <text x="190" y="24" text-anchor="middle" font-family="'Noto Sans TC'" font-weight="700" font-size="14" fill="#2a7a6e">✅ 高信任的良性循環</text>
+      <rect x="40" y="40" width="120" height="42" rx="8" fill="#e3f1ee" stroke="#2a7a6e"/><text x="100" y="66" text-anchor="middle" font-size="12" fill="#1c5a51">願意合作參與</text>
+      <rect x="230" y="40" width="120" height="42" rx="8" fill="#e3f1ee" stroke="#2a7a6e"/><text x="290" y="66" text-anchor="middle" font-size="12" fill="#1c5a51">治理更有效</text>
+      <rect x="135" y="120" width="120" height="42" rx="8" fill="#e3f1ee" stroke="#2a7a6e"/><text x="195" y="146" text-anchor="middle" font-size="12" fill="#1c5a51">信任再提升</text>
+      <line x1="160" y1="61" x2="226" y2="61" stroke="#2a7a6e" stroke-width="2" marker-end="url(#ar2)"/>
+      <line x1="280" y1="84" x2="225" y2="120" stroke="#2a7a6e" stroke-width="2" marker-end="url(#ar2)"/>
+      <line x1="160" y1="135" x2="105" y2="84" stroke="#2a7a6e" stroke-width="2" marker-end="url(#ar2)"/>
+      <!-- 惡性 -->
+      <text x="575" y="24" text-anchor="middle" font-family="'Noto Sans TC'" font-weight="700" font-size="14" fill="#c0392b">⚠️ 低信任的惡性循環</text>
+      <rect x="430" y="40" width="120" height="42" rx="8" fill="#fbe6e3" stroke="#c0392b"/><text x="490" y="66" text-anchor="middle" font-size="12" fill="#7a1a10">彼此提防退縮</text>
+      <rect x="620" y="40" width="120" height="42" rx="8" fill="#fbe6e3" stroke="#c0392b"/><text x="680" y="66" text-anchor="middle" font-size="12" fill="#7a1a10">合作失敗</text>
+      <rect x="525" y="120" width="120" height="42" rx="8" fill="#fbe6e3" stroke="#c0392b"/><text x="585" y="146" text-anchor="middle" font-size="12" fill="#7a1a10">信任更崩壞</text>
+      <line x1="550" y1="61" x2="616" y2="61" stroke="#c0392b" stroke-width="2" marker-end="url(#ar3)"/>
+      <line x1="670" y1="84" x2="615" y2="120" stroke="#c0392b" stroke-width="2" marker-end="url(#ar3)"/>
+      <line x1="550" y1="135" x2="495" y2="84" stroke="#c0392b" stroke-width="2" marker-end="url(#ar3)"/>
+    </svg>
+    <p style="font-size:.82rem;color:#666;margin:.8rem 0 0;text-align:center">信任不是固定資源，而是會自我強化或自我侵蝕的「動態存量」。</p>
+  </div>
+
+  <h3><span class="num">③</span>信任作為政治脆弱性：台灣的處境（點擊思考）</h3>
+  <div class="spoiler"><strong>社會信任是一種可被攻擊的「政治基礎建設」。</strong> 對台灣而言，這一點具有特殊的安全意涵。當外部行為者透過<strong>不實訊息、認知作戰、製造對立</strong>來侵蝕台灣社會的<strong>制度信任</strong>（讓人民懷疑選舉、司法、媒體、官方資訊），其目的往往不是改變某次投票結果，而是<strong>瓦解整個社會「彼此還能合作」的基礎</strong>。一旦人際與制度信任同時下滑，社會就更容易陷入前述的「惡性循環」：人人提防、共識破裂、政府難以治理。從這個角度看，<strong>守護社會信任本身，就是一種民主防衛</strong>。這也是政治社會學近年高度關注的議題。</div>
+
+  <div class="next-page" onclick="goPage(4)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P4 · 正當性：權力為何需要被「相信」</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P4 正當性 ============ -->
+<div class="page" data-page="4"><div class="page-inner">
+  <div class="week-flag w12">📘 Week 12 · 政治文化與社會信任</div>
+  <h2>正當性：權力為何需要被「相信」</h2>
+
+  <p>政治文化與社會信任，最終匯流到政治社會學最核心的概念之一：<strong>正當性（legitimacy）</strong>。它回答一個根本問題——人民為什麼<strong>「願意」</strong>服從，而不只是<strong>「被迫」</strong>服從？</p>
+
+  <div class="concept">
+    <div class="lead">概念定義｜正當性 Legitimacy</div>
+    <div class="body">指一個政權或權威被人民<strong>承認為「正當的、有權發號施令的」</strong>之程度。關鍵在於：服從來自人民<strong>內心的認可</strong>，而非單純的恐懼或利益計算。一個只靠武力與賄賂維持的政權，其正當性是空的，也最脆弱。</div>
+  </div>
+
+  <h3><span class="num">①</span>Weber：三種正當支配的類型</h3>
+  <p>韋伯（Max Weber）區分了人民為什麼會接受權威的三種理由：</p>
+  <div class="cmp-three">
+    <div class="cmp-three-card scott">
+      <div class="cmp-name">傳統型</div>
+      <div class="yr">Traditional</div>
+      <div class="concept-line">「祖宗向來如此」</div>
+      <div class="desc">正當性來自<strong>世代相傳的慣例與神聖傳統</strong>。如君主世襲、宗族長老。「因為一直都是這樣」。</div>
+    </div>
+    <div class="cmp-three-card bayat">
+      <div class="cmp-name">魅力型</div>
+      <div class="yr">Charismatic</div>
+      <div class="concept-line">「他與眾不同、能帶領我們」</div>
+      <div class="desc">正當性來自<strong>領袖個人的非凡特質</strong>（魅力、使命感）。如革命領袖、宗教先知、群眾偶像。但難以制度化、難以傳承。</div>
+    </div>
+    <div class="cmp-three-card decerteau">
+      <div class="cmp-name">法理型</div>
+      <div class="yr">Legal-Rational</div>
+      <div class="concept-line">「依法選出、依法行政」</div>
+      <div class="desc">正當性來自<strong>非個人的法律規則與程序</strong>。我服從的是「職位」與「法律」，不是某個人。現代民主官僚體制的基礎。</div>
+    </div>
+  </div>
+
+  <div class="hl-box blue">
+    <h4>🔍 三種類型常常「混合」存在</h4>
+    <p style="margin-bottom:0">現實中的政權往往同時動用多種正當性來源。例如一位民選總統，正當性主要來自<strong>法理型</strong>（選舉程序），但若他有個人魅力（<strong>魅力型</strong>），又能訴諸國族傳統與歷史記憶（<strong>傳統型</strong>），其正當性就更厚實。反過來說，當選舉程序受質疑（法理型動搖）、領袖光環褪色（魅力型耗損）時，正當性就可能快速流失。</p>
+  </div>
+
+  <h3><span class="num">②</span>正當性的「製造」與「崩解」</h3>
+  <p>正當性不是天上掉下來的，而是被<strong>持續生產與再生產</strong>的。國家透過教育、媒體、儀式、紀念、國旗國歌，不斷向人民灌輸「這個秩序是正當的」。但它也可能<strong>崩解</strong>：當人民普遍覺得制度不公、菁英貪腐、承諾跳票，正當性的「庫存」就會耗竭。這時，社會運動往往趁勢而起——它們正是在挑戰既有秩序的正當性，並試圖建立另一套「我們才是正當」的論述。</p>
+
+  <div class="hl-box">
+    <h4>🌉 連向 W13：正當性是運動的「兵家必爭之地」</h4>
+    <p style="margin-bottom:0">社會運動的本質，往往是一場<strong>正當性的爭奪戰</strong>：運動者要說服社會「現狀是不正當的、不可忍受的」，同時「我們的訴求才符合社會真正珍視的價值」。要打贏這場戰爭，靠的不是武力，而是<strong>論述與框架</strong>——這正是 W13 的主題。請帶著一個問題進入下半段：<strong>運動者要怎麼「說」，才能讓沉默的多數覺得「這也是我的事」？</strong></p>
+  </div>
+
+  <div class="next-page" onclick="goPage(5)">
+    <div><div class="np-label">下一頁 · 進入 Week 13</div><div class="np-title">P5 · 框架理論：運動如何「定義」現實</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P5 框架理論 ============ -->
+<div class="page" data-page="5"><div class="page-inner">
+  <div class="week-flag w13">📗 Week 13 · 文化框架與動員政治</div>
+  <h2>框架理論：運動如何「定義」現實</h2>
+
+  <p>同一個事件——比如一座工廠關門——可以被講成「全球化下的產業淘汰，怪不了誰」，也可以被講成「資方無情背叛、政府失職」。<strong>怎麼講，決定了人們怎麼感受、怎麼行動。</strong>這種「定義現實」的工作，社會學稱為「框架（framing）」。</p>
+
+  <h3><span class="num">①</span>從 Goffman 到 Snow &amp; Benford</h3>
+  <div class="scholar-card">
+    <h4>框架（Frame）的概念旅程</h4>
+    <p style="font-size:.88rem;color:#444;line-height:1.85">「框架」概念源自 <strong>Erving Goffman</strong>《框架分析》(1974)：人們需要一套「詮釋基模（schemata of interpretation）」來理解眼前發生了什麼事。社會學者 <strong>David Snow 與 Robert Benford</strong> 把它帶進社會運動研究：運動組織並非被動等待群眾覺醒，而是主動進行「<strong>框架化工作（framing work）</strong>」——積極地為支持者定義問題、指認敵人、提出方案、號召行動。</p>
+    <div class="scholar-meta">
+      <span class="scholar-tag">Goffman 1974 框架分析</span>
+      <span class="scholar-tag">Snow &amp; Benford 1988</span>
+      <span class="scholar-tag">集體行動框架</span>
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>核心框架三件套</h3>
+  <p>Snow &amp; Benford 指出，一個有效的集體行動框架，通常要完成三件事：</p>
+  <div class="frame-trio">
+    <div class="frame-card">
+      <div class="fk">Diagnostic · 診斷</div>
+      <div class="ft">出了什麼問題？誰的錯？</div>
+      <div class="fd">界定<strong>問題</strong>並指認<strong>該負責的對象</strong>（不公義的來源）。把模糊的不滿，鎖定成具體的「敵人」與「受害」。</div>
+      <div class="feg">例：「居住正義崩壞，是建商炒房與政府縱容造成的。」</div>
+    </div>
+    <div class="frame-card" style="border-top-color:var(--teal)">
+      <div class="fk" style="color:var(--teal)">Prognostic · 預後</div>
+      <div class="ft">該怎麼解決？</div>
+      <div class="fd">提出<strong>解方與策略</strong>。光指出問題不夠，還要讓人相信「有辦法改變」，並給出具體主張與行動方向。</div>
+      <div class="feg">例：「課囤房稅、興建社會住宅，就能壓低房價。」</div>
+    </div>
+    <div class="frame-card" style="border-top-color:var(--gold)">
+      <div class="fk" style="color:var(--gold)">Motivational · 動機</div>
+      <div class="ft">為什麼是「我」、為什麼是「現在」？</div>
+      <div class="fd">提供<strong>行動的理由與急迫性</strong>，喚起道德義務與集體認同（「這是我們的事」「不站出來就來不及了」）。</div>
+      <div class="feg">例：「這是我們這一代的居住權！今天不發聲，下一代更慘。」</div>
+    </div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>💡 框架不是「說謊」，而是「選擇性突顯」</h4>
+    <p style="margin-bottom:0">框架的力量不在於捏造事實，而在於<strong>從複雜現實中挑出某些面向加以突顯、賦予意義，並淡化其他面向</strong>。同樣是真實的，「強調 A 還是強調 B」會召喚出不同的情緒與行動。這也是為什麼運動與反運動之間，往往是一場<strong>框架的競爭</strong>——大家搶著定義「這件事到底是怎麼回事」。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(6)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P6 · 框架如何「對上」人心：共鳴與競爭（含隨堂測驗）</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P6 框架動員 + 隨堂 ============ -->
+<div class="page" data-page="6"><div class="page-inner">
+  <div class="week-flag w13">📗 Week 13 · 文化框架與動員政治</div>
+  <h2>框架如何「對上」人心：共鳴、橋接與競爭</h2>
+
+  <h3><span class="num">①</span>框架共鳴（Frame Resonance）</h3>
+  <p>一個框架能不能動員人，關鍵在於它有沒有跟受眾「<strong>對上頻率</strong>」。Snow &amp; Benford 稱此為<strong>框架共鳴</strong>——框架越貼近受眾既有的<strong>文化價值、生活經驗與信念</strong>，就越能引發共鳴。這正好把 W13 接回 W12：<strong>運動的框架必須「對上」社會既有的政治文化，才會成功。</strong>運動不是無中生有，而是提取社會早已存在的價值庫存。</p>
+
+  <div class="icon-row">
+    <div class="icon-item"><div class="ic">🎯</div><div class="lb">可信度</div><div class="ds">框架本身一致、提出者有公信力、與經驗相符</div></div>
+    <div class="icon-item"><div class="ic">📌</div><div class="lb">顯著性</div><div class="ds">切中受眾日常的核心關切，不是遙遠抽象的議題</div></div>
+    <div class="icon-item"><div class="ic">🪢</div><div class="lb">文化契合</div><div class="ds">呼應社會深層的文化敘事與既有價值（民主、公平、認同）</div></div>
+  </div>
+
+  <h3><span class="num">②</span>框架擴展的四種策略（Frame Alignment）</h3>
+  <div class="vs-table-wrap">
+  <table class="vs-table">
+    <thead><tr><th>策略</th><th class="sun">做什麼</th><th class="blue">台灣式舉例</th></tr></thead>
+    <tbody>
+      <tr><td>橋接 Bridging</td><td>把兩群<strong>原本各自不滿、但沒連結</strong>的人，用同一框架串起來</td><td>把「青年低薪」與「居住困難」橋接成同一個「世代正義」框架</td></tr>
+      <tr><td>擴大 Amplification</td><td>強化、放大受眾<strong>原本就認同</strong>的價值或信念</td><td>把抗爭訴求扣連到「守護民主」「公民責任」等高度共識的價值</td></tr>
+      <tr><td>延伸 Extension</td><td>把運動框架<strong>延伸到</strong>支持者原本關心的其他議題，以擴大基礎</td><td>環保運動延伸納入健康、地方經濟、世代公平等關切</td></tr>
+      <tr><td>轉換 Transformation</td><td><strong>重新定義</strong>原本被視為理所當然的事，翻轉既有認知</td><td>把「同性婚姻」從「道德爭議」重新框架為「平等人權」</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3><span class="num">③</span>框架競爭與反框架</h3>
+  <p>運動很少獨佔話語權。對手（國家、反對團體、媒體）會打出<strong>反框架（counter-framing）</strong>，例如把「抗議者」說成「暴民」、把「改革」說成「鬧事」、把「人權」說成「秩序破壞」。誰的框架最終「定義」了這件事，往往決定了輿論與動員的勝負。這也呼應 W11 蕭蘋的提問：新媒體上的群眾，到底被框架成「<strong>公民</strong>」還是「<strong>暴民</strong>」？</p>
+
+  <h3><span class="num">📝</span>隨堂測驗（4 題）</h3>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q1</div>
+    <div class="quiz-question">運動者把一場拆遷抗爭，從「個別住戶的補償糾紛」重新講成「全民都該關心的居住正義問題」。這最接近哪一種框架策略？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">框架橋接，因為它連結了兩個團體</button>
+      <button class="quiz-opt" data-correct="true">框架延伸／轉換，把局部議題重新定義為普遍價值，以擴大支持基礎</button>
+      <button class="quiz-opt" data-correct="false">反框架，因為它在反駁對手</button>
+      <button class="quiz-opt" data-correct="false">診斷框架，因為它只是在描述問題</button>
+    </div>
+    <div class="quiz-explain"><strong>正解：B。</strong>把一個局部、私人的糾紛，重新定義並擴展為「全民共享的普遍價值（居住正義）」，是典型的框架延伸與轉換——目的在於讓原本事不關己的旁觀者，覺得「這也是我的事」，從而擴大動員基礎。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q2</div>
+    <div class="quiz-question">根據 Snow &amp; Benford，一個集體行動框架的「動機框架（motivational framing）」主要負責：</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">指認問題的肇因與該負責的對象</button>
+      <button class="quiz-opt" data-correct="false">提出具體的政策解方</button>
+      <button class="quiz-opt" data-correct="true">提供行動的理由與急迫性，喚起「為什麼是我、為什麼是現在」的道德動力</button>
+      <button class="quiz-opt" data-correct="false">記錄運動的歷史過程</button>
+    </div>
+    <div class="quiz-explain"><strong>正解：C。</strong>三件套中，診斷框架管「誰的錯」、預後框架管「怎麼辦」、<strong>動機框架</strong>管「為什麼要由我、現在就行動」。它負責把認知上的認同，轉化為實際走上街頭的動力。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q3</div>
+    <div class="quiz-question">「框架共鳴（frame resonance）」的概念，最能說明下列哪一個現象？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="true">同樣的訴求，扣連到社會既有的核心價值（如「守護民主」）時，遠比抽象口號更能動員群眾</button>
+      <button class="quiz-opt" data-correct="false">運動規模越大，警力部署就越多</button>
+      <button class="quiz-opt" data-correct="false">經濟越差，抗議一定越多</button>
+      <button class="quiz-opt" data-correct="false">有組織的運動一定比無組織的成功</button>
+    </div>
+    <div class="quiz-explain"><strong>正解：A。</strong>框架共鳴指框架與受眾既有文化價值、經驗的契合程度。當訴求「對上」社會早已珍視的價值時，共鳴最強——這也正是 W12「政治文化」與 W13「框架動員」的接點：運動提取的是社會既有的價值庫存。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q4</div>
+    <div class="quiz-question">政府把一場示威稱為「少數暴民鬧事、破壞社會秩序」，而運動方則自稱「和平公民捍衛民主」。這種雙方互相爭奪「事件該如何被理解」的過程，最適合用哪個概念分析？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">社會資本的流失</button>
+      <button class="quiz-opt" data-correct="false">後物質價值轉變</button>
+      <button class="quiz-opt" data-correct="true">框架競爭／反框架（counter-framing）</button>
+      <button class="quiz-opt" data-correct="false">傳統型正當支配</button>
+    </div>
+    <div class="quiz-explain"><strong>正解：C。</strong>這是典型的框架競爭：運動方與國家方各自提出對立的框架（公民 vs 暴民、民主 vs 秩序），爭奪「定義現實」的話語權。誰的框架被社會接受，往往決定了正當性的歸屬與動員的成敗。</div>
+  </div>
+
+  <div class="next-page" onclick="goPage(7)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P7 · 台灣案例：四場運動的框架戰（含隨堂測驗）</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P7 台灣案例 + 隨堂 ============ -->
+<div class="page" data-page="7"><div class="page-inner">
+  <div class="week-flag w13">📗 Week 13 · 文化框架與動員政治</div>
+  <h2>台灣案例：四場運動的框架戰</h2>
+
+  <p>把框架理論帶回台灣現場。以下四個案例，請特別注意：每個運動「打出什麼框架」、又「對上了什麼政治文化／價值」，以及它面對的「反框架」是什麼。可切換分頁逐一檢視。</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'tab-sun')">🌻 太陽花</button>
+    <button class="tab" onclick="switchTab(this,'tab-nuke')">☢️ 反核</button>
+    <button class="tab" onclick="switchTab(this,'tab-marriage')">🌈 婚姻平權</button>
+    <button class="tab" onclick="switchTab(this,'tab-recall')">🗳 罷免</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-sun">
+    <div class="case-block gold">
+      <div class="ce">2014 · 太陽花運動</div>
+      <h4>「守護民主程序」框架</h4>
+      <p class="ct"><strong>診斷：</strong>服貿審查被「三十秒通過」，程序黑箱、傷害民主。<strong>預後：</strong>退回協議、先立法監督再審查。<strong>動機：</strong>「自己的國家自己救」——把抗爭扣連到守護民主與世代未來。<br><br><strong>對上的政治文化：</strong>台灣解嚴後高度珍視的<strong>民主程序正當性</strong>與對中國因素的戒心。框架共鳴極強，成功把局部的貿易議題，轉換為全民的民主防衛議題。<strong>反框架：</strong>執政方稱其「違法佔領、傷害經濟、被特定勢力操縱」。</p>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-nuke">
+    <div class="case-block">
+      <div class="ce">反核運動（長期）</div>
+      <h4>「世代安全與環境正義」框架</h4>
+      <p class="ct"><strong>診斷：</strong>核電風險被低估，核廢料無解、危及後代與特定地區（如蘭嶼）。<strong>預後：</strong>非核家園、發展再生能源。<strong>動機：</strong>守護下一代的生存環境。<br><br><strong>對上的政治文化：</strong>呼應 Inglehart 所說的<strong>後物質價值</strong>（環境、安全、生活品質）的興起，尤其在福島事故後共鳴大增。<strong>反框架：</strong>擁核方打出「缺電、經濟受損、碳排上升」的框架，形成長期的框架拉鋸——這也是為何能源議題至今高度對立。</p>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-marriage">
+    <div class="case-block purple">
+      <div class="ce">婚姻平權運動</div>
+      <h4>從「道德爭議」到「平等人權」的框架轉換</h4>
+      <p class="ct"><strong>框架轉換的經典案例：</strong>運動方的核心工作，是把同性婚姻從反對方設定的「<strong>道德／傳統爭議</strong>」框架，<strong>轉換</strong>成「<strong>平等與人權</strong>」框架——「愛是平等的」「婚姻自由是基本人權」。<br><br><strong>對上的政治文化：</strong>年輕世代的後物質、自由多元價值。<strong>反框架：</strong>反對方則動員「保護家庭、守護下一代、傳統價值」框架。雙方激烈的<strong>框架競爭</strong>，正是 2018 公投與後續修法過程的核心戰場。</p>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-recall">
+    <div class="case-block blue">
+      <div class="ce">罷免動員</div>
+      <h4>「問責 vs 報復」的框架對決</h4>
+      <p class="ct"><strong>診斷框架的兩種版本：</strong>發動方框架為「<strong>公民問責、收回授權</strong>」——民主賦予人民監督民代的權利；被罷方則反框架為「<strong>惡意報復、勞民傷財、撕裂社會</strong>」。<br><br><strong>關鍵觀察：</strong>罷免是「制度性管道」（W11 概念），但其成敗高度仰賴<strong>框架競爭</strong>與<strong>社會信任</strong>（W12 概念）。當社會信任低、對立深時，罷免容易被框架為政黨惡鬥而非公民問責——這正是文化、信任、框架三者交織的最佳示範。</p>
+    </div>
+  </div>
+
+  <h3><span class="num">📝</span>隨堂測驗（4 題）</h3>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q1</div>
+    <div class="quiz-question">太陽花運動把「服貿審查程序問題」成功動員為「全民守護民主」的議題。用本週概念，這最能說明：</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="true">框架成功「對上」台灣社會珍視民主程序的政治文化，產生強烈的框架共鳴</button>
+      <button class="quiz-opt" data-correct="false">運動完全是經濟結構決定的，與文化無關</button>
+      <button class="quiz-opt" data-correct="false">這是純粹的魅力型正當支配</button>
+      <button class="quiz-opt" data-correct="false">社會資本下降的結果</button>
+    </div>
+    <div class="quiz-explain"><strong>正解：A。</strong>運動的框架（守護民主程序）扣連了台灣解嚴後高度重視的民主正當性價值，因此能引發廣泛共鳴並擴大動員。這展示了 W12「政治文化」與 W13「框架共鳴」如何接合。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q2</div>
+    <div class="quiz-question">婚姻平權運動把訴求從「道德爭議」重新定義為「平等人權」。這在框架理論中屬於：</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">框架橋接（bridging）</button>
+      <button class="quiz-opt" data-correct="true">框架轉換（transformation）——翻轉了議題原本被理解的方式</button>
+      <button class="quiz-opt" data-correct="false">反框架（counter-framing）</button>
+      <button class="quiz-opt" data-correct="false">框架擴大（amplification）</button>
+    </div>
+    <div class="quiz-explain"><strong>正解：B。</strong>把一個原本被放在「道德／傳統」框架下的議題，整個翻轉到「平等／人權」的新框架去理解，是典型的框架轉換。它改變的不只是說法，而是議題的根本意義座標。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q3</div>
+    <div class="quiz-question">關於罷免動員，下列哪個分析最完整地運用了本週（W12+W13）的概念？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">罷免純粹是法律程序，與文化、信任、框架都無關</button>
+      <button class="quiz-opt" data-correct="true">罷免雖是制度性管道，但其成敗取決於「問責 vs 報復」的框架競爭，且高度受社會信任水準影響</button>
+      <button class="quiz-opt" data-correct="false">罷免一定會成功，因為它是公民權利</button>
+      <button class="quiz-opt" data-correct="false">罷免只跟魅力型領袖有關</button>
+    </div>
+    <div class="quiz-explain"><strong>正解：B。</strong>罷免示範了三個概念的交織：它是制度性管道（W11），其正當性被「問責 vs 報復」的框架競爭爭奪（W13），而社會信任的高低又決定了哪種框架更容易被接受（W12）。理論不是各自獨立，而是層層疊合。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q4</div>
+    <div class="quiz-question">若一個外部行為者透過散布不實訊息，讓台灣民眾普遍懷疑「選舉是否公正、官方資訊是否可信」，從本週概念看，這最直接侵蝕的是：</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">後物質價值</button>
+      <button class="quiz-opt" data-correct="true">制度信任，進而動搖政治正當性與社會合作的基礎</button>
+      <button class="quiz-opt" data-correct="false">傳統型正當支配</button>
+      <button class="quiz-opt" data-correct="false">框架橋接能力</button>
+    </div>
+    <div class="quiz-explain"><strong>正解：B。</strong>讓人民懷疑選舉、司法、官方資訊，攻擊的正是<strong>制度信任</strong>。制度信任是政治正當性的溫度計，一旦崩壞，社會「彼此還能合作」的基礎也隨之瓦解——這說明了守護社會信任本身具有民主防衛的意義。</div>
+  </div>
+
+  <div class="next-page" onclick="goPage(8)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P8 · 小組討論題</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P8 討論題 ============ -->
+<div class="page" data-page="8"><div class="page-inner">
+  <h2>小組討論題</h2>
+  <p>以下題目可作為課堂分組討論或書面作業。建議先回顧 P2–P7 的概念，再嘗試把「文化—信任—框架」串起來分析。</p>
+
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">討論一 · 政治文化</span>
+    <div class="discussion-q">你認為今天的台灣，比較接近 Almond &amp; Verba 的哪一種政治文化？<em>有沒有可能是矛盾的混合？</em></div>
+    <div class="ctx">請從你自己與身邊同學的政治參與經驗出發：我們是高參與、高信任，還是「<strong>熱衷投票與運動、卻不信任政治人物</strong>」？這種組合對民主是好是壞？</div>
+  </div>
+
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">討論二 · 社會信任</span>
+    <div class="discussion-q">如果「社會信任」是一種可被攻擊的政治基礎建設，<em>我們能做什麼來「修復」或「保護」它？</em></div>
+    <div class="ctx">想想看：當社會被刻意製造對立、信任快速流失時，從個人（如查證資訊）、社群、到制度（如媒體識讀、選舉透明）各層次，分別可以採取哪些行動？守護信任和「民主防衛」之間是什麼關係？</div>
+  </div>
+
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">討論三 · 框架分析</span>
+    <div class="discussion-q">挑一個你近期關注的爭議（任何議題皆可），試著拆解<em>正反雙方各自打出什麼「框架」？</em></div>
+    <div class="ctx">請用三件套分析：雙方的<strong>診斷框架</strong>（誰的錯）、<strong>預後框架</strong>（怎麼辦）、<strong>動機框架</strong>（為什麼要行動）各是什麼？哪一方的框架更能「對上」社會主流價值？為什麼？</div>
+  </div>
+
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">討論四 · 整合（W12 × W13）</span>
+    <div class="discussion-q">為什麼說「運動者不是無中生有，而是提取社會既有的價值庫存」？<em>請用一個台灣案例論證或反駁這句話。</em></div>
+    <div class="ctx">提示：把 W12 的「政治文化／正當性」當成「庫存」，把 W13 的「框架共鳴」當成「提取的方法」。是否存在「框架很強、但社會沒有相應價值庫存」而失敗的運動？這對運動策略有什麼啟示？</div>
+  </div>
+
+  <div class="next-page" onclick="goPage(9)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P9 · 本週指定與推薦閱讀</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ============ P9 讀物 ============ -->
+<div class="page" data-page="9"><div class="page-inner">
+  <h2>本週讀物</h2>
+
+  <h3><span class="num">📕</span>指定閱讀（Required）</h3>
+
+  <div class="reading-card must">
+    <div class="reading-icon">1</div>
+    <div class="reading-body">
+      <div class="reading-title">Almond, G. A. &amp; Verba, S.《公民文化：五國的政治態度與民主》相關章節</div>
+      <div class="reading-meta">The Civic Culture (1963) · 政治文化的經典分類</div>
+      <div class="reading-note">重點：三種政治文化（地方型／臣屬型／參與型）的定義，以及為何「混合的公民文化」最有利於穩定民主。閱讀時思考台灣屬於哪一種。</div>
+    </div>
+  </div>
+
+  <div class="reading-card must">
+    <div class="reading-icon">2</div>
+    <div class="reading-body">
+      <div class="reading-title">Putnam, R. D.《使民主運轉起來》導論與社會資本相關章節</div>
+      <div class="reading-meta">Making Democracy Work (1993) · 社會資本與治理績效</div>
+      <div class="reading-note">重點：社會資本（信任、互惠、公民網絡）如何解釋政府績效差異。掌握「人際信任 vs 制度信任」的區分，以及信任的自我強化／侵蝕機制。</div>
+    </div>
+  </div>
+
+  <div class="reading-card must">
+    <div class="reading-icon">3</div>
+    <div class="reading-body">
+      <div class="reading-title">Snow, D. A. &amp; Benford, R. D. 關於框架與集體行動的代表性論文</div>
+      <div class="reading-meta">Frame Alignment Processes (1986) / Master Frames (1992) 等 · 框架理論核心</div>
+      <div class="reading-note">重點：集體行動框架三件套（診斷／預後／動機）、框架擴展四策略（橋接／擴大／延伸／轉換）、以及框架共鳴的條件。這是 W13 的理論主幹。</div>
+    </div>
+  </div>
+
+  <h3><span class="num">📙</span>推薦閱讀（Recommended）</h3>
+
+  <div class="reading-card rec">
+    <div class="reading-icon">4</div>
+    <div class="reading-body">
+      <div class="reading-title">Inglehart, R. 後物質主義價值變遷相關著作</div>
+      <div class="reading-meta">The Silent Revolution / World Values Survey · 價值的世代轉移</div>
+      <div class="reading-note">延伸理解：為何富裕民主社會的青年世代更重視環境、認同、自我實現——這些正是當代運動最常援引的框架資源。</div>
+    </div>
+  </div>
+
+  <div class="reading-card rec">
+    <div class="reading-icon">5</div>
+    <div class="reading-body">
+      <div class="reading-title">何明修，台灣社會運動與公民社會相關研究</div>
+      <div class="reading-meta">台灣本土經驗 · 連結 W11 太陽花／青鳥分析</div>
+      <div class="reading-note">延伸應用：把框架理論放回台灣脈絡，觀察太陽花以降的運動如何運用論述、符號與認同進行動員。</div>
+    </div>
+  </div>
+
+  <div class="reading-card rec">
+    <div class="reading-icon">6</div>
+    <div class="reading-body">
+      <div class="reading-title">Weber, M. 關於正當支配三類型的經典段落</div>
+      <div class="reading-meta">傳統型／魅力型／法理型 · 正當性的古典基礎</div>
+      <div class="reading-note">延伸理解：正當性為何比「服從」更深一層，以及三種正當性如何在現實政權中混合運作。</div>
+    </div>
+  </div>
+
+  <div class="hl-box gold" style="margin-top:1.5rem">
+    <h4>🎓 本週小結：一條主線</h4>
+    <p style="margin-bottom:0">權力不只靠槍與錢，更靠<strong>人心</strong>。<strong>政治文化</strong>是人民看待權力的底色，<strong>社會信任</strong>是合作的隱形地基，兩者共同撐起<strong>正當性</strong>（W12）。而社會運動之所以能動員，正是透過<strong>文化框架</strong>，把社會既有的價值庫存「提取」出來，轉化為集體行動（W13）。下週我們將從「人心如何被組織」，進一步探討組織、資源與運動的後續發展。</p>
+  </div>
+
+</div></div>
+
+</div><!-- /page-container -->
+
+<!-- 底部 -->
+<div class="bottom-bar">
+  <div class="page-indicator">第 <span id="cur-page">1</span> / 10 頁</div>
+  <div class="page-dots" id="dots"></div>
+  <div class="arrow-btns">
+    <button class="arrow-btn" id="prev-btn" onclick="goPrev()">←</button>
+    <button class="arrow-btn" id="next-btn" onclick="goNext()">→</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+const totalPages = 10;
+let currentPage = 0;
+
+const dotsEl = document.getElementById('dots');
+for(let i=0; i<totalPages; i++){
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.onclick = () => goPage(i);
+  dotsEl.appendChild(d);
+}
+
+function goPage(n){
+  if(n<0||n>=totalPages) return;
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('cur-page').textContent = n+1;
+  document.getElementById('prev-btn').disabled = n===0;
+  document.getElementById('next-btn').disabled = n===totalPages-1;
+  currentPage = n;
+  document.querySelectorAll('.page')[n].scrollTop = 0;
+}
+
+function goPrev(){ goPage(currentPage-1); }
+function goNext(){ goPage(currentPage+1); }
+
+// Tab 切換
+function switchTab(btn, panelId){
+  const tabs = btn.parentElement.querySelectorAll('.tab');
+  tabs.forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const container = btn.closest('.page-inner');
+  container.querySelectorAll('.tab-panel').forEach(p=>{
+    if(p.id===panelId) p.classList.add('active');
+    else p.classList.remove('active');
+  });
+}
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowLeft') goPrev();
+  if(e.key==='ArrowRight') goNext();
+});
+
+// Spoiler 點擊展開
+document.addEventListener('click', e=>{
+  const sp = e.target.closest('.spoiler');
+  if(sp) sp.classList.toggle('revealed');
+});
+
+// 選擇題互動
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('.quiz-opt');
+  if(!btn) return;
+  const block = btn.closest('.quiz-block');
+  if(!block) return;
+  if(block.dataset.answered === '1') return;
+  block.dataset.answered = '1';
+  const correct = btn.dataset.correct === 'true';
+  btn.classList.add(correct ? 'selected-correct' : 'selected-wrong');
+  if(!correct){
+    block.querySelectorAll('.quiz-opt').forEach(o=>{
+      if(o.dataset.correct === 'true') o.classList.add('show-correct');
+    });
+  }
+  const exp = block.querySelector('.quiz-explain');
+  if(exp) exp.classList.add('shown');
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政治社會學 W7 — 期中總結 × 新制度主義銜接</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;
+  --gold:#b8860b;--sage:#5a6e5a;--muted:#6b6560;--line:#c9c0b4;
+  --card-bg:#faf7f2;--blue:#3a5a8c;--purple:#6b4c7a;--teal:#2a7a6e;
+  --red:#c0392b;--green:#27ae60;--orange:#d35400;
+  /* 議題色 */
+  --iss-a:#8b2500; --iss-b:#3a5a8c; --iss-c:#6b4c7a; --iss-d:#d35400;
+  /* 制度主義三派色 */
+  --hi:#8b2500; --rci:#3a5a8c; --si:#5a6e5a; --di:#b8860b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+
+/* ========== 頂部導航 ========== */
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.2rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .9rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.76rem;font-weight:500;color:#888;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#ccc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:var(--paper);background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.88rem;font-weight:700;margin-right:1rem;flex-shrink:0}
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+
+/* ========== 頁面 ========== */
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:920px;margin:0 auto}
+
+/* ========== 底部 ========== */
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+
+/* ========== 標題 ========== */
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.2vw,2.3rem);font-weight:700;color:var(--accent);line-height:1.2;margin-bottom:.3rem}
+.page h2::after{content:'';display:block;width:48px;height:3px;background:var(--gold);margin-top:.6rem;margin-bottom:1.6rem}
+.page h3{font-family:'Playfair Display',serif;font-size:1.18rem;color:var(--ink);margin:1.8rem 0 .7rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.page h3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;font-size:.85rem;font-family:'Playfair Display',serif}
+.page h4{font-family:'Noto Sans TC',sans-serif;font-size:.98rem;color:var(--accent);margin:1.2rem 0 .5rem;font-weight:700}
+.page p{font-size:.93rem;margin-bottom:1rem;color:#333}
+.page p strong{color:var(--ink)}
+.page ul,.page ol{padding-left:1.5rem;margin-bottom:1rem}
+.page li{font-size:.9rem;margin-bottom:.35rem;color:#333}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;color:var(--ink);line-height:1.1;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:620px;margin:0 auto 1.8rem}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+
+.story-lead{font-size:.98rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+
+/* ========== 卡片 ========== */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.2rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.1rem 1.2rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card h4{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--accent);margin-bottom:.4rem;margin-top:0}
+.card p{font-size:.84rem;color:#555;margin-bottom:0;line-height:1.75}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.blue{border-top-color:var(--blue)}.card.blue h4{color:var(--blue)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.purple{border-top-color:var(--purple)}.card.purple h4{color:var(--purple)}
+.card.orange{border-top-color:var(--orange)}.card.orange h4{color:var(--orange)}
+
+/* =========================================
+   議題關係圖 SVG 樣式
+   ========================================= */
+.relation-svg{display:block;width:100%;max-width:880px;margin:1.5rem auto;background:#fff;border-radius:12px;padding:1rem;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.r-center{fill:var(--accent);stroke:var(--gold);stroke-width:3}
+.r-center-text{fill:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:14px;text-anchor:middle}
+.r-week{fill:#fff;stroke:var(--blue);stroke-width:2}
+.r-week-text{fill:var(--blue);font-family:'Playfair Display',serif;font-weight:700;font-size:11px;text-anchor:middle}
+.r-iss{stroke:#fff;stroke-width:2;cursor:pointer;transition:all .3s}
+.r-iss:hover{filter:brightness(1.1);transform:scale(1.05)}
+.r-iss-text{fill:#fff;font-family:'Noto Sans TC',sans-serif;font-weight:700;font-size:11.5px;text-anchor:middle;pointer-events:none}
+.r-iss-sub{fill:rgba(255,255,255,.85);font-family:'Noto Sans TC',sans-serif;font-size:9px;text-anchor:middle;pointer-events:none}
+.r-line{stroke:#888;stroke-width:1.5;fill:none;opacity:.5;stroke-dasharray:4 3}
+.r-line.bold{stroke-width:2.5;opacity:.85;stroke-dasharray:none}
+.r-legend{fill:#666;font-family:'Noto Sans TC',sans-serif;font-size:10px}
+
+/* ========== 議題詳解卡 ========== */
+.iss-detail{background:#fff;border-radius:10px;padding:1.4rem 1.6rem;margin:1rem 0;border-top:4px solid;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.iss-detail.iA{border-top-color:var(--iss-a)}
+.iss-detail.iB{border-top-color:var(--iss-b)}
+.iss-detail.iC{border-top-color:var(--iss-c)}
+.iss-detail.iD{border-top-color:var(--iss-d)}
+.iss-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;flex-wrap:wrap;gap:.5rem}
+.iss-h-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700}
+.iss-detail.iA .iss-h-title{color:var(--iss-a)}
+.iss-detail.iB .iss-h-title{color:var(--iss-b)}
+.iss-detail.iC .iss-h-title{color:var(--iss-c)}
+.iss-detail.iD .iss-h-title{color:var(--iss-d)}
+.iss-h-tags{display:flex;gap:.3rem;flex-wrap:wrap}
+.tg{padding:.18rem .55rem;background:rgba(0,0,0,.05);border-radius:10px;font-size:.7rem;font-weight:600;color:#555}
+.tg.hi{background:rgba(139,37,0,.1);color:var(--accent)}
+.iss-q{font-family:'Source Serif 4',serif;font-style:italic;color:var(--accent);font-size:.95rem;margin-bottom:.7rem;padding:.5rem .8rem;background:rgba(139,37,0,.04);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+.iss-rows{display:grid;grid-template-columns:1fr;gap:.6rem}
+.iss-row{display:flex;gap:.7rem;padding:.6rem .8rem;background:var(--card-bg);border-radius:6px}
+.iss-row-label{flex-shrink:0;width:90px;font-weight:700;font-size:.8rem;color:var(--accent)}
+.iss-row-text{font-size:.85rem;line-height:1.75;color:#333}
+.iss-row-text strong{color:var(--ink)}
+
+/* ========== 制度主義時間軸 ========== */
+.history-axis{background:linear-gradient(180deg,#fff 0%,#faf7f2 100%);border-radius:12px;padding:2rem 1.5rem;margin:1.5rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);position:relative;overflow:hidden}
+.ax-title{text-align:center;font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--ink);font-weight:700;margin-bottom:1.5rem}
+.ax-svg{width:100%;display:block}
+
+/* ========== 三派學派關係圖 ========== */
+.school-relations{background:#fff;border-radius:12px;padding:1.8rem 1.5rem;margin:1.5rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.sr-svg{width:100%;display:block}
+
+/* ========== 學派卡 ========== */
+.school-card{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0;border-left:5px solid;box-shadow:0 3px 14px rgba(0,0,0,.05);transition:transform .3s}
+.school-card:hover{transform:translateX(5px)}
+.school-card.hi{border-left-color:var(--hi)}
+.school-card.rci{border-left-color:var(--rci)}
+.school-card.si{border-left-color:var(--si)}
+.school-card.di{border-left-color:var(--di)}
+.school-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6rem;flex-wrap:wrap;gap:.3rem}
+.school-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700}
+.school-card.hi .school-name{color:var(--hi)}
+.school-card.rci .school-name{color:var(--rci)}
+.school-card.si .school-name{color:var(--si)}
+.school-card.di .school-name{color:var(--di)}
+.school-en{font-family:'Source Serif 4',serif;font-style:italic;font-size:.85rem;color:var(--muted)}
+.school-body{font-size:.88rem;color:#333;line-height:1.85;margin-bottom:.7rem}
+.school-keys{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem;padding-top:.6rem;border-top:1px dashed var(--line)}
+.key-tag{padding:.25rem .65rem;background:rgba(139,37,0,.06);color:var(--accent);border-radius:14px;font-size:.74rem;font-weight:600}
+.school-card.rci .key-tag{background:rgba(58,90,140,.08);color:var(--rci)}
+.school-card.si .key-tag{background:rgba(90,110,90,.08);color:var(--si)}
+.school-card.di .key-tag{background:rgba(184,134,11,.08);color:var(--di)}
+
+/* ========== 案例分析 ========== */
+.case-box{background:#fff;border-radius:10px;margin:1.3rem 0;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.07)}
+.case-head{padding:1.2rem 1.4rem;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-light))}
+.case-head.gray{background:linear-gradient(135deg,#444,#666)}
+.case-eyebrow{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-bottom:.3rem}
+.case-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:.2rem}
+.case-sub{font-size:.85rem;opacity:.9}
+.case-body{padding:1.3rem 1.4rem}
+.case-facts{background:var(--card-bg);border-radius:8px;padding:1rem 1.2rem;margin-bottom:1.1rem;font-size:.85rem;line-height:1.85}
+.case-facts strong{color:var(--accent)}
+
+/* ========== 視角對照（前六週 vs. 制度主義） ========== */
+.perspective-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1.3rem 0}
+.persp-col{padding:1.1rem 1.2rem;border-radius:10px;position:relative}
+.persp-col.old{background:linear-gradient(135deg,#f8f5ef,#f0ebe0);border:1px solid var(--line)}
+.persp-col.new{background:linear-gradient(135deg,rgba(139,37,0,.06),rgba(184,134,11,.06));border:1px solid rgba(139,37,0,.15)}
+.persp-label{display:inline-block;padding:.2rem .7rem;border-radius:14px;font-size:.72rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem;text-transform:uppercase}
+.persp-col.old .persp-label{background:var(--muted);color:#fff}
+.persp-col.new .persp-label{background:var(--accent);color:#fff}
+.persp-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.5rem;color:var(--ink)}
+.persp-text{font-size:.85rem;color:#444;line-height:1.85}
+.persp-text strong{color:var(--accent)}
+.persp-col.old .persp-text strong{color:#333}
+.persp-bullet{display:flex;gap:.5rem;align-items:flex-start;margin-bottom:.4rem}
+.persp-bullet::before{content:'•';color:var(--accent);font-weight:700;flex-shrink:0}
+.persp-col.old .persp-bullet::before{color:var(--muted)}
+
+/* ========== 制度層次表 ========== */
+.layer-table{width:100%;border-collapse:collapse;font-size:.82rem;margin:1rem 0;background:#fff;border-radius:8px;overflow:hidden}
+.layer-table th{background:var(--ink);color:var(--paper);padding:.65rem .8rem;font-weight:600;text-align:left;font-size:.78rem}
+.layer-table td{padding:.65rem .8rem;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+.layer-table tr:last-child td{border-bottom:0}
+.layer-table tr:hover td{background:rgba(139,37,0,.02)}
+.layer-table .lvl{font-weight:700;color:var(--accent);width:120px}
+.layer-table .act{font-weight:600;width:130px}
+
+/* ========== 引言／提問框 ========== */
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.1rem 0}
+.hl-box p:last-child{margin-bottom:0}
+.hl-box h4{margin-top:0;color:var(--accent)}
+.hl-box.blue{background:rgba(58,90,140,.05);border-left-color:var(--blue)}
+.hl-box.blue h4{color:var(--blue)}
+.hl-box.sage{background:rgba(90,110,90,.05);border-left-color:var(--sage)}
+.hl-box.sage h4{color:var(--sage)}
+.hl-box.gold{background:rgba(184,134,11,.06);border-left-color:var(--gold)}
+.hl-box.gold h4{color:var(--gold)}
+
+/* ========== 概念框 ========== */
+.concept{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(58,90,140,.04));padding:.9rem 1.2rem;border-radius:8px;margin:.8rem 0;border:1px solid rgba(184,134,11,.2)}
+.concept .lead{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent);font-weight:700;margin-bottom:.4rem}
+.concept .body{font-size:.86rem;color:#333;line-height:1.85}
+.concept .body strong{color:var(--accent)}
+
+/* ========== 中央問題列 ========== */
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+
+/* ========== 下一頁 ========== */
+.next-page{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:1.1rem 1.4rem;border-radius:10px;margin-top:2.2rem;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.next-page:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(139,37,0,.3)}
+.np-label{font-size:.72rem;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.np-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.np-arrow{font-size:1.4rem;opacity:.8}
+
+/* ========== Ansell 書籍介紹 ========== */
+.book-hero{background:linear-gradient(135deg,#1a1a1a,#3a2818);color:#fff;padding:2rem 1.8rem;border-radius:12px;margin:1.5rem 0;display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+.book-cover{flex-shrink:0;width:180px;height:260px;background:linear-gradient(135deg,var(--accent),var(--accent-light));border-radius:6px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:1rem;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.4);color:#fff}
+.book-cover .bk-cn{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;margin-bottom:.3rem;line-height:1.3}
+.book-cover .bk-en{font-size:.7rem;opacity:.8;font-style:italic;margin-bottom:.6rem;line-height:1.4}
+.book-cover .bk-author{font-size:.78rem;opacity:.9;border-top:1px solid rgba(255,255,255,.3);padding-top:.5rem;width:100%}
+.book-info{flex:1;min-width:240px}
+.book-info h3{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--gold);margin:0 0 .4rem;display:block}
+.book-info h3::after{display:none}
+.book-info .sub{font-size:.92rem;color:#d8d0c4;font-style:italic;margin-bottom:.7rem;font-family:'Source Serif 4',serif}
+.book-info p{font-size:.86rem;color:#bfb6a8;margin-bottom:0;line-height:1.8}
+.book-info p strong{color:#fff}
+
+.scholar-card{background:linear-gradient(135deg,rgba(58,90,140,.07),rgba(184,134,11,.05));border:1px solid rgba(58,90,140,.15);border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0}
+.scholar-card h4{margin-top:0;color:var(--blue)}
+.scholar-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+.scholar-tag{padding:.25rem .7rem;background:rgba(58,90,140,.1);color:var(--blue);border-radius:14px;font-size:.74rem;font-weight:600}
+
+/* ========== 五大陷阱 ========== */
+.traps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.7rem;margin:1.3rem 0}
+.trap-card{padding:1.1rem 1.1rem;background:#fff;border-radius:10px;border-top:4px solid;box-shadow:0 3px 12px rgba(0,0,0,.05);transition:all .3s;cursor:pointer}
+.trap-card:hover{transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,0,0,.1)}
+.trap-card.t1{border-top-color:#8b2500}
+.trap-card.t2{border-top-color:#3a5a8c}
+.trap-card.t3{border-top-color:#5a6e5a}
+.trap-card.t4{border-top-color:#6b4c7a}
+.trap-card.t5{border-top-color:#b8860b}
+.trap-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;line-height:1;margin-bottom:.3rem;opacity:.4}
+.trap-card.t1 .trap-num{color:#8b2500}
+.trap-card.t2 .trap-num{color:#3a5a8c}
+.trap-card.t3 .trap-num{color:#5a6e5a}
+.trap-card.t4 .trap-num{color:#6b4c7a}
+.trap-card.t5 .trap-num{color:#b8860b}
+.trap-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.3rem}
+.trap-q{font-size:.78rem;color:var(--muted);font-style:italic;line-height:1.6;margin-bottom:.4rem}
+.trap-desc{font-size:.8rem;color:#444;line-height:1.7}
+
+/* ========== 個案討論方塊 ========== */
+.book-case{background:var(--card-bg);border-radius:8px;padding:.95rem 1.2rem;margin:.7rem 0;border-left:3px solid var(--gold)}
+.book-case-head{font-family:'Playfair Display',serif;font-weight:700;color:var(--accent);font-size:.9rem;margin-bottom:.35rem}
+.book-case-body{font-size:.85rem;color:#444;line-height:1.8}
+.book-case-body strong{color:var(--ink)}
+
+/* ========== 學派恩怨情仇 ========== */
+.feud-grid{display:grid;grid-template-columns:1fr;gap:.7rem;margin:1rem 0}
+.feud-card{background:#fff;border-radius:10px;padding:1rem 1.2rem;box-shadow:0 3px 12px rgba(0,0,0,.05);border-left:4px solid;display:flex;gap:1rem;align-items:flex-start}
+.feud-card.f1{border-left-color:#b8860b}
+.feud-card.f2{border-left-color:#6b6560}
+.feud-card.f3{border-left-color:#8b2500}
+.feud-card.f4{border-left-color:#3a5a8c}
+.feud-card.f5{border-left-color:#5a6e5a}
+.feud-card.f6{border-left-color:var(--gold)}
+.feud-year{flex-shrink:0;width:90px;text-align:center;padding:.3rem .4rem;border-radius:6px;background:var(--card-bg);font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;color:var(--accent);line-height:1.3}
+.feud-card.f1 .feud-year{color:#b8860b}
+.feud-card.f2 .feud-year{color:#6b6560}
+.feud-card.f3 .feud-year{color:#8b2500}
+.feud-card.f4 .feud-year{color:#3a5a8c}
+.feud-card.f5 .feud-year{color:#5a6e5a}
+.feud-card.f6 .feud-year{color:var(--gold)}
+.feud-content{flex:1}
+.feud-title{font-weight:700;color:var(--ink);font-size:.93rem;margin-bottom:.3rem}
+.feud-text{font-size:.85rem;color:#444;line-height:1.8}
+.feud-text strong{color:var(--accent)}
+.feud-text em{font-style:italic;color:#888}
+.feud-quote{display:block;margin-top:.4rem;padding:.45rem .7rem;background:var(--card-bg);border-radius:5px;font-style:italic;color:#666;font-size:.82rem;border-left:2px solid var(--line)}
+
+/* ========== 選擇題互動 ========== */
+.quiz-box{background:linear-gradient(135deg,#fff,#faf7f2);border-radius:12px;padding:1.4rem 1.5rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid rgba(184,134,11,.2)}
+.quiz-eyebrow{display:inline-block;padding:.25rem .8rem;background:var(--gold);color:#fff;border-radius:14px;font-size:.72rem;font-weight:700;letter-spacing:.05em;margin-bottom:.7rem}
+.quiz-question{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.9rem;line-height:1.65}
+.quiz-options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1rem}
+.quiz-opt{display:flex;gap:.7rem;align-items:flex-start;padding:.85rem 1rem;background:#fff;border:2px solid var(--line);border-radius:8px;cursor:pointer;transition:all .25s;font-size:.88rem;line-height:1.7;color:#333;text-align:left;font-family:inherit}
+.quiz-opt:hover{border-color:var(--gold);background:rgba(184,134,11,.04);transform:translateX(3px)}
+.quiz-opt.correct{border-color:var(--sage);background:rgba(90,110,90,.08);color:var(--sage);font-weight:600}
+.quiz-opt.wrong{border-color:#c0392b;background:rgba(192,57,43,.06);color:#c0392b;opacity:.7}
+.quiz-opt.disabled{pointer-events:none}
+.quiz-letter{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--card-bg);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:.92rem;color:var(--accent)}
+.quiz-opt.correct .quiz-letter{background:var(--sage);color:#fff}
+.quiz-opt.wrong .quiz-letter{background:#c0392b;color:#fff}
+.quiz-feedback{display:none;padding:1rem 1.2rem;background:linear-gradient(135deg,rgba(90,110,90,.08),rgba(184,134,11,.05));border-left:4px solid var(--sage);border-radius:0 8px 8px 0;margin-top:.8rem;font-size:.86rem;line-height:1.85;color:#333}
+.quiz-feedback.show{display:block;animation:fadeUp .4s ease}
+.quiz-feedback strong{color:var(--accent)}
+.quiz-feedback .ans-mark{color:var(--sage);font-weight:700;font-family:'Playfair Display',serif}
+
+/* RWD */
+@media(max-width:700px){
+  .page{padding:1.8rem 1rem 3rem}
+  .hero-title{font-size:2rem}
+  .page h2{font-size:1.5rem}
+  .perspective-grid{grid-template-columns:1fr}
+  .book-hero{flex-direction:column;text-align:center}
+  .layer-table .lvl,.layer-table .act{width:auto}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- 頂部導航 -->
+<div class="top-nav">
+  <span class="nav-title">W7 期中總結 ⇄ 新制度主義</span>
+  <button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+  <button class="nav-btn" onclick="goPage(1)">1 · 議題關係圖</button>
+  <button class="nav-btn" onclick="goPage(2)">2 · 議題A</button>
+  <button class="nav-btn" onclick="goPage(3)">3 · 議題B</button>
+  <button class="nav-btn" onclick="goPage(4)">4 · 議題C</button>
+  <button class="nav-btn" onclick="goPage(5)">5 · 議題D</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(6)">6 · 制度主義發展</button>
+  <button class="nav-btn" onclick="goPage(7)">7 · 三大學派</button>
+  <button class="nav-btn" onclick="goPage(8)">8 · 鼠患案例</button>
+  <button class="nav-btn" onclick="goPage(9)">9 · 社宅火警</button>
+  <button class="nav-btn" onclick="goPage(10)">10 · 三班護病比</button>
+  <button class="nav-btn" onclick="goPage(11)">11 · 本週讀物</button>
+</div>
+
+<div class="page-container">
+
+<!-- ========== P0 封面 ========== -->
+<div class="page active" data-page="0"><div class="page-inner">
+  <div class="hero">
+    <div class="hero-eyebrow">政治社會學 · Week 7 · 2026 春</div>
+    <h1 class="hero-title">期中總結 <span class="mark">×</span> 新制度主義</h1>
+    <p class="hero-sub">從四個爭議議題出發，把前六週的理論串成一張地圖；再用兩個本週新聞，開啟「制度如何影響行為者」的新章節</p>
+    <div class="hero-meta">
+      <span>📅 全 12 頁</span>
+      <span>🎭 期中四議題回顧</span>
+      <span>🏛️ 新制度主義銜接</span>
+      <span>📚 本週讀物</span>
+    </div>
+  </div>
+
+  <div class="story-lead">
+    <strong>今天的課要做三件事</strong>：第一，把你們的期中報告<strong>拉回理論</strong>——四個看似不同的議題，其實都在問同一組根本問題；第二，用兩個本週新聞（台北鼠患、台中社宅火警），<strong>引出新的分析視角：新制度主義</strong>；第三，介紹一本進階讀本——<strong>Ben Ansell《政治為什麼會失敗》</strong>。
+  </div>
+
+  <h3><span class="num">①</span>本次課程地圖</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>📊 Part 1 · 期中回顧（P1–P5）</h4>
+      <p>用一張<strong>議題關係圖</strong>把四個議題連回前六週概念——印度勞工、陸客、鞭刑、普發一萬，各自對應到不同的政治社會學提問。</p>
+    </div>
+    <div class="card sage">
+      <h4>🏛️ Part 2 · 制度主義回顧（P6–P7）</h4>
+      <p>用<strong>時間軸</strong>看「舊制度主義 → 行為主義 → 新制度主義」的發展脈絡；用<strong>學派關係圖</strong>對照三大新制度主義的差異。</p>
+    </div>
+    <div class="card gold">
+      <h4>📰 Part 3 · 案例與讀物（P8–P11）</h4>
+      <p>台北鼠患、台中社宅、三班護病比——<strong>先看前六週視角會忽略什麼，再看新制度主義怎麼分析</strong>。最後介紹本週讀物 Ansell。</p>
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>今天的核心提問</h3>
+  <div class="questions">
+    <h4>📌 帶著這四個問題進入課程</h4>
+    <ol>
+      <li><strong>四個議題真的毫無關聯嗎？</strong>還是它們在問同一組根本問題？</li>
+      <li><strong>為什麼明明大家都想解決問題，事情還是辦不好？</strong>是「人」的問題還是「制度」的問題？</li>
+      <li><strong>制度如何形塑行為者的選擇？</strong>即使在每個人都「理性」的情況下？</li>
+      <li><strong>為什麼民主政治經常「失敗」？</strong>制度有可能避免悲劇嗎？</li>
+    </ol>
+  </div>
+
+  <div class="next-page" onclick="goPage(1)">
+    <div><div class="np-label">下一頁</div><div class="np-title">四個議題的關係圖</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ========== P1 議題關係圖 ========== -->
+<div class="page" data-page="1"><div class="page-inner">
+  <div class="guide-breadcrumb">📍 <span>P1 議題關係圖</span> → P2-P5 議題詳解 → ...</div>
+  <h2>1. 期中議題的關係圖</h2>
+
+  <div class="story-lead">
+    你們做的四個議題乍看毫不相關——印度勞工、陸客、鞭刑、普發一萬。但<strong>把它們放在前六週的理論架構下，會看到驚人的共通結構</strong>：每一個議題都同時牽動兩到三條理論軸線。下面這張圖讓你看清楚誰連到誰。
+  </div>
+
+  <h3><span class="num">①</span>議題 × 前六週理論：分組對應</h3>
+
+  <svg class="relation-svg" viewBox="0 0 880 580" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="gradA" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#a13110"/>
+        <stop offset="100%" stop-color="#8b2500"/>
+      </linearGradient>
+      <linearGradient id="gradB" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#4a6fa3"/>
+        <stop offset="100%" stop-color="#3a5a8c"/>
+      </linearGradient>
+      <linearGradient id="gradC" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#7d5a8c"/>
+        <stop offset="100%" stop-color="#6b4c7a"/>
+      </linearGradient>
+      <linearGradient id="gradD" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#e36812"/>
+        <stop offset="100%" stop-color="#d35400"/>
+      </linearGradient>
+    </defs>
+
+    <!-- ============ 標題列 ============ -->
+    <text x="440" y="28" text-anchor="middle" font-family="'Playfair Display',serif" font-size="14" font-weight="700" fill="#1a1a1a">📍 四個議題 × 前六週理論的對應圖</text>
+
+    <!-- ============ 上層：前六週理論帶 ============ -->
+    <rect x="40" y="50" width="800" height="60" rx="8" fill="#faf7f2" stroke="#c9c0b4" stroke-width="1"/>
+    <text x="60" y="73" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#666">前六週理論</text>
+
+    <!-- 五個週次小框，平均分佈 -->
+    <g>
+      <rect x="100" y="80" width="120" height="22" rx="4" fill="#fff" stroke="#3a5a8c" stroke-width="1.5"/>
+      <text x="160" y="96" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#3a5a8c">W2 階級分析</text>
+
+      <rect x="240" y="80" width="120" height="22" rx="4" fill="#fff" stroke="#3a5a8c" stroke-width="1.5"/>
+      <text x="300" y="96" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#3a5a8c">W3 分配政治</text>
+
+      <rect x="380" y="80" width="120" height="22" rx="4" fill="#fff" stroke="#3a5a8c" stroke-width="1.5"/>
+      <text x="440" y="96" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#3a5a8c">W4 國際環境</text>
+
+      <rect x="520" y="80" width="120" height="22" rx="4" fill="#fff" stroke="#3a5a8c" stroke-width="1.5"/>
+      <text x="580" y="96" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#3a5a8c">W5 國家自主</text>
+
+      <rect x="660" y="80" width="120" height="22" rx="4" fill="#fff" stroke="#3a5a8c" stroke-width="1.5"/>
+      <text x="720" y="96" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#3a5a8c">W6 國家能力</text>
+    </g>
+
+    <!-- ============ 中層：四個議題卡片，平均分佈在水平軸上 ============ -->
+    <!-- 議題A 印度勞工：x=140 -->
+    <g onclick="goPage(2)" style="cursor:pointer">
+      <rect x="60" y="230" width="160" height="80" rx="10" fill="url(#gradA)"/>
+      <text x="140" y="258" text-anchor="middle" fill="#fff" font-size="18">👷</text>
+      <text x="140" y="280" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="13" font-weight="700">議題 A</text>
+      <text x="140" y="297" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="700">印度勞工</text>
+    </g>
+
+    <!-- 議題B 陸客：x=340 -->
+    <g onclick="goPage(3)" style="cursor:pointer">
+      <rect x="260" y="230" width="160" height="80" rx="10" fill="url(#gradB)"/>
+      <text x="340" y="258" text-anchor="middle" fill="#fff" font-size="18">🛬</text>
+      <text x="340" y="280" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="13" font-weight="700">議題 B</text>
+      <text x="340" y="297" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="700">開放陸客</text>
+    </g>
+
+    <!-- 議題C 鞭刑：x=540 -->
+    <g onclick="goPage(4)" style="cursor:pointer">
+      <rect x="460" y="230" width="160" height="80" rx="10" fill="url(#gradC)"/>
+      <text x="540" y="258" text-anchor="middle" fill="#fff" font-size="18">⚖️</text>
+      <text x="540" y="280" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="13" font-weight="700">議題 C</text>
+      <text x="540" y="297" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="700">開放鞭刑</text>
+    </g>
+
+    <!-- 議題D 普發：x=740 -->
+    <g onclick="goPage(5)" style="cursor:pointer">
+      <rect x="660" y="230" width="160" height="80" rx="10" fill="url(#gradD)"/>
+      <text x="740" y="258" text-anchor="middle" fill="#fff" font-size="18">💰</text>
+      <text x="740" y="280" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="13" font-weight="700">議題 D</text>
+      <text x="740" y="297" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="700">普發一萬</text>
+    </g>
+
+    <!-- ============ 連線：議題 → 對應週次 ============ -->
+    <!-- 議題A → W2 階級, W3 分配, W6 能力 -->
+    <line x1="140" y1="230" x2="160" y2="102" stroke="#8b2500" stroke-width="2" opacity="0.45"/>
+    <line x1="140" y1="230" x2="300" y2="102" stroke="#8b2500" stroke-width="2" opacity="0.45"/>
+    <line x1="140" y1="230" x2="720" y2="102" stroke="#8b2500" stroke-width="2" opacity="0.45"/>
+
+    <!-- 議題B → W4 國際, W5 國家 -->
+    <line x1="340" y1="230" x2="440" y2="102" stroke="#3a5a8c" stroke-width="2" opacity="0.45"/>
+    <line x1="340" y1="230" x2="580" y2="102" stroke="#3a5a8c" stroke-width="2" opacity="0.45"/>
+
+    <!-- 議題C → W4 國際, W5 國家, W6 能力 -->
+    <line x1="540" y1="230" x2="440" y2="102" stroke="#6b4c7a" stroke-width="2" opacity="0.45"/>
+    <line x1="540" y1="230" x2="580" y2="102" stroke="#6b4c7a" stroke-width="2" opacity="0.45"/>
+    <line x1="540" y1="230" x2="720" y2="102" stroke="#6b4c7a" stroke-width="2" opacity="0.45"/>
+
+    <!-- 議題D → W3 分配, W5 國家, W6 能力 -->
+    <line x1="740" y1="230" x2="300" y2="102" stroke="#d35400" stroke-width="2" opacity="0.45"/>
+    <line x1="740" y1="230" x2="580" y2="102" stroke="#d35400" stroke-width="2" opacity="0.45"/>
+    <line x1="740" y1="230" x2="720" y2="102" stroke="#d35400" stroke-width="2" opacity="0.45"/>
+
+    <!-- ============ 下層：核心關懷 ============ -->
+    <rect x="40" y="380" width="800" height="60" rx="8" fill="#1a1a1a"/>
+    <text x="60" y="402" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#b8860b">核心關懷</text>
+
+    <text x="140" y="425" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="11" font-weight="700">資本 × 國家能力</text>
+    <text x="340" y="425" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="11" font-weight="700">國際結構 × 認同</text>
+    <text x="540" y="425" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="11" font-weight="700">強制力 × 國際規範</text>
+    <text x="740" y="425" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="11" font-weight="700">分配政治 × 國家</text>
+
+    <!-- 議題到核心關懷的線（短直線） -->
+    <line x1="140" y1="310" x2="140" y2="380" stroke="#8b2500" stroke-width="2" stroke-dasharray="4 3" opacity="0.5"/>
+    <line x1="340" y1="310" x2="340" y2="380" stroke="#3a5a8c" stroke-width="2" stroke-dasharray="4 3" opacity="0.5"/>
+    <line x1="540" y1="310" x2="540" y2="380" stroke="#6b4c7a" stroke-width="2" stroke-dasharray="4 3" opacity="0.5"/>
+    <line x1="740" y1="310" x2="740" y2="380" stroke="#d35400" stroke-width="2" stroke-dasharray="4 3" opacity="0.5"/>
+
+    <!-- ============ 統計資訊：每個議題連幾條線 ============ -->
+    <text x="140" y="340" text-anchor="middle" font-size="10" fill="#666" font-weight="600">連結 3 個週次</text>
+    <text x="340" y="340" text-anchor="middle" font-size="10" fill="#666" font-weight="600">連結 2 個週次</text>
+    <text x="540" y="340" text-anchor="middle" font-size="10" fill="#666" font-weight="600">連結 3 個週次</text>
+    <text x="740" y="340" text-anchor="middle" font-size="10" fill="#666" font-weight="600">連結 3 個週次</text>
+
+    <!-- ============ 觀察列 ============ -->
+    <text x="440" y="490" text-anchor="middle" font-family="'Playfair Display',serif" font-size="13" font-weight="700" fill="#8b2500">⭐ 三個關鍵觀察</text>
+
+    <g>
+      <rect x="40" y="505" width="260" height="60" rx="6" fill="#faf7f2" stroke="#c9c0b4"/>
+      <text x="170" y="525" text-anchor="middle" font-size="10.5" font-weight="700" fill="#3a5a8c">W5 國家自主</text>
+      <text x="170" y="545" text-anchor="middle" font-size="10" fill="#444">連到 3 個議題（B/C/D）</text>
+      <text x="170" y="560" text-anchor="middle" font-size="9.5" fill="#888" font-style="italic">「國家」是議題核心</text>
+
+      <rect x="310" y="505" width="260" height="60" rx="6" fill="#faf7f2" stroke="#c9c0b4"/>
+      <text x="440" y="525" text-anchor="middle" font-size="10.5" font-weight="700" fill="#3a5a8c">W6 國家能力</text>
+      <text x="440" y="545" text-anchor="middle" font-size="10" fill="#444">連到 3 個議題（A/C/D）</text>
+      <text x="440" y="560" text-anchor="middle" font-size="9.5" fill="#888" font-style="italic">「能不能做到」最關鍵</text>
+
+      <rect x="580" y="505" width="260" height="60" rx="6" fill="#faf7f2" stroke="#c9c0b4"/>
+      <text x="710" y="525" text-anchor="middle" font-size="10.5" font-weight="700" fill="#8b2500">沒有議題只連 1 個週次</text>
+      <text x="710" y="545" text-anchor="middle" font-size="10" fill="#444">最少 2 條、最多 3 條</text>
+      <text x="710" y="560" text-anchor="middle" font-size="9.5" fill="#888" font-style="italic">結構多重性</text>
+    </g>
+  </svg>
+
+  <p style="font-size:.78rem;color:var(--muted);text-align:center;margin-top:-.5rem;font-style:italic">💡 提示：點選議題卡片可跳到該議題的詳細分析</p>
+
+  <h3><span class="num">②</span>從圖中可以看到什麼？</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>① 沒有一個議題只連到單一週次</h4>
+      <p>每個議題都同時連結 2-3 個週次的概念——<strong>這就是政治社會學的特色，強迫你看到結構的多重性</strong>。</p>
+    </div>
+    <div class="card blue">
+      <h4>② W5（國家自主）連到三個議題</h4>
+      <p>陸客、鞭刑、普發都和「國家有多大自主性」有關。<strong>「國家」是貫穿所有議題的核心</strong>，這預告了新制度主義為什麼重要。</p>
+    </div>
+    <div class="card sage">
+      <h4>③ W6（國家能力）連到三個議題</h4>
+      <p>印度勞工、鞭刑、普發都涉及「國家能不能做到」。<strong>有意志不代表能執行</strong>——這就是制度主義要追問的事。</p>
+    </div>
+    <div class="card gold">
+      <h4>④ 四個議題的共通結構</h4>
+      <p>都在問——<strong>結構 vs. 行動者、利益 vs. 認同、國家 vs. 社會</strong>。這三組張力，就是政治社會學的核心關懷。</p>
+    </div>
+  </div>
+
+  <div class="hl-box">
+    <h4>💡 一個關鍵觀察</h4>
+    <p>這張圖告訴我們：<strong>政治社會學不是「一個議題一個理論」的對應關係</strong>，而是「<strong>一個議題多層交織</strong>」。你期中報告的每一個論點，都可能同時觸及階級、國家、國際三個層次——這也是為什麼這門課要花六週鋪陳這些概念。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(2)">
+    <div><div class="np-label">下一頁</div><div class="np-title">議題 A · 印度勞工的理論深度</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ========== P2 議題A 印度勞工 ========== -->
+<div class="page" data-page="2"><div class="page-inner">
+  <div class="guide-breadcrumb">P1 → 📍 <span>P2 議題A</span> → P3-P5 → ...</div>
+  <h2>2. 議題 A · 開放印度勞工</h2>
+
+  <div class="iss-detail iA">
+    <div class="iss-head">
+      <div class="iss-h-title">👷 為什麼台灣不能不開放？為什麼開放又這麼難？</div>
+      <div class="iss-h-tags">
+        <span class="tg hi">W2-W3 階級</span>
+        <span class="tg hi">W6 國家能力</span>
+        <span class="tg">發展型國家</span>
+      </div>
+    </div>
+
+    <div class="iss-q">「資本要的東西，國家有沒有能力給？」——這是這個議題的根本問題。</div>
+
+    <h4>🔑 三條理論分析線</h4>
+
+    <div class="iss-rows">
+      <div class="iss-row">
+        <div class="iss-row-label">① 階級邏輯</div>
+        <div class="iss-row-text"><strong>資本累積有它自己的邏輯</strong>。工總、中小企業協會的訴求不是「想要」，而是「不得不」——當勞動力短缺到威脅生產，國家不得不回應。這正是 W2 馬克思說的：<strong>資本對勞動力的結構性需求</strong>。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">② 發展型國家</div>
+        <div class="iss-row-text">勞動部主動規劃移工配置，這就是 W6 教過的「<strong>發展型國家</strong>」典範——國家不只管秩序，還主動為產業搭橋。但日韓也在搶印度移工，台灣不動就被邊緣化。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">③ 國家能力</div>
+        <div class="iss-row-text">9.4 萬失聯移工告訴我們：<strong>國家「想做」不等於「做得到」</strong>。這呼應 Michael Mann 的「基礎建設權力」——能下命令是一回事，能讓命令真正穿透社會、被執行又是另一回事。</div>
+      </div>
+    </div>
+
+    <h4>🎭 四組角色的理論定位</h4>
+    <div class="iss-rows">
+      <div class="iss-row">
+        <div class="iss-row-label">A1 勞動部</div>
+        <div class="iss-row-text">代表「<strong>發展型國家的執行端</strong>」——國家有意志、有計畫、有 KPI。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">A2 移民署</div>
+        <div class="iss-row-text">代表「<strong>國家能力的現實面</strong>」——再好的政策意志，沒有治理能力配合就會崩盤。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">A3 工總</div>
+        <div class="iss-row-text">代表「<strong>資本階級的結構需求</strong>」——這不是貪婪，是資本累積邏輯的展現。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">A4 連署民眾</div>
+        <div class="iss-row-text">代表「<strong>勞動階級的焦慮</strong>」——擔心壓低本國勞工的議價能力，反映台灣低薪結構的長期問題。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hl-box">
+    <h4>📌 一句話總結</h4>
+    <p>印度勞工議題不是「<strong>要不要</strong>」的問題，是「<strong>資本要的東西，國家有沒有能力給</strong>」的問題。這也預告了——光看政策意圖不夠，還要看「<strong>制度</strong>」如何讓政策意圖實現或落空。這正是新制度主義要回答的事。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(3)">
+    <div><div class="np-label">下一頁</div><div class="np-title">議題 B · 陸客來台</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ========== P3 議題B 陸客 ========== -->
+<div class="page" data-page="3"><div class="page-inner">
+  <div class="guide-breadcrumb">P1 → P2 → 📍 <span>P3 議題B</span> → P4-P5 → ...</div>
+  <h2>3. 議題 B · 開放陸客來台</h2>
+
+  <div class="iss-detail iB">
+    <div class="iss-head">
+      <div class="iss-h-title">🛬 在大國夾縫中，小國能多自主？</div>
+      <div class="iss-h-tags">
+        <span class="tg hi">W4 國際環境</span>
+        <span class="tg hi">W5 國家自主</span>
+        <span class="tg">認同建構</span>
+      </div>
+    </div>
+
+    <div class="iss-q">「相互依賴」到底是降低衝突的紐帶，還是被武器化的籌碼？——這是 W4 留下的開放問題。</div>
+
+    <h4>🔑 三條理論分析線</h4>
+
+    <div class="iss-rows">
+      <div class="iss-row">
+        <div class="iss-row-label">① 互賴 vs. 現實</div>
+        <div class="iss-row-text">W4 的核心爭論——<strong>互賴理論</strong>（Keohane）認為經濟交流會抑制衝突；<strong>新現實主義</strong>（Waltz）認為國際結構決定一切，再多經濟合作也擋不住權力鬥爭。陸客議題正是這個理論爭議的台灣版實驗。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">② 武器化依賴</div>
+        <div class="iss-row-text">Farrell & Newman 的概念——<strong>當經濟連結被一方拿來當武器</strong>，互賴就成了陷阱。中國對立陶宛、澳洲、台灣的經濟報復都是這個邏輯。陸客是觀光，也是政治籌碼。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">③ 認同建構</div>
+        <div class="iss-row-text">Z 世代反對的不是「賺中國錢」這件事，而是「<strong>我們是誰</strong>」的問題。這提醒我們：政治社會學不只看物質利益，也看身分建構——這是 W4 後段提過的<strong>建構主義</strong>視角。</div>
+      </div>
+    </div>
+
+    <h4>🎭 四組角色的理論定位</h4>
+    <div class="iss-rows">
+      <div class="iss-row">
+        <div class="iss-row-label">B1 觀光署</div>
+        <div class="iss-row-text">代表「<strong>互賴理論的務實派</strong>」——經濟連結可管理，國家有能力管控風險。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">B2 執政黨</div>
+        <div class="iss-row-text">代表「<strong>現實主義＋武器化依賴</strong>」——把國安放在經濟之上的戰略思維。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">B3 觀光業者</div>
+        <div class="iss-row-text">代表「<strong>依賴發展論的現實</strong>」——小國本來就無法擺脫與大國的經濟連結。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">B4 民眾</div>
+        <div class="iss-row-text">代表「<strong>認同政治的力量</strong>」——身分認同已超越物質利益，成為政治決定的優先變項。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hl-box blue">
+    <h4>📌 一句話總結</h4>
+    <p>陸客議題從來不只是觀光問題，它是<strong>台灣國際處境的縮影</strong>。觀光業者代表的是「依賴的現實」，公民團體代表的是「自主的渴望」——這兩個聲音都是真的，台灣作為小國，必須在這兩端找平衡。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(4)">
+    <div><div class="np-label">下一頁</div><div class="np-title">議題 C · 開放鞭刑</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ========== P4 議題C 鞭刑 ========== -->
+<div class="page" data-page="4"><div class="page-inner">
+  <div class="guide-breadcrumb">P1 → P2-P3 → 📍 <span>P4 議題C</span> → P5 → ...</div>
+  <h2>4. 議題 C · 開放鞭刑</h2>
+
+  <div class="iss-detail iC">
+    <div class="iss-head">
+      <div class="iss-h-title">⚖️ 國家可以用多殘酷的手段對人民？</div>
+      <div class="iss-h-tags">
+        <span class="tg hi">W5-W6 國家</span>
+        <span class="tg hi">W4 國際規範</span>
+        <span class="tg">分配正義</span>
+      </div>
+    </div>
+
+    <div class="iss-q">「強國家」不等於「文明國家」——現代國家的合法性，來自能否節制使用暴力。</div>
+
+    <h4>🔑 三條理論分析線</h4>
+
+    <div class="iss-rows">
+      <div class="iss-row">
+        <div class="iss-row-label">① 國家強制力</div>
+        <div class="iss-row-text">W5-W6 講過 Weber 的經典定義——<strong>國家就是壟斷暴力的合法組織</strong>。但現代國家的合法性不只來自「暴力的展現」，更來自「<strong>節制使用暴力</strong>」——這就是法務部反對鞭刑的核心理由。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">② 國際規範鑲嵌</div>
+        <div class="iss-row-text">台灣簽兩公約後，國內政策受國際標準約束。<strong>這不是「主權喪失」，而是現代國家從來不是孤立的</strong>——它鑲嵌在國際規範體系中。引進鞭刑，可能讓歐盟拒絕引渡台灣的詐騙犯。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">③ 分配正義</div>
+        <div class="iss-row-text">受害者家屬問的不是「該不該鞭」，而是「<strong>正義誰來伸張</strong>」——刑罰不只是嚇阻，也是國家對「<strong>誰值得被保護</strong>」的表態。這是 W3 分配政治在司法領域的展現。</div>
+      </div>
+    </div>
+
+    <h4>🎭 四組角色的理論定位</h4>
+    <div class="iss-rows">
+      <div class="iss-row">
+        <div class="iss-row-label">C1 在野黨</div>
+        <div class="iss-row-text">代表「<strong>民意回應論</strong>」——民主政治就是要回應主流民意，7 成支持就該推動。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">C2 法務部</div>
+        <div class="iss-row-text">代表「<strong>國際規範鑲嵌</strong>」——主權不是孤立行使，要承擔國際成本。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">C3 受害者家屬</div>
+        <div class="iss-row-text">代表「<strong>正義分配的另一面</strong>」——現行制度把保護傾向加害者，受害者被忽視。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">C4 人權團體</div>
+        <div class="iss-row-text">代表「<strong>文明國家的底線</strong>」——國家強制力的節制，是現代民主的根本特徵。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hl-box" style="background:rgba(107,76,122,.05);border-left-color:var(--purple)">
+    <h4 style="color:var(--purple)">📌 一句話總結</h4>
+    <p>鞭刑爭議不只是「治安」問題，是「<strong>我們要當什麼樣的國家</strong>」的問題。國家的強制力可以多深、可以多殘酷？這個問題的答案，將決定台灣在國際社會中的位置。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(5)">
+    <div><div class="np-label">下一頁</div><div class="np-title">議題 D · 普發一萬</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ========== P5 議題D 普發 ========== -->
+<div class="page" data-page="5"><div class="page-inner">
+  <div class="guide-breadcrumb">P1 → P2-P4 → 📍 <span>P5 議題D</span> → P6 制度主義 → ...</div>
+  <h2>5. 議題 D · 普發一萬</h2>
+
+  <div class="iss-detail iD">
+    <div class="iss-head">
+      <div class="iss-h-title">💰 國家的錢，該怎麼花？誰來決定？</div>
+      <div class="iss-h-tags">
+        <span class="tg hi">W3 分配政治</span>
+        <span class="tg hi">W5-W6 國家</span>
+        <span class="tg">財政社會學</span>
+      </div>
+    </div>
+
+    <div class="iss-q">「形式平等」往往掩蓋「實質不平等」——這是 W3 分配政治最深刻的提問。</div>
+
+    <h4>🔑 三條理論分析線</h4>
+
+    <div class="iss-rows">
+      <div class="iss-row">
+        <div class="iss-row-label">① 再分配政治</div>
+        <div class="iss-row-text">W3 教過——<strong>「形式平等」往往掩蓋「實質不平等」</strong>。發 1 萬塊看起來人人平等，但對年收 50 萬的家庭和年收 200 萬的家庭，1 萬塊的意義天差地別。這就是「<strong>普遍給付</strong>」與「<strong>選擇性給付</strong>」福利國家設計的核心爭議。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">② 國家自主性反向</div>
+        <div class="iss-row-text">W5 通常問「國家能否抵抗社會壓力」。但普發一萬反過來——<strong>當立法院（政治菁英）與行政院（官僚體系）對抗時，誰才代表「國家」？</strong>這也是 W5 留下的開放問題：國家不是鐵板一塊，內部有自己的政治。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">③ 經濟結構盲點</div>
+        <div class="iss-row-text">青年世代反對的不是「拿錢」，是「<strong>結構不公被掩蓋</strong>」——低薪、高房價、勞保破產，這 2,300 億如果用來蓋社宅可以蓋 5 萬戶。<strong>普發是用一次性快樂，換取結構性絕望</strong>。</div>
+      </div>
+    </div>
+
+    <h4>🎭 四組角色的理論定位</h4>
+    <div class="iss-rows">
+      <div class="iss-row">
+        <div class="iss-row-label">D1 在野黨</div>
+        <div class="iss-row-text">代表「<strong>立法權對行政權的制衡</strong>」——民主政治不該等於行政壟斷。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">D2 行政院</div>
+        <div class="iss-row-text">代表「<strong>財政紀律的國家責任</strong>」——真正的國家自主，是能拒絕短期民粹的勇氣。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">D3 民眾</div>
+        <div class="iss-row-text">代表「<strong>再分配正當性</strong>」——國家有錢就該還給人民，這是社會契約。</div>
+      </div>
+      <div class="iss-row">
+        <div class="iss-row-label">D4 青年世代</div>
+        <div class="iss-row-text">代表「<strong>世代正義的算術</strong>」——結構問題不該被一次性現金掩蓋。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hl-box sage">
+    <h4>📌 一句話總結</h4>
+    <p>普發一萬考驗的，是<strong>台灣有沒有「結構性思考」的政治文化</strong>。當我們把焦點放在「能不能拿到 1 萬」，就放棄了問「2300 億能改變什麼結構」。這正是民粹政治與結構性政治的分野。</p>
+  </div>
+
+  <h3><span class="num">①</span>四議題的最終總結</h3>
+
+  <div class="questions">
+    <h4>🎯 四個議題的共同提問</h4>
+    <ol>
+      <li><strong>誰的利益被優先回應？</strong>——階級分析（W2-W3）</li>
+      <li><strong>國家有多大程度的意志？</strong>——國家自主（W5）</li>
+      <li><strong>國家做事的能力有多深？</strong>——國家能力（W6）</li>
+      <li><strong>國際結構如何形塑國內？</strong>——國際環境（W4）</li>
+    </ol>
+  </div>
+
+  <p style="margin-top:1.2rem">這四個問題，就是<strong>政治社會學的全部地基</strong>。但是——上面講的「階級」、「國家能力」、「國際結構」，<strong>都還停留在比較宏觀的層次</strong>。下一頁我們要往下走一層：</p>
+
+  <p style="font-family:'Playfair Display',serif;font-style:italic;color:var(--accent);font-size:1.05rem;text-align:center;padding:1rem;background:rgba(139,37,0,.04);border-radius:8px;margin-top:1rem">「為什麼明明大家都知道有問題，事情還是辦不好？」</p>
+
+  <div class="next-page" onclick="goPage(6)">
+    <div><div class="np-label">下一頁</div><div class="np-title">制度主義的發展時間軸</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ========== P6 制度主義發展時間軸 ========== -->
+<div class="page" data-page="6"><div class="page-inner">
+  <div class="guide-breadcrumb">P1-P5 → 📍 <span>P6 制度主義發展</span> → P7 三大學派 → ...</div>
+  <h2>6. 制度主義的發展時間軸</h2>
+
+  <div class="story-lead">
+    在進入新制度主義之前，先帶你看一段政治學近百年的<strong>「鐘擺」</strong>故事——從「重視制度」到「拋棄制度」，再到「把制度找回來」。理解這段歷史，才能明白為什麼今天我們要重新討論制度。
+  </div>
+
+  <h3><span class="num">①</span>百年時間軸：制度研究的三波</h3>
+
+  <div class="history-axis">
+    <div class="ax-title">📍 政治學中「制度」概念的發展脈絡</div>
+
+    <svg class="ax-svg" viewBox="0 0 880 480" xmlns="http://www.w3.org/2000/svg">
+      <!-- 副標題 -->
+      <text x="440" y="22" text-anchor="middle" font-family="'Playfair Display',serif" font-size="13" font-weight="700" fill="#1a1a1a">從「重視制度」→「拋棄制度」→「把制度找回來」百年鐘擺</text>
+
+      <!-- 三大階段色塊（與時間軸座標對齊） -->
+      <g>
+        <!-- 階段一：1880s-1940s（x: 40-280） -->
+        <rect x="40" y="60" width="240" height="60" rx="8" fill="#b8860b" opacity="0.92"/>
+        <text x="160" y="86" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="13" font-weight="700">🏛️ 階段一 · 舊制度主義</text>
+        <text x="160" y="106" text-anchor="middle" fill="#fff" font-size="10" opacity="0.92" font-style="italic">Old Institutionalism</text>
+
+        <!-- 階段二：1950s-1970s（x: 290-510） -->
+        <rect x="290" y="60" width="220" height="60" rx="8" fill="#6b6560" opacity="0.92"/>
+        <text x="400" y="86" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="13" font-weight="700">📊 階段二 · 行為主義革命</text>
+        <text x="400" y="106" text-anchor="middle" fill="#fff" font-size="10" opacity="0.92" font-style="italic">Behavioral Revolution</text>
+
+        <!-- 階段三：1980s-現在（x: 520-840） -->
+        <rect x="520" y="60" width="320" height="60" rx="8" fill="#8b2500" opacity="0.95"/>
+        <text x="680" y="86" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="13" font-weight="700">🔄 階段三 · 新制度主義</text>
+        <text x="680" y="106" text-anchor="middle" fill="#fff" font-size="10" opacity="0.92" font-style="italic">New Institutionalism (含內部三派分支)</text>
+      </g>
+
+      <!-- 主時間軸 -->
+      <line x1="40" y1="220" x2="840" y2="220" stroke="#1a1a1a" stroke-width="2.5"/>
+
+      <!-- 年代刻度 -->
+      <g>
+        <line x1="100" y1="210" x2="100" y2="230" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="100" y="247" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#666">1880s</text>
+
+        <line x1="320" y1="210" x2="320" y2="230" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="320" y="247" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#666">1950s</text>
+
+        <line x1="540" y1="210" x2="540" y2="230" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="540" y="247" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#666">1980s</text>
+
+        <line x1="690" y1="210" x2="690" y2="230" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="690" y="247" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#666">2000s</text>
+
+        <line x1="820" y1="210" x2="820" y2="230" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="820" y="247" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" font-weight="700" fill="#666">2020s+</text>
+      </g>
+
+      <!-- 學者標記（重新分配位置，避免擠在右側） -->
+      <!-- 1979 Skocpol（在 1980s 前方，x≈525） -->
+      <g>
+        <circle cx="525" cy="220" r="4.5" fill="#3a5a8c"/>
+        <line x1="525" y1="216" x2="525" y2="175" stroke="#3a5a8c" stroke-width="1.2" stroke-dasharray="3 2"/>
+        <rect x="465" y="158" width="120" height="20" rx="4" fill="#3a5a8c"/>
+        <text x="525" y="172" text-anchor="middle" font-size="9.5" fill="#fff" font-weight="700">1979 Skocpol</text>
+      </g>
+
+      <!-- 1984 March & Olsen（在 1980s 上方一點，x≈555，⭐ 最重要） -->
+      <g>
+        <circle cx="555" cy="220" r="6" fill="#b8860b" stroke="#8b2500" stroke-width="2"/>
+        <line x1="555" y1="214" x2="555" y2="135" stroke="#b8860b" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <rect x="495" y="135" width="120" height="20" rx="4" fill="#b8860b"/>
+        <text x="555" y="149" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">⭐ 1984 March &amp; Olsen</text>
+      </g>
+
+      <!-- 1992 Thelen et al.（1990s 區段，x≈610） -->
+      <g>
+        <circle cx="610" cy="220" r="4.5" fill="#8b2500"/>
+        <line x1="610" y1="216" x2="610" y2="175" stroke="#8b2500" stroke-width="1.2" stroke-dasharray="3 2"/>
+        <rect x="555" y="158" width="110" height="20" rx="4" fill="#8b2500"/>
+        <text x="610" y="172" text-anchor="middle" font-size="9.5" fill="#fff" font-weight="700">1992 Thelen et al.</text>
+      </g>
+
+      <!-- 1996 Hall & Taylor（接近 2000s，x≈660） -->
+      <g>
+        <circle cx="660" cy="220" r="4.5" fill="#5a6e5a"/>
+        <line x1="660" y1="216" x2="660" y2="190" stroke="#5a6e5a" stroke-width="1.2" stroke-dasharray="3 2"/>
+        <rect x="600" y="180" width="120" height="20" rx="4" fill="#5a6e5a"/>
+        <text x="660" y="194" text-anchor="middle" font-size="9.5" fill="#fff" font-weight="700">1996 Hall &amp; Taylor</text>
+      </g>
+
+      <!-- 2008 Schmidt（在 2000s 與 2020s 之間，x≈740） -->
+      <g>
+        <circle cx="740" cy="220" r="4.5" fill="#b8860b"/>
+        <line x1="740" y1="216" x2="740" y2="160" stroke="#b8860b" stroke-width="1.2" stroke-dasharray="3 2"/>
+        <rect x="685" y="158" width="110" height="20" rx="4" fill="#b8860b"/>
+        <text x="740" y="172" text-anchor="middle" font-size="9.5" fill="#fff" font-weight="700">2008 Schmidt (DI)</text>
+      </g>
+
+      <!-- 階段說明（時間軸下方） -->
+      <g>
+        <text x="160" y="282" text-anchor="middle" font-size="10" fill="#444" font-weight="600">關注：憲法、法律、官僚</text>
+        <text x="160" y="298" text-anchor="middle" font-size="9.5" fill="#888" font-style="italic">「制度規定誰能做什麼」</text>
+
+        <text x="400" y="282" text-anchor="middle" font-size="10" fill="#444" font-weight="600">關注：個人偏好、投票行為</text>
+        <text x="400" y="298" text-anchor="middle" font-size="9.5" fill="#888" font-style="italic">「行為才是真相」</text>
+
+        <text x="680" y="282" text-anchor="middle" font-size="10" fill="#444" font-weight="600">關注：制度如何形塑行為</text>
+        <text x="680" y="298" text-anchor="middle" font-size="9.5" fill="#888" font-style="italic">「把制度找回來」</text>
+      </g>
+
+      <!-- 學者群（依年代分四區，與上方階段色塊對齊） -->
+      <g>
+        <text x="160" y="325" text-anchor="middle" font-family="'Playfair Display',serif" font-size="10.5" font-weight="700" fill="#b8860b">主要學者</text>
+        <text x="160" y="340" text-anchor="middle" font-size="10" fill="#444">Max Weber</text>
+        <text x="160" y="354" text-anchor="middle" font-size="10" fill="#444">Alexis de Tocqueville</text>
+        <text x="160" y="368" text-anchor="middle" font-size="10" fill="#444">Woodrow Wilson</text>
+      </g>
+
+      <g>
+        <text x="400" y="325" text-anchor="middle" font-family="'Playfair Display',serif" font-size="10.5" font-weight="700" fill="#6b6560">主要學者</text>
+        <text x="400" y="340" text-anchor="middle" font-size="10" fill="#444">David Easton</text>
+        <text x="400" y="354" text-anchor="middle" font-size="10" fill="#444">Robert Dahl</text>
+        <text x="400" y="368" text-anchor="middle" font-size="10" fill="#444">Gabriel Almond</text>
+      </g>
+
+      <!-- 階段三分兩組：奠基者 & 近期學者 -->
+      <g>
+        <text x="600" y="325" text-anchor="middle" font-family="'Playfair Display',serif" font-size="10.5" font-weight="700" fill="#8b2500">奠基者 (80-90s)</text>
+        <text x="600" y="340" text-anchor="middle" font-size="10" fill="#444">Theda Skocpol</text>
+        <text x="600" y="354" text-anchor="middle" font-size="10" fill="#444">March &amp; Olsen</text>
+        <text x="600" y="368" text-anchor="middle" font-size="10" fill="#444">Paul Pierson</text>
+      </g>
+
+      <g>
+        <text x="770" y="325" text-anchor="middle" font-family="'Playfair Display',serif" font-size="10.5" font-weight="700" fill="#8b2500">近期學者 (2000s+)</text>
+        <text x="770" y="340" text-anchor="middle" font-size="10" fill="#444">Kathleen Thelen</text>
+        <text x="770" y="354" text-anchor="middle" font-size="10" fill="#444">James Mahoney</text>
+        <text x="770" y="368" text-anchor="middle" font-size="10" fill="#444">Acemoglu &amp; Robinson</text>
+      </g>
+
+      <!-- 下方標題 -->
+      <text x="440" y="395" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11.5" font-weight="700" fill="#1a1a1a">⬇ 新制度主義內部分支與發展</text>
+
+      <!-- 四個學派分支 -->
+      <g>
+        <rect x="40" y="405" width="190" height="65" rx="8" fill="#8b2500" opacity="0.92"/>
+        <text x="135" y="425" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="11" font-weight="700">🏛️ HI · 歷史制度主義</text>
+        <text x="135" y="441" text-anchor="middle" fill="#fff" font-size="9" opacity="0.9">Skocpol → Pierson</text>
+        <text x="135" y="453" text-anchor="middle" fill="#fff" font-size="9" opacity="0.9">→ Thelen → Mahoney</text>
+        <text x="135" y="465" text-anchor="middle" fill="#fff" font-size="9" opacity="0.85" font-style="italic">漸進變遷理論 (2010s)</text>
+
+        <rect x="245" y="405" width="190" height="65" rx="8" fill="#3a5a8c" opacity="0.92"/>
+        <text x="340" y="425" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="11" font-weight="700">🎯 RCI · 理性選擇</text>
+        <text x="340" y="441" text-anchor="middle" fill="#fff" font-size="9" opacity="0.9">Shepsle · Weingast</text>
+        <text x="340" y="453" text-anchor="middle" fill="#fff" font-size="9" opacity="0.9">North · Ostrom (2009 諾貝爾)</text>
+        <text x="340" y="465" text-anchor="middle" fill="#fff" font-size="9" opacity="0.85" font-style="italic">公共財治理 (2010s)</text>
+
+        <rect x="450" y="405" width="190" height="65" rx="8" fill="#5a6e5a" opacity="0.92"/>
+        <text x="545" y="425" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="11" font-weight="700">🎭 SI · 社會學</text>
+        <text x="545" y="441" text-anchor="middle" fill="#fff" font-size="9" opacity="0.9">March &amp; Olsen</text>
+        <text x="545" y="453" text-anchor="middle" fill="#fff" font-size="9" opacity="0.9">DiMaggio &amp; Powell</text>
+        <text x="545" y="465" text-anchor="middle" fill="#fff" font-size="9" opacity="0.85" font-style="italic">組織同構與擴散</text>
+
+        <rect x="655" y="405" width="185" height="65" rx="8" fill="#b8860b" opacity="0.92" stroke="#fff" stroke-width="2" stroke-dasharray="4 3"/>
+        <text x="747" y="425" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="11" font-weight="700">💬 DI · 論述制度</text>
+        <text x="747" y="441" text-anchor="middle" fill="#fff" font-size="9" opacity="0.9">Vivien Schmidt (2008)</text>
+        <text x="747" y="453" text-anchor="middle" fill="#fff" font-size="9" opacity="0.9">理念與論述帶回制度</text>
+        <text x="747" y="465" text-anchor="middle" fill="#fff" font-size="9" opacity="0.85" font-style="italic">第四派 · 後起</text>
+      </g>
+    </svg>
+  </div>
+
+  <h3><span class="num">②</span>三波背後的「鐘擺邏輯」</h3>
+
+  <div class="card-grid">
+    <div class="card" style="border-top-color:#b8860b">
+      <h4 style="color:#b8860b">🏛️ 第一波：制度為主</h4>
+      <p><strong>代表學者</strong>：Weber、Tocqueville、Wilson<br>
+      <strong>研究什麼</strong>：憲法、法律條文、官僚結構、政府組織<br>
+      <strong>方法</strong>：歷史描述、法律文本分析、比較憲政<br>
+      <strong>盲點</strong>：太靜態、太規範性，忽略「實際運作」與制度背後的權力關係</p>
+    </div>
+    <div class="card" style="border-top-color:#6b6560">
+      <h4 style="color:#6b6560">📊 第二波：拋棄制度</h4>
+      <p><strong>代表學者</strong>：Easton、Dahl、Almond<br>
+      <strong>研究什麼</strong>：投票行為、利益團體、個人偏好<br>
+      <strong>方法</strong>：問卷調查、統計分析、博弈論<br>
+      <strong>盲點</strong>：把所有國家當「相似容器」，<strong>忽略制度差異</strong>為何讓不同國家走上不同的路</p>
+    </div>
+    <div class="card" style="border-top-color:#8b2500">
+      <h4 style="color:#8b2500">🔄 第三波：找回制度</h4>
+      <p><strong>奠基者</strong>：Skocpol、March & Olsen、Pierson<br>
+      <strong>近期學者</strong>：Thelen、Mahoney、Acemoglu & Robinson<br>
+      <strong>研究什麼</strong>：制度如何形塑偏好、選擇、結果<br>
+      <strong>進階分支</strong>：制度不只是規則，也是文化、認知、博弈均衡——分裂為三大學派（HI/RCI/SI）＋論述制度主義（DI）</p>
+    </div>
+  </div>
+
+  <h3><span class="num">③</span>學派恩怨情仇：誰打誰、誰背叛誰、誰又自己分家？</h3>
+
+  <div class="story-lead">
+    制度主義的百年發展，不是溫情脈脈的「學者接力賽」，而是<strong>一連串學術鬥爭、世代叛逆、與自家人分家</strong>的故事。把這些「<strong>恩怨情仇</strong>」串起來，你就能理解每一派為什麼存在、為什麼非要那樣主張。
+  </div>
+
+  <div class="feud-grid">
+    <div class="feud-card f1">
+      <div class="feud-year">1880s<br>–1940s</div>
+      <div class="feud-content">
+        <div class="feud-title">🏛️ 開場：舊制度主義獨大時代</div>
+        <div class="feud-text">
+          Weber、Tocqueville、Wilson 主導政治學，研究的就是<strong>「正式制度」</strong>——憲法、官僚、法律。當時的研究幾乎都是「<strong>美國國會怎麼運作</strong>」、「<strong>英國內閣的演變</strong>」這類描述性的工作。沒有競爭、也沒有對手。
+          <span class="feud-quote">📜 心法：制度就是政治。研究政治＝研究制度。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="feud-card f2">
+      <div class="feud-year">1950s<br>–1970s</div>
+      <div class="feud-content">
+        <div class="feud-title">⚔️ 第一場戰爭：行為主義革命「弒父」</div>
+        <div class="feud-text">
+          二戰後，受美國社會科學「<strong>科學化</strong>」運動影響，新一代學者（Easton、Dahl、Almond）<strong>公開反叛舊制度主義</strong>。他們的攻擊很狠：「<strong>研究憲法條文有什麼用？真正的政治發生在投票所、利益團體、人的偏好裡</strong>。」<br>
+          這場「<strong>行為主義革命</strong>」幾乎讓制度研究在政治學系裡<strong>消失了 30 年</strong>——年輕學者要拿教職、要拿期刊，就必須學迴歸分析、博弈論。
+          <span class="feud-quote">⚔️ 攻擊口號：「制度只是表面，行為才是真相！」</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="feud-card f3">
+      <div class="feud-year">1979<br>–1985</div>
+      <div class="feud-content">
+        <div class="feud-title">🔥 反擊號角：Skocpol 與「把國家帶回來」</div>
+        <div class="feud-text">
+          1979 年 Theda Skocpol 出版《<strong>國家與社會革命</strong>》——她用法國、俄國、中國革命的比較分析，<strong>證明行為主義無法解釋大歷史變遷</strong>。1985 年她與 Evans、Rueschemeyer 主編《<strong>把國家帶回來</strong>》(Bringing the State Back In)——書名本身就是宣戰：<strong>國家被你們行為主義者趕走了，我們要把它請回來</strong>。<br>
+          這本書是制度復興的起點，被視為當代政治社會學的奠基時刻。
+          <span class="feud-quote">🔥 反擊口號：「Bring the State Back In！」</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="feud-card f4">
+      <div class="feud-year">1984</div>
+      <div class="feud-content">
+        <div class="feud-title">⭐ 正名時刻：March & Olsen 給「新制度主義」起名</div>
+        <div class="feud-text">
+          James March 與 Johan Olsen 1984 年發表〈<strong>新制度主義：政治生活的組織因素</strong>〉，第一次<strong>正式命名「新制度主義」</strong>。他們小心翼翼說：「我們不是要回到舊制度主義那種法律描述，我們是<strong>新</strong>的——關注規範、文化、組織。」<br>
+          這個「新」字很關鍵——既是<strong>承接舊制度主義的傳統</strong>，又是<strong>反對行為主義的科學化獨裁</strong>。
+          <span class="feud-quote">⭐ 立場：「我們不是復古，我們是革新。」</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="feud-card f5">
+      <div class="feud-year">1990s</div>
+      <div class="feud-content">
+        <div class="feud-title">💔 自家人分家：新制度主義內部分裂</div>
+        <div class="feud-text">
+          才剛統一陣線、一致對外打行為主義沒幾年，新制度主義<strong>內部就分裂</strong>了。三派為「<strong>什麼才是制度</strong>」吵成一團：
+          <ul style="margin:.4rem 0 .3rem 1rem;font-size:.85rem">
+            <li><strong>HI</strong>（Skocpol、Pierson）：制度是<strong>歷史路徑</strong>，要看時序、看反饋</li>
+            <li><strong>RCI</strong>（Shepsle、Weingast）：制度是<strong>賽局規則</strong>，理性人才是分析單位</li>
+            <li><strong>SI</strong>（March & Olsen 後期、DiMaggio & Powell）：制度是<strong>文化認知</strong>，意義系統比規則重要</li>
+          </ul>
+          1996 年 <strong>Peter Hall & Rosemary Taylor</strong> 寫〈三種新制度主義〉，把這場分家正式記錄下來。<strong>三派從此井水不犯河水</strong>——HI 在政治學發展、RCI 進經濟系、SI 留在社會學系。
+          <span class="feud-quote">💔 結局：「同床異夢」——三派共用「新制度主義」這個招牌，但研究的根本不是同一個東西。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="feud-card f6">
+      <div class="feud-year">2008</div>
+      <div class="feud-content">
+        <div class="feud-title">🗣️ 後起叛逆：Schmidt 的論述制度主義（第四派）</div>
+        <div class="feud-text">
+          Vivien Schmidt 2008 年發表〈<strong>論述制度主義：理念與論述的解釋力</strong>〉——她對前三派一起開砲：「<strong>你們都太結構決定論了！</strong>把行動者當成被制度牽著走的傀儡，完全忽略人會講話、會說服彼此、會改變想法。」<br>
+          她主張<strong>論述（discourse）本身就是制度變遷的引擎</strong>——制度改不改變，往往取決於「<strong>主流論述</strong>」能不能被挑戰。Schmidt 把自己稱為「<strong>第四派制度主義</strong>」，但其他三派至今對她半信半疑。
+          <span class="feud-quote">🗣️ 攻擊三派：「你們忘了，制度是人講出來的！」</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>💡 為什麼要懂這段恩怨？</h4>
+    <p>因為——<strong>每一個學派的「主張」，都是對前一場戰爭的反應</strong>。HI 強調歷史路徑，是為了反擊行為主義「沒有歷史感」；RCI 強調賽局規則，是要證明「制度研究也可以很科學」；SI 強調文化認知，是要保住社會學的傳統不被搶走；DI 強調論述，是要奪回行動者的能動性。<br><br>
+    <strong>當你讀任何一個學派的論文時，記得問</strong>：他們在跟誰對話？在反對誰？這樣讀，你才能看到制度主義的「真正面貌」。</p>
+  </div>
+
+  <h3><span class="num">④</span>近期重要發展（2000s+）</h3>
+
+  <div class="iss-rows">
+    <div class="iss-row">
+      <div class="iss-row-label">漸進變遷</div>
+      <div class="iss-row-text"><strong>Thelen (2004)、Mahoney & Thelen (2010)</strong>——修正 HI 過度強調「關鍵時刻」的傾向，提出<strong>四種漸進變遷機制</strong>：層疊、漂移、轉換、取代。讓制度主義能解釋「沒有大事件的緩慢變遷」。</div>
+    </div>
+    <div class="iss-row">
+      <div class="iss-row-label">公共財治理</div>
+      <div class="iss-row-text"><strong>Elinor Ostrom (2009 諾貝爾經濟學獎)</strong>——展示社區如何透過制度規則避免「公地悲劇」。<strong>她是第一位獲諾貝爾經濟學獎的女性</strong>，研究印度水利、瑞士牧場、日本漁業等案例。</div>
+    </div>
+    <div class="iss-row">
+      <div class="iss-row-label">制度與經濟發展</div>
+      <div class="iss-row-text"><strong>Acemoglu & Robinson《國家為什麼會失敗》(2012)、《狹窄走廊》(2019)</strong>——把制度主義拓展到「為什麼有些國家富有、有些貧窮」的問題。獲 2024 諾貝爾經濟學獎。</div>
+    </div>
+    <div class="iss-row">
+      <div class="iss-row-label">論述制度主義</div>
+      <div class="iss-row-text"><strong>Vivien Schmidt (2008)</strong>——批評三派忽略「理念與論述」的力量。主張制度變遷往往來自<strong>行動者透過論述說服彼此</strong>的過程。被稱為「第四派制度主義」。</div>
+    </div>
+  </div>
+
+  <h3><span class="num">⑤</span>新制度主義的核心命題</h3>
+
+  <div class="concept">
+    <div class="lead">「Institutions Matter」——制度有它自己的因果效力</div>
+    <div class="body">這句話聽起來像廢話，但它的革命性在於：<strong>制度不只是「人在裡面活動的容器」，制度本身會塑造人的偏好、選擇、與結果</strong>。同樣是理性的人，放在不同制度裡，會做出截然不同的選擇。<br><br>
+    <strong>所以分析政治不能只看「人怎麼想」</strong>，還要看「<strong>制度怎麼讓人這樣想</strong>」——這就是新制度主義最重要的轉向。</div>
+  </div>
+
+  <div class="hl-box">
+    <h4>💡 為什麼會回到制度？三個原因</h4>
+    <ul style="margin-top:.5rem;padding-left:1.3rem">
+      <li><strong>經驗困境</strong>：行為主義無法解釋——為什麼相似的選民、相似的利益，在不同國家卻產生不同政策？答案藏在制度差異裡。</li>
+      <li><strong>Skocpol 的衝擊</strong>：1979《國家與社會革命》、1985《把國家帶回來》——<strong>國家本身就是制度</strong>，有自己的能力、偏好、慣性。</li>
+      <li><strong>比較政治的需求</strong>：北歐與美國同樣是民主國家，福利制度卻天差地別。<strong>制度差異是因果關鍵</strong>。</li>
+    </ul>
+  </div>
+
+  <div class="next-page" onclick="goPage(7)">
+    <div><div class="np-label">下一頁</div><div class="np-title">新制度主義三大學派</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ========== P7 三大學派 ========== -->
+<div class="page" data-page="7"><div class="page-inner">
+  <div class="guide-breadcrumb">P1-P6 → 📍 <span>P7 三大學派</span> → P8 鼠患 → ...</div>
+  <h2>7. 新制度主義三大學派</h2>
+
+  <div class="story-lead">
+    1996 年 Peter Hall & Rosemary Taylor 寫了一篇經典文章〈政治科學與三種新制度主義〉，把新制度主義整理成<strong>三個分支</strong>。它們對「什麼是制度、人為什麼遵守制度、制度如何變遷」有不同回答。下面是一張學派關係圖。
+  </div>
+
+  <h3><span class="num">①</span>學派關係圖：三派如何分裂、又如何互補？</h3>
+
+  <div class="school-relations">
+    <svg class="sr-svg" viewBox="0 0 880 540" xmlns="http://www.w3.org/2000/svg">
+      <!-- 共同根源：新制度主義 -->
+      <rect x="320" y="20" width="240" height="55" rx="8" fill="#1a1a1a"/>
+      <text x="440" y="42" text-anchor="middle" fill="#b8860b" font-family="'Playfair Display',serif" font-size="14" font-weight="700">新制度主義 (New Institutionalism)</text>
+      <text x="440" y="60" text-anchor="middle" fill="#d8d0c4" font-size="10">1984 March & Olsen 提出</text>
+
+      <!-- 分裂的三條線 -->
+      <line x1="440" y1="75" x2="170" y2="135" stroke="#8b2500" stroke-width="3"/>
+      <line x1="440" y1="75" x2="440" y2="135" stroke="#3a5a8c" stroke-width="3"/>
+      <line x1="440" y1="75" x2="710" y2="135" stroke="#5a6e5a" stroke-width="3"/>
+
+      <!-- HI 框 -->
+      <rect x="40" y="135" width="260" height="200" rx="10" fill="#8b2500"/>
+      <text x="170" y="160" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="16" font-weight="700">🏛️ HI</text>
+      <text x="170" y="180" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="13" font-weight="700">歷史制度主義</text>
+      <text x="170" y="196" text-anchor="middle" fill="#fff" font-size="9" opacity="0.85" font-style="italic">Historical Institutionalism</text>
+
+      <line x1="60" y1="208" x2="280" y2="208" stroke="#fff" stroke-width="1" opacity="0.3"/>
+
+      <text x="170" y="226" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">核心問題</text>
+      <text x="170" y="244" text-anchor="middle" fill="#fff" font-size="10">制度如何隨時間演化？</text>
+      <text x="170" y="260" text-anchor="middle" fill="#fff" font-size="10">為何路徑會鎖死？</text>
+
+      <text x="170" y="285" text-anchor="middle" fill="#ffd47a" font-size="10" font-weight="700">關鍵概念</text>
+      <text x="170" y="303" text-anchor="middle" fill="#fff" font-size="9.5">路徑依賴 · 關鍵時刻</text>
+      <text x="170" y="318" text-anchor="middle" fill="#fff" font-size="9.5">政策反饋 · 漸進變遷</text>
+
+      <!-- RCI 框 -->
+      <rect x="310" y="135" width="260" height="200" rx="10" fill="#3a5a8c"/>
+      <text x="440" y="160" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="16" font-weight="700">🎯 RCI</text>
+      <text x="440" y="180" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="13" font-weight="700">理性選擇制度主義</text>
+      <text x="440" y="196" text-anchor="middle" fill="#fff" font-size="9" opacity="0.85" font-style="italic">Rational Choice Institutionalism</text>
+
+      <line x1="330" y1="208" x2="550" y2="208" stroke="#fff" stroke-width="1" opacity="0.3"/>
+
+      <text x="440" y="226" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">核心問題</text>
+      <text x="440" y="244" text-anchor="middle" fill="#fff" font-size="10">理性個人為何遵守規則？</text>
+      <text x="440" y="260" text-anchor="middle" fill="#fff" font-size="10">集體行動如何可能？</text>
+
+      <text x="440" y="285" text-anchor="middle" fill="#a8c4e8" font-size="10" font-weight="700">關鍵概念</text>
+      <text x="440" y="303" text-anchor="middle" fill="#fff" font-size="9.5">博弈均衡 · 交易成本</text>
+      <text x="440" y="318" text-anchor="middle" fill="#fff" font-size="9.5">公地悲劇 · 承諾問題</text>
+
+      <!-- SI 框 -->
+      <rect x="580" y="135" width="260" height="200" rx="10" fill="#5a6e5a"/>
+      <text x="710" y="160" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="16" font-weight="700">🎭 SI</text>
+      <text x="710" y="180" text-anchor="middle" fill="#fff" font-family="'Noto Sans TC',sans-serif" font-size="13" font-weight="700">社會學制度主義</text>
+      <text x="710" y="196" text-anchor="middle" fill="#fff" font-size="9" opacity="0.85" font-style="italic">Sociological Institutionalism</text>
+
+      <line x1="600" y1="208" x2="820" y2="208" stroke="#fff" stroke-width="1" opacity="0.3"/>
+
+      <text x="710" y="226" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">核心問題</text>
+      <text x="710" y="244" text-anchor="middle" fill="#fff" font-size="10">人為何自動遵守規範？</text>
+      <text x="710" y="260" text-anchor="middle" fill="#fff" font-size="10">文化如何滲透制度？</text>
+
+      <text x="710" y="285" text-anchor="middle" fill="#b8d4ba" font-size="10" font-weight="700">關鍵概念</text>
+      <text x="710" y="303" text-anchor="middle" fill="#fff" font-size="9.5">制度同構 · 合法性</text>
+      <text x="710" y="318" text-anchor="middle" fill="#fff" font-size="9.5">文化認知 · 象徵秩序</text>
+
+      <!-- 連到代表學者 -->
+      <line x1="170" y1="335" x2="170" y2="375" stroke="#8b2500" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="170" y="392" text-anchor="middle" font-size="10.5" fill="#8b2500" font-weight="700">代表學者</text>
+      <text x="170" y="410" text-anchor="middle" font-size="10" fill="#444">Skocpol · Pierson</text>
+      <text x="170" y="425" text-anchor="middle" font-size="10" fill="#444">Thelen · Mahoney</text>
+
+      <line x1="440" y1="335" x2="440" y2="375" stroke="#3a5a8c" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="440" y="392" text-anchor="middle" font-size="10.5" fill="#3a5a8c" font-weight="700">代表學者</text>
+      <text x="440" y="410" text-anchor="middle" font-size="10" fill="#444">Shepsle · Weingast</text>
+      <text x="440" y="425" text-anchor="middle" font-size="10" fill="#444">Ostrom · North</text>
+
+      <line x1="710" y1="335" x2="710" y2="375" stroke="#5a6e5a" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="710" y="392" text-anchor="middle" font-size="10.5" fill="#5a6e5a" font-weight="700">代表學者</text>
+      <text x="710" y="410" text-anchor="middle" font-size="10" fill="#444">March & Olsen</text>
+      <text x="710" y="425" text-anchor="middle" font-size="10" fill="#444">DiMaggio & Powell</text>
+
+      <!-- 第四派：DI 論述制度主義 -->
+      <rect x="290" y="455" width="300" height="60" rx="8" fill="none" stroke="#b8860b" stroke-width="2" stroke-dasharray="5 3"/>
+      <text x="440" y="478" text-anchor="middle" fill="#b8860b" font-family="'Playfair Display',serif" font-size="13" font-weight="700">💬 DI · 論述制度主義 (第四派)</text>
+      <text x="440" y="496" text-anchor="middle" fill="#444" font-size="10">Vivien Schmidt (2008)</text>
+      <text x="440" y="510" text-anchor="middle" fill="#666" font-size="9.5">批評三派忽略「理念與論述」的力量</text>
+
+      <line x1="440" y1="425" x2="440" y2="455" stroke="#b8860b" stroke-width="2" stroke-dasharray="4 3"/>
+    </svg>
+  </div>
+
+  <h3><span class="num">②</span>三派細看（含台灣應用）</h3>
+
+  <div id="hi-card" class="school-card hi">
+    <div class="school-head">
+      <div class="school-name">🏛️ 歷史制度主義（HI）</div>
+      <div class="school-en">Historical Institutionalism</div>
+    </div>
+    <div class="school-body">
+      <strong>核心關懷</strong>：制度如何隨時間演化？歷史時序為什麼重要？同樣的壓力下，為什麼不同國家走上完全不同的路？<br><br>
+      <strong>分析特色</strong>：強調「<strong>路徑依賴</strong>」與「<strong>關鍵時刻</strong>」。制度一旦走上某條路，後續每一步都受前面影響——這就是為什麼「制度黏性」這麼強。Skocpol 的《國家與社會革命》是經典案例：法國、俄國、中國革命的不同結果，可以用各國的「制度遺產」解釋。<br><br>
+      <strong>對台灣的啟示</strong>：台灣的健保、勞保、土地制度，都有非常強的路徑依賴——就算大家都知道勞保要破產，要改卻動不了。為什麼？因為制度已經創造了利益相關者，他們會反過來保護制度。
+    </div>
+    <div class="school-keys">
+      <span class="key-tag">路徑依賴</span>
+      <span class="key-tag">關鍵時刻</span>
+      <span class="key-tag">政策反饋</span>
+      <span class="key-tag">比較歷史</span>
+      <span class="key-tag">時序因果</span>
+    </div>
+  </div>
+
+  <div id="rci-card" class="school-card rci">
+    <div class="school-head">
+      <div class="school-name">🎯 理性選擇制度主義（RCI）</div>
+      <div class="school-en">Rational Choice Institutionalism</div>
+    </div>
+    <div class="school-body">
+      <strong>核心關懷</strong>：理性的個人為何遵守看似限制自己的規則？制度如何讓「集體理性」可能？<br><br>
+      <strong>分析特色</strong>：把制度看成「<strong>博弈規則</strong>」——它降低交易成本、解決集體行動困境、創造可預期的均衡。Elinor Ostrom 研究公共財管理的諾貝爾獎工作就屬於這派——她展示了人們如何透過建立制度規則，避免「公地悲劇」。<br><br>
+      <strong>對台灣的啟示</strong>：為什麼大家都知道塞車很討厭，但解決不了？因為個別駕駛的「理性選擇」（開車比較舒服）加總起來就是塞車。新制度設計（高乘載車道、塞車費）就是要改變博弈規則。
+    </div>
+    <div class="school-keys">
+      <span class="key-tag">博弈均衡</span>
+      <span class="key-tag">交易成本</span>
+      <span class="key-tag">集體行動</span>
+      <span class="key-tag">公地悲劇</span>
+      <span class="key-tag">承諾問題</span>
+    </div>
+  </div>
+
+  <div id="si-card" class="school-card si">
+    <div class="school-head">
+      <div class="school-name">🎭 社會學制度主義（SI）</div>
+      <div class="school-en">Sociological Institutionalism</div>
+    </div>
+    <div class="school-body">
+      <strong>核心關懷</strong>：人為什麼會「自動地」遵守某些規則，甚至沒意識到自己在遵守？制度如何透過文化、認知滲透到我們的「常識」？<br><br>
+      <strong>分析特色</strong>：制度不只是「規則」，更是「<strong>文化認知框架</strong>」。DiMaggio & Powell 的「<strong>制度同構</strong>」概念——為什麼世界各地的大學長得越來越像？醫院越來越像？因為合法性壓力讓組織模仿被認可的範本。<br><br>
+      <strong>對台灣的啟示</strong>：為什麼台灣的公務員加班文化這麼根深蒂固？不是個人不想下班，而是「<strong>準時下班 = 不認真</strong>」這個文化認知已經內化。要改變的不只是制度規則，還有制度背後的意義系統。
+    </div>
+    <div class="school-keys">
+      <span class="key-tag">制度同構</span>
+      <span class="key-tag">合法性</span>
+      <span class="key-tag">文化認知</span>
+      <span class="key-tag">象徵秩序</span>
+      <span class="key-tag">擴散模仿</span>
+    </div>
+  </div>
+
+  <div class="school-card di">
+    <div class="school-head">
+      <div class="school-name">💬 論述制度主義（DI · 第四派）</div>
+      <div class="school-en">Discursive Institutionalism · Vivien Schmidt (2008)</div>
+    </div>
+    <div class="school-body">
+      Vivien Schmidt 認為三大學派都<strong>過度強調結構，忽略「理念與論述」的力量</strong>。她主張：制度變遷往往來自<strong>行動者透過論述（discourse）說服彼此、重新定義利益</strong>的過程。<br><br>
+      例如：台灣勞保改革為什麼推不動？不只是利益問題，也是「<strong>世代正義</strong>」這個論述還沒有強到能說服年長世代接受改變。當論述改變，制度改變才有空間。
+    </div>
+    <div class="school-keys">
+      <span class="key-tag">理念與論述</span>
+      <span class="key-tag">說服</span>
+      <span class="key-tag">敘事框架</span>
+      <span class="key-tag">主觀詮釋</span>
+    </div>
+  </div>
+
+  <div class="hl-box">
+    <h4>📌 三派的關係</h4>
+    <p>三派<strong>不是互斥的</strong>，它們關注同一現象的不同面向。一個好的分析往往會用兩派以上：例如解釋台灣健保時——HI 看制度的歷史路徑、RCI 看醫病與藥商的博弈、SI 看「全民健保」這個文化認同的形成。<strong>制度主義給我們的不是單一答案，而是多重視角的工具箱</strong>。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(8)">
+    <div><div class="np-label">下一頁</div><div class="np-title">案例一 · 台北鼠患</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ========== P8 鼠患案例 ========== -->
+<div class="page" data-page="8"><div class="page-inner">
+  <div class="guide-breadcrumb">P1-P7 → 📍 <span>P8 鼠患案例</span> → P9 社宅 → P10</div>
+  <h2>8. 案例一 · 台北鼠患風暴</h2>
+
+  <div class="story-lead">
+    讓我們做個練習：用<strong>前六週的視角</strong>看這則新聞，會看到什麼？看不到什麼？然後再切換到<strong>新制度主義</strong>的鏡頭——你會發現完全不同的圖像。
+  </div>
+
+  <div class="case-box">
+    <div class="case-head">
+      <div class="case-eyebrow">📰 案例新聞 · 2026年5月</div>
+      <div class="case-title">台北「安鼠之亂」</div>
+      <div class="case-sub">蔣萬安啟動12行政區大清消 · BBC 國際報導</div>
+    </div>
+    <div class="case-body">
+      <div class="case-facts">
+        <strong>🗓️ 事件時間軸</strong><br>
+        • <strong>2026/01</strong>：台北大安區 70 歲男性感染漢他病毒身亡，是 2000 年以來首例死亡。家中周邊捕獲老鼠驗出陽性。<br>
+        • <strong>2026/03–04</strong>：木柵動物園、雙連菜市場、捷運周邊、誠品南西天花板⋯⋯「老鼠逛大街」影片瘋傳。<br>
+        • <strong>2026/05/07</strong>：大直典華婚宴會館宴席間老鼠亂竄，BBC 報導。<br>
+        • <strong>2026/05/08</strong>：蔣萬安宣布啟動 <strong>12 行政區大清消</strong>，推「鼠類偵防師」，要求都更危老建物拆除前提報鼠患防治報告。
+      </div>
+
+      <h4>🔍 兩種視角的對照</h4>
+
+      <div class="perspective-grid">
+        <div class="persp-col old">
+          <span class="persp-label">前六週視角會看到什麼？</span>
+          <div class="persp-title">看見：政治攻防、選舉算計</div>
+          <div class="persp-text">
+            <div class="persp-bullet"><div><strong>W2-W3 階級分析</strong>：鼠患是「階級議題」？大直貴婦婚宴爆鼠＝富人也躲不掉？但這個解讀勉強。</div></div>
+            <div class="persp-bullet"><div><strong>W4 國際比較</strong>：BBC 報導損及台灣形象，是國際視角的問題？但不是核心。</div></div>
+            <div class="persp-bullet"><div><strong>W5 國家自主</strong>：蔣萬安是政治人物，要為下次選舉做事——這是「政治菁英回應選舉壓力」的典型。</div></div>
+            <div class="persp-bullet"><div><strong>W6 國家能力</strong>：北市府投藥、跨局處清消，<strong>看起來是國家能力的問題</strong>。</div></div>
+          </div>
+          <div style="margin-top:.8rem;padding-top:.7rem;border-top:1px dashed var(--muted);font-size:.82rem;color:var(--muted);font-style:italic">
+            ⚠️ <strong>但前六週視角會錯過什麼？</strong>它告訴我們「誰得利、誰失利、國家有沒有能力」，但<strong>無法告訴我們為什麼這個問題會在 2026 年突然爆發</strong>。如果北市府能力一直不夠，為什麼前幾年沒爆？如果只是政治攻防，為什麼蔣萬安的回應是「修改都更規範」而不是「換掉一批官員」？
+          </div>
+        </div>
+
+        <div class="persp-col new">
+          <span class="persp-label">新制度主義會看到什麼？</span>
+          <div class="persp-title">看見：制度漏洞、權責真空</div>
+          <div class="persp-text">
+            <div class="persp-bullet"><div><strong>制度漂移（HI）</strong>：都更政策從 1990 年代啟動時就存在，<strong>當時台北還沒大規模都更，鼠患不是問題</strong>。制度沒變，但環境變了——這就叫「漂移」。</div></div>
+            <div class="persp-bullet"><div><strong>制度真空</strong>：環境部長明說「中央到地方至今沒有界定權責」——衛福部、環境部、地方環保局都「沾邊」但沒人完全負責。</div></div>
+            <div class="persp-bullet"><div><strong>公私分界（SI）</strong>：政府只能管公共區域，<strong>誠品天花板掉老鼠，市府只能稽查不能執行</strong>。這是制度文化邊界的問題。</div></div>
+            <div class="persp-bullet"><div><strong>個別理性 ≠ 集體理性（RCI）</strong>：每個建商在自己拆除時都沒義務管鼠患——這是「理性」的選擇，但加總起來就是全市鼠患。</div></div>
+          </div>
+          <div style="margin-top:.8rem;padding-top:.7rem;border-top:1px dashed var(--accent);font-size:.82rem;color:var(--accent);font-style:italic">
+            ✅ <strong>制度主義能告訴我們什麼？</strong>問題不是「誰是壞人」，而是「<strong>什麼樣的制度漏洞，讓理性的人做出我們不樂見的選擇</strong>」。換市長不會解決，<strong>改變制度規則才會</strong>。
+          </div>
+        </div>
+      </div>
+
+      <h4>📋 制度層次拆解</h4>
+
+      <table class="layer-table">
+        <thead><tr><th>制度面向</th><th>失靈在哪？</th><th>對應理論</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lvl">都更拆遷規範</td>
+            <td>老舊建物拆除時<strong>沒有強制配套滅鼠程序</strong>，老鼠順著管道間「逃難」到鄰近住宅區</td>
+            <td><span class="tg hi">HI · 制度漂移</span></td>
+          </tr>
+          <tr>
+            <td class="lvl">跨局處協調</td>
+            <td>鼠患橫跨<strong>環保局、衛生局、市場處、產業局、捷運公司、市民家戶</strong>——沒有任何單一單位有完整職權</td>
+            <td><span class="tg hi">HI · 制度分裂</span></td>
+          </tr>
+          <tr>
+            <td class="lvl">中央地方界定</td>
+            <td>「<strong>中央到地方至今沒有界定權責</strong>」——衛福部、環境部、地方環保局都「沾邊」但沒人完全負責</td>
+            <td><span class="tg hi">HI · 制度真空</span></td>
+          </tr>
+          <tr>
+            <td class="lvl">公私分界</td>
+            <td>政府只能管公共區域，<strong>私人建物（婚宴會館、百貨）出問題時市府是「協調者」不是「執行者」</strong></td>
+            <td><span class="tg" style="background:rgba(90,110,90,.1);color:var(--si)">SI · 制度邊界</span></td>
+          </tr>
+          <tr>
+            <td class="lvl">投藥規範</td>
+            <td>環保局加強投藥，但<strong>議員質疑「危及兒童寵物」</strong>——安全與效率的制度權衡</td>
+            <td><span class="tg" style="background:rgba(58,90,140,.1);color:var(--rci)">RCI · 集體行動</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="concept">
+        <div class="lead">💡 看蔣萬安怎麼回應——這是「制度創設」的瞬間</div>
+        <div class="body">蔣萬安宣布：「<strong>都發局將發布——包含室內裝修及都更危老建物拆除，在開工前及施工期間，需定期提報鼠患防治報告</strong>」。<br><br>
+        這就是新制度主義說的「<strong>制度層疊</strong>」（Thelen）——在既有的都更規範上<strong>添加新規則</strong>。建商從此不能像以前一樣「拆完就走」，他們的成本函數被改變了——而這會改變他們的行為選擇。<br><br>
+        <strong>注意</strong>：這不是換人就能解決的，是「改變遊戲規則」就能解決的。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(9)">
+    <div><div class="np-label">下一頁</div><div class="np-title">案例二 · 台中社宅火警</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ========== P9 社宅火警 ========== -->
+<div class="page" data-page="9"><div class="page-inner">
+  <div class="guide-breadcrumb">P1-P8 → 📍 <span>P9 社宅火警</span> → P10 推薦讀本</div>
+  <h2>9. 案例二 · 台中社宅工地大火</h2>
+
+  <div class="story-lead">
+    第二個案例更接近你們期中報告的議題——<strong>社會住宅</strong>。普發一萬議題中，反方主張「2300 億可以蓋 5 萬戶社宅」。但社宅政策表面是「政府蓋房子給人住」，實際運作呢？這禮拜的台中社宅火警，給了我們答案。
+  </div>
+
+  <div class="case-box">
+    <div class="case-head gray">
+      <div class="case-eyebrow">📰 案例新聞 · 2026/05/13</div>
+      <div class="case-title">台中「新平好室」工地大火</div>
+      <div class="case-sub">悶燒 14 小時 · 燃燒面積 2,000 平方公尺</div>
+    </div>
+    <div class="case-body">
+      <div class="case-facts">
+        <strong>🔥 事件概況</strong><br>
+        • <strong>地點</strong>：台中市北屯區敦平街新建社會住宅「新平．好室」<br>
+        • <strong>火源</strong>：地下 2 樓塑膠棧板起火，濃黑煙竄升<br>
+        • <strong>後果</strong>：大火悶燒 14 小時，<strong>地下支撐柱傾倒、車道崩塌有結構安全疑慮</strong><br>
+        • <strong>空污</strong>：環保局將依空污法開罰 10-500 萬<br>
+        • <strong>背景</strong>：台中目前已完工社宅 14 處 3,668 戶，興建中 16 處，目標 1 萬戶
+      </div>
+
+      <h4>🔍 兩種視角的對照</h4>
+
+      <div class="perspective-grid">
+        <div class="persp-col old">
+          <span class="persp-label">前六週視角會看到什麼？</span>
+          <div class="persp-title">看見：政策意圖、階級議題</div>
+          <div class="persp-text">
+            <div class="persp-bullet"><div><strong>W2-W3 分配政治</strong>：社宅是國家對中低收入者的居住權保障——進步！是 W3 福利國家的台灣版。</div></div>
+            <div class="persp-bullet"><div><strong>W5 國家自主</strong>：蔡英文時期承諾 12 萬戶社宅 KPI——這就是「國家自主性」的展現，國家主動介入住宅市場。</div></div>
+            <div class="persp-bullet"><div><strong>W6 國家能力</strong>：火警代表國家能力不足？需要更強的監管？</div></div>
+            <div class="persp-bullet"><div><strong>政策評價</strong>：政府蓋的社宅出問題，反對黨會說「政策失敗」、支持黨會說「個案」。</div></div>
+          </div>
+          <div style="margin-top:.8rem;padding-top:.7rem;border-top:1px dashed var(--muted);font-size:.82rem;color:var(--muted);font-style:italic">
+            ⚠️ <strong>但前六週視角會錯過什麼？</strong>它能告訴我們「<strong>為什麼要蓋社宅</strong>」，但無法告訴我們「<strong>為什麼蓋出來品質會出問題</strong>」。從中央 KPI 到工地工人，中間有六層制度——每一層都有自己的行為者與誘因，但這些都被「政策意圖」蓋過去了。
+          </div>
+        </div>
+
+        <div class="persp-col new">
+          <span class="persp-label">新制度主義會看到什麼？</span>
+          <div class="persp-title">看見：制度誘因鏈</div>
+          <div class="persp-text">
+            <div class="persp-bullet"><div><strong>多層制度疊合</strong>：中央→地方→招標→建造→監造→工人，<strong>每一層都有自己的「制度誘因」</strong>，而這些誘因不一定對齊。</div></div>
+            <div class="persp-bullet"><div><strong>最低標制度（RCI）</strong>：得標廠商會壓縮成本，這是博弈均衡——<strong>不是建商壞，是規則允許</strong>。</div></div>
+            <div class="persp-bullet"><div><strong>KPI 政治（HI）</strong>：「12 萬戶」這個數字目標，會讓地方政府優先<strong>數量</strong>而非<strong>品質</strong>——這就是政策反饋的反效果。</div></div>
+            <div class="persp-bullet"><div><strong>趕工文化（SI）</strong>：「工地就是這樣」的文化認知，讓所有人（包括工人自己）覺得「不戴安全帽很正常」——制度的意義系統。</div></div>
+          </div>
+          <div style="margin-top:.8rem;padding-top:.7rem;border-top:1px dashed var(--accent);font-size:.82rem;color:var(--accent);font-style:italic">
+            ✅ <strong>制度主義能告訴我們什麼？</strong>建商不是壞人、工人不是怠惰——他們都在「合法的制度規則內」做出對自己最有利的選擇。<strong>但這些個別理性選擇，加總起來就是大火</strong>。
+          </div>
+        </div>
+      </div>
+
+      <h4>📋 制度層次拆解（六層誘因鏈）</h4>
+
+      <table class="layer-table">
+        <thead><tr><th>制度層次</th><th>行為者</th><th>制度誘因</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lvl">中央政策</td>
+            <td class="act">內政部</td>
+            <td>蔡英文時期承諾 <strong>12 萬戶社宅 KPI</strong>，要在任內達成</td>
+          </tr>
+          <tr>
+            <td class="lvl">地方執行</td>
+            <td class="act">台中市政府</td>
+            <td><strong>拼建設數量</strong>、爭取中央補助與統籌分配款；社宅完工數＝政績</td>
+          </tr>
+          <tr>
+            <td class="lvl">招標發包</td>
+            <td class="act">都發局</td>
+            <td><strong>最低標、工期壓力</strong>——預算固定下，得標廠商會壓縮成本</td>
+          </tr>
+          <tr>
+            <td class="lvl">實際建造</td>
+            <td class="act">營造廠</td>
+            <td><strong>利潤極大化、勞安成本最小化</strong>——這是合法範圍內的「理性選擇」</td>
+          </tr>
+          <tr>
+            <td class="lvl">工地監造</td>
+            <td class="act">監造單位</td>
+            <td>名義上監督，<strong>實際監管能力受限</strong>——人手不夠、現場太多</td>
+          </tr>
+          <tr>
+            <td class="lvl">勞工現場</td>
+            <td class="act">工人</td>
+            <td>計件付薪、工期壓力下<strong>個別工人對勞安規範的妥協</strong>（塑膠棧板比阻燃材便宜快速）</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="concept">
+        <div class="lead">🔑 關鍵提問</div>
+        <div class="body">「為什麼每次工安出事，都是塑膠棧板、可燃材料、地下室？」<br><br>
+        答案是——<strong>這些都是制度允許的「成本最低化」結果</strong>。<strong>當制度設計讓「個別理性」加總成「集體不理性」時，悲劇就會發生</strong>。這就是 RCI（理性選擇制度主義）的核心命題。</div>
+      </div>
+
+      <h4>三派學者怎麼看？</h4>
+
+      <div class="iss-rows">
+        <div class="iss-row" style="border-left:3px solid var(--hi);background:rgba(139,37,0,.03)">
+          <div class="iss-row-label" style="color:var(--hi)">HI 視角</div>
+          <div class="iss-row-text">台灣的<strong>營造業勞動條件惡劣，是路徑依賴的結果</strong>——從 1970 年代發展型國家的勞動體制延續至今，勞工保護一直沒有完整建立。要改不是改一個工地，是改整個產業的制度遺產。</div>
+        </div>
+        <div class="iss-row" style="border-left:3px solid var(--rci);background:rgba(58,90,140,.03)">
+          <div class="iss-row-label" style="color:var(--rci)">RCI 視角</div>
+          <div class="iss-row-text">最低標制度讓建商<strong>不可能不偷工減料</strong>——這是博弈均衡。要改變這個均衡，必須改變遊戲規則（例如：採用最有利標、強制勞安保險、提高違約金）。</div>
+        </div>
+        <div class="iss-row" style="border-left:3px solid var(--si);background:rgba(90,110,90,.03)">
+          <div class="iss-row-label" style="color:var(--si)">SI 視角</div>
+          <div class="iss-row-text">「<strong>趕工是常態</strong>」、「<strong>工地就是這樣</strong>」的文化認知，讓所有人（包括工人自己）都覺得「不戴安全帽很正常」。要改的不只是規則，還有制度背後的意義系統。</div>
+        </div>
+      </div>
+
+      <div class="hl-box sage">
+        <h4>🔗 回到普發一萬的辯論</h4>
+        <p>還記得 D4 組的論點嗎？「<strong>2300 億可以蓋 5 萬戶社宅</strong>」。但這個案例告訴我們——<strong>就算把錢給了，社宅蓋出來也未必是好房子</strong>。錢只是其中一環，背後的制度配套（招標、監造、勞安、後續管理）才是決定品質的關鍵。<br><br>
+        這就是政治社會學的深度——<strong>看完表面的政策，還要看制度的執行；看完執行的人，還要看背後的制度誘因</strong>。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(10)">
+    <div><div class="np-label">下一頁</div><div class="np-title">案例三 · 三班護病比入法</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ========== P10 三班護病比 ========== -->
+<div class="page" data-page="10"><div class="page-inner">
+  <div class="guide-breadcrumb">P1-P9 → 📍 <span>P10 三班護病比</span> → P11 本週讀物</div>
+  <h2>10. 案例三 · 三班護病比入法</h2>
+
+  <div class="story-lead">
+    第三個案例：本週剛三讀通過的《醫療法》修正案——<strong>三班護病比入法</strong>。這個案例特別精彩，因為它<strong>同時呈現了制度主義所有的關鍵概念</strong>：路徑依賴、制度設計、立法博弈、政策反饋。
+  </div>
+
+  <div class="case-box">
+    <div class="case-head" style="background:linear-gradient(135deg,#2a7a6e,#3a8a7e)">
+      <div class="case-eyebrow">📰 案例新聞 · 2026/05/08</div>
+      <div class="case-title">《醫療法》三讀！三班護病比正式入法</div>
+      <div class="case-sub">護理界陳抗下跪 · 三黨各提版本 · 緩衝至 2028 施行</div>
+    </div>
+    <div class="case-body">
+      <div class="case-facts">
+        <strong>🗓️ 事件背景</strong><br>
+        • <strong>2023</strong>：賴清德總統大選承諾「兩年內完成三班護病比入法」，三主要候選人皆有共識<br>
+        • <strong>2024/03</strong>：衛福部在「醫療機構設置標準」（<strong>行政命令</strong>）訂定三班護病比，但<strong>無強制力、無罰則</strong>，僅結合獎勵<br>
+        • <strong>2025/12 → 2026/04</strong>：傳出衛福部擬「不修法」，僅保留行政命令版本<br>
+        • <strong>2026/05/05</strong>：上千名護理師赴衛福部陳抗<br>
+        • <strong>2026/05/08</strong>：立法院三讀通過《醫療法》第 12 條，藍白綠各提版本，<strong>最後國民黨版本以 60 票對 50 票通過</strong>，但<strong>未納入護理界力爭的「諮詢委員會」條文</strong>。護師工會顧問陳玉鳳當場下跪要求撤除諮詢委員會、邱慧洳立委淚灑現場<br>
+        • <strong>關鍵設計</strong>：違規最重罰 200 萬，累犯 3 次停業 1 年；緩衝期至 <strong>2028/05/01 施行</strong>；目前缺口 3,000-5,000 名護理師
+      </div>
+
+      <h4>🔍 兩種視角的對照</h4>
+
+      <div class="perspective-grid">
+        <div class="persp-col old">
+          <span class="persp-label">前六週視角會看到什麼？</span>
+          <div class="persp-title">看見：階級、勞動、政治攻防</div>
+          <div class="persp-text">
+            <div class="persp-bullet"><div><strong>W2 階級分析</strong>：護理師是受剝削的勞動階級，這是<strong>勞資對抗</strong>的議題——資方（醫院）vs. 勞方（護理師）。</div></div>
+            <div class="persp-bullet"><div><strong>W3 分配政治</strong>：醫療資源的再分配——是要讓護理師有合理工作條件，還是讓醫院持續壓低人事成本？</div></div>
+            <div class="persp-bullet"><div><strong>W5 國家自主</strong>：國家要不要介入醫療市場？這是「<strong>福利國家擴張</strong>」的展現。</div></div>
+            <div class="persp-bullet"><div><strong>W6 國家能力</strong>：4 年投入 275 億是國家能力的展現，國家有財政資源解決問題。</div></div>
+          </div>
+          <div style="margin-top:.8rem;padding-top:.7rem;border-top:1px dashed var(--muted);font-size:.82rem;color:var(--muted);font-style:italic">
+            ⚠️ <strong>但前六週視角會錯過什麼？</strong>它能告訴你「為什麼要保護護理師」，但<strong>無法解釋一個更基本的問題</strong>：行政命令早就有了（2024/03），<strong>為什麼非要「入法」不可</strong>？護理界明明已經在抗爭，<strong>為什麼最後關頭「諮詢委員會」會被刪掉</strong>？這背後是「<strong>制度設計</strong>」與「<strong>制度層級</strong>」的關鍵差異。
+          </div>
+        </div>
+
+        <div class="persp-col new">
+          <span class="persp-label">新制度主義會看到什麼？</span>
+          <div class="persp-title">看見：制度層級、博弈、政策反饋</div>
+          <div class="persp-text">
+            <div class="persp-bullet"><div><strong>行政命令 → 法律的制度升級（HI）</strong>：同樣是「三班護病比」，<strong>行政命令</strong>可以被衛福部隨時調整、無強制力；<strong>法律入法</strong>有罰則（50-200 萬）、有累犯停業。<strong>制度層級不同，效力完全不同</strong>。</div></div>
+            <div class="persp-bullet"><div><strong>諮詢委員會之爭（RCI）</strong>：護理界為何「下跪」也要爭諮詢委員會？因為這是<strong>未來修訂規則的權力分配</strong>——誰能定義「合理護病比」？這是賽局論的「議事規則」之爭。</div></div>
+            <div class="persp-bullet"><div><strong>緩衝期＝路徑依賴妥協（HI）</strong>：為什麼緩衝到 2028 才施行？因為現行制度已產生 <strong>3000-5000 人缺口</strong>——突然執法會讓偏鄉醫院關床。<strong>路徑依賴讓變遷必須漸進</strong>。</div></div>
+            <div class="persp-bullet"><div><strong>政策反饋的逆襲（HI）</strong>：賴清德 2023 年的選舉承諾，<strong>創造了一個「言出必行」的政治反饋壓力</strong>——民進黨想拖延、護理界拿選舉承諾施壓，最後逼出三讀。</div></div>
+          </div>
+          <div style="margin-top:.8rem;padding-top:.7rem;border-top:1px dashed var(--accent);font-size:.82rem;color:var(--accent);font-style:italic">
+            ✅ <strong>制度主義能告訴我們什麼？</strong>這不是「藍綠惡鬥」也不是「醫院黑心」，而是<strong>制度設計如何決定行為者的選擇空間</strong>。同一個議題，<strong>從行政命令升級到法律的瞬間，整個賽局就變了</strong>。
+          </div>
+        </div>
+      </div>
+
+      <h4>📋 制度設計的關鍵差異</h4>
+
+      <table class="layer-table">
+        <thead><tr><th>面向</th><th>行政命令（2024）</th><th>法律入法（2026）</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lvl">法律位階</td>
+            <td>衛福部「醫療機構設置標準」</td>
+            <td><strong>《醫療法》第 12 條</strong></td>
+          </tr>
+          <tr>
+            <td class="lvl">強制力</td>
+            <td>缺乏強制力，僅結合獎勵</td>
+            <td>違規罰 50-200 萬、<strong>累犯停業 1 年</strong></td>
+          </tr>
+          <tr>
+            <td class="lvl">修改難度</td>
+            <td>衛福部可自行調整</td>
+            <td>需立法院修法、難度極高</td>
+          </tr>
+          <tr>
+            <td class="lvl">行為者誘因</td>
+            <td>醫院＝守不守得起的選擇題</td>
+            <td>醫院＝必須投入成本的命題</td>
+          </tr>
+          <tr>
+            <td class="lvl">未來規則設定權</td>
+            <td>衛福部單方制定</td>
+            <td><strong>諮詢委員會之爭點</strong>（最終未納入，由衛福部以行政「醫療人力研究精進小組」補足，護理委員不低於 1/3）</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>🎭 三派學者怎麼看？</h4>
+
+      <div class="iss-rows">
+        <div class="iss-row" style="border-left:3px solid var(--hi);background:rgba(139,37,0,.03)">
+          <div class="iss-row-label" style="color:var(--hi)">HI 視角</div>
+          <div class="iss-row-text">這是「<strong>制度層疊</strong>」（Thelen）的範例——舊行政命令沒廢，新法律疊上來，創造強制力。同時是「<strong>關鍵時刻</strong>」（Capoccia & Kelemen）——賴清德的選舉承諾打開了制度變遷的窗口，護理團體的陳抗推力，造就 2026/05/08 三讀通過。<strong>但緩衝期到 2028</strong>——路徑依賴讓制度變遷無法一步到位。</div>
+        </div>
+        <div class="iss-row" style="border-left:3px solid var(--rci);background:rgba(58,90,140,.03)">
+          <div class="iss-row-label" style="color:var(--rci)">RCI 視角</div>
+          <div class="iss-row-text">這是<strong>典型的承諾問題</strong>（commitment problem）——護理界擔心，沒有法律強制力，醫院不會真的改善。<strong>諮詢委員會之爭</strong>更純粹是賽局——誰能進入規則制定的「房間」，誰就能影響未來。藍白綠三黨各提版本，是 Shepsle 說的「<strong>結構誘發均衡</strong>」（structure-induced equilibrium）的台灣現場。</div>
+        </div>
+        <div class="iss-row" style="border-left:3px solid var(--si);background:rgba(90,110,90,.03)">
+          <div class="iss-row-label" style="color:var(--si)">SI 視角</div>
+          <div class="iss-row-text">為什麼台灣護理人力長期短缺？除了制度規則，還有「<strong>白衣天使應該奉獻</strong>」的文化認知——把護理職業視為「天職」、不是「勞動」。陳玉鳳的下跪、邱慧洳的眼淚，<strong>都在挑戰一個既有的意義系統</strong>。當「護理＝勞動者」這個論述取代「護理＝犧牲奉獻」，制度才有改變的空間。</div>
+        </div>
+      </div>
+
+      <div class="hl-box gold">
+        <h4>🔗 與課程的三重連結</h4>
+        <p>三班護病比案例特別適合本週課程，因為它<strong>同時涵蓋三個關鍵概念</strong>：</p>
+        <ol style="margin-top:.5rem">
+          <li><strong>制度層級的差異</strong>（行政命令 vs. 法律）——呼應 W6 國家能力與基礎建設權力（Mann）</li>
+          <li><strong>政策反饋的力量</strong>（選舉承諾如何反過來綁住執政者）——Pierson 政策反饋的台灣版</li>
+          <li><strong>路徑依賴的妥協</strong>（緩衝期 2 年）——Thelen 漸進變遷理論的活生生案例</li>
+        </ol>
+        <p style="margin-top:.5rem">這也提醒我們——<strong>下次再看到「某某法案通過」的新聞，要問的不只是「該不該」，而是「制度設計怎麼決定執行的成敗」</strong>。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(11)">
+    <div><div class="np-label">下一頁</div><div class="np-title">本週讀物 · Ansell《政治為什麼會失敗》</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- ========== P11 本週讀物 ========== -->
+<div class="page" data-page="11"><div class="page-inner">
+  <div class="guide-breadcrumb">P1-P10 → 📍 <span>P11 本週讀物</span></div>
+  <h2>11. 本週讀物</h2>
+
+  <div class="story-lead">
+    今天我們用前六週的理論看了四個議題，又用新制度主義看了三個新聞案例。但你可能會問：<strong>為什麼民主政治在這麼多議題上看起來都「失敗」</strong>？這正是本週讀物要回答的問題——這本書雖然出自政治學者之手，但其分析架構與課堂上的政治社會學核心概念（國家、社會、團結、認同）有極深的對話。
+  </div>
+
+  <h3><span class="num">①</span>本書介紹</h3>
+
+  <div class="book-hero">
+    <div class="book-cover">
+      <div class="bk-cn">政治為什麼會失敗</div>
+      <div class="bk-en">Why Politics Fails:<br>The Five Traps of the Modern World</div>
+      <div class="bk-author">Ben Ansell · 班．安塞爾<br>黑體文化 · 2025/07</div>
+    </div>
+    <div class="book-info">
+      <h3>《政治為什麼會失敗》</h3>
+      <div class="sub">如何擺脫當今世界五大政治陷阱</div>
+      <p>
+        <strong>「政治是個很有趣的存在，它隨時存在於我們的生活之中。許多人覺得它骯髒，避之唯恐不及。但一旦自己取得了政治權力，才在各種決策中不斷妥協⋯⋯」</strong><br><br>
+        本書集結了 Ansell 教授近 20 年的學術洞見之精華——以淺白文字解釋政治學最核心的五大問題：為什麼民主常常無法產生好決定？為什麼追求平等這麼難？為什麼團結如此脆弱？為什麼安全與自由總是衝突？為什麼短期繁榮會導致長期貧窮？
+      </p>
+    </div>
+  </div>
+
+  <h3><span class="num">②</span>作者介紹</h3>
+
+  <div class="scholar-card">
+    <h4>👨‍🏫 Ben Ansell · 班．安塞爾</h4>
+    <p style="margin-top:.4rem;font-size:.88rem;line-height:1.85">
+      <strong>身分</strong>：牛津大學 Nuffield College <strong>比較民主制度</strong>講座教授、<strong>不列顛學會院士（FBA）</strong>、《Comparative Political Studies》期刊共同主編。<br><br>
+      <strong>學歷</strong>：曼徹斯特大學歷史系第一名畢業，後赴哈佛大學取得政治學博士學位。<br><br>
+      <strong>學術成就</strong>：兩度榮獲<strong>政治經濟學最高榮譽 William Riker Prize</strong>——2011 年以《From the Ballot to the Blackboard》（教育政治經濟學）、2015 年以《Inequality and Democratization》（與 David Samuels 合著）。後者同年也獲美國政治學會 <strong>Woodrow Wilson Prize</strong>。<br><br>
+      <strong>公共影響</strong>：2023 年受邀主講 <strong>BBC Reith Lectures</strong>（英國最具聲望的公共演講系列）；經營政治評論電子報 <em>Political Calculus</em>，深入英國移民、住宅、民主等政策辯論。
+    </p>
+    <div class="scholar-meta">
+      <span class="scholar-tag">牛津大學</span>
+      <span class="scholar-tag">比較政治</span>
+      <span class="scholar-tag">政治經濟學</span>
+      <span class="scholar-tag">William Riker Prize ×2</span>
+      <span class="scholar-tag">BBC Reith Lectures 2023</span>
+    </div>
+  </div>
+
+  <div class="hl-box">
+    <h4>📖 導讀者介紹</h4>
+    <p><strong>沈智新</strong> · 中央研究院政治學研究所助研究員。本書中文版導讀刊於菜市場政治學，是台灣政治學界第一手的閱讀指引。</p>
+  </div>
+
+  <h3><span class="num">③</span>理論架構：五大政治陷阱</h3>
+
+  <p>Ansell 認為：人類追求<strong>五個普遍價值</strong>——但每個價值的追求過程，都會落入一個結構性的「陷阱」。這就是當代政治為什麼經常失敗的根源：</p>
+
+  <div class="traps-grid">
+    <div class="trap-card t1">
+      <div class="trap-num">01</div>
+      <div class="trap-name">民主陷阱</div>
+      <div class="trap-q">「人民意志」真的存在嗎？</div>
+      <div class="trap-desc">面對兩個以上選項，民主投票幾乎必定陷入混亂——個人理性的加總，不等於集體理性。</div>
+    </div>
+    <div class="trap-card t2">
+      <div class="trap-num">02</div>
+      <div class="trap-name">平等陷阱</div>
+      <div class="trap-q">機會平等 vs. 結果平等？</div>
+      <div class="trap-desc">追求弱勢優惠（如 DEI 政策）可能變成對其他族群的歧視。我們追求的到底是哪種平等？</div>
+    </div>
+    <div class="trap-card t3">
+      <div class="trap-num">03</div>
+      <div class="trap-name">團結陷阱</div>
+      <div class="trap-q">為什麼大家不願犧牲？</div>
+      <div class="trap-desc">「我們只會在自己也需要時，才會想到團結」——集體行動為何如此困難？怎樣維繫社會安全網？</div>
+    </div>
+    <div class="trap-card t4">
+      <div class="trap-num">04</div>
+      <div class="trap-name">安全陷阱</div>
+      <div class="trap-q">逃離無政府，但會落入暴政？</div>
+      <div class="trap-desc">霍布斯命題的現代版——COVID 防疫、假訊息管制都讓我們重新思考自由與秩序的平衡。</div>
+    </div>
+    <div class="trap-card t5">
+      <div class="trap-num">05</div>
+      <div class="trap-name">繁榮陷阱</div>
+      <div class="trap-q">短期致富 → 長期貧窮？</div>
+      <div class="trap-desc">資源詛咒、選舉短視、撒幣政治——為什麼有些國家越富越窮？關鍵在政治制度與長期信任。</div>
+    </div>
+  </div>
+
+  <h3><span class="num">④</span>為什麼政治學的書，社會學課要讀？</h3>
+
+  <div class="hl-box gold">
+    <h4>🔗 政治學 ⇄ 社會學的關係（一句話）</h4>
+    <p style="font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--accent);font-weight:700;text-align:center;padding:.8rem;background:#fff;border-radius:8px;margin:.7rem 0;line-height:1.7">
+      政治學問「<strong>權力如何運作</strong>」，社會學問「<strong>社會如何可能</strong>」——而 Ansell 的書，正是<strong>用政治學的工具，回答社會學的百年命題</strong>。
+    </p>
+    <p style="margin-top:.7rem">Ansell 是<strong>政治學者</strong>、寫的是<strong>政治經濟學的書</strong>，但《政治為什麼會失敗》的五大陷阱，<strong>幾乎每一個都和社會學經典理論有深度對話</strong>：</p>
+  </div>
+
+  <table class="cmp-table" style="margin-top:1rem">
+    <thead>
+      <tr>
+        <th class="dim" style="width:90px">陷阱</th>
+        <th class="dim">對應的社會學理論（一句話）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700;color:#8b2500">民主陷阱</td>
+        <td>
+          <strong>Durkheim 集體意識</strong>：社會如何透過共同信念連結成「我們」？<br>
+          <strong>Weber 合法性</strong>：權力如何維繫——靠暴力、傳統、還是被認可？
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:#3a5a8c">平等陷阱</td>
+        <td>
+          <strong>Bourdieu 文化資本</strong>：為什麼「公平的競爭」往往讓富人贏？<br>
+          <strong>Marx 再生產理論</strong>：教育與制度如何讓階級代代相傳？
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:#5a6e5a">團結陷阱</td>
+        <td>
+          <strong>Putnam 社會資本</strong>：為什麼有些社會願意互助，有些卻彼此猜忌？<br>
+          <strong>Olson 集體行動困境</strong>：為什麼大家都受益的事，卻沒人願意出力？
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:#6b4c7a">安全陷阱</td>
+        <td>
+          <strong>Foucault 治理性</strong>：權力如何不靠暴力，而靠規訓滲透日常？<br>
+          <strong>Hobbes 利維坦</strong>：為什麼人們願意讓出自由，換取秩序？
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:#b8860b">繁榮陷阱</td>
+        <td>
+          <strong>Polanyi 鑲嵌經濟</strong>：市場為什麼不能脫離社會、單獨運作？<br>
+          <strong>Skocpol 國家自主性</strong>：國家何時能抵抗短期民粹、追求長期發展？
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:.85rem;color:var(--muted);font-style:italic;text-align:center;margin-top:.8rem">💡 下面用三道選擇題檢驗看看，你能不能<strong style="color:var(--accent)">把書中案例連結到本課程的社會學概念</strong>。</p>
+
+  <!-- 選擇題 1 -->
+  <div class="quiz-box">
+    <span class="quiz-eyebrow">🎯 選擇題 1 · 平等陷阱</span>
+    <div class="quiz-question">Ansell 在「平等陷阱」中討論美國大學的 DEI 政策爭議。<strong>這個案例最能呼應本課程哪個社會學概念</strong>？</div>
+    <div class="quiz-options" data-quiz="q1">
+      <button class="quiz-opt" onclick="quizPick(this,'q1','a',false)">
+        <span class="quiz-letter">A</span>
+        <span>Weber 的科層制理論——大學應該完全依照客觀標準錄取，不該有任何身分考量</span>
+      </button>
+      <button class="quiz-opt" onclick="quizPick(this,'q1','b',true)">
+        <span class="quiz-letter">B</span>
+        <span>W3 分配政治中的「形式平等 vs. 實質平等」——形式上人人平等的考試，可能掩蓋了結構性的不平等</span>
+      </button>
+      <button class="quiz-opt" onclick="quizPick(this,'q1','c',false)">
+        <span class="quiz-letter">C</span>
+        <span>W6 國家能力——這是美國國家治理能力不足的展現</span>
+      </button>
+      <button class="quiz-opt" onclick="quizPick(this,'q1','d',false)">
+        <span class="quiz-letter">D</span>
+        <span>W4 國際結構——這是全球化下美國對外開放的結果</span>
+      </button>
+    </div>
+    <div class="quiz-feedback" id="fb-q1">
+      <p><span class="ans-mark">✓ 正解：B</span></p>
+      <p style="margin-top:.5rem">DEI 政策的核心爭議正是 W3 教過的「<strong>形式平等可能掩蓋實質不平等</strong>」——表面上「分數至上」很公平，但 Bourdieu 早就指出，<strong>菁英大學的入學標準本身就反映了文化資本的階級分布</strong>。這正是社會學百年來在問的問題：<strong>怎樣的平等才是真正的平等</strong>？這也是你們<strong>議題 D 普發一萬</strong>辯論的核心——「人人發 1 萬」是形式平等，但對不同階級意義天差地別。</p>
+    </div>
+  </div>
+
+  <!-- 選擇題 2 -->
+  <div class="quiz-box">
+    <span class="quiz-eyebrow">🎯 選擇題 2 · 團結陷阱</span>
+    <div class="quiz-question">Ansell 說：「我們只會在自己也需要時，才會想到團結」。<strong>下列哪一個本週案例，最能呈現「團結陷阱」的台灣版本</strong>？</div>
+    <div class="quiz-options" data-quiz="q2">
+      <button class="quiz-opt" onclick="quizPick(this,'q2','a',false)">
+        <span class="quiz-letter">A</span>
+        <span>議題 B 開放陸客——台灣社會在「賺中國錢」與「身分認同」之間的分裂</span>
+      </button>
+      <button class="quiz-opt" onclick="quizPick(this,'q2','b',false)">
+        <span class="quiz-letter">B</span>
+        <span>議題 C 開放鞭刑——主流民眾與人權團體對「正義」的不同想像</span>
+      </button>
+      <button class="quiz-opt" onclick="quizPick(this,'q2','c',true)">
+        <span class="quiz-letter">C</span>
+        <span>三班護病比入法——護理界陳抗才能爭取入法，平時社會大眾對其勞動條件冷漠</span>
+      </button>
+      <button class="quiz-opt" onclick="quizPick(this,'q2','d',false)">
+        <span class="quiz-letter">D</span>
+        <span>議題 A 印度勞工——資本要的東西，國家給不出來</span>
+      </button>
+    </div>
+    <div class="quiz-feedback" id="fb-q2">
+      <p><span class="ans-mark">✓ 正解：C（其他選項也有部分相關，但 C 最直接）</span></p>
+      <p style="margin-top:.5rem">三班護病比是「<strong>團結陷阱</strong>」的完美台灣案例——平時護理師的高工時、低人力被當作「常態」，<strong>直到大家自己生病住院才意識到問題</strong>。Ansell 的提問與 Durkheim《社會分工論》、Putnam《獨自打保齡》的核心一致：<strong>現代社會的團結是怎麼可能的</strong>？護理師「下跪」陳抗，正是試圖把職業勞動議題重新框架為「<strong>公民共同關懷</strong>」——這是 SI 社會學制度主義所說的「<strong>意義系統的重建</strong>」。</p>
+    </div>
+  </div>
+
+  <!-- 選擇題 3 -->
+  <div class="quiz-box">
+    <span class="quiz-eyebrow">🎯 選擇題 3 · 繁榮陷阱</span>
+    <div class="quiz-question">Ansell 提出「<strong>短期致富將導致長期貧窮</strong>」——擺脫「繁榮陷阱」需要「<strong>穩定可靠的政治制度</strong>」與「<strong>社會的長期承諾可信度</strong>」。<strong>這個論點與你期中報告哪個議題的辯論最直接相關</strong>？</div>
+    <div class="quiz-options" data-quiz="q3">
+      <button class="quiz-opt" onclick="quizPick(this,'q3','a',true)">
+        <span class="quiz-letter">A</span>
+        <span>議題 D 普發一萬——拿一次性現金 vs. 投資長期結構（社宅、勞保改革），這就是「短期 vs. 長期」的繁榮陷阱</span>
+      </button>
+      <button class="quiz-opt" onclick="quizPick(this,'q3','b',false)">
+        <span class="quiz-letter">B</span>
+        <span>議題 A 印度勞工——印度移工是台灣短期繁榮的工具</span>
+      </button>
+      <button class="quiz-opt" onclick="quizPick(this,'q3','c',false)">
+        <span class="quiz-letter">C</span>
+        <span>議題 B 陸客——觀光收入是台灣繁榮的關鍵</span>
+      </button>
+      <button class="quiz-opt" onclick="quizPick(this,'q3','d',false)">
+        <span class="quiz-letter">D</span>
+        <span>議題 C 鞭刑——治安穩定是繁榮的前提</span>
+      </button>
+    </div>
+    <div class="quiz-feedback" id="fb-q3">
+      <p><span class="ans-mark">✓ 正解：A</span></p>
+      <p style="margin-top:.5rem">普發一萬辯論完美呼應 Ansell 的「<strong>繁榮陷阱</strong>」——D3 組訴求「<strong>國家有錢就要還給人民</strong>」，D4 組則指出「<strong>2300 億如果蓋社宅可以蓋 5 萬戶</strong>」，這就是<strong>短期撒幣 vs. 長期結構投資</strong>的選擇。Polanyi、Polányi 與 Streeck 等社會學家早已指出：<strong>當政治讓位給短期民粹，社會的長期承諾就會崩解</strong>。而青年世代對「普發」的反感，正是「<strong>社會承諾可信度</strong>」流失的警訊——他們已經不相信國家能解決結構問題了。</p>
+    </div>
+  </div>
+
+  <div class="hl-box sage" style="margin-top:1.2rem">
+    <h4>💡 三道題目想說的事</h4>
+    <p><strong>Ansell 的書雖是政治學重點讀物，但本質上是「政治社會學」的當代示範</strong>。他用政治學的因果推論工具，回答的卻是 Durkheim、Weber、Marx、Bourdieu、Polanyi 留下的<strong>百年命題</strong>——團結為何可能？平等為何難以達成？繁榮為何不能持久？<br><br>
+    這就是為什麼<strong>政治學與社會學在當代必須對話</strong>——也是為什麼這本書值得我們花時間閱讀。</p>
+  </div>
+
+  <h3><span class="num">⑤</span>書中重要案例討論</h3>
+
+  <div class="book-case">
+    <div class="book-case-head">🇹🇼 案例 1 · 台灣 vTaiwan 平台（民主陷阱）</div>
+    <div class="book-case-body">Ansell <strong>引用台灣 vTaiwan 平台</strong>作為「促進民眾參與公共政策」的範例。雖然 2014 年上線後成果有限，但仍是<strong>緩解民主極化</strong>的重要嘗試。問題是：vTaiwan 真的解決了「民主陷阱」嗎？沈智新導讀中質疑這個成果「難稱豐碩」——這就是台灣讀者最該深思的部分。</div>
+  </div>
+
+  <div class="book-case">
+    <div class="book-case-head">🇺🇸 案例 2 · 美國大學 DEI 政策（平等陷阱）</div>
+    <div class="book-case-body">美國大學的「<strong>多元、公平與包容</strong>」（DEI）招生政策，是否變相歧視亞裔或白人學生？川普限制哈佛招收國際生引爆爭議。<strong>這個案例的本質是：我們認為合理的「平等」到底是什麼？</strong>提供弱勢族群優惠時，是否同時剝奪了其他人的機會？</div>
+  </div>
+
+  <div class="book-case">
+    <div class="book-case-head">🇮🇳 案例 3 · 民主國家不會有飢荒（民主與訊息）</div>
+    <div class="book-case-body">諾貝爾經濟學獎得主 <strong>Amartya Sen</strong> 的著名論斷：「民主國家不會發生飢荒」——因為新聞媒體會預警，領導人必須回應民眾需求。獨裁者擁有絕對權力，民眾不敢說實話，導致信息失靈、民怨累積。<strong>這是民主對抗暴政的最強論證</strong>。</div>
+  </div>
+
+  <div class="book-case">
+    <div class="book-case-head">😷 案例 4 · COVID-19 防疫措施（安全陷阱）</div>
+    <div class="book-case-body">疫情期間的<strong>移動限制、假訊息管制</strong>，干預了民眾的自由與言論——但又確實控制了疫情。Ansell 提問：<strong>我們願意犧牲多少自由換取安全？</strong>當政府措施超越必要範疇，就進入暴政。但「必要」由誰定義？</div>
+  </div>
+
+  <div class="book-case">
+    <div class="book-case-head">🤖 案例 5 · AI 監控系統（安全陷阱進階）</div>
+    <div class="book-case-body">Ansell 主張：<strong>AI 可同時幫我們監控自己（防無政府）與監控監管者（防暴政）</strong>。但條件是「<strong>新監控工具必須是透明的</strong>」——預測犯罪演算法應向大眾公開，人臉辨識與軍事衛星影像都應受監督。否則就會進入《1984》的「老大哥」世界。</div>
+  </div>
+
+  <div class="book-case">
+    <div class="book-case-head">💰 案例 6 · 資源詛咒（繁榮陷阱）</div>
+    <div class="book-case-body">許多<strong>自然資源豐富但貧窮的國家</strong>（委內瑞拉、奈及利亞），對比<strong>資源貧瘠卻富裕的國家</strong>（新加坡、瑞士）——關鍵是<strong>政治體制與發展政策</strong>。民選政府應該少將手伸入私有市場、避免短期政治支票，培養社會的「長期承諾可信度」——這正是繁榮的核心。</div>
+  </div>
+
+  <h3><span class="num">⑥</span>這本書與本週課程的連結</h3>
+
+  <div class="hl-box gold">
+    <h4>🔗 為什麼這本書是今天課程的延伸？</h4>
+    <p>今天我們用<strong>新制度主義</strong>解釋了「為什麼明明大家想做好事，事情還是辦不好」——這正是 Ansell 整本書要回答的問題。但他從<strong>五個普遍價值</strong>（民主、平等、團結、安全、繁榮）出發，把制度分析帶到更宏觀的層次。</p>
+    <p style="margin-top:.6rem">如果今天你還覺得「制度主義」太抽象——讀 Ansell 的書，你會看到<strong>五個你早就在生活中遇到的問題，原來都有政治學的深層解答</strong>。<br><br>
+    這也是為什麼<strong>沈智新在導讀中說</strong>：這本書「不但非政治學專業的讀者可以一窺當代政治學研究之堂奧，社會科學背景的讀者也能複習我們苦思難解的政治社會問題——<strong>對於初學政治學的同學來說，更是重要的啟蒙讀物</strong>」。</p>
+  </div>
+
+  <h3><span class="num">⑦</span>建議閱讀順序</h3>
+  <div class="card-grid">
+    <div class="card">
+      <h4>① 先讀導讀</h4>
+      <p>沈智新（2025）〈導讀：政治注定失敗？有解嗎？〉<br>菜市場政治學<br><span style="font-size:.78rem;color:var(--muted)">whogovernstw.org</span></p>
+    </div>
+    <div class="card blue">
+      <h4>② 再讀原書五章</h4>
+      <p>每章對應一個陷阱。<strong>建議從「團結」或「繁榮」</strong>開始——這兩章最貼近台灣當代爭議（社安、勞保、房價）。</p>
+    </div>
+    <div class="card sage">
+      <h4>③ 對照思考</h4>
+      <p>讀完後用本書架構<strong>重看你的期中議題</strong>——印度勞工屬於「團結陷阱」？普發一萬屬於「繁榮陷阱」？鞭刑屬於「安全陷阱」？</p>
+    </div>
+    <div class="card gold">
+      <h4>④ 延伸閱讀</h4>
+      <p>對學術版本有興趣者：Ansell & Samuels (2014) <em>Inequality and Democratization</em>（Cambridge）——他得 Riker Prize 的學術原作。</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:2rem 0;border-top:1px solid var(--line);margin-top:2.5rem">
+    <p style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--accent);font-weight:700;margin-bottom:.5rem">「民主是最糟糕的政治制度——除了所有那些我們陸續試過的以外。」</p>
+    <p style="font-size:.85rem;color:var(--muted);font-style:italic;margin-bottom:1.5rem">— Winston Churchill（Ansell 書中引言）</p>
+    <p style="font-size:.83rem;color:var(--muted)">政治社會學 W7 · 期中總結 × 新制度主義銜接 · 林文正</p>
+  </div>
+</div></div>
+
+</div><!-- /page-container -->
+
+<!-- 底部 -->
+<div class="bottom-bar">
+  <div class="page-indicator">第 <span id="cur-page">1</span> / 12 頁</div>
+  <div class="page-dots" id="dots"></div>
+  <div class="arrow-btns">
+    <button class="arrow-btn" id="prev-btn" onclick="goPrev()">←</button>
+    <button class="arrow-btn" id="next-btn" onclick="goNext()">→</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+const totalPages = 12;
+let currentPage = 0;
+
+const dotsEl = document.getElementById('dots');
+for(let i=0; i<totalPages; i++){
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.onclick = () => goPage(i);
+  dotsEl.appendChild(d);
+}
+
+function goPage(n){
+  if(n<0||n>=totalPages) return;
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('cur-page').textContent = n+1;
+  document.getElementById('prev-btn').disabled = n===0;
+  document.getElementById('next-btn').disabled = n===totalPages-1;
+  currentPage = n;
+  document.querySelectorAll('.page')[n].scrollTop = 0;
+}
+
+function goPrev(){ goPage(currentPage-1); }
+function goNext(){ goPage(currentPage+1); }
+
+// 選擇題互動
+function quizPick(btn, qid, choice, isCorrect){
+  const container = btn.closest('.quiz-options');
+  if(container.classList.contains('done')) return;
+  container.classList.add('done');
+
+  container.querySelectorAll('.quiz-opt').forEach(opt => {
+    opt.classList.add('disabled');
+    // 找出正解（在 onclick 屬性裡標示 true）
+    const onclickAttr = opt.getAttribute('onclick') || '';
+    if(onclickAttr.includes(',true)')){
+      opt.classList.add('correct');
+    }
+  });
+
+  if(!isCorrect){
+    btn.classList.remove('correct');
+    btn.classList.add('wrong');
+  }
+
+  const fb = document.getElementById('fb-' + qid);
+  if(fb) fb.classList.add('show');
+}
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowLeft') goPrev();
+  if(e.key==='ArrowRight') goNext();
+});
+</script>
+</body>
+</html>
