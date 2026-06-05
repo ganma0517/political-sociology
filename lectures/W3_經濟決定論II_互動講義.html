@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政治社會學 W3 — 經濟決定論 II</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;
+  --gold:#b8860b;--sage:#5a6e5a;--muted:#6b6560;--line:#c9c0b4;
+  --card-bg:#faf7f2;--blue:#3a5a8c;--purple:#6b4c7a;--teal:#2a7a6e;
+  --red:#c0392b;--green:#27ae60;--orange:#d35400;
+  /* W3 路徑 / 體制色 */
+  --us:#3a5a8c;      /* 英美·右派 */
+  --fr:#2a7a6e;      /* 法國·調和派 */
+  --fasc:#a8322a;    /* 德日·法西斯 */
+  --comm:#6b4c7a;    /* 中俄·共產 */
+  --leftp:#9c3c6d;   /* 左派 */
+  --nec:#b8860b;     /* 必要條件 */
+  --suf:#2c5f7c;     /* 充分條件 */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+
+/* 頂部導航 */
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.2rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .9rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.76rem;font-weight:500;color:#888;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#ccc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:var(--paper);background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.88rem;font-weight:700;margin-right:1rem;flex-shrink:0}
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+
+/* 頁面 */
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:920px;margin:0 auto}
+
+/* 底部 */
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+
+/* 標題 */
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,3vw,2.1rem);font-weight:800;color:var(--ink);margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent);position:relative}
+.page h2::after{content:'';position:absolute;left:0;bottom:-2px;width:60px;height:2px;background:var(--gold)}
+.page h2 .mark{color:var(--accent)}
+.page h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent);margin:1.6rem 0 .8rem;display:flex;align-items:center;gap:.5rem}
+.page h3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;font-size:.85rem;font-weight:700;flex-shrink:0}
+.page h4{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin:1rem 0 .5rem}
+.page p{font-size:.92rem;color:#333;margin-bottom:.7rem;line-height:1.95}
+.page p strong{color:var(--accent);font-weight:700}
+.page ul,.page ol{margin:.6rem 0 .9rem 1.5rem}
+.page li{font-size:.9rem;margin-bottom:.35rem;line-height:1.9;color:#333}
+.page li strong{color:var(--ink)}
+.section-lead{font-size:.88rem;color:var(--muted);margin:-.3rem 0 .8rem;font-style:italic;font-family:'Source Serif 4',serif}
+
+/* Hero */
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:900;color:var(--ink);line-height:1.12;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:660px;margin:0 auto 1.4rem}
+.hero-teacher{font-size:.9rem;color:#555;margin-bottom:1.4rem}
+.hero-teacher strong{color:var(--accent)}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+
+.story-lead{font-size:.98rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+
+/* 卡片 */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.2rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.1rem 1.2rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card h4{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--accent);margin-bottom:.4rem;margin-top:0}
+.card p{font-size:.84rem;color:#555;margin-bottom:0;line-height:1.75}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.blue{border-top-color:var(--blue)}.card.blue h4{color:var(--blue)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.purple{border-top-color:var(--purple)}.card.purple h4{color:var(--purple)}
+.card.teal{border-top-color:var(--teal)}.card.teal h4{color:var(--teal)}
+.card.orange{border-top-color:var(--orange)}.card.orange h4{color:var(--orange)}
+
+/* 引言框 */
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.1rem 0}
+.hl-box p:last-child{margin-bottom:0}
+.hl-box h4{margin-top:0;color:var(--accent)}
+.hl-box.blue{background:rgba(58,90,140,.05);border-left-color:var(--blue)}.hl-box.blue h4{color:var(--blue)}
+.hl-box.sage{background:rgba(90,110,90,.05);border-left-color:var(--sage)}.hl-box.sage h4{color:var(--sage)}
+.hl-box.gold{background:rgba(184,134,11,.06);border-left-color:var(--gold)}.hl-box.gold h4{color:var(--gold)}
+.hl-box.teal{background:rgba(42,122,110,.06);border-left-color:var(--teal)}.hl-box.teal h4{color:var(--teal)}
+.hl-box.purple{background:rgba(107,76,122,.05);border-left-color:var(--purple)}.hl-box.purple h4{color:var(--purple)}
+
+/* 概念框 */
+.concept{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(58,90,140,.04));padding:.9rem 1.2rem;border-radius:8px;margin:.8rem 0;border:1px solid rgba(184,134,11,.2)}
+.concept .lead{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent);font-weight:700;margin-bottom:.4rem}
+.concept .body{font-size:.86rem;color:#333;line-height:1.85}
+.concept .body strong{color:var(--accent)}
+
+/* 中央問題列 */
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+
+/* 下一頁 */
+.next-page{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:1.1rem 1.4rem;border-radius:10px;margin-top:2.2rem;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.next-page:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(139,37,0,.3)}
+.np-label{font-size:.72rem;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.np-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.np-arrow{font-size:1.4rem;opacity:.8}
+
+/* Spoiler */
+.spoiler{cursor:pointer;background:linear-gradient(135deg,rgba(90,110,90,.08),rgba(184,134,11,.06));border-left:3px dashed var(--sage);padding:.8rem 1.1rem;border-radius:0 6px 6px 0;font-size:.85rem;color:var(--sage);max-height:46px;overflow:hidden;transition:max-height .5s ease;line-height:1.85;position:relative;margin:.9rem 0}
+.spoiler::after{content:'▼ 點擊展開';position:absolute;right:1rem;top:.85rem;font-size:.72rem;color:var(--muted);font-family:'Source Serif 4',serif;font-style:italic}
+.spoiler.revealed{max-height:1800px;color:#333}
+.spoiler.revealed::after{content:'▲ 點擊收合';color:var(--sage)}
+.spoiler strong{color:var(--accent)}
+.spoiler .sp-title{font-weight:700;color:var(--sage)}
+
+/* Tabs */
+.tabs{display:flex;gap:.3rem;margin:1.1rem 0 .7rem;border-bottom:2px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:.6rem 1.1rem;background:0;border:0;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .25s;white-space:nowrap}
+.tab:hover{color:var(--accent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* 因果鏈 */
+.flow-chain{display:flex;flex-direction:column;gap:.5rem;align-items:center;margin:1.2rem 0}
+.flow-step{background:#fff;border-radius:10px;padding:.9rem 1.4rem;text-align:center;width:100%;max-width:460px;box-shadow:0 2px 10px rgba(0,0,0,.05);border-left:4px solid var(--blue)}
+.flow-step .em{font-size:1.5rem;line-height:1;margin-bottom:.25rem}
+.flow-step strong{display:block;font-size:1rem;color:var(--ink)}
+.flow-step small{color:var(--muted);font-size:.8rem}
+.flow-arrow{font-size:1.3rem;color:var(--gold);line-height:1}
+.flow-warn{background:linear-gradient(135deg,rgba(168,50,42,.08),rgba(139,37,0,.05));border:2px dashed var(--fasc);border-radius:10px;padding:1rem 1.4rem;text-align:center;max-width:520px;width:100%}
+.flow-warn strong{color:var(--fasc)}
+.flow-warn p{font-size:.85rem;color:#555;margin:.3rem 0 0}
+
+/* 因果路徑 SVG */
+.fig{background:#fff;border-radius:12px;padding:1.2rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.fig-svg{display:block;width:100%;margin:0 auto}
+.fig-note{font-size:.84rem;line-height:1.8;color:#444;background:var(--card-bg);border-radius:8px;padding:.8rem 1rem;margin-top:.6rem;border-left:3px solid var(--gold)}
+.fig-note strong{color:var(--accent)}
+
+/* Moore 決策樹 */
+.tree-legend{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin:.6rem 0;justify-content:center}
+.tree-legend .li{display:flex;align-items:center;gap:.35rem;font-size:.76rem;color:#555}
+.tree-legend .sw{width:14px;height:14px;border-radius:3px}
+.tree-svg{display:block;width:100%;max-width:880px;margin:.5rem auto}
+.tree-svg .pl{transition:opacity .3s}
+.tree-svg .nb{transition:opacity .3s}
+.path-btns{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;margin:1rem 0}
+.pbtn{padding:.45rem 1rem;border:1.5px solid var(--line);background:#fff;border-radius:20px;font-family:inherit;font-size:.8rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .25s}
+.pbtn:hover{border-color:var(--accent)}
+.pbtn.active{color:#fff}
+.pbtn.all.active{background:var(--accent);border-color:var(--accent)}
+.pbtn.d1.active{background:var(--us);border-color:var(--us)}
+.pbtn.d2.active{background:var(--fr);border-color:var(--fr)}
+.pbtn.fa.active{background:var(--fasc);border-color:var(--fasc)}
+.pbtn.co.active{background:var(--comm);border-color:var(--comm)}
+
+/* 比較表 */
+.cmp-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.07);margin:1.2rem 0;font-size:.84rem}
+.cmp-table thead th{padding:.8rem .7rem;font-weight:700;color:#fff;text-align:left;font-size:.82rem;line-height:1.4}
+.cmp-table thead th:first-child{background:#1a1a1a;width:110px}
+.cmp-table thead th.cl{background:linear-gradient(135deg,#9c3c6d,#b85088)}
+.cmp-table thead th.cm{background:linear-gradient(135deg,#2a7a6e,#3a9080)}
+.cmp-table thead th.cr{background:linear-gradient(135deg,#3a5a8c,#5a7ab0)}
+.cmp-table td{padding:.65rem .75rem;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.6}
+.cmp-table td:first-child{font-weight:700;color:var(--accent);background:var(--card-bg);font-size:.79rem;width:110px}
+.cmp-table tr:last-child td{border-bottom:0}
+.cmp-table .vl{color:var(--leftp);font-weight:700}
+.cmp-table .vm{color:var(--teal);font-weight:700}
+.cmp-table .vr{color:var(--blue);font-weight:700}
+
+/* 變數矩陣 */
+.matrix-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.07);margin:1.1rem 0;font-size:.82rem;text-align:center}
+.matrix-table th,.matrix-table td{padding:.55rem .4rem;border:1px solid var(--line)}
+.matrix-table thead th{background:#1a1a1a;color:#fff;font-weight:700}
+.matrix-table th.us{background:var(--us)}.matrix-table th.fr{background:var(--fr)}.matrix-table th.fasc{background:var(--fasc)}.matrix-table th.comm{background:var(--comm)}
+.matrix-table td:first-child{text-align:left;font-weight:700;color:var(--ink);background:var(--card-bg)}
+.pill{display:inline-block;padding:.15rem .55rem;border-radius:12px;font-size:.74rem;font-weight:700;color:#fff}
+.pill-s{background:var(--teal)}.pill-m{background:var(--gold)}.pill-w{background:var(--fasc)}
+.pill-h{background:var(--accent)}.pill-l{background:#9aa0a6}
+.pill-mk{background:var(--blue)}.pill-rp{background:var(--purple)}
+
+/* 邏輯公式卡 */
+.logic-card{background:#fff;border-radius:10px;padding:1rem 1.2rem;margin:.7rem 0;box-shadow:0 2px 10px rgba(0,0,0,.05);border-left:4px solid var(--accent)}
+.logic-card.us{border-left-color:var(--us)}
+.logic-card.fr{border-left-color:var(--fr)}
+.logic-card.fasc{border-left-color:var(--fasc)}
+.logic-card.comm{border-left-color:var(--comm)}
+.logic-card h4{margin:0 0 .5rem}
+.logic-card.us h4{color:var(--us)}.logic-card.fr h4{color:var(--fr)}.logic-card.fasc h4{color:var(--fasc)}.logic-card.comm h4{color:var(--comm)}
+.logic-row{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.lp{padding:.25rem .65rem;background:var(--card-bg);border:1px solid var(--line);border-radius:6px;font-size:.8rem;font-weight:600;color:#444}
+.land{color:var(--muted);font-weight:700}
+.larr{color:var(--accent);font-size:1.1rem;font-weight:700}
+.lout{padding:.3rem .8rem;border-radius:6px;font-weight:800;font-size:.84rem}
+.lout.us{background:rgba(58,90,140,.14);color:var(--us)}
+.lout.fr{background:rgba(42,122,110,.14);color:var(--fr)}
+.lout.fasc{background:rgba(168,50,42,.12);color:var(--fasc)}
+.lout.comm{background:rgba(107,76,122,.14);color:var(--comm)}
+
+/* 兩欄治理 */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:1.2rem 0}
+.tc-card{background:#fff;border-radius:12px;padding:1.2rem 1.3rem;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:4px solid #888}
+.tc-card.right{border-top-color:var(--blue)}
+.tc-card.left{border-top-color:var(--leftp)}
+.tc-tag{display:inline-block;padding:.2rem .7rem;border-radius:12px;font-size:.72rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.tc-card.right .tc-tag{background:var(--blue)}
+.tc-card.left .tc-tag{background:var(--leftp)}
+.tc-card h4{margin:.1rem 0 .6rem}
+.tc-card.right h4{color:var(--blue)}.tc-card.left h4{color:var(--leftp)}
+.tc-card ul{margin:.3rem 0 .6rem 1.2rem}
+.tc-card li{font-size:.85rem;line-height:1.75}
+.tc-foot{font-size:.82rem;font-weight:600;margin-top:.5rem;padding-top:.5rem;border-top:1px dashed var(--line)}
+.tc-card.right .tc-foot{color:var(--blue)}.tc-card.left .tc-foot{color:var(--leftp)}
+
+/* 金字塔 */
+.pyramid{display:flex;flex-direction:column;align-items:center;margin:1.3rem 0;gap:3px}
+.pyr-layer{color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:.7rem;text-align:center;font-weight:800;font-size:.92rem;line-height:1.3}
+.pyr-layer .ps{font-size:.74rem;font-weight:500;opacity:.92;margin-top:.15rem}
+.pyr-1{width:240px;background:linear-gradient(135deg,#6b4c7a,#8a6499);clip-path:polygon(22% 0,78% 0,100% 100%,0 100%);border-radius:10px 10px 0 0}
+.pyr-2{width:360px;background:linear-gradient(135deg,#7a5a88,#9a74a8)}
+.pyr-3{width:480px;background:linear-gradient(135deg,#8a6996,#ab86b8)}
+.pyr-4{width:600px;max-width:100%;background:linear-gradient(135deg,#9a78a4,#bd9bc8);border-radius:0 0 10px 10px}
+
+/* 時間軸 */
+.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem;margin:1rem 0}
+.tl-card{background:#fff;border-radius:10px;padding:1rem 1.1rem;box-shadow:0 2px 10px rgba(0,0,0,.05);border-top:3px solid var(--accent)}
+.tl-card .tl-era{font-size:.74rem;font-weight:700;color:var(--accent);font-style:italic;margin-bottom:.3rem}
+.tl-card.t2{border-top-color:var(--gold)}.tl-card.t2 .tl-era{color:#946a09}
+.tl-card.t3{border-top-color:var(--fasc)}.tl-card.t3 .tl-era{color:var(--fasc)}
+.tl-card.t4{border-top-color:var(--purple)}.tl-card.t4 .tl-era{color:var(--purple)}
+.tl-card p{font-size:.82rem;color:#555;margin:0;line-height:1.7}
+
+/* 雷達圖 */
+.radar-wrap{background:#fff;border-radius:16px;padding:1.5rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.regime-btns{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem}
+.regime-btn{padding:.5rem 1rem;border:1.5px solid var(--line);background:#fff;border-radius:20px;font-family:inherit;font-size:.8rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .25s}
+.regime-btn:hover{border-color:var(--rc,var(--accent));color:var(--rc,var(--accent))}
+.regime-btn.on{background:var(--rc,var(--accent));border-color:var(--rc,var(--accent));color:#fff}
+.radar-flex{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;justify-content:center}
+.radar-result{background:var(--card-bg);border-radius:12px;padding:1.3rem;text-align:center;border-top:3px solid var(--accent)}
+.radar-result .rr-emoji{font-size:2rem;margin-bottom:.3rem}
+.radar-result h3{margin:0;font-size:1.05rem;border:0;padding:0;display:block}
+.radar-result h3::after{display:none}
+.radar-result p{font-size:.85rem;color:var(--muted);margin:.2rem 0 0}
+.radar-explain{margin-top:1rem;background:var(--card-bg);border-radius:12px;padding:1.1rem 1.2rem;border-left:3px solid var(--accent);display:none}
+.radar-explain.show{display:block}
+.radar-explain p{font-size:.86rem;color:#444;line-height:1.8;margin:0}
+
+/* 案例討論 */
+.disc-case{background:#fff;border-radius:12px;padding:1.3rem 1.5rem;margin:1.1rem 0;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:4px solid var(--gold);position:relative}
+.disc-case.tw{border-top-color:var(--teal)}
+.disc-num{position:absolute;top:-12px;left:1.4rem;width:30px;height:30px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem}
+.disc-case.tw .disc-num{background:var(--teal)}
+.disc-case h4{margin:.3rem 0 .2rem}
+.disc-case .ds{font-size:.82rem;color:var(--muted);font-style:italic;margin-bottom:.5rem}
+.disc-case>p{font-size:.86rem;color:#444;line-height:1.8}
+.persp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:.8rem}
+.persp{padding:.8rem .9rem;border-radius:9px;font-size:.8rem;line-height:1.65}
+.persp h5{font-size:.82rem;margin:0 0 .3rem;font-family:'Playfair Display',serif}
+.persp.lft{background:rgba(156,60,109,.07);border-left:3px solid var(--leftp)}.persp.lft h5{color:var(--leftp)}
+.persp.rgt{background:rgba(58,90,140,.07);border-left:3px solid var(--blue)}.persp.rgt h5{color:var(--blue)}
+.persp.mre{background:rgba(42,122,110,.07);border-left:3px solid var(--teal)}.persp.mre h5{color:var(--teal)}
+.persp p{margin:0;color:#444}
+
+/* 福利國家妥協 */
+.compromise{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1rem 0}
+.comp-item{background:var(--card-bg);border-radius:9px;padding:.9rem 1rem;font-size:.82rem;line-height:1.7}
+.comp-item.l{border-left:3px solid var(--leftp)}
+.comp-item.r{border-left:3px solid var(--blue)}
+.comp-item.m{border-left:3px solid var(--teal)}
+.comp-item strong{display:block;margin-bottom:.2rem}
+.comp-item.l strong{color:var(--leftp)}.comp-item.r strong{color:var(--blue)}.comp-item.m strong{color:var(--teal)}
+
+/* Quiz */
+.quiz-block{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0;border:1px solid #e5e0d6;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative}
+.quiz-q-num{position:absolute;top:-12px;left:1.5rem;background:var(--accent);color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;padding:.25rem .75rem;border-radius:5px;letter-spacing:.05em}
+.quiz-question{font-size:.95rem;font-weight:600;color:var(--ink);margin:.4rem 0 .9rem;line-height:1.7}
+.quiz-question strong{color:var(--accent)}
+.quiz-options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.7rem}
+.quiz-opt{text-align:left;background:#fafaf6;border:1.5px solid #e0d9c8;border-radius:7px;padding:.7rem 1rem;font-size:.88rem;line-height:1.6;color:#333;cursor:pointer;transition:all .2s;font-family:inherit}
+.quiz-opt:hover{background:#f5f0e8;border-color:#b8860b}
+.quiz-opt.selected-correct{background:linear-gradient(135deg,#d4edd4,#c0e0c0);border-color:#5a8c5a;color:#1e4d1e;font-weight:600}
+.quiz-opt.selected-wrong{background:linear-gradient(135deg,#f8d8d4,#efc4be);border-color:#b85040;color:#7a1a10}
+.quiz-opt.show-correct{background:#eaf5ea;border-color:#5a8c5a;font-weight:500}
+.quiz-explain{font-size:.85rem;line-height:1.8;color:#333;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(90,110,90,.04));padding:.9rem 1.1rem;border-radius:7px;border-left:3px solid var(--sage);display:none}
+.quiz-explain.shown{display:block}
+.quiz-explain strong{color:var(--accent)}
+.quiz-explain em{color:var(--blue);font-style:normal;font-weight:600}
+
+/* 討論題 */
+.discussion-block{background:linear-gradient(135deg,#fff,#faf7f2);border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid rgba(139,37,0,.12)}
+.discussion-eyebrow{display:inline-block;padding:.2rem .7rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem}
+.discussion-q{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin-bottom:.7rem;line-height:1.7}
+.discussion-q em{color:var(--accent);font-style:normal}
+.discussion-block .ctx{font-size:.85rem;color:#555;margin-bottom:.5rem;line-height:1.85}
+.discussion-block .ctx strong{color:var(--accent)}
+
+/* 讀物 */
+.reading-card{background:#fff;border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0;border-left:4px solid;display:flex;gap:.9rem;align-items:flex-start;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.reading-card.must{border-left-color:var(--accent)}
+.reading-card.rec{border-left-color:var(--gold)}
+.reading-icon{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;font-family:'Playfair Display',serif}
+.reading-card.must .reading-icon{background:var(--accent)}
+.reading-card.rec .reading-icon{background:var(--gold)}
+.reading-body{flex:1}
+.reading-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:.2rem;line-height:1.5}
+.reading-meta{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:.3rem;font-family:'Source Serif 4',serif}
+.reading-note{font-size:.83rem;color:#444;line-height:1.75}
+.reading-note strong{color:var(--accent)}
+
+/* RWD */
+@media(max-width:780px){
+  .page{padding:1.8rem 1rem 3rem}
+  .hero-title{font-size:1.9rem}
+  .page h2{font-size:1.45rem}
+  .two-col,.compromise,.persp-grid{grid-template-columns:1fr}
+  .pyr-1,.pyr-2,.pyr-3,.pyr-4{width:100%!important;clip-path:none!important;border-radius:8px!important}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="top-nav">
+  <span class="nav-title">W3 經濟決定論 II</span>
+  <button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+  <button class="nav-btn" onclick="goPage(1)">1 · 現代化理論</button>
+  <button class="nav-btn" onclick="goPage(2)">2 · 相關≠因果</button>
+  <button class="nav-btn" onclick="goPage(3)">3 · Moore聯盟</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(4)">4 · 左右派比較</button>
+  <button class="nav-btn" onclick="goPage(5)">5 · 體制後果</button>
+  <button class="nav-btn" onclick="goPage(6)">6 · 發展國家</button>
+  <button class="nav-btn" onclick="goPage(7)">7 · 雷達圖</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(8)">8 · 案例討論</button>
+  <button class="nav-btn" onclick="goPage(9)">9 · 隨堂測驗</button>
+  <button class="nav-btn" onclick="goPage(10)">10 · 讀物小結</button>
+</div>
+
+<div class="page-container">
+
+<!-- ============ P0 封面 ============ -->
+<div class="page active" data-page="0"><div class="page-inner">
+  <div class="hero">
+    <div class="hero-eyebrow">Political Sociology · Week 3</div>
+    <h1 class="hero-title">經濟決定論 <span class="mark">II</span><br>是誰把錢變成了權力？</h1>
+    <p class="hero-sub">上週問「經濟能不能帶來民主」。本週更深一層：當經濟真的改變了社會，<strong>是哪一種「階級結構」</strong>把這股力量，翻譯成了民主、法西斯，或共產？</p>
+    <div class="hero-teacher">授課教師：<strong>林文正</strong>　·　國立臺灣大學</div>
+    <div class="hero-meta">
+      <span>📊 相關 ≠ 因果</span>
+      <span>🏰 Moore 階級聯盟</span>
+      <span>🏗 發展國家</span>
+    </div>
+  </div>
+
+  <div class="story-lead">
+    現代化理論說「富了就會民主」，聽起來很順——但它把<strong>相關</strong>當成了<strong>因果</strong>。本週我們戴著上週的「<strong>必要／充分</strong>」眼鏡，跟著 Barrington Moore 一路追問：真正決定一個國家命運的，不是經濟發展的「<strong>量</strong>」，而是階級結構的「<strong>質與組合</strong>」。
+  </div>
+
+  <div class="questions">
+    <h4>📌 本週要解答的核心問題</h4>
+    <ol>
+      <li><strong>現代化理論錯在哪？</strong>為什麼「越富越民主」是一種把相關誤當因果的迷思？</li>
+      <li><strong>「相關 ≠ 因果」有幾種可能？</strong>因果方向、中介、調節中介——四張路徑圖一次看懂。</li>
+      <li><strong>Moore 怎麼解釋同樣的經濟發展，卻長出民主、法西斯、共產三種結局？</strong></li>
+      <li><strong>左派、右派、調和派（福利國家）對「經濟與政治」的預測有何不同？</strong></li>
+      <li><strong>東亞「發展型國家」憑什麼走出第四條路？</strong>不同體制的「結構指紋」長什麼樣？</li>
+    </ol>
+  </div>
+
+  <h3><span class="num">📖</span>本週路線圖</h3>
+  <div class="card-grid">
+    <div class="card blue"><h4>P1 現代化理論</h4><p>Lipset (1959) 的迷人故事與它的因果鏈條，以及 Diamond 的當頭棒喝。</p></div>
+    <div class="card gold"><h4>P2 相關 ≠ 因果</h4><p><strong>互動路徑圖</strong>：相關性、因果方向、中介、調節中介四種關係。</p></div>
+    <div class="card"><h4>P3 Moore 階級聯盟</h4><p><strong>互動因果樹</strong>：點路徑追蹤英美/法國/德日/中俄的命運分歧。</p></div>
+    <div class="card teal"><h4>P4-5 左右派 · 體制後果</h4><p>左派/調和派/右派三種預測；福利國家作為「歷史妥協」。</p></div>
+    <div class="card purple"><h4>P6-7 發展國家 · 雷達圖</h4><p>東亞第四條路；<strong>互動雷達圖</strong>：六種體制的結構指紋。</p></div>
+    <div class="card sage"><h4>P8-10 案例 · 測驗 · 讀物</h4><p>黃背心、台灣躺平；<strong>選擇題與問答題</strong>；本週讀物。</p></div>
+  </div>
+
+  <div class="next-page" onclick="goPage(1)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P1 · 現代化理論：一個充滿魅力的簡單故事</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+<!-- ============ /P0 ============ -->
+
+
+<!-- P1 現代化理論 -->
+<div class="page" data-page="1"><div class="page-inner">
+  <div class="guide-breadcrumb">第 1 章 · <span>現代化理論</span></div>
+  <h2>現代化理論<span class="mark">：</span>一個充滿魅力的簡單故事</h2>
+  <div class="story-lead">
+    這個故事很迷人，因為它<strong>簡單、樂觀、線性</strong>：只要把經濟搞起來，民主自然會降臨。它主宰了戰後半世紀的發展想像——但問題就藏在那個「自然會」三個字裡。
+  </div>
+  <div class="hl-box blue">
+    <h4>Lipset (1959) 的核心命題</h4>
+    <p>「一個國家越富裕，它維持民主的機會就越大。」Lipset 將拉丁美洲與歐洲各國分組比較，發現經濟發展指標（收入、都市化、教育、工業化）較高的國家，民主體制也較穩定。</p>
+  </div>
+
+  <h3><span class="num">⛓</span>它假設的因果鏈條</h3>
+  <div class="flow-chain">
+    <div class="flow-step"><div class="em">🏭</div><strong>經濟發展（工業化）</strong><small>GDP 提升、產業結構轉型</small></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="em">🏙️</div><strong>社會結構變遷</strong><small>都市化、教育普及、中產階級擴大</small></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="em">🗳️</div><strong>政治文化轉變</strong><small>容忍、妥協、參與意識提升</small></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="em">🏛️</div><strong>民主體制鞏固</strong><small>競爭性選舉、權力和平轉移</small></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-warn"><strong>⚠️ 但這條鏈真的這麼順暢嗎？</strong><p>Diamond (1992)：Lipset 證明的是<strong>統計相關</strong>，而不是因果關係。</p></div>
+  </div>
+
+  <div class="hl-box gold">
+    <h4>🎯 本週的核心轉折</h4>
+    <p>「富裕」與「民主」常一起出現——但<strong>一起出現 ≠ 誰造成誰</strong>。接下來四頁，我們要用因果路徑圖，把這條看似順暢的鏈條，一刀一刀拆開來檢查。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(2)"><div><div class="np-label">下一頁</div><div class="np-title">P2 · 相關 ≠ 因果：四種關係的路徑圖</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P2 相關≠因果 -->
+<div class="page" data-page="2"><div class="page-inner">
+  <div class="guide-breadcrumb">第 2 章 · <span>相關 ≠ 因果</span></div>
+  <h2>相關 ≠ 因果<span class="mark">：</span>四種關係的路徑圖</h2>
+  <div class="story-lead">點選下方四種關係類型，觀察「經濟發展 X」與「民主 Y」之間，可能隱藏著什麼樣的路徑結構。</div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'cv1')">① 相關性</button>
+    <button class="tab" onclick="switchTab(this,'cv2')">② 因果方向</button>
+    <button class="tab" onclick="switchTab(this,'cv3')">③ 中介效果</button>
+    <button class="tab" onclick="switchTab(this,'cv4')">④ 調節中介</button>
+  </div>
+
+  <div class="tab-panel active" id="cv1">
+    <div class="fig">
+      <h4 style="text-align:center;margin:.2rem 0 .6rem;color:var(--accent)">① 相關性 — Lipset 證明了什麼？</h4>
+      <svg class="fig-svg" viewBox="0 0 600 180" style="max-width:560px" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="60" width="150" height="60" rx="9" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.8"/>
+        <text x="105" y="86" text-anchor="middle" fill="#3a5a8c" font-size="14" font-weight="700">經濟發展 X</text>
+        <text x="105" y="106" text-anchor="middle" fill="#6b6560" font-size="10">GDP·都市化·教育</text>
+        <rect x="420" y="60" width="150" height="60" rx="9" fill="#e6f0ed" stroke="#2a7a6e" stroke-width="1.8"/>
+        <text x="495" y="86" text-anchor="middle" fill="#2a7a6e" font-size="14" font-weight="700">民主 Y</text>
+        <text x="495" y="106" text-anchor="middle" fill="#6b6560" font-size="10">競爭性選舉·自由</text>
+        <line x1="185" y1="90" x2="415" y2="90" stroke="#8b2500" stroke-width="2.5" stroke-dasharray="8 5"/>
+        <polygon points="415,84 430,90 415,96" fill="#8b2500"/><polygon points="185,84 170,90 185,96" fill="#8b2500"/>
+        <text x="300" y="78" text-anchor="middle" fill="#8b2500" font-size="12" font-weight="700">r＝相關</text>
+        <text x="300" y="140" text-anchor="middle" fill="#6b6560" font-size="11">共同出現 ≠ 誰造成誰</text>
+        <text x="300" y="160" text-anchor="middle" fill="#a8322a" font-size="10" font-weight="700">⚠ 可能存在未觀察到的第三變數</text>
+      </svg>
+      <div class="fig-note"><strong>Lipset 的貢獻與侷限：</strong>富裕國家「傾向」民主，但「一起出現」不代表「誰造成誰」。<br><strong>反例：</strong>沙烏地阿拉伯很富有但不民主；印度很窮但是民主。<br><strong>類比：</strong>冰淇淋銷量與溺水人數高度相關——因為都受「夏天」驅動。</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="cv2">
+    <div class="fig">
+      <h4 style="text-align:center;margin:.2rem 0 .6rem;color:var(--accent)">② 因果方向 — 雞生蛋還是蛋生雞？</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div style="text-align:center">
+          <svg viewBox="0 0 320 110" style="width:100%;max-width:300px" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="35" width="100" height="48" rx="8" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.6"/><text x="65" y="64" text-anchor="middle" fill="#3a5a8c" font-size="13" font-weight="700">X 經濟</text>
+            <rect x="205" y="35" width="100" height="48" rx="8" fill="#e6f0ed" stroke="#2a7a6e" stroke-width="1.6"/><text x="255" y="64" text-anchor="middle" fill="#2a7a6e" font-size="13" font-weight="700">Y 民主</text>
+            <line x1="120" y1="59" x2="200" y2="59" stroke="#3a5a8c" stroke-width="2.5"/><polygon points="200,53 213,59 200,65" fill="#3a5a8c"/>
+          </svg>
+          <p style="color:#3a5a8c;font-weight:700;font-size:.86rem;margin:.3rem 0 0">假設 A：經濟 → 民主</p>
+          <p style="color:#6b6560;font-size:.78rem">Lipset／現代化理論</p>
+        </div>
+        <div style="text-align:center">
+          <svg viewBox="0 0 320 110" style="width:100%;max-width:300px" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="35" width="100" height="48" rx="8" fill="#e6f0ed" stroke="#2a7a6e" stroke-width="1.6"/><text x="65" y="64" text-anchor="middle" fill="#2a7a6e" font-size="13" font-weight="700">Y 民主</text>
+            <rect x="205" y="35" width="100" height="48" rx="8" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.6"/><text x="255" y="64" text-anchor="middle" fill="#3a5a8c" font-size="13" font-weight="700">X 經濟</text>
+            <line x1="120" y1="59" x2="200" y2="59" stroke="#2a7a6e" stroke-width="2.5"/><polygon points="200,53 213,59 200,65" fill="#2a7a6e"/>
+          </svg>
+          <p style="color:#2a7a6e;font-weight:700;font-size:.86rem;margin:.3rem 0 0">假設 B：民主 → 經濟</p>
+          <p style="color:#6b6560;font-size:.78rem">民主保障產權 → 促進投資</p>
+        </div>
+      </div>
+      <div class="fig-note"><strong>相關性無法告訴我們方向。</strong>可能是經濟發展促進民主，也可能是民主體制保障產權、進而促進經濟發展，甚至兩者互為因果。</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="cv3">
+    <div class="fig">
+      <h4 style="text-align:center;margin:.2rem 0 .6rem;color:var(--accent)">③ 中介效果 — 經濟如何「間接」影響民主？</h4>
+      <svg class="fig-svg" viewBox="0 0 620 230" style="max-width:600px" xmlns="http://www.w3.org/2000/svg">
+        <rect x="230" y="15" width="160" height="52" rx="8" fill="#f1ecf4" stroke="#6b4c7a" stroke-width="1.6"/>
+        <text x="310" y="36" text-anchor="middle" fill="#6b6560" font-size="10">中介變數 M</text>
+        <text x="310" y="55" text-anchor="middle" fill="#6b4c7a" font-size="13" font-weight="700">階級結構</text>
+        <rect x="30" y="150" width="150" height="52" rx="8" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.6"/><text x="105" y="172" text-anchor="middle" fill="#3a5a8c" font-size="13" font-weight="700">X 經濟發展</text><text x="105" y="190" text-anchor="middle" fill="#6b6560" font-size="9.5">工業化·GDP</text>
+        <rect x="440" y="150" width="150" height="52" rx="8" fill="#e6f0ed" stroke="#2a7a6e" stroke-width="1.6"/><text x="515" y="172" text-anchor="middle" fill="#2a7a6e" font-size="13" font-weight="700">Y 政治體制</text><text x="515" y="190" text-anchor="middle" fill="#6b6560" font-size="9.5">民主？威權？</text>
+        <line x1="140" y1="150" x2="248" y2="68" stroke="#3a5a8c" stroke-width="2"/><polygon points="246,63 257,68 248,73" fill="#3a5a8c"/><text x="175" y="100" text-anchor="middle" fill="#3a5a8c" font-size="12" font-weight="700">a</text>
+        <line x1="372" y1="68" x2="478" y2="150" stroke="#6b4c7a" stroke-width="2" stroke-dasharray="6 3"/><polygon points="476,145 487,150 478,155" fill="#6b4c7a"/><text x="445" y="100" text-anchor="middle" fill="#6b4c7a" font-size="12" font-weight="700">b</text>
+        <line x1="185" y1="176" x2="435" y2="176" stroke="#8b2500" stroke-width="2.5"/><polygon points="435,170 448,176 435,182" fill="#8b2500"/><text x="310" y="170" text-anchor="middle" fill="#8b2500" font-size="12" font-weight="700">c′ 直接效果</text>
+        <text x="310" y="220" text-anchor="middle" fill="#6b6560" font-size="10.5">間接效果＝a×b（透過階級結構） ｜ Moore：間接路徑才是關鍵</text>
+      </svg>
+      <div class="card-grid" style="margin-top:.5rem">
+        <div class="card blue"><h4>M＝中產階級</h4><p>經濟發展壯大中產 → 民主化</p></div>
+        <div class="card teal"><h4>M＝階級聯盟</h4><p>不同聯盟組合 → 民主或威權</p></div>
+        <div class="card purple"><h4>M＝教育水平</h4><p>公民意識提升 → 民主需求</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="cv4">
+    <div class="fig">
+      <h4 style="text-align:center;margin:.2rem 0 .6rem;color:var(--accent)">④ 調節中介 — Moore 的完整因果模型</h4>
+      <svg class="fig-svg" viewBox="0 0 640 280" style="max-width:620px" xmlns="http://www.w3.org/2000/svg">
+        <rect x="55" y="15" width="170" height="52" rx="8" fill="#fbf3e3" stroke="#b8860b" stroke-width="1.6"/><text x="140" y="36" text-anchor="middle" fill="#6b6560" font-size="10">調節變數 W</text><text x="140" y="55" text-anchor="middle" fill="#946a09" font-size="12.5" font-weight="700">農業勞動體制</text>
+        <rect x="280" y="15" width="170" height="52" rx="8" fill="#f1ecf4" stroke="#6b4c7a" stroke-width="1.6"/><text x="365" y="36" text-anchor="middle" fill="#6b6560" font-size="10">中介變數 M</text><text x="365" y="55" text-anchor="middle" fill="#6b4c7a" font-size="12.5" font-weight="700">階級聯盟結構</text>
+        <rect x="25" y="180" width="150" height="52" rx="8" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.6"/><text x="100" y="205" text-anchor="middle" fill="#3a5a8c" font-size="12.5" font-weight="700">X 經濟發展</text><text x="100" y="222" text-anchor="middle" fill="#6b6560" font-size="9">工業化程度</text>
+        <rect x="470" y="180" width="150" height="52" rx="8" fill="#e6f0ed" stroke="#2a7a6e" stroke-width="1.6"/><text x="545" y="205" text-anchor="middle" fill="#2a7a6e" font-size="12.5" font-weight="700">Y 政治體制</text><text x="545" y="222" text-anchor="middle" fill="#6b6560" font-size="9">民主/法西斯/共產</text>
+        <line x1="145" y1="180" x2="295" y2="68" stroke="#3a5a8c" stroke-width="2"/><polygon points="293,63 304,68 295,73" fill="#3a5a8c"/><text x="205" y="118" text-anchor="middle" fill="#3a5a8c" font-size="12" font-weight="700">a</text>
+        <line x1="430" y1="68" x2="500" y2="178" stroke="#6b4c7a" stroke-width="2" stroke-dasharray="6 3"/><polygon points="498,173 509,178 500,183" fill="#6b4c7a"/><text x="490" y="118" text-anchor="middle" fill="#6b4c7a" font-size="12" font-weight="700">b</text>
+        <line x1="160" y1="68" x2="135" y2="140" stroke="#b8860b" stroke-width="2" stroke-dasharray="5 3"/><polygon points="133,135 140,148 143,135" fill="#b8860b"/><text x="120" y="108" text-anchor="middle" fill="#946a09" font-size="11" font-weight="700">調節</text>
+        <line x1="180" y1="208" x2="465" y2="208" stroke="#8b2500" stroke-width="2.5"/><polygon points="465,202 478,208 465,214" fill="#8b2500"/><text x="320" y="200" text-anchor="middle" fill="#8b2500" font-size="12" font-weight="700">c′ 直接效果</text>
+        <text x="320" y="258" text-anchor="middle" fill="#6b6560" font-size="10">W 調節了 X→M 的路徑：自由 vs 壓迫勞動，改變了階級聯盟的形成方式</text>
+        <text x="320" y="275" text-anchor="middle" fill="#8b2500" font-size="10" font-weight="700">同樣的經濟發展 X，因 W 不同，透過 M 產生完全不同的 Y</text>
+      </svg>
+      <div class="hl-box gold">
+        <p><strong>這就是 Moore 的完整因果模型：</strong>經濟發展（X）不直接決定政治體制（Y）——它透過<strong>階級聯盟結構（M）</strong>間接影響結果；而 M 如何形成，又受<strong>農業勞動體制（W：自由 vs 壓迫）</strong>調節。<br>這就是為什麼同樣的經濟發展水平，在英國（自由勞動）走向民主，在德國（壓迫勞動）卻走向法西斯。<strong>不是 X 的大小決定 Y，而是 W 如何調節 X→M 的路徑決定了 Y。</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(3)"><div><div class="np-label">下一頁</div><div class="np-title">P3 · Moore：階級聯盟的因果邏輯</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P3 Moore 聯盟 -->
+<div class="page" data-page="3"><div class="page-inner">
+  <div class="guide-breadcrumb">第 3 章 · <span>Moore 階級聯盟</span></div>
+  <h2>Moore<span class="mark">：</span>階級聯盟的因果邏輯</h2>
+  <div class="story-lead">同一個起點（農業官僚體制），為何長出<strong>民主、法西斯、共產</strong>三種截然不同的結局？Moore 的答案是：看<strong>地主、資產階級、農民</strong>三者的力量與結盟方式。以下用<strong>必要條件（NC）／充分條件（SC）</strong>重新解讀他的決策樹。</div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'sv1')">因果決策樹</button>
+    <button class="tab" onclick="switchTab(this,'sv2')">變數矩陣</button>
+    <button class="tab" onclick="switchTab(this,'sv3')">邏輯公式</button>
+  </div>
+
+  <div class="tab-panel active" id="sv1">
+    <p class="section-lead">點下方按鈕，追蹤不同國家的命運路徑。</p>
+    <div class="path-btns">
+      <button class="pbtn all active" onclick="hlPath('all',this)">全部顯示</button>
+      <button class="pbtn d1" onclick="hlPath('d1',this)">英美→民主</button>
+      <button class="pbtn d2" onclick="hlPath('d2',this)">法國→民主</button>
+      <button class="pbtn fa" onclick="hlPath('fa',this)">德日→法西斯</button>
+      <button class="pbtn co" onclick="hlPath('co',this)">中俄→共產</button>
+    </div>
+    <div class="tree-legend">
+      <span class="li"><span class="sw" style="background:var(--nec)"></span>NC 必要條件</span>
+      <span class="li"><span class="sw" style="background:var(--suf)"></span>SC 充分條件</span>
+      <span class="li"><span class="sw" style="background:var(--us)"></span>英美</span>
+      <span class="li"><span class="sw" style="background:var(--fr)"></span>法國</span>
+      <span class="li"><span class="sw" style="background:var(--fasc)"></span>德日</span>
+      <span class="li"><span class="sw" style="background:var(--comm)"></span>中俄</span>
+    </div>
+    <div class="fig">
+      <svg class="tree-svg" viewBox="0 0 900 470" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="a-us" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#3a5a8c"/></marker>
+          <marker id="a-fr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2a7a6e"/></marker>
+          <marker id="a-fa" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#a8322a"/></marker>
+          <marker id="a-co" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#6b4c7a"/></marker>
+        </defs>
+        <text x="450" y="20" text-anchor="middle" fill="#6b6560" font-size="11">共同起點：農業官僚體制（Agrarian Bureaucracy）</text>
+        <rect x="365" y="30" width="170" height="44" rx="8" fill="#faf7f2" stroke="#8b2500" stroke-width="1.8"/>
+        <text x="450" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#8b2500">🏰 地主貴族</text>
+
+        <!-- 左：自由勞動 -->
+        <path data-ps="d1" d="M400,74 L235,124" stroke="#3a5a8c" stroke-width="2" marker-end="url(#a-us)"/>
+        <text data-ps="d1" x="300" y="92" fill="#3a5a8c" font-size="11" font-weight="600" transform="rotate(-17,300,92)">自由勞動</text>
+        <rect data-ps="d1" x="296" y="98" width="22" height="13" rx="2" fill="#b8860b"/><text data-ps="d1" x="307" y="108" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">NC</text>
+        <rect data-ps="d1" x="60" y="126" width="320" height="44" rx="8" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.6"/>
+        <text data-ps="d1" x="220" y="153" text-anchor="middle" font-size="12.5" fill="#3a5a8c" font-weight="700">強資產階級 ＋ 自由勞動</text>
+        <path data-ps="d1" d="M220,170 L220,222" stroke="#3a5a8c" stroke-width="2" marker-end="url(#a-us)"/>
+        <rect data-ps="d1" x="196" y="184" width="22" height="13" rx="2" fill="#2c5f7c"/><text data-ps="d1" x="207" y="194" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">SC</text>
+        <rect data-ps="d1" x="130" y="224" width="180" height="50" rx="9" fill="rgba(58,90,140,.12)" stroke="#3a5a8c" stroke-width="2.4"/>
+        <text data-ps="d1" x="220" y="246" text-anchor="middle" font-size="15" fill="#3a5a8c" font-weight="800">🏛️ 民主</text>
+        <text data-ps="d1" x="220" y="265" text-anchor="middle" font-size="11" fill="#3a5a8c">英國、美國</text>
+
+        <!-- 右：壓迫性勞動 -->
+        <path data-ps="fa,co,d2" d="M500,74 L660,124" stroke="#9aa0a6" stroke-width="1.6"/>
+        <text data-ps="fa,co,d2" x="600" y="92" fill="#a8322a" font-size="11" font-weight="600" transform="rotate(17,600,92)">壓迫性勞動</text>
+        <rect data-ps="fa,co,d2" x="582" y="98" width="22" height="13" rx="2" fill="#b8860b"/><text data-ps="fa,co,d2" x="593" y="108" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">NC</text>
+        <rect data-ps="fa,co,d2" x="630" y="126" width="140" height="44" rx="8" fill="#faf7f2" stroke="#8b2500" stroke-width="1.6"/>
+        <text data-ps="fa,co,d2" x="700" y="153" text-anchor="middle" font-size="14" font-weight="700" fill="#8b2500">👥 農民</text>
+
+        <!-- 農民→法西斯 -->
+        <path data-ps="fa" d="M745,170 L825,222" stroke="#a8322a" stroke-width="2" marker-end="url(#a-fa)"/>
+        <text data-ps="fa" x="812" y="196" fill="#a8322a" font-size="10" font-weight="600" transform="rotate(33,812,196)">弱農民社群</text>
+        <rect data-ps="fa" x="800" y="206" width="22" height="13" rx="2" fill="#2c5f7c"/><text data-ps="fa" x="811" y="216" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">SC</text>
+        <rect data-ps="fa" x="730" y="224" width="160" height="50" rx="9" fill="rgba(168,50,42,.1)" stroke="#a8322a" stroke-width="2.4"/>
+        <text data-ps="fa" x="810" y="246" text-anchor="middle" font-size="15" fill="#a8322a" font-weight="800">⚔️ 法西斯</text>
+        <text data-ps="fa" x="810" y="265" text-anchor="middle" font-size="11" fill="#a8322a">德國、日本</text>
+
+        <!-- 農民→革命 -->
+        <path data-ps="co,d2" d="M660,170 L590,222" stroke="#9aa0a6" stroke-width="1.6"/>
+        <text data-ps="co,d2" x="600" y="196" fill="#2a7a6e" font-size="10" font-weight="600" transform="rotate(-28,600,196)">強農民社群</text>
+        <rect data-ps="co,d2" x="600" y="206" width="22" height="13" rx="2" fill="#b8860b"/><text data-ps="co,d2" x="611" y="216" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">NC</text>
+        <rect data-ps="co,d2" x="480" y="224" width="150" height="44" rx="8" fill="#faf7f2" stroke="#8b2500" stroke-width="1.6"/>
+        <text data-ps="co,d2" x="555" y="251" text-anchor="middle" font-size="13" font-weight="700" fill="#8b2500">💥 由下而上革命</text>
+
+        <!-- 革命→法國民主 -->
+        <path data-ps="d2" d="M520,268 L450,344" stroke="#2a7a6e" stroke-width="2" marker-end="url(#a-fr)"/>
+        <text data-ps="d2" x="448" y="312" fill="#2a7a6e" font-size="9.5" font-weight="600" transform="rotate(-32,448,312)">強都市資產階級</text>
+        <rect data-ps="d2" x="430" y="320" width="22" height="13" rx="2" fill="#2c5f7c"/><text data-ps="d2" x="441" y="330" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">SC</text>
+        <rect data-ps="d2" x="345" y="346" width="175" height="50" rx="9" fill="rgba(42,122,110,.12)" stroke="#2a7a6e" stroke-width="2.4"/>
+        <text data-ps="d2" x="432" y="368" text-anchor="middle" font-size="15" fill="#2a7a6e" font-weight="800">🏛️ 民主</text>
+        <text data-ps="d2" x="432" y="387" text-anchor="middle" font-size="11" fill="#2a7a6e">法國</text>
+
+        <!-- 革命→中俄共產 -->
+        <path data-ps="co" d="M600,268 L690,344" stroke="#6b4c7a" stroke-width="2" marker-end="url(#a-co)"/>
+        <text data-ps="co" x="690" y="312" fill="#6b4c7a" font-size="9.5" font-weight="600" transform="rotate(32,690,312)">弱都市資產階級</text>
+        <rect data-ps="co" x="668" y="320" width="22" height="13" rx="2" fill="#2c5f7c"/><text data-ps="co" x="679" y="330" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">SC</text>
+        <rect data-ps="co" x="615" y="346" width="185" height="50" rx="9" fill="rgba(107,76,122,.12)" stroke="#6b4c7a" stroke-width="2.4"/>
+        <text data-ps="co" x="707" y="368" text-anchor="middle" font-size="15" fill="#6b4c7a" font-weight="800">🚩 共產獨裁</text>
+        <text data-ps="co" x="707" y="387" text-anchor="middle" font-size="11" fill="#6b4c7a">俄國、中國</text>
+
+        <rect x="30" y="400" width="220" height="44" rx="8" fill="none" stroke="#c9c0b4" stroke-dasharray="4 3"/>
+        <text x="140" y="420" text-anchor="middle" fill="#8b2500" font-size="11" font-weight="700" font-style="italic">"No Bourgeoisie,</text>
+        <text x="140" y="436" text-anchor="middle" fill="#8b2500" font-size="11" font-weight="700" font-style="italic">no Democracy"</text>
+      </svg>
+      <div class="fig-note"><strong>強資產階級</strong>是民主的<strong style="color:var(--nec)">必要條件</strong>，但單獨不是<strong style="color:var(--suf)">充分條件</strong>；<strong>壓迫性勞動</strong>是威權的必要條件，最終走向取決於農民社群與都市資產階級的強弱。</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="sv2">
+    <table class="matrix-table">
+      <thead><tr><th rowspan="2">解釋變數</th><th class="us" colspan="2">路徑一·民主</th><th class="fasc">路徑二</th><th class="comm">路徑三</th></tr>
+      <tr><th class="us">英美</th><th class="fr">法國</th><th class="fasc">德日</th><th class="comm">中俄</th></tr></thead>
+      <tbody>
+        <tr><td>資產階級動力</td><td><span class="pill pill-s">強</span></td><td><span class="pill pill-s">強</span></td><td><span class="pill pill-m">中</span></td><td><span class="pill pill-w">弱</span></td></tr>
+        <tr><td>農業發展模式</td><td><span class="pill pill-mk">市場型</span></td><td><span class="pill pill-rp">壓迫型</span></td><td><span class="pill pill-rp">壓迫型</span></td><td><span class="pill pill-rp">壓迫型</span></td></tr>
+        <tr><td>農民革命潛力</td><td><span class="pill pill-l">低</span></td><td><span class="pill pill-h">高</span></td><td><span class="pill pill-l">低</span></td><td><span class="pill pill-h">高</span></td></tr>
+        <tr><td>關鍵事件</td><td colspan="2" style="color:var(--us);font-weight:700">資產階級革命</td><td style="color:var(--fasc);font-weight:700">由上而下革命</td><td style="color:var(--comm);font-weight:700">農民革命</td></tr>
+        <tr><td>體制結果</td><td colspan="2" style="font-weight:800;color:var(--us)">民主資本主義</td><td style="font-weight:800;color:var(--fasc)">法西斯</td><td style="font-weight:800;color:var(--comm)">共產獨裁</td></tr>
+      </tbody>
+    </table>
+    <p class="section-lead">同樣經歷工業化，三種階級組合，導向三種命運。</p>
+  </div>
+
+  <div class="tab-panel" id="sv3">
+    <div class="logic-card us"><h4>英美 → 民主</h4><div class="logic-row"><span class="lp">強資產階級</span><span class="land">∧</span><span class="lp">自由勞動</span><span class="land">∧</span><span class="lp">低農民革命</span><span class="larr">→</span><span class="lout us">民主</span></div></div>
+    <div class="logic-card fr"><h4>法國 → 民主（革命路徑）</h4><div class="logic-row"><span class="lp">強資產階級</span><span class="land">∧</span><span class="lp">壓迫勞動</span><span class="land">∧</span><span class="lp">強農民社群</span><span class="land">∧</span><span class="lp">強都市資產階級</span><span class="larr">→</span><span class="lout fr">民主</span></div></div>
+    <div class="logic-card fasc"><h4>德日 → 法西斯</h4><div class="logic-row"><span class="lp">中等資產階級</span><span class="land">∧</span><span class="lp">壓迫勞動</span><span class="land">∧</span><span class="lp">弱農民社群</span><span class="larr">→</span><span class="lout fasc">法西斯</span></div></div>
+    <div class="logic-card comm"><h4>中俄 → 共產獨裁</h4><div class="logic-row"><span class="lp">弱資產階級</span><span class="land">∧</span><span class="lp">壓迫勞動</span><span class="land">∧</span><span class="lp">強農民社群</span><span class="land">∧</span><span class="lp">弱都市資產階級</span><span class="larr">→</span><span class="lout comm">共產獨裁</span></div></div>
+    <div class="hl-box gold"><h4>整合</h4><p><strong>強資產階級</strong>是民主的<strong>必要條件</strong>但非充分條件。<strong>不是經濟發展的「量」，而是階級結構的「質」與「組合」決定命運。</strong></p></div>
+  </div>
+
+  <div class="next-page" onclick="goPage(4)"><div><div class="np-label">下一頁</div><div class="np-title">P4 · 經濟左右派比較：三種觀點</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P4 左右派比較 -->
+<div class="page" data-page="4"><div class="page-inner">
+  <div class="guide-breadcrumb">第 4 章 · <span>左右派比較</span></div>
+  <h2>經濟左右派比較<span class="mark">：</span>三種觀點，三種預測</h2>
+  <div class="story-lead">面對「經濟發展會帶來什麼」，左派、右派與調和派給出三種截然不同的劇本。Moore 的階級分析，其實為中間的「調和派」留了一個位置。</div>
+
+  <table class="cmp-table">
+    <thead><tr><th>比較面向</th><th class="cl">左派（馬克思）</th><th class="cm">調和派（福利國家）</th><th class="cr">右派（現代化）</th></tr></thead>
+    <tbody>
+      <tr><td>經濟發展本質</td><td>資本積累＝剝削過程</td><td>創造財富，但分配需政治介入</td><td>社會進步的引擎，共同繁榮</td></tr>
+      <tr><td>社會結構</td><td>兩極化：資產 vs 無產</td><td>承認階級差異，但靠再分配縮小</td><td>多元化：中產壯大、整合</td></tr>
+      <tr><td>核心衝突</td><td>不可調和的階級矛盾</td><td>衝突可管理——靠社會契約</td><td>可協商的利益分歧</td></tr>
+      <tr><td>國家角色</td><td>統治階級的管理委員會</td><td>積極再分配者：稅收、社福</td><td>中立仲裁者、公共財提供者</td></tr>
+      <tr><td>勞資關係</td><td>根本對立，無法調和</td><td>制度化協商（統合主義）</td><td>市場自由競爭</td></tr>
+      <tr><td>政治後果</td><td class="vl">革命 → 社會主義</td><td class="vm">社會民主 → 福利國家</td><td class="vr">漸進改革 → 自由民主</td></tr>
+      <tr><td>代表案例</td><td>蘇聯、古巴</td><td>北歐、德國</td><td>英國、美國</td></tr>
+    </tbody>
+  </table>
+
+  <h3><span class="num">⚖</span>福利國家：左右派的「歷史妥協」</h3>
+  <p>福利國家不是任何一派的勝利，而是二戰後勞資雙方的<strong>歷史性妥協</strong>：</p>
+  <div class="compromise">
+    <div class="comp-item l"><strong>接受左派的診斷</strong>承認市場會產生不平等與社會風險（失業、疾病、老年貧困），國家必須介入。</div>
+    <div class="comp-item r"><strong>接受右派的框架</strong>保留資本主義市場與私有產權，不追求革命式推翻，而是在市場之上加再分配。</div>
+    <div class="comp-item m"><strong>制度創新</strong>工會與雇主的制度化協商（統合主義）、累進稅、全民健保、失業保險、公共教育。</div>
+  </div>
+
+  <div class="hl-box teal">
+    <h4>🔗 三派如何回應 Moore？</h4>
+    <p>Moore 暗示了一種可能：當<strong>資產階級夠強、但勞工也組織化</strong>時，既不會走向革命（左派預測），也不會完全放任市場（右派預測），而形成<strong>勞資之間的制度化妥協</strong>——這正是北歐福利國家的路徑。福利國家因此可被理解為 Moore 框架中的<strong>第四種體制結果</strong>。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(5)"><div><div class="np-label">下一頁</div><div class="np-title">P5 · 體制後果：階級聯盟如何塑造治理？</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P5 體制後果 -->
+<div class="page" data-page="5"><div class="page-inner">
+  <div class="guide-breadcrumb">第 5 章 · <span>體制後果</span></div>
+  <h2>體制後果<span class="mark">：</span>階級聯盟如何塑造治理邏輯？</h2>
+  <div class="story-lead">同樣的經濟發展，因為背後的階級聯盟不同，會長出兩種完全相反的治理邏輯——一條通往民主，一條通往威權。</div>
+  <div class="two-col">
+    <div class="tc-card right">
+      <span class="tc-tag">右派連結</span>
+      <h4>民主路徑的治理邏輯</h4>
+      <ul><li>資產階級主導 → 保障產權、自由市場</li><li>透過議會協商分配資源</li><li>中產階級成為民主鞏固的壓艙石</li></ul>
+      <div class="tc-foot">→ 經濟發展帶來漸進民主——但前提是資產階級強大。</div>
+    </div>
+    <div class="tc-card left">
+      <span class="tc-tag">左派連結</span>
+      <h4>威權路徑的治理邏輯</h4>
+      <ul><li>地主—資產階級聯盟 → 壓制勞工</li><li>國家由上而下推動工業化</li><li>經濟成長果實集中上層</li></ul>
+      <div class="tc-foot">→ 經濟發展加劇不平等，衝突不可避免。</div>
+    </div>
+  </div>
+  <div class="hl-box gold"><h4>💡 關鍵對照</h4><p>右派看到的是「資產階級＝民主推手」；左派看到的是「資產階級＝壓迫同盟」。<strong>同一個階級，在不同的聯盟結構裡，扮演完全不同的政治角色</strong>——這正是 Moore 的洞見。</p></div>
+  <div class="next-page" onclick="goPage(6)"><div><div class="np-label">下一頁</div><div class="np-title">P6 · 發展國家：面對經濟衝突的能力</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P6 發展國家 -->
+<div class="page" data-page="6"><div class="page-inner">
+  <div class="guide-breadcrumb">第 6 章 · <span>發展國家</span></div>
+  <h2>發展國家<span class="mark">：</span>面對經濟衝突的能力</h2>
+  <div class="story-lead">東亞的<strong>資本主義發展國家（CDS）</strong>走出了 Moore 三條路之外的<strong>第四條路</strong>——國家主導的現代化，既非自由市場、也非革命。台灣正是其中的典型。</div>
+
+  <h3><span class="num">🏗</span>發展國家的四層結構</h3>
+  <div class="pyramid">
+    <div class="pyr-layer pyr-1">國家自主性<span class="ps">凌駕於社會之上</span></div>
+    <div class="pyr-layer pyr-2">菁英發展主義共識<span class="ps">經濟成長 ＝ 政權合法性</span></div>
+    <div class="pyr-layer pyr-3">官僚對社會的滲透<span class="ps">黨國體系控制農會、漁會、工商與工會</span></div>
+    <div class="pyr-layer pyr-4">策略性產業政策<span class="ps">經濟官僚瞄準世界市場、極大化成長潛能</span></div>
+  </div>
+
+  <h3><span class="num">📈</span>發展國家的沈浮與再起</h3>
+  <div class="timeline">
+    <div class="tl-card"><div class="tl-era">崛起 1960s–80s</div><p>威權體制下的經濟奇蹟：日本、台灣、韓國、新加坡。</p></div>
+    <div class="tl-card t2"><div class="tl-era">衝擊一 1980s–90s</div><p>民主化浪潮：台韓經驗顯示可與民主並存。</p></div>
+    <div class="tl-card t3"><div class="tl-era">衝擊二 1997–98</div><p>東亞金融危機暴露裙帶資本主義。</p></div>
+    <div class="tl-card t4"><div class="tl-era">再起 2008–</div><p>金融海嘯後國家干預重獲合法性；中國模式崛起。</p></div>
+  </div>
+
+  <div class="two-col">
+    <div class="tc-card right"><span class="tc-tag">西方</span><h4>自由市場 ＋ 民主</h4><p style="font-size:.86rem;color:#555">代表：美國、歐洲。國家當守夜人，市場與選舉主導分配。</p></div>
+    <div class="tc-card" style="border-top-color:var(--purple)"><span class="tc-tag" style="background:var(--purple)">東方</span><h4 style="color:var(--purple)">國家主導資本主義</h4><p style="font-size:.86rem;color:#555">代表：中國、新加坡。國家自主性高，主導產業方向與資源配置。</p></div>
+  </div>
+
+  <div class="next-page" onclick="goPage(7)"><div><div class="np-label">下一頁</div><div class="np-title">P7 · 雷達圖實驗：體制的結構指紋</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P7 雷達圖 -->
+<div class="page" data-page="7"><div class="page-inner">
+  <div class="guide-breadcrumb">第 7 章 · <span>互動雷達圖</span></div>
+  <h2>雷達圖實驗<span class="mark">：</span>體制的結構指紋</h2>
+  <div class="story-lead">每種經濟運作模式，都有一組獨特的「<strong>結構指紋</strong>」——在國家自主性、資本階級、勞工農民、產權、外部強權、技術官僚六個維度上各有高低。點下方按鈕，看雷達圖如何<strong>動態變形</strong>。</div>
+
+  <div class="radar-wrap">
+    <div class="regime-btns">
+      <button class="regime-btn" style="--rc:#3a5a8c" onclick="pickRegime('free',this)">🏛️ 自由市場資本主義</button>
+      <button class="regime-btn" style="--rc:#2a7a6e" onclick="pickRegime('welfare',this)">⚖️ 福利國家</button>
+      <button class="regime-btn" style="--rc:#6b4c7a" onclick="pickRegime('dev',this)">🏗️ 發展型國家</button>
+      <button class="regime-btn" style="--rc:#b8860b" onclick="pickRegime('crony',this)">🤝 裙帶資本主義</button>
+      <button class="regime-btn" style="--rc:#a8322a" onclick="pickRegime('comm',this)">🚩 共產主義</button>
+      <button class="regime-btn" style="--rc:#9c3c6d" onclick="pickRegime('feudal',this)">🏰 封建地主官僚</button>
+    </div>
+    <div class="radar-flex">
+      <canvas id="radarCanvas" width="380" height="380" style="max-width:100%"></canvas>
+      <div style="flex:1;min-width:260px">
+        <div class="radar-result" id="radarResult"><div class="rr-emoji">🔮</div><h3>點選上方體制按鈕</h3><p>觀察不同體制的結構指紋</p></div>
+        <div class="radar-explain" id="radarExplain"><p id="radarExplainText"></p></div>
+      </div>
+    </div>
+  </div>
+  <p class="section-lead">六個維度：國家自主性、資本階級、勞工與農民、產權制度、外部強權、都市化與技術官僚。</p>
+
+  <div class="next-page" onclick="goPage(8)"><div><div class="np-label">下一頁</div><div class="np-title">P8 · 案例討論：理論與現實的對話</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P8 案例討論 -->
+<div class="page" data-page="8"><div class="page-inner">
+  <div class="guide-breadcrumb">第 8 章 · <span>案例討論</span></div>
+  <h2>案例討論<span class="mark">：</span>理論與現實的對話</h2>
+  <div class="story-lead">理論不是用來背的，是用來「吵架」的。同一個現實案例，左派、右派、Moore 會吵出三種完全不同的解讀。</div>
+
+  <div class="disc-case">
+    <div class="disc-num">01</div>
+    <h4>法國「黃背心運動」</h4>
+    <div class="ds">新自由主義下的階級反撲？</div>
+    <p>2018 年，參與者多為城郊中下階層——依賴汽車通勤、薪資停滯、購買力持續下降。</p>
+    <div class="persp-grid">
+      <div class="persp lft"><h5>左派觀點</h5><p>新自由主義加劇階級分化，國家成為資本代理人。黃背心是馬克思預言的階級衝突再現。</p></div>
+      <div class="persp rgt"><h5>右派觀點</h5><p>問題在再分配制度不足。街頭運動本身就是民主運作的證據。</p></div>
+      <div class="persp mre"><h5>Moore 觀點</h5><p>反映新的「階級脫鉤」：全球化下中產分裂——都會菁英 vs 城郊勞動者。</p></div>
+    </div>
+  </div>
+
+  <div class="disc-case tw">
+    <div class="disc-num">02</div>
+    <h4>台灣的房價、低薪與「躺平」</h4>
+    <div class="ds">經濟決定論如何解讀世代困境？</div>
+    <p>台灣人均 GDP 突破 3 萬美元，但年輕世代面臨房價所得比超過 15 倍、實質薪資停滯近 20 年。</p>
+    <div class="persp-grid">
+      <div class="persp lft"><h5>左派觀點</h5><p>「躺平」是對剝削結構的消極抵抗——拒絕為不公平的遊戲努力。</p></div>
+      <div class="persp rgt"><h5>右派觀點</h5><p>問題出在制度：土地政策扭曲、持有成本過低。民主提供改革的可能。</p></div>
+      <div class="persp mre"><h5>發展國家觀點</h5><p>民主轉型後國家自主性下降，資產階級獲更大政策影響力。「躺平」是轉型紅利耗盡的信號。</p></div>
+    </div>
+  </div>
+
+  <div class="next-page" onclick="goPage(9)"><div><div class="np-label">下一頁</div><div class="np-title">P9 · 隨堂測驗與課堂討論</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P9 測驗 + 討論 -->
+<div class="page" data-page="9"><div class="page-inner">
+  <div class="guide-breadcrumb">第 9 章 · <span>隨堂測驗與討論</span></div>
+  <h2>隨堂測驗<span class="mark">：</span>選擇題</h2>
+  <p class="section-lead">點選你認為正確的選項，系統會立刻標出正解並顯示解析。</p>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q1</div>
+    <div class="quiz-question">Diamond (1992) 對 Lipset 的核心批評是什麼？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) Lipset 的資料造假</button>
+      <button class="quiz-opt" data-correct="true">(B) Lipset 證明的是統計相關，而非因果關係</button>
+      <button class="quiz-opt" data-correct="false">(C) 富裕國家其實都不民主</button>
+      <button class="quiz-opt" data-correct="false">(D) 經濟發展與民主完全無關</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：B</strong><br>富裕與民主「一起出現」是<em>相關</em>，但不代表「誰造成誰」。可能有未觀察到的第三變數（如階級結構）同時驅動兩者——就像冰淇淋與溺水都受「夏天」驅動。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q2</div>
+    <div class="quiz-question">用 Moore 的框架，同樣經歷工業化，英國走向民主、德國走向法西斯，最關鍵的差異在於？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 英國的 GDP 比德國高很多</button>
+      <button class="quiz-opt" data-correct="true">(B) 農業勞動體制不同（自由 vs 壓迫），導致階級聯盟結構不同</button>
+      <button class="quiz-opt" data-correct="false">(C) 英國人比較愛好和平</button>
+      <button class="quiz-opt" data-correct="false">(D) 德國沒有經歷工業化</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：B</strong><br>Moore 的調節中介模型：經濟發展（X）透過階級聯盟（M）影響體制（Y），而 M 又被<em>農業勞動體制（W）</em>調節。英國的自由勞動孕育強資產階級＋自由勞動 → 民主；德國的壓迫性勞動＋弱農民社群 → 法西斯。<em>不是 X 的大小，而是 W 如何調節決定結果。</em></div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q3</div>
+    <div class="quiz-question">「No bourgeoisie, no democracy」這句話，最精確的邏輯意涵是？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 強資產階級是民主的充分條件</button>
+      <button class="quiz-opt" data-correct="true">(B) 強資產階級是民主的必要條件，但非充分條件</button>
+      <button class="quiz-opt" data-correct="false">(C) 資產階級與民主無關</button>
+      <button class="quiz-opt" data-correct="false">(D) 只要沒有資產階級就一定民主</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：B</strong><br>「沒有 A 就沒有 B」是<em>必要條件</em>句型。法國也有強資產階級卻是走「革命路徑」才到民主——可見強資產階級<em>必要但不充分</em>，還要搭配其他條件（自由勞動、農民社群、都市資產階級）。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q4</div>
+    <div class="quiz-question">關於「福利國家」作為 Moore 框架的延伸，下列敘述何者<strong>正確</strong>？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 它是左派革命的最終勝利</button>
+      <button class="quiz-opt" data-correct="false">(B) 它是右派自由市場的純粹形式</button>
+      <button class="quiz-opt" data-correct="true">(C) 它是強資產階級與組織化勞工之間的制度化妥協（第四種結果）</button>
+      <button class="quiz-opt" data-correct="false">(D) 它只存在於威權國家</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：C</strong><br>當資產階級夠強、但勞工也高度組織化時，既不革命也不放任市場，而走向<em>統合主義式的制度化妥協</em>（北歐路徑）。它接受左派診斷（市場有風險）＋右派框架（保留市場與產權），是 Moore 三種結果之外的第四種。</div>
+  </div>
+
+  <h2 style="margin-top:2rem">課堂討論<span class="mark">：</span>問答題</h2>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 A</span>
+    <div class="discussion-q">用 Moore 的「調節中介」邏輯，重新解釋台灣的民主化。</div>
+    <div class="ctx">台灣的「W（農業／土地體制）」是什麼？戰後土地改革（三七五減租、耕者有其田）如何改變了階級聯盟（M）？這對日後的民主轉型（Y）有何影響？</div>
+  </div>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 B</span>
+    <div class="discussion-q">「躺平」是<em>消極抵抗</em>、<em>制度失靈</em>，還是<em>轉型紅利耗盡</em>？</div>
+    <div class="ctx">分別站在左派、右派、發展國家三個立場各寫一段。你最認同哪一個？為什麼？提示：注意每個立場各自「看見」與「看不見」什麼。</div>
+  </div>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 C</span>
+    <div class="discussion-q">挑兩種雷達圖體制，比較它們「結構指紋」的最大差異。</div>
+    <div class="ctx">例如：發展型國家 vs 福利國家——兩者「國家自主性」與「勞工與農民」的分數為何相反？這如何呼應 Moore 的階級聯盟觀點？</div>
+  </div>
+
+  <div class="next-page" onclick="goPage(10)"><div><div class="np-label">下一頁</div><div class="np-title">P10 · 本週讀物與小結</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P10 讀物小結 -->
+<div class="page" data-page="10"><div class="page-inner">
+  <div class="guide-breadcrumb">第 10 章 · <span>延伸</span></div>
+  <h2>本週讀物與<span class="mark">小結</span></h2>
+  <div class="story-lead">本週的核心是一句話：<strong>決定命運的不是經濟發展的「量」，而是階級結構的「質與組合」</strong>。閱讀時請聚焦於「因果路徑」而非結論。</div>
+
+  <h3><span class="num">①</span>核心文獻</h3>
+  <div class="reading-card must"><div class="reading-icon">📚</div><div class="reading-body">
+    <div class="reading-title">Moore, B. (1966). <em>Social Origins of Dictatorship and Democracy</em></div>
+    <div class="reading-meta">英文專書｜中譯《民主與獨裁的社會起源》｜重點：導論與英、法、德、中、日章節</div>
+    <div class="reading-note">本週理論核心。讀的時候請畫出每個國家的「<strong>階級聯盟路徑圖</strong>」，並標出哪些是必要條件、哪些是充分條件。</div>
+  </div></div>
+  <div class="reading-card rec"><div class="reading-icon">📄</div><div class="reading-body">
+    <div class="reading-title">Diamond, L. (1992). "Economic Development and Democracy Reconsidered"</div>
+    <div class="reading-meta"><em>American Behavioral Scientist</em>, 35</div>
+    <div class="reading-note">對 Lipset 現代化理論的經典再檢討。理解「<strong>相關 ≠ 因果</strong>」的最佳入門。</div>
+  </div></div>
+  <div class="reading-card rec"><div class="reading-icon">📘</div><div class="reading-body">
+    <div class="reading-title">Evans, P. (1995). <em>Embedded Autonomy</em>（發展型國家經典）</div>
+    <div class="reading-meta">英文專書｜搭配本週 P6 發展國家</div>
+    <div class="reading-note">理解東亞「第四條路」與「<strong>嵌入式自主性</strong>」概念——國家自主性如何嵌入社會網絡而仍能主導發展。</div>
+  </div></div>
+
+  <h3><span class="num">②</span>本週一句話總結</h3>
+  <div class="hl-box gold"><p style="font-family:'Playfair Display',serif;font-size:1.05rem;text-align:center;color:var(--accent);font-weight:700;padding:1rem;background:#fff;border-radius:8px;margin-top:.5rem;line-height:1.7">「越富越民主」是一個把相關誤當因果的迷思——<br>真正寫下命運的，是地主、資產階級與農民<br>結盟與對抗的方式。</p></div>
+
+  <div class="hl-box blue"><h4>🔮 下週預告 · W4 國家自主性（Skocpol）</h4><p>本週 Moore 把焦點放在「<strong>社會裡的階級</strong>」。下週 Skocpol 會反過來追問：難道<strong>國家本身</strong>沒有「自己的意志」嗎？革命，會不會是國家機器崩潰、而非只是階級鬥爭的結果？我們將正式進入「<strong>國家自主論</strong>」。</p></div>
+</div></div>
+
+</div><!-- /page-container -->
+
+<div class="bottom-bar">
+  <div class="page-indicator">第 <span id="cur-page">1</span> / 11 頁</div>
+  <div class="page-dots" id="dots"></div>
+  <div class="arrow-btns">
+    <button class="arrow-btn" id="prev-btn" onclick="goPrev()">←</button>
+    <button class="arrow-btn" id="next-btn" onclick="goNext()">→</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+const totalPages=11;
+let currentPage=0;
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<totalPages;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>goPage(i);
+  dotsEl.appendChild(d);
+}
+function goPage(n){
+  if(n<0||n>=totalPages)return;
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('cur-page').textContent=n+1;
+  document.getElementById('prev-btn').disabled=n===0;
+  document.getElementById('next-btn').disabled=n===totalPages-1;
+  currentPage=n;
+  document.querySelectorAll('.page')[n].scrollTop=0;
+  if(n===7){drawRadar();}
+}
+function goPrev(){goPage(currentPage-1);}
+function goNext(){goPage(currentPage+1);}
+function switchTab(btn,panelId){
+  btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const container=btn.closest('.page-inner');
+  container.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id===panelId));
+}
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT')return;
+  if(e.key==='ArrowLeft')goPrev();
+  if(e.key==='ArrowRight')goNext();
+});
+document.addEventListener('click',e=>{
+  const sp=e.target.closest('.spoiler');
+  if(sp)sp.classList.toggle('revealed');
+});
+document.addEventListener('click',function(e){
+  const btn=e.target.closest('.quiz-opt');
+  if(!btn)return;
+  const block=btn.closest('.quiz-block');
+  if(!block||block.dataset.answered==='1')return;
+  block.dataset.answered='1';
+  const correct=btn.dataset.correct==='true';
+  btn.classList.add(correct?'selected-correct':'selected-wrong');
+  if(!correct){block.querySelectorAll('.quiz-opt').forEach(o=>{if(o.dataset.correct==='true')o.classList.add('show-correct');});}
+  const exp=block.querySelector('.quiz-explain');
+  if(exp)exp.classList.add('shown');
+});
+
+// ===== Moore 決策樹路徑高亮 =====
+function hlPath(p,btn){
+  document.querySelectorAll('.path-btns .pbtn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const els=document.querySelectorAll('.tree-svg [data-ps]');
+  if(p==='all'){els.forEach(el=>el.style.opacity='');return;}
+  els.forEach(el=>{
+    const d=(el.getAttribute('data-ps')||'').split(',');
+    el.style.opacity=d.includes(p)?'1':'.12';
+  });
+}
+
+// ===== 雷達圖 =====
+const RLABELS=['國家自主性','資本階級','勞工與農民','產權制度','外部強權','都市化與\n技術官僚'];
+let rvals=[50,50,50,50,50,50];
+const REGIMES={
+  free:{vals:[30,90,45,95,55,85],emoji:'🏛️',name:'自由市場資本主義',color:'#3a5a8c',cases:'英國、美國、澳洲',desc:'國家自主性低，充當「守夜人」。資本階級主導經濟運作，產權制度高度完善，都市化與技術官僚程度高。勞工與農民透過工會和選舉參與分配。外部強權影響中等——作為規則制定者而非接受者。'},
+  welfare:{vals:[55,70,80,85,45,90],emoji:'⚖️',name:'福利國家（社會民主）',color:'#2a7a6e',cases:'瑞典、丹麥、挪威、德國',desc:'左右派的「歷史妥協」。國家自主性中等——民主體制下透過選舉與協商運作。資本階級強大，但勞工同樣高度組織化（工會覆蓋率極高），形成制度化勞資協商（統合主義）。產權完善，搭配累進稅制與慷慨社福實現再分配。技術官僚極高。小國開放但維持政策自主。'},
+  dev:{vals:[90,65,30,70,70,80],emoji:'🏗️',name:'發展型國家',color:'#6b4c7a',cases:'台灣(1960-80s)、韓國、新加坡',desc:'國家自主性極高，凌駕於社會之上。國家與資本階級形成策略性聯盟，但由國家主導方向。勞工與農民被壓制或吸納。產權存在但國家可選擇性干預。外部強權影響大（冷戰結構、出口導向）。技術官僚是核心引擎。'},
+  crony:{vals:[70,80,20,40,50,45],emoji:'🤝',name:'裙帶資本主義',color:'#b8860b',cases:'菲律賓(馬可仕)、印尼(蘇哈托)',desc:'國家自主性表面高但實質被少數家族滲透。資本階級強大但高度依賴政治關係。產權薄弱——規則因人而異。勞工與農民被邊緣化。技術官僚被架空。經濟效率低，財富集中於裙帶網絡。'},
+  comm:{vals:[95,5,70,10,60,55],emoji:'🚩',name:'共產主義',color:'#a8322a',cases:'蘇聯、毛時期中國、古巴',desc:'國家自主性極高（黨國一體）。資本階級被消滅。勞工與農民名義上是「主人」，實際被黨組織動員。私有產權幾乎不存在。外部強權影響大（冷戰陣營對抗）。都市化被國家計劃控制。'},
+  feudal:{vals:[60,10,25,15,30,10],emoji:'🏰',name:'封建／地主官僚',color:'#9c3c6d',cases:'帝制中國、中世紀歐洲、沙俄',desc:'王權/國家自主性中高，但受限於地方貴族。資本階級極弱或尚未出現。農民被束縛於土地，階層流動極低。產權概念模糊——土地歸貴族或王室。外部影響有限。都市化極低，官僚以稅收與治安為主。'}
+};
+let rAnim=null;
+function animateRadar(target){
+  const start=[...rvals],t0=performance.now();
+  function step(now){
+    const t=Math.min((now-t0)/600,1),e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+    for(let i=0;i<6;i++)rvals[i]=Math.round(start[i]+(target[i]-start[i])*e);
+    drawRadar();
+    if(t<1)rAnim=requestAnimationFrame(step);
+  }
+  if(rAnim)cancelAnimationFrame(rAnim);
+  rAnim=requestAnimationFrame(step);
+}
+function pickRegime(key,btn){
+  document.querySelectorAll('.regime-btn').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  const r=REGIMES[key];
+  animateRadar(r.vals);
+  const box=document.getElementById('radarResult');
+  box.style.borderTopColor=r.color;
+  box.innerHTML='<div class="rr-emoji">'+r.emoji+'</div><h3 style="color:'+r.color+'">'+r.name+'</h3><p>'+r.cases+'</p>';
+  const ex=document.getElementById('radarExplain');
+  ex.classList.add('show');ex.style.borderLeftColor=r.color;
+  document.getElementById('radarExplainText').innerHTML=r.desc;
+}
+function drawRadar(){
+  const canvas=document.getElementById('radarCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height,cx=W/2,cy=H/2,R=140,n=6;
+  ctx.clearRect(0,0,W,H);
+  for(let r=1;r<=5;r++){
+    ctx.beginPath();
+    for(let i=0;i<=n;i++){const a=Math.PI*2*i/n-Math.PI/2;ctx.lineTo(cx+R*r/5*Math.cos(a),cy+R*r/5*Math.sin(a));}
+    ctx.closePath();ctx.strokeStyle=r===5?'rgba(0,0,0,.18)':'rgba(0,0,0,.07)';ctx.lineWidth=1;ctx.stroke();
+  }
+  for(let i=0;i<n;i++){
+    const a=Math.PI*2*i/n-Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));
+    ctx.strokeStyle='rgba(0,0,0,.06)';ctx.lineWidth=1;ctx.stroke();
+    const lx=cx+(R+26)*Math.cos(a),ly=cy+(R+26)*Math.sin(a);
+    ctx.fillStyle='#6b6560';ctx.font='bold 11px "Noto Sans TC"';ctx.textAlign='center';ctx.textBaseline='middle';
+    const lines=RLABELS[i].split('\n');
+    lines.forEach((line,li)=>ctx.fillText(line,lx,ly+(li-lines.length/2+.5)*13));
+  }
+  ctx.beginPath();
+  for(let i=0;i<=n;i++){const idx=i%n,a=Math.PI*2*idx/n-Math.PI/2,v=rvals[idx]/100;ctx.lineTo(cx+R*v*Math.cos(a),cy+R*v*Math.sin(a));}
+  ctx.closePath();ctx.fillStyle='rgba(139,37,0,.13)';ctx.fill();ctx.strokeStyle='#8b2500';ctx.lineWidth=2.5;ctx.stroke();
+  for(let i=0;i<n;i++){
+    const a=Math.PI*2*i/n-Math.PI/2,v=rvals[i]/100;
+    ctx.beginPath();ctx.arc(cx+R*v*Math.cos(a),cy+R*v*Math.sin(a),4.5,0,Math.PI*2);
+    ctx.fillStyle='#8b2500';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+    const vx=cx+(R*v+14)*Math.cos(a),vy=cy+(R*v+14)*Math.sin(a);
+    ctx.fillStyle='rgba(0,0,0,.4)';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.fillText(rvals[i],vx,vy);
+  }
+}
+</script>
+</body>
+</html>
