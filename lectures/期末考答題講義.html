@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政治社會學 · 期末考答題邏輯</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;
+  --gold:#b8860b;--sage:#5a6e5a;--muted:#6b6560;--line:#c9c0b4;
+  --card-bg:#faf7f2;--blue:#3a5a8c;--purple:#6b4c7a;--teal:#2a7a6e;
+  --red:#c0392b;--green:#27ae60;--orange:#d35400;
+  /* 三大學者色 */
+  --scott:#8b2500; --bayat:#2a7a6e; --decerteau:#6b4c7a;
+  /* 太陽花 vs 青鳥 */
+  --sunflower:#d4a017; --bluebird:#3a5a8c;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+
+/* ========== 頂部導航 ========== */
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.2rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .9rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.76rem;font-weight:500;color:#888;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#ccc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:var(--paper);background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.88rem;font-weight:700;margin-right:1rem;flex-shrink:0}
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+
+/* ========== 頁面 ========== */
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:920px;margin:0 auto}
+
+/* ========== 底部 ========== */
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+
+/* ========== 標題 ========== */
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,3vw,2.1rem);font-weight:800;color:var(--ink);margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent);position:relative}
+.page h2::after{content:'';position:absolute;left:0;bottom:-2px;width:60px;height:2px;background:var(--gold)}
+.page h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent);margin:1.6rem 0 .8rem;display:flex;align-items:center;gap:.5rem}
+.page h3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;font-size:.85rem;font-weight:700;flex-shrink:0}
+.page h4{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin:1rem 0 .5rem}
+.page p{font-size:.92rem;color:#333;margin-bottom:.7rem;line-height:1.95}
+.page p strong{color:var(--accent);font-weight:700}
+.page ul,.page ol{margin:.6rem 0 .9rem 1.5rem}
+.page li{font-size:.9rem;margin-bottom:.35rem;line-height:1.9;color:#333}
+.page li strong{color:var(--ink)}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;color:var(--ink);line-height:1.1;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:620px;margin:0 auto 1.8rem}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+
+.story-lead{font-size:.98rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+
+/* ========== 卡片 ========== */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.2rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.1rem 1.2rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card h4{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--accent);margin-bottom:.4rem;margin-top:0}
+.card p{font-size:.84rem;color:#555;margin-bottom:0;line-height:1.75}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.blue{border-top-color:var(--blue)}.card.blue h4{color:var(--blue)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.purple{border-top-color:var(--purple)}.card.purple h4{color:var(--purple)}
+.card.teal{border-top-color:var(--teal)}.card.teal h4{color:var(--teal)}
+.card.orange{border-top-color:var(--orange)}.card.orange h4{color:var(--orange)}
+
+/* ========== 引言／提問框 ========== */
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.1rem 0}
+.hl-box p:last-child{margin-bottom:0}
+.hl-box h4{margin-top:0;color:var(--accent)}
+.hl-box.blue{background:rgba(58,90,140,.05);border-left-color:var(--blue)}
+.hl-box.blue h4{color:var(--blue)}
+.hl-box.sage{background:rgba(90,110,90,.05);border-left-color:var(--sage)}
+.hl-box.sage h4{color:var(--sage)}
+.hl-box.gold{background:rgba(184,134,11,.06);border-left-color:var(--gold)}
+.hl-box.gold h4{color:var(--gold)}
+.hl-box.purple{background:rgba(107,76,122,.05);border-left-color:var(--purple)}
+.hl-box.purple h4{color:var(--purple)}
+
+/* ========== 概念框 ========== */
+.concept{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(58,90,140,.04));padding:.9rem 1.2rem;border-radius:8px;margin:.8rem 0;border:1px solid rgba(184,134,11,.2)}
+.concept .lead{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent);font-weight:700;margin-bottom:.4rem}
+.concept .body{font-size:.86rem;color:#333;line-height:1.85}
+.concept .body strong{color:var(--accent)}
+
+/* ========== 中央問題列 ========== */
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+
+/* ========== 下一頁 ========== */
+.next-page{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:1.1rem 1.4rem;border-radius:10px;margin-top:2.2rem;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.next-page:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(139,37,0,.3)}
+.np-label{font-size:.72rem;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.np-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.np-arrow{font-size:1.4rem;opacity:.8}
+
+/* ========== Spoiler（點擊揭露） ========== */
+.spoiler{cursor:pointer;background:linear-gradient(135deg,rgba(90,110,90,.08),rgba(184,134,11,.06));border-left:3px dashed var(--sage);padding:.8rem 1.1rem;border-radius:0 6px 6px 0;font-size:.85rem;color:var(--sage);max-height:42px;overflow:hidden;transition:max-height .5s ease;line-height:1.85;position:relative}
+.spoiler::after{content:'▼ 點擊展開';position:absolute;right:1rem;top:.75rem;font-size:.72rem;color:var(--muted);font-family:'Source Serif 4',serif;font-style:italic}
+.spoiler.revealed{max-height:1500px;color:#333}
+.spoiler.revealed::after{content:'▲ 點擊收合';color:var(--sage)}
+.spoiler strong{color:var(--accent)}
+
+/* ========== Scholar Card ========== */
+.scholar-card{background:linear-gradient(135deg,rgba(58,90,140,.07),rgba(184,134,11,.05));border:1px solid rgba(58,90,140,.15);border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0}
+.scholar-card h4{margin-top:0;color:var(--blue)}
+.scholar-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+.scholar-tag{padding:.25rem .7rem;background:rgba(58,90,140,.1);color:var(--blue);border-radius:14px;font-size:.74rem;font-weight:600}
+
+/* ========== Scott 大圖卡 ========== */
+.scott-hero{background:linear-gradient(135deg,#1a1a1a,#3a1a10);color:#fff;padding:1.8rem;border-radius:12px;margin:1.3rem 0;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap}
+.scott-portrait{flex-shrink:0;width:120px;height:160px;background:linear-gradient(135deg,var(--accent),var(--accent-light));border-radius:8px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:.8rem;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.scott-portrait .name-cn{font-family:'Playfair Display',serif;font-weight:900;font-size:1.05rem;line-height:1.3;margin-bottom:.3rem}
+.scott-portrait .name-en{font-size:.7rem;opacity:.85;font-style:italic;border-top:1px solid rgba(255,255,255,.3);padding-top:.4rem;margin-top:.3rem;width:100%}
+.scott-portrait .life{font-size:.66rem;opacity:.75;margin-top:.4rem}
+.scott-info{flex:1;min-width:240px}
+.scott-info h3{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--gold);margin:0 0 .4rem;border:none;display:block}
+.scott-info h3::after{display:none}
+.scott-info .scott-sub{font-size:.9rem;color:#d8d0c4;font-style:italic;margin-bottom:.7rem}
+.scott-info p{font-size:.88rem;color:#cfc6b8;margin-bottom:0;line-height:1.85}
+.scott-info p strong{color:#fff}
+.scott-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.7rem}
+.scott-tag{padding:.2rem .65rem;background:rgba(184,134,11,.25);color:#f0d895;border-radius:14px;font-size:.72rem;font-weight:600}
+
+/* ========== 弱者的武器表 ========== */
+.weapons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.7rem;margin:1.1rem 0}
+.weapon-card{background:#fff;border-radius:8px;padding:.9rem 1rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.05);transition:all .3s;cursor:default}
+.weapon-card:hover{transform:translateY(-3px);box-shadow:0 5px 18px rgba(0,0,0,.1)}
+.weapon-emoji{font-size:1.6rem;line-height:1;margin-bottom:.4rem}
+.weapon-name{font-family:'Playfair Display',serif;font-weight:700;color:var(--accent);font-size:.93rem;margin-bottom:.3rem}
+.weapon-desc{font-size:.78rem;color:#555;line-height:1.7}
+
+/* ========== Hidden vs Public Transcript ========== */
+.transcript-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:1.2rem 0}
+.tr-col{padding:1.1rem 1.2rem;border-radius:10px;position:relative;border:1px solid}
+.tr-col.public{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(184,134,11,.03));border-color:rgba(184,134,11,.25)}
+.tr-col.hidden{background:linear-gradient(135deg,rgba(58,90,140,.08),rgba(107,76,122,.05));border-color:rgba(58,90,140,.25)}
+.tr-label{display:inline-block;padding:.2rem .7rem;border-radius:14px;font-size:.72rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem;text-transform:uppercase;color:#fff}
+.tr-col.public .tr-label{background:var(--gold)}
+.tr-col.hidden .tr-label{background:var(--blue)}
+.tr-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.4rem}
+.tr-col.public .tr-title{color:var(--gold)}
+.tr-col.hidden .tr-title{color:var(--blue)}
+.tr-text{font-size:.85rem;color:#444;line-height:1.85}
+.tr-text strong{color:var(--ink)}
+.tr-eg{margin-top:.6rem;padding:.5rem .8rem;background:rgba(255,255,255,.6);border-radius:6px;font-size:.8rem;font-style:italic;color:#555}
+
+/* ========== 三巨頭比較表 ========== */
+.cmp-three{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1.2rem 0}
+.cmp-three-card{background:#fff;border-radius:10px;padding:1.1rem 1.1rem;border-top:4px solid;box-shadow:0 3px 14px rgba(0,0,0,.06);transition:transform .3s}
+.cmp-three-card:hover{transform:translateY(-4px)}
+.cmp-three-card.scott{border-top-color:var(--scott)}
+.cmp-three-card.bayat{border-top-color:var(--bayat)}
+.cmp-three-card.decerteau{border-top-color:var(--decerteau)}
+.cmp-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin-bottom:.2rem}
+.cmp-three-card.scott .cmp-name{color:var(--scott)}
+.cmp-three-card.bayat .cmp-name{color:var(--bayat)}
+.cmp-three-card.decerteau .cmp-name{color:var(--decerteau)}
+.cmp-three-card .yr{font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.55rem}
+.cmp-three-card .concept-line{font-weight:700;color:var(--ink);font-size:.87rem;margin-bottom:.5rem;padding:.4rem .6rem;background:var(--card-bg);border-radius:5px;line-height:1.5}
+.cmp-three-card .desc{font-size:.82rem;color:#444;line-height:1.8}
+.cmp-three-card .desc strong{color:var(--accent)}
+
+/* ========== 蕭蘋論述對照 ========== */
+.discourse-box{background:#fff;border-radius:12px;overflow:hidden;margin:1.3rem 0;box-shadow:0 4px 16px rgba(0,0,0,.07)}
+.discourse-head{padding:1rem 1.3rem;background:linear-gradient(135deg,#1a1a1a,#3a2818);color:#fff}
+.discourse-head h4{margin:0;color:#fff;font-family:'Playfair Display',serif;font-size:1.05rem}
+.discourse-head .sub{font-size:.78rem;color:#bfb6a8;font-style:italic;margin-top:.2rem}
+.discourse-body{padding:1.2rem 1.3rem}
+.discourse-era{margin-bottom:.9rem;padding:.8rem 1rem;background:var(--card-bg);border-radius:7px;border-left:3px solid var(--accent)}
+.discourse-era:last-child{margin-bottom:0}
+.discourse-era .era-label{display:inline-block;padding:.15rem .6rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;margin-bottom:.4rem;letter-spacing:.05em}
+.discourse-era.e1 .era-label{background:#6b6560}
+.discourse-era.e2 .era-label{background:var(--accent)}
+.discourse-era.e3 .era-label{background:var(--gold)}
+.discourse-era.e4 .era-label{background:var(--blue)}
+.discourse-era .era-title{font-weight:700;color:var(--ink);font-size:.92rem;margin-bottom:.35rem}
+.discourse-era .era-text{font-size:.85rem;color:#444;line-height:1.85}
+.discourse-era .era-text strong{color:var(--accent)}
+
+/* ========== 太陽花 vs 青鳥比較表 ========== */
+.vs-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.07);margin:1.3rem 0;font-size:.84rem}
+.vs-table thead th{padding:.85rem .8rem;font-weight:700;color:#fff;text-align:left;font-size:.85rem}
+.vs-table thead th:first-child{background:#1a1a1a;width:140px}
+.vs-table thead th.sun{background:linear-gradient(135deg,#d4a017,#b8860b)}
+.vs-table thead th.blue{background:linear-gradient(135deg,#3a5a8c,#5a7ab0)}
+.vs-table td{padding:.75rem .85rem;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.75}
+.vs-table td:first-child{font-weight:700;color:var(--accent);background:var(--card-bg);font-size:.8rem;width:140px}
+.vs-table td strong{color:var(--ink)}
+.vs-table tr:last-child td{border-bottom:0}
+.vs-table tr:hover td:not(:first-child){background:rgba(184,134,11,.04)}
+
+/* ========== Toggle Tabs 切換 ========== */
+.tabs{display:flex;gap:.3rem;margin:1.1rem 0 .7rem;border-bottom:2px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:.6rem 1.1rem;background:0;border:0;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .25s;white-space:nowrap}
+.tab:hover{color:var(--accent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ========== 圖示展示 ========== */
+.icon-row{display:flex;gap:.8rem;flex-wrap:wrap;margin:1rem 0}
+.icon-item{flex:1;min-width:130px;text-align:center;padding:.9rem .8rem;background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.icon-item .ic{font-size:1.8rem;line-height:1;margin-bottom:.4rem}
+.icon-item .lb{font-weight:700;color:var(--accent);font-size:.85rem;margin-bottom:.3rem}
+.icon-item .ds{font-size:.76rem;color:#666;line-height:1.65}
+
+/* ========== 案例分析（躺平內卷） ========== */
+.case-block{background:#fff;border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:4px solid var(--teal)}
+.case-block h4{color:var(--teal);font-family:'Playfair Display',serif;margin:0 0 .4rem}
+.case-block .ce{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.case-block .ct{font-size:.86rem;color:#333;line-height:1.85;margin-bottom:0}
+.case-block .ct strong{color:var(--accent)}
+.case-block.purple{border-top-color:var(--purple)}.case-block.purple h4{color:var(--purple)}
+.case-block.blue{border-top-color:var(--blue)}.case-block.blue h4{color:var(--blue)}
+.case-block.gold{border-top-color:var(--gold)}.case-block.gold h4{color:var(--gold)}
+
+/* ========== 討論題 ========== */
+.discussion-block{background:linear-gradient(135deg,#fff,#faf7f2);border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid rgba(139,37,0,.12)}
+.discussion-eyebrow{display:inline-block;padding:.2rem .7rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem}
+.discussion-q{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin-bottom:.7rem;line-height:1.7}
+.discussion-q em{color:var(--accent);font-style:normal}
+.discussion-block .ctx{font-size:.85rem;color:#555;margin-bottom:.7rem;line-height:1.85}
+.discussion-block .ctx strong{color:var(--accent)}
+
+/* ========== 本週讀物 ========== */
+.reading-card{background:#fff;border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0;border-left:4px solid;display:flex;gap:.9rem;align-items:flex-start;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.reading-card.must{border-left-color:var(--accent)}
+.reading-card.rec{border-left-color:var(--gold)}
+.reading-icon{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;font-family:'Playfair Display',serif}
+.reading-card.must .reading-icon{background:var(--accent)}
+.reading-card.rec .reading-icon{background:var(--gold)}
+.reading-body{flex:1}
+.reading-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:.2rem;line-height:1.5}
+.reading-meta{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:.3rem;font-family:'Source Serif 4',serif}
+.reading-note{font-size:.83rem;color:#444;line-height:1.75}
+
+/* ========== 銜接關係圖 SVG ========== */
+.linkmap{background:#fff;border-radius:12px;padding:1.5rem;margin:1.3rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.linkmap-svg{display:block;width:100%;max-width:780px;margin:0 auto}
+
+/* ========== RWD ========== */
+@media(max-width:700px){
+  .page{padding:1.8rem 1rem 3rem}
+  .hero-title{font-size:2rem}
+  .page h2{font-size:1.5rem}
+  .scott-hero{flex-direction:column;align-items:center;text-align:center}
+  .scott-info{text-align:left}
+  .transcript-grid{grid-template-columns:1fr}
+  .cmp-three{grid-template-columns:1fr}
+  .vs-table thead th:first-child,.vs-table td:first-child{width:auto}
+  .weapons-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* === W11 新增元件樣式 === */
+.layer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0 2rem}
+.layer-card{background:#fff;border-radius:10px;padding:1.2rem;border-top:4px solid #888;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.layer-macro{border-top-color:var(--accent)}
+.layer-meso{border-top-color:#b8860b}
+.layer-micro{border-top-color:#2c5f7c}
+.layer-tag{font-size:.7rem;letter-spacing:.15em;color:#888;font-weight:600;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.layer-title{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.6rem}
+.layer-list{margin:.3rem 0 .8rem;padding-left:1.2rem;font-size:.86rem;line-height:1.7;color:#444}
+.layer-list li{margin-bottom:.1rem}
+.layer-scholar{font-size:.78rem;color:#666;border-top:1px dashed #ddd;padding-top:.6rem;font-style:italic}
+
+.lineage-map,.lineage-tree{background:#fff;border:1px solid #e5e0d6;border-radius:10px;padding:1.2rem;margin:1rem 0 2rem;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+
+.transition-box{background:linear-gradient(135deg,#fdf8ef,#f5f0e8);border-radius:10px;padding:.4rem 1.4rem;margin:1.2rem 0 2rem;border:1px solid #e0d9c8}
+.trans-row{padding:1rem 0;border-bottom:1px dashed #d4cfc4}
+.trans-row:last-child{border-bottom:0}
+.trans-q{font-size:.95rem;font-weight:700;color:var(--accent);margin-bottom:.5rem;line-height:1.5}
+.trans-a{font-size:.88rem;line-height:1.8;color:#333}
+
+.inst-vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0 1.5rem}
+.inst-card{background:#fff;border-radius:10px;padding:1.3rem 1.4rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.inst-formal{border-top:5px solid #2c5f7c}
+.inst-informal{border-top:5px solid #8b2500}
+.inst-tag{font-size:.7rem;letter-spacing:.18em;font-weight:600;color:#888;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.inst-title{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.8rem}
+.inst-list{padding-left:.2rem;list-style:none;margin:0 0 .8rem;font-size:.88rem;line-height:1.9}
+.inst-list li{margin-bottom:.3rem}
+.inst-foot{font-size:.82rem;background:#f8f5ee;padding:.6rem .8rem;border-radius:6px;border-left:3px solid #b8860b;color:#444}
+
+.callout{border-radius:10px;padding:1rem 1.3rem;margin:1.2rem 0}
+.callout-amber{background:linear-gradient(135deg,#fef6e3,#fbecc6);border-left:4px solid #b8860b}
+.callout-blue{background:linear-gradient(135deg,#eef4f8,#dbe7ee);border-left:4px solid #2c5f7c}
+.callout-eyebrow{font-size:.72rem;letter-spacing:.15em;font-weight:600;color:#666;margin-bottom:.5rem;font-family:'Source Serif 4',serif;font-style:italic}
+.callout p{margin:.4rem 0;font-size:.92rem;line-height:1.75;color:#333}
+.callout-list{font-size:.9rem;line-height:1.85;color:#333;margin:.5rem 0 0;padding-left:1.4rem}
+.callout-list li{margin-bottom:.4rem}
+
+.connect-box{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0 1.5rem;border:1px solid #e0d9c8;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.connect-box p{font-size:.92rem;line-height:1.8;color:#333;margin:.4rem 0}
+.connect-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:1rem 0 .5rem}
+.connect-item{display:flex;gap:.7rem;background:#fafaf6;padding:.9rem;border-radius:8px;border-left:3px solid var(--accent)}
+.connect-num{font-size:1.4rem;font-weight:800;color:var(--accent);font-family:'Playfair Display',serif;line-height:1}
+.connect-text{flex:1;font-size:.86rem;line-height:1.6}
+.connect-sub{display:block;color:#666;font-size:.78rem;margin-top:.3rem;line-height:1.55}
+.connect-foot{font-size:.85rem;color:#666;font-style:italic;margin-top:.6rem;padding-top:.6rem;border-top:1px dashed #ddd}
+
+.media-impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1rem 0 1.6rem}
+.impact-card{background:#fff;border-radius:10px;padding:1.3rem 1.4rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.impact-inst{border-top:5px solid #2c5f7c}
+.impact-noninst{border-top:5px solid #8b2500}
+.impact-tag{font-size:.72rem;letter-spacing:.15em;font-weight:600;color:#888;margin-bottom:.3rem;font-family:'Source Serif 4',serif;font-style:italic}
+.impact-title{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.9rem;line-height:1.4}
+.impact-list{padding-left:0;list-style:none;margin:0 0 .8rem;font-size:.88rem;line-height:1.75}
+.impact-list li{margin-bottom:.7rem;padding-left:0}
+.impact-sub{display:block;color:#666;font-size:.78rem;margin-top:.15rem;line-height:1.55}
+.impact-foot{font-size:.83rem;background:#f8f5ee;padding:.55rem .8rem;border-radius:6px;border-left:3px solid #b8860b;color:#444}
+
+.blur-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1rem 0 1.5rem}
+.blur-card{background:#fff;border-radius:10px;padding:1.1rem 1.2rem;border-left:4px solid var(--sage);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.blur-eye{font-size:.7rem;letter-spacing:.15em;color:var(--sage);font-weight:600;font-family:'Source Serif 4',serif;font-style:italic;margin-bottom:.3rem}
+.blur-title{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:.5rem;line-height:1.4}
+.blur-text{font-size:.85rem;line-height:1.7;color:#444}
+
+/* === Quiz blocks === */
+.quiz-block{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0;border:1px solid #e5e0d6;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative}
+.quiz-q-num{position:absolute;top:-12px;left:1.5rem;background:var(--accent);color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;padding:.25rem .75rem;border-radius:5px;letter-spacing:.05em}
+.quiz-question{font-size:.95rem;font-weight:600;color:var(--ink);margin:.4rem 0 .9rem;line-height:1.7}
+.quiz-options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.7rem}
+.quiz-opt{text-align:left;background:#fafaf6;border:1.5px solid #e0d9c8;border-radius:7px;padding:.7rem 1rem;font-size:.88rem;line-height:1.6;color:#333;cursor:pointer;transition:all .2s;font-family:inherit}
+.quiz-opt:hover{background:#f5f0e8;border-color:#b8860b}
+.quiz-opt.selected-correct{background:linear-gradient(135deg,#d4edd4,#c0e0c0);border-color:#5a8c5a;color:#1e4d1e;font-weight:600}
+.quiz-opt.selected-wrong{background:linear-gradient(135deg,#f8d8d4,#efc4be);border-color:#b85040;color:#7a1a10}
+.quiz-opt.show-correct{background:#eaf5ea;border-color:#5a8c5a;font-weight:500}
+.quiz-explain{font-size:.85rem;line-height:1.8;color:#333;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(90,110,90,.04));padding:.9rem 1.1rem;border-radius:7px;border-left:3px solid var(--sage);display:none}
+.quiz-explain.shown{display:block}
+.quiz-explain strong{color:var(--accent)}
+
+@media(max-width:780px){
+  .layer-grid,.inst-vs-grid,.media-impact-grid,.blur-grid,.connect-grid{grid-template-columns:1fr}
+}
+
+
+.sch-node{cursor:pointer;transition:opacity .25s}
+.sch-node:hover{opacity:.82}
+.sch-detail{background:#fff;border:1px solid #e5e0d6;border-left:5px solid var(--accent);border-radius:10px;padding:1.1rem 1.3rem;margin:.6rem 0 1rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.sch-detail .sd-name{font-family:'Playfair Display',serif;font-weight:800;font-size:1.08rem;margin-bottom:.45rem}
+.sch-detail p{font-size:.88rem;line-height:1.8;margin:.3rem 0;color:#333}
+.sch-hint{font-size:.78rem;color:var(--muted);font-style:italic;text-align:center;margin:.3rem 0 .8rem}
+.tmpl-list{list-style:none;padding:0;margin:1rem 0}
+.tmpl-list li{background:#fff;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:.65rem 1rem;margin:.45rem 0;font-size:.9rem;box-shadow:0 1px 6px rgba(0,0,0,.04);font-family:'Source Serif 4',serif}
+.tmpl-list li strong{color:var(--accent);font-family:'Noto Sans TC',sans-serif}
+.rule-list{list-style:none;padding:0;margin:.8rem 0}
+.rule-list li{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid #ece6da;border-radius:8px;padding:.55rem .9rem;margin:.4rem 0;font-size:.86rem;line-height:1.55}
+.rule-list .kw{font-family:'Source Serif 4',serif;font-weight:700;color:var(--accent);flex-shrink:0;font-style:italic}
+.check-box{background:#fff;border:1px solid #e5e0d6;border-radius:12px;padding:1rem 1.3rem;margin:.7rem 0;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.check-box h4{font-family:'Playfair Display',serif;color:var(--accent);margin:0 0 .5rem;font-size:.98rem}
+.check-box ul{list-style:none;padding:0;margin:0}
+.check-box li{padding:.3rem 0 .3rem 1.7rem;position:relative;font-size:.86rem;line-height:1.55;border-bottom:1px dashed #eee}
+.check-box li::before{content:'☐';position:absolute;left:0;color:var(--gold);font-size:1rem}
+.check-box li:last-child{border-bottom:none}
+.skeleton{font-family:'Source Serif 4',serif;font-size:.82rem;color:#7a6f5f;background:#faf7f2;border:1px dashed #d8cdbb;border-radius:8px;padding:.55rem .9rem;margin:.6rem 0}
+.skeleton b{color:var(--accent);font-family:'Noto Sans TC',sans-serif}
+.model-ans{background:#fff;border:1px solid #e5e0d6;border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:1.1rem 1.35rem;margin:.7rem 0 1rem;font-family:'Source Serif 4',serif;font-size:.92rem;line-height:2.0;color:#2b2b2b;text-align:justify}
+.model-ans .ma-tag{display:inline-block;font-family:'Noto Sans TC',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.06em;color:#fff;background:var(--gold);padding:.18rem .7rem;border-radius:4px;margin-bottom:.7rem}
+.model-ans strong{color:var(--accent);font-family:'Noto Sans TC',sans-serif}
+.model-ans ol{margin:.3rem 0 0;padding:0;list-style:none}
+.model-ans li{padding:.55rem 0;border-bottom:1px dashed #ece6da;line-height:1.85}
+.model-ans li:last-child{border-bottom:none;padding-bottom:0}
+.model-ans .lbl{font-family:'Noto Sans TC',sans-serif;font-weight:800;color:var(--accent)}
+.material{background:#f3f6f2;border:1px solid #d9e4d6;border-radius:10px;padding:1rem 1.3rem;margin:.6rem 0;font-family:'Source Serif 4',serif;font-size:.9rem;line-height:1.95;color:#33403a;text-align:justify}
+.material .mt-tag{display:inline-block;font-family:'Noto Sans TC',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.06em;color:#fff;background:#5a7d6f;padding:.18rem .7rem;border-radius:4px;margin-right:.5rem}
+
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top-nav">
+  <span class="nav-title">期末考 · 答題邏輯</span>
+  <button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+  <button class="nav-btn" onclick="goPage(1)">1 · 黃金結構</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(2)">2 · 簡答 · 規則</button>
+  <button class="nav-btn" onclick="goPage(3)">3 · 簡答 · 實例</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(4)">4 · 申論 · 流程</button>
+  <button class="nav-btn" onclick="goPage(5)">5 · 申論 · 民主化</button>
+  <button class="nav-btn" onclick="goPage(6)">6 · 申論 · 青鳥行動</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(7)">7 · 檢查與評分</button>
+</div>
+<div class="page-container">
+
+<!-- P0 封面 -->
+<div class="page active" data-page="0"><div class="page-inner">
+  <div class="hero">
+    <div class="hero-eyebrow">政治社會學 · Final Exam Guide</div>
+    <h1 class="hero-title">期末考答題<span class="mark">邏</span>輯</h1>
+    <p class="hero-sub">把答題當成一條流程：<strong>題目（輸入）→ 套規則 → 答案（輸出）</strong></p>
+    <div class="hero-meta">
+      <span>📝 簡答 ＝ 代表學者 · 重要變數 · 因果關係</span>
+      <span>🧩 申論 ＝ 五步驟流程</span>
+      <span>⚙️ 規則明確，照著跑就對</span>
+    </div>
+  </div>
+  <div class="story-lead">
+    好答案靠的是<strong>穩定的邏輯</strong>，不是更多的字。這份講義把答題拆成<strong>明確的步驟與規則</strong>，每一步都講清楚要做什麼、輸出什麼，清楚到連 AI 都能照著執行。心法一句話：<strong>先搭骨架，再填血肉。</strong>
+  </div>
+  <div class="questions">
+    <h4>📌 三個要解決的問題</h4>
+    <ol>
+      <li>簡答怎麼寫，才不被當成<strong>常識複述</strong>？</li>
+      <li>申論怎麼從 B 到 A？哪兩步是<strong>關鍵</strong>？</li>
+      <li>交卷前怎麼<strong>自我檢查</strong>？</li>
+    </ol>
+  </div>
+  <div class="card-grid">
+    <div class="card"><h4>P1 黃金結構</h4><p>兩種題型的流程一次看懂。</p></div>
+    <div class="card gold"><h4>P2–3 簡答</h4><p>三要素規則，弱強對照，模範題庫。</p></div>
+    <div class="card blue"><h4>P4–6 申論</h4><p>五步驟流程（可點），兩個完整實例。</p></div>
+    <div class="card sage"><h4>P7 檢查</h4><p>清單、評分規則、常見錯誤。</p></div>
+  </div>
+  <div class="next-page" onclick="goPage(1)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P1 · 答題的黃金結構</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P1 黃金結構 -->
+<div class="page" data-page="1"><div class="page-inner">
+  <div class="guide-breadcrumb">第 1 章 · <span>邏輯</span></div>
+  <h2>答題的黃金結構</h2>
+  <p class="lede">把答題想成一個<strong>函數</strong>：題目（輸入）經過套規則的處理，輸出答案。兩種題型，各有一條穩定的流程。</p>
+  <div class="lineage-map">
+    <svg viewBox="0 0 900 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Noto Sans TC',sans-serif">
+      <line x1="450" y1="40" x2="450" y2="310" stroke="#e0d8c8" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="225" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#8b2500">簡答 ｜ 3 要素</text>
+      <rect x="80" y="56" width="290" height="46" rx="8" fill="#8b2500"/><text x="225" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">① 代表學者</text>
+      <rect x="80" y="116" width="290" height="46" rx="8" fill="#b8860b"/><text x="225" y="144" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">② 重要變數</text>
+      <rect x="80" y="176" width="290" height="46" rx="8" fill="#3a5a8c"/><text x="225" y="199" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">③ 關注的因果關係</text>
+      <text x="225" y="252" text-anchor="middle" font-size="11.5" fill="#777">三句到位，即可得分</text>
+      <text x="675" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#8b2500">申論 ｜ 5 步驟</text>
+      <rect x="540" y="48" width="290" height="36" rx="7" fill="#6b6560"/><text x="685" y="71" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">① 辨識 · 抽爭點</text>
+      <rect x="540" y="94" width="290" height="36" rx="7" fill="#5a7d6f"/><text x="685" y="117" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">② 配對 · 選理論</text>
+      <rect x="540" y="140" width="290" height="36" rx="7" fill="#3a5a8c"/><text x="685" y="163" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">③ 映射 · 貼案例</text>
+      <rect x="540" y="186" width="290" height="36" rx="7" fill="#8b2500"/><text x="685" y="209" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">④ 檢驗 · 評限制 ★</text>
+      <rect x="540" y="232" width="290" height="36" rx="7" fill="#b8860b"/><text x="685" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">⑤ 補強 · 補視角 ★</text>
+      <text x="685" y="292" text-anchor="middle" font-size="11.5" fill="#8b2500" font-weight="600">★ ④⑤ 是 B 到 A 的關鍵</text>
+    </svg>
+  </div>
+  <ul class="tmpl-list">
+    <li>📐 <strong>簡答邏輯式：</strong>答案 ＝ 代表學者 ＋ 重要變數 ＋ 關注的因果關係</li>
+    <li>📐 <strong>申論流程：</strong>辨識 → 配對 → 映射 → 檢驗 → 補強</li>
+  </ul>
+  <div class="hl-box gold"><h4>🔑 一句話</h4><p>簡答考「記不記得、懂不懂」，申論考「會不會用、能不能評」。規則寫明確，答案就穩定。</p></div>
+  <div class="next-page" onclick="goPage(2)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P2 · 簡答題：三要素規則</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P2 簡答規則 -->
+<div class="page" data-page="2"><div class="page-inner">
+  <div class="guide-breadcrumb">第 2 章 · <span>簡答題</span></div>
+  <h2>簡答題：三要素規則</h2>
+  <p class="section-lead">3 到 5 分、3 到 6 句。不必寫多，三個要素各一句講清楚。</p>
+  <div class="lineage-map">
+    <svg viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Noto Sans TC',sans-serif">
+      <rect x="10" y="38" width="170" height="46" rx="9" fill="#8b2500"/><text x="95" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">代表學者</text>
+      <text x="195" y="68" font-size="22" fill="#b8860b" font-weight="700">＋</text>
+      <rect x="225" y="38" width="170" height="46" rx="9" fill="#b8860b"/><text x="310" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">重要變數</text>
+      <text x="410" y="68" font-size="22" fill="#b8860b" font-weight="700">＋</text>
+      <rect x="440" y="38" width="210" height="46" rx="9" fill="#3a5a8c"/><text x="545" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">關注的因果關係</text>
+      <text x="665" y="68" font-size="22" fill="#1a1a1a" font-weight="700">＝</text>
+      <rect x="695" y="38" width="195" height="46" rx="9" fill="#1a1a1a"/><text x="792" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">得分的簡答</text>
+    </svg>
+  </div>
+  <div class="connect-grid">
+    <div class="connect-item"><div class="connect-num">1</div><div class="connect-text"><strong>代表學者</strong><span class="connect-sub">誰提出或代表這個理論，必要時加上代表作。錯置就會扣分。</span></div></div>
+    <div class="connect-item"><div class="connect-num">2</div><div class="connect-text"><strong>重要變數</strong><span class="connect-sub">點出理論處理的關鍵變數，也就是「什麼」在影響「什麼」（自變數與依變數）。</span></div></div>
+    <div class="connect-item"><div class="connect-num">3</div><div class="connect-text"><strong>關注的因果關係</strong><span class="connect-sub">說清楚變數之間的因果主張與機制，也就是「A 透過什麼途徑造成 B」。缺了因果關係就缺了靈魂。</span></div></div>
+  </div>
+  <ul class="tmpl-list">
+    <li>📐 <strong>句型：</strong>「[學者] 關注 [變數 X] 如何影響 [變數 Y]，主張其因果關係是 ___（透過 ___ 的機制）。」</li>
+  </ul>
+  <div class="callout callout-amber">
+    <div class="callout-eyebrow">三個失分點</div>
+    <ul class="callout-list">
+      <li>只寫結論，<strong>沒講清楚因果關係</strong>。</li>
+      <li>沒點出<strong>關鍵變數</strong>，或學者張冠李戴。</li>
+      <li>用語<strong>常識化</strong>，不使用學術概念。</li>
+    </ul>
+  </div>
+  <div class="next-page" onclick="goPage(3)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P3 · 簡答實例：弱與強</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P3 簡答實例 -->
+<div class="page" data-page="3"><div class="page-inner">
+  <div class="guide-breadcrumb">第 3 章 · <span>簡答實例</span></div>
+  <h2>簡答實例：差在哪？</h2>
+  <div class="case-block"><div class="ce">題目（5 分）</div><h4>說明 Tilly「戰爭締造國家」的命題。</h4></div>
+  <div class="inst-vs-grid">
+    <div class="inst-card inst-informal">
+      <div class="inst-tag">弱答案</div>
+      <div class="inst-title">常識複述</div>
+      <ul class="inst-list">
+        <li>「Tilly 說戰爭很重要，國家因為打仗而變強。」</li>
+        <li>沒有機制，沒有關鍵概念，對象也模糊。</li>
+      </ul>
+      <div class="inst-foot">沒點出關鍵變數，也沒講清楚因果關係。</div>
+    </div>
+    <div class="inst-card inst-formal">
+      <div class="inst-tag">強答案</div>
+      <div class="inst-title">代表學者＋重要變數＋因果關係</div>
+      <ul class="inst-list">
+        <li><strong>代表學者：</strong>Charles Tilly。</li>
+        <li><strong>重要變數：</strong>備戰壓力（自變數）、資源汲取與官僚財政軍事機器（中介），以及強制（coercion）與資本（capital）的組合。</li>
+        <li><strong>因果關係：</strong>備戰壓力促使統治者汲取資源、建立官僚財政軍事機器而催生國家；強制與資本的不同組合則造就不同路徑，其中「資本化強制」（如英、法）勝出為主導形態。</li>
+      </ul>
+      <div class="inst-foot">代表學者、重要變數、因果關係都齊了。</div>
+    </div>
+  </div>
+  <h3><span class="num">📚</span>模範題庫（先自己想，再點開）</h3>
+  <div class="spoiler"><strong>Q1：Skocpol 的「國家自主性」？（點我展開）</strong><br>
+  Skocpol 在《國家與社會革命》中，把<strong>國家自主性與國家能力</strong>當成關鍵變數，主張國家並非階級利益的被動反映，而是能在國際地緣壓力與既有社會結構下，作為自主行為者推動甚至違背支配階級短期利益的政策，進而影響社會革命與重大政策的走向。</div>
+  <div class="spoiler"><strong>Q2：Anderson 的「想像的共同體」？（點我展開）</strong><br>
+  Anderson 以<strong>印刷資本主義</strong>為關鍵變數，主張它透過創造成員之間的「同時性」想像，促成了民族這個被想像的、有限的、有主權的共同體，而這裡的「想像」指的是建構方式而非虛假。</div>
+  <div class="spoiler"><strong>Q3：Almond 與 Verba 的「公民文化」？（點我展開）</strong><br>
+  Almond 與 Verba 在《公民文化》中，把<strong>政治文化的類型</strong>當成關鍵變數，主張參與型、臣屬型與狹隘型取向取得平衡的「公民文化」，能讓公民既積極參與又對權威保有信任，從而促成穩定的民主。</div>
+  <div class="next-page" onclick="goPage(4)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P4 · 申論題：五步驟流程</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P4 申論流程 -->
+<div class="page" data-page="4"><div class="page-inner">
+  <div class="guide-breadcrumb">第 4 章 · <span>申論題</span></div>
+  <h2>申論題：五步驟流程</h2>
+  <p class="section-lead">申論考的是應用、評估與整合。把它當成一條處理流程，<strong>點任一步</strong>看「做什麼、規則」。</p>
+  <div class="lineage-map">
+    <svg viewBox="0 0 900 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'Noto Sans TC',sans-serif">
+      <defs><marker id="arS" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#bbb"/></marker></defs>
+      <line x1="170" y1="107" x2="186" y2="107" stroke="#bbb" stroke-width="1.6" marker-end="url(#arS)"/>
+      <line x1="348" y1="107" x2="364" y2="107" stroke="#bbb" stroke-width="1.6" marker-end="url(#arS)"/>
+      <line x1="526" y1="107" x2="542" y2="107" stroke="#bbb" stroke-width="1.6" marker-end="url(#arS)"/>
+      <line x1="704" y1="107" x2="720" y2="107" stroke="#bbb" stroke-width="1.6" marker-end="url(#arS)"/>
+      <text x="713" y="50" text-anchor="middle" font-size="12" font-weight="700" fill="#8b2500">★ B 到 A 的關鍵 ★</text>
+      <line x1="544" y1="58" x2="882" y2="58" stroke="#8b2500" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <g class="sch-node" onclick="showStep(0)"><rect x="10" y="72" width="160" height="70" rx="9" fill="#6b6560"/><text x="90" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">① 辨識</text><text x="90" y="121" text-anchor="middle" font-size="9.5" fill="#e6e2da">Parse · 抽爭點</text></g>
+      <g class="sch-node" onclick="showStep(1)"><rect x="188" y="72" width="160" height="70" rx="9" fill="#5a7d6f"/><text x="268" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">② 配對</text><text x="268" y="121" text-anchor="middle" font-size="9.5" fill="#dcebe4">Match · 選理論</text></g>
+      <g class="sch-node" onclick="showStep(2)"><rect x="366" y="72" width="160" height="70" rx="9" fill="#3a5a8c"/><text x="446" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">③ 映射</text><text x="446" y="121" text-anchor="middle" font-size="9.5" fill="#d7e1f0">Map · 貼案例</text></g>
+      <g class="sch-node" onclick="showStep(3)"><rect x="544" y="72" width="160" height="70" rx="9" fill="#8b2500"/><text x="624" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">④ 檢驗</text><text x="624" y="121" text-anchor="middle" font-size="9.5" fill="#f0d9cf">Evaluate · 評限制</text></g>
+      <g class="sch-node" onclick="showStep(4)"><rect x="722" y="72" width="160" height="70" rx="9" fill="#b8860b"/><text x="802" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">⑤ 補強</text><text x="802" y="121" text-anchor="middle" font-size="9.5" fill="#fbeecb">Augment · 補視角</text></g>
+      <text x="450" y="180" text-anchor="middle" font-size="11.5" fill="#888">點擊任一步，看「做什麼、規則」</text>
+    </svg>
+  </div>
+  <div class="sch-hint">（預設顯示「① 辨識」；點擊步驟切換）</div>
+  <div class="sch-detail" id="stepCard" style="border-left-color:#6b6560">
+    <div class="sd-name" style="color:#6b6560">① 辨識（Parse）</div>
+    <p><strong>做什麼：</strong>抽出案例的時間、關鍵事件與爭點。</p>
+    <p><strong>規則：</strong>只留與理論相關的事實，不寫流水帳。</p>
+  </div>
+  <ul class="tmpl-list"><li>📐 <strong>流程：</strong>題目 →〔辨識 → 配對 → 映射 → 檢驗 → 補強〕→ 高分答案</li></ul>
+  <div class="next-page" onclick="goPage(5)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P5 · 申論實例一：台灣民主化</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P5 申論實例一 民主化 -->
+<div class="page" data-page="5"><div class="page-inner">
+  <div class="guide-breadcrumb">第 5 章 · <span>申論實例一</span></div>
+  <h2>申論實例一：台灣民主化</h2>
+  <div class="material"><span class="mt-tag">背景資訊</span>台灣自 1970 年代起出現黨外運動，1986 年民主進步黨成立，1987 年政府宣布解嚴，1991 至 1992 年國會全面改選，1996 年舉行首次總統直選，整個過程是漸進的政治開放而非武裝革命。同一時期，執政的國民黨內部存在保守派與改革派的張力，蔣經國晚期推動了一連串開放措施；體制外的反對運動由下而上持續施壓，長期的地方選舉也成為反對勢力累積實力的舞台。對外，冷戰格局與美中台三方關係構成不可忽視的外部環境。</div>
+  <div class="case-block"><div class="ce">分析要求（25 分）</div><h4>請依據上述背景，分析台灣民主化過程中國家與社會的關係，並評估哪一個理論最能解釋台灣經驗。</h4></div>
+  <div class="skeleton">📐 解題骨架：<b>辨識</b>（抓爭點）→ <b>配對</b>（民主轉型論）→ <b>映射</b>（菁英分裂加反對壓力）→ <b>檢驗</b>（分裂國家的限制）→ <b>補強</b>（國家能力、認同、國際環境）。</div>
+  <div class="model-ans">
+    <span class="ma-tag">完整模範答案 · 列點</span>
+    <ol>
+      <li><span class="lbl">① 辨識｜抓爭點：</span>從背景可看出這是一場由菁英開放與反對壓力共同推動的漸進轉型，因此核心問題是國家與社會如何互動而促成民主化，而非單一方主導。</li>
+      <li><span class="lbl">② 配對｜主要理論：</span>採 O'Donnell 與 Schmitter 的<strong>民主轉型論</strong>，核心主張是威權轉型源於統治集團內部強硬派與改革派的分裂，再透過菁英協商與反對勢力的壓力逐步開放。</li>
+      <li><span class="lbl">③ 映射｜分析：</span>蔣經國晚期的開放反映國民黨內改革派抬頭，黨外與民進黨形成由下而上的壓力，地方選舉長期作為練兵舞台，國家與社會的互動因而共同推動漸進轉型，與轉型論的機制相當吻合。</li>
+      <li><span class="lbl">④ 檢驗｜能否解釋：</span>轉型論能說明菁英互動與漸進路徑，卻較難處理台灣作為<strong>分裂國家</strong>的特殊性，國族認同分歧與兩岸關係並未被充分納入。</li>
+      <li><span class="lbl">⑤ 補強｜補充視角：</span>可再補<strong>國家中心論</strong>對國家能力的關注、<strong>認同政治</strong>對台灣認同浮現的解釋，以及<strong>國際環境</strong>對美中台地緣結構的考量。</li>
+    </ol>
+  </div>
+  <div class="hl-box blue"><h4>➡ 看出層次了嗎？</h4><p>前三點（辨識、配對、映射）把案例講清楚，已經是 B。真正讓它升到 A 的，是第 ④ 與第 ⑤ 點，也就是<strong>檢驗理論限制</strong>與<strong>補上跨週視角</strong>。</p></div>
+  <div class="next-page" onclick="goPage(6)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P6 · 申論實例二：青鳥行動</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P6 申論實例二 青鳥行動 -->
+<div class="page" data-page="6"><div class="page-inner">
+  <div class="guide-breadcrumb">第 6 章 · <span>申論實例二</span></div>
+  <h2>申論實例二：青鳥行動</h2>
+  <div class="material"><span class="mt-tag">背景資訊</span>2024 年 5 月，立法院在國民黨與民眾黨的人數優勢下推動國會職權修法，內容包含具爭議的「藐視國會罪」等條文，審議過程中於 5 月 17 日院會一度爆發肢體衝突。多個公民團體在立法院旁的青島東路一帶集結，並因避開社群媒體演算法而以字形相近的「青鳥」為名，5 月 24 日號稱聚集超過 10 萬人，喊出「沒有討論，不是民主」與「反黑箱、拒絕中國干政」等訴求。整場運動透過直播與社群媒體快速擴散，並被許多人視為太陽花世代的延續。</div>
+  <div class="case-block"><div class="ce">分析要求（25 分）</div><h4>請依據上述背景，分析青鳥行動的動員邏輯，並評估文化框架理論能否解釋這場運動。</h4></div>
+  <div class="skeleton">📐 解題骨架：<b>辨識</b>（抓爭點）→ <b>配對</b>（文化框架理論）→ <b>映射</b>（診斷、預後、動員框架）→ <b>檢驗</b>（為何此刻爆發）→ <b>補強</b>（政治機會、認同、資訊環境）。</div>
+  <div class="model-ans">
+    <span class="ma-tag">完整模範答案 · 列點</span>
+    <ol>
+      <li><span class="lbl">① 辨識｜抓爭點：</span>從背景可看出這是一場針對國會修法內容與審議程序的抗議，因此核心問題是運動者如何賦予爭議意義並動員群眾上街。</li>
+      <li><span class="lbl">② 配對｜主要理論：</span>採 Snow 與 Benford 的<strong>文化框架理論</strong>，分析運動者如何建構意義以爭取共鳴。</li>
+      <li><span class="lbl">③ 映射｜分析：</span>診斷框架把爭議指認為國會黑箱擴權，預後框架要求退回委員會、恢復程序正義，動員框架號召民眾上街守護民主；「沒有討論，不是民主」把程序問題提升為民主存亡，「拒絕中國干政」連結主權與認同，直播與社群的即時擴散創造同時性，使運動被視為太陽花世代的延續。</li>
+      <li><span class="lbl">④ 檢驗｜能否解釋：</span>框架理論能說明意義如何被建構與共鳴，卻較難單獨解釋運動為何在此刻爆發，也較少觸及為何「守護民主」這個框架特別能打動台灣社會。</li>
+      <li><span class="lbl">⑤ 補強｜補充視角：</span>可補<strong>政治機會結構</strong>（選後朝小野大的格局與議事衝突開啟動員空窗）、<strong>認同政治</strong>（台灣認同是這些框架共鳴的情感地基），以及<strong>資訊環境</strong>（「青鳥」之名本身就是對演算法與認知環境的回應）。</li>
+    </ol>
+  </div>
+  <div class="hl-box gold"><h4>🎯 兩題共通的總評</h4><p>好的申論都是同一個邏輯：用一個主理論把案例講清楚，誠實指出它解釋不到的地方，再用一兩個跨週視角把它補完整。</p></div>
+  <div class="next-page" onclick="goPage(7)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P7 · 檢查清單與評分規則</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+
+<!-- P7 檢查與評分 -->
+<div class="page" data-page="7"><div class="page-inner">
+  <div class="guide-breadcrumb">第 7 章 · <span>自我檢查</span></div>
+  <h2>檢查清單與評分規則</h2>
+  <div class="check-box">
+    <h4>✓ 簡答：交卷前</h4>
+    <ul>
+      <li>點出<strong>代表學者</strong>了嗎？</li>
+      <li>點出<strong>重要變數</strong>了嗎？</li>
+      <li>講清楚<strong>關注的因果關係</strong>（不只結論）了嗎？</li>
+      <li>用了<strong>學術概念</strong>（不是常識用語）嗎？</li>
+    </ul>
+  </div>
+  <div class="check-box">
+    <h4>✓ 申論：交卷前</h4>
+    <ul>
+      <li>① 背景精準，只留相關事實嗎？</li>
+      <li>② 選對理論並寫出機制嗎？</li>
+      <li>③ 每個概念都<strong>對應到案例</strong>嗎？</li>
+      <li>④ 有<strong>評估</strong>理論的限制嗎？</li>
+      <li>⑤ 有補<strong>一兩個跨週視角</strong>嗎？</li>
+    </ul>
+  </div>
+  <h3><span class="num">⚙️</span>評分規則（可直接套用）</h3>
+  <ul class="rule-list">
+    <li><span class="kw">IF</span><span>缺機制，則降一級。</span></li>
+    <li><span class="kw">IF</span><span>學者或理論張冠李戴，則該題重扣。</span></li>
+    <li><span class="kw">IF</span><span>案例與理論脫節，則上限 B。</span></li>
+    <li><span class="kw">IF</span><span>沒有評估（步驟④），則上限 B。</span></li>
+    <li><span class="kw">IF</span><span>有評估又有補充（步驟④⑤），則可達 A。</span></li>
+  </ul>
+  <table class="vs-table">
+    <thead><tr><th>等第</th><th class="sun">申論答案特徵</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A</strong></td><td>理論加機制，案例緊扣，<strong>有評估</strong>，再<strong>跨週補充</strong>。</td></tr>
+      <tr><td><strong>B</strong></td><td>理論正確、案例對應，但分析淺，<strong>缺評估與補充</strong>。</td></tr>
+      <tr><td><strong>C</strong></td><td>概念模糊或<strong>張冠李戴</strong>，案例與理論<strong>脫節</strong>。</td></tr>
+    </tbody>
+  </table>
+  <div class="callout callout-amber">
+    <div class="callout-eyebrow">最常見的失分</div>
+    <ul class="callout-list">
+      <li>只寫結論，沒有機制。</li>
+      <li>學者或理論張冠李戴。</li>
+      <li>案例與理論脫節。</li>
+      <li>全程複述，不做評估。</li>
+    </ul>
+  </div>
+  <div class="hl-box blue"><h4>⏱ 提醒</h4><p>拿到申論題，先花 3 到 5 分鐘列骨架，把五步驟的關鍵字寫在草稿區，再開始下筆。祝考試順利。</p></div>
+</div></div>
+
+</div>
+<div class="bottom-bar">
+  <div class="page-indicator">第 <span id="cur-page">1</span> / 8 頁</div>
+  <div class="page-dots" id="dots"></div>
+  <div class="arrow-btns">
+    <button class="arrow-btn" id="prev-btn" onclick="goPrev()">←</button>
+    <button class="arrow-btn" id="next-btn" onclick="goNext()">→</button>
+  </div>
+</div>
+</div>
+<script>
+const totalPages = 8;
+let currentPage = 0;
+const dotsEl = document.getElementById('dots');
+for(let i=0;i<totalPages;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goPage(i);dotsEl.appendChild(d);}
+function goPage(n){if(n<0||n>=totalPages)return;
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('cur-page').textContent=n+1;
+  document.getElementById('prev-btn').disabled=n===0;
+  document.getElementById('next-btn').disabled=n===totalPages-1;
+  currentPage=n;document.querySelectorAll('.page')[n].scrollTop=0;}
+function goPrev(){goPage(currentPage-1);}
+function goNext(){goPage(currentPage+1);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')goPrev();if(e.key==='ArrowRight')goNext();});
+document.addEventListener('click',e=>{const sp=e.target.closest('.spoiler');if(sp)sp.classList.toggle('revealed');});
+const stepData=[
+ {name:'① 辨識（Parse）',color:'#6b6560',what:'抽出案例的時間、關鍵事件與爭點。',tip:'只留與理論相關的事實，不寫流水帳。'},
+ {name:'② 配對（Match）',color:'#5a7d6f',what:'選最契合的主理論，包含學者、主張與機制。',tip:'選對理論並寫出機制，而非只報學者名字。'},
+ {name:'③ 映射（Map）',color:'#3a5a8c',what:'把理論的每個概念對應到案例事實。',tip:'每個概念都要有案例對應，否則像兩段獨立作文。'},
+ {name:'④ 檢驗（Evaluate）',color:'#8b2500',what:'主理論解釋了什麼，又漏了或簡化了什麼。',tip:'沒有評估，分數上限只到 B。'},
+ {name:'⑤ 補強（Augment）',color:'#b8860b',what:'用一兩個其他理論補主理論的漏洞。',tip:'能跨週整合，才拿得到 A。'}
+];
+function showStep(i){var d=stepData[i];var c=document.getElementById('stepCard');c.style.borderLeftColor=d.color;c.innerHTML='<div class="sd-name" style="color:'+d.color+'">'+d.name+'</div>'+'<p><strong>做什麼：</strong>'+d.what+'</p>'+'<p><strong>規則：</strong>'+d.tip+'</p>';}
+</script>
+</body>
+</html>
