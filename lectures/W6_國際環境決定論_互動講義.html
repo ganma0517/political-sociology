@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>W6 — 國家自主論 II：國家能力如何展現？</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;--gold:#b8860b;--sage:#5a6e5a;--muted:#6b6560;--line:#c9c0b4;--card-bg:#faf7f2;--blue:#3a5a8c;--purple:#6b4c7a;--teal:#2a7a6e}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.25rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .95rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.78rem;font-weight:500;color:#888;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#ccc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:var(--paper);background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.9rem;font-weight:700;margin-right:1.2rem;flex-shrink:0}
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:860px;margin:0 auto}
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:700;color:var(--accent);line-height:1.2;margin-bottom:.3rem}
+.page h2::after{content:'';display:block;width:48px;height:3px;background:var(--gold);margin-top:.6rem;margin-bottom:1.6rem}
+.page h3{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--ink);margin:1.8rem 0 .7rem;font-weight:700}
+.page p{font-size:.93rem;margin-bottom:1.1rem;color:#333}
+.page p strong{color:var(--ink)}
+.hero-header{border-bottom:1px solid var(--line);padding-bottom:1.8rem;margin-bottom:2rem}
+.hero-header .name{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:var(--ink);line-height:1.15}
+.hero-header .sub{font-family:'Source Serif 4',serif;font-size:.92rem;color:var(--gold);font-style:italic;margin:.4rem 0 .6rem}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1rem}
+.tag{padding:.3rem .8rem;background:rgba(139,37,0,.07);color:var(--accent);border-radius:18px;font-size:.76rem;font-weight:500}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.3rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.2rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card h4{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent);margin-bottom:.4rem}
+.card p{font-size:.84rem;color:#555;margin-bottom:0}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.blue{border-top-color:var(--blue)}.card.blue h4{color:var(--blue)}
+.card.purple{border-top-color:var(--purple)}.card.purple h4{color:var(--purple)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.teal{border-top-color:var(--teal)}.card.teal h4{color:var(--teal)}
+
+/* Scholar comparison */
+.scholar-tabs{display:flex;gap:0;border-bottom:2px solid var(--line);margin-bottom:0;flex-wrap:wrap}
+.s-tab{padding:.55rem 1rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.82rem;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .3s;white-space:nowrap}
+.s-tab:hover{color:var(--accent)}
+.s-tab.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.s-panel{display:none;padding:1.4rem 0;animation:fadeUp .35s ease}
+.s-panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.kv{display:grid;grid-template-columns:110px 1fr;gap:.3rem .8rem;margin:.8rem 0;font-size:.87rem}
+.kv dt{color:var(--muted);font-weight:500;text-align:right}.kv dd{color:#333}
+
+/* Compare table */
+.cmp-table{width:100%;border-collapse:collapse;font-size:.8rem;margin:1.2rem 0}
+.cmp-table th{background:var(--ink);color:var(--paper);padding:.55rem .6rem;font-weight:600;text-align:left;position:sticky;top:0}
+.cmp-table td{padding:.55rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.cmp-table tr:hover td{background:rgba(139,37,0,.03)}
+.cmp-table .hl{font-weight:600;color:var(--accent)}
+
+/* Quiz */
+.quiz-block{background:var(--card-bg);border-radius:9px;padding:1.5rem;margin:1.2rem 0;border-left:4px solid var(--gold)}
+.quiz-q{font-weight:600;font-size:.92rem;margin-bottom:.8rem;color:var(--ink)}
+.quiz-opts{display:flex;flex-direction:column;gap:.45rem}
+.quiz-opt{padding:.6rem 1rem;background:#fff;border:1px solid var(--line);border-radius:6px;cursor:pointer;font-size:.85rem;transition:all .25s;position:relative}
+.quiz-opt:hover{border-color:var(--accent);background:rgba(139,37,0,.02)}
+.quiz-opt.correct{border-color:var(--sage);background:rgba(90,110,90,.1);color:var(--sage);font-weight:600}
+.quiz-opt.wrong{border-color:#c0392b;background:rgba(192,57,43,.06);color:#c0392b}
+.quiz-opt.disabled{pointer-events:none;opacity:.7}
+.quiz-explain{display:none;margin-top:.8rem;padding:.8rem 1rem;background:rgba(184,134,11,.06);border-radius:6px;font-size:.84rem;color:#555;line-height:1.7}
+.quiz-explain.show{display:block;animation:fadeUp .35s ease}
+
+/* Quote */
+.quote{position:relative;background:linear-gradient(135deg,#2d1f1a,#1a1a1a);color:#e8e0d4;padding:1.8rem 2rem;border-radius:7px;margin:1.5rem 0}
+.quote::before{content:'\201C';position:absolute;top:-.2rem;left:1rem;font-family:'Playfair Display',serif;font-size:4rem;color:var(--gold);opacity:.22;line-height:1}
+.quote p{font-family:'Source Serif 4',serif;font-style:italic;font-size:.92rem;color:#e8e0d4;position:relative;z-index:1;margin-bottom:.5rem}
+.quote .attr{font-style:normal;font-size:.78rem;color:var(--gold);text-align:right}
+
+/* Diagram */
+.diagram-box{background:var(--card-bg);border-radius:9px;padding:1.4rem;margin:1.5rem 0;box-shadow:0 2px 10px rgba(0,0,0,.04);overflow-x:auto}
+.diagram-box h4{font-family:'Playfair Display',serif;text-align:center;color:var(--accent);margin-bottom:1rem;font-size:1rem}
+.dia-flow{display:flex;flex-direction:column;align-items:center;gap:.6rem;min-width:480px}
+.dia-row{display:flex;gap:.8rem;align-items:center;justify-content:center;flex-wrap:wrap}
+.d-box{padding:.5rem .9rem;border-radius:5px;font-size:.8rem;font-weight:500;text-align:center;min-width:100px;transition:transform .3s}
+.d-box:hover{transform:scale(1.04)}
+.d-state{background:var(--accent);color:#fff;font-size:.85rem;font-weight:700;padding:.7rem 1.3rem}
+.d-ext{background:var(--blue);color:#fff}
+.d-mid{background:#e8ddd0;color:var(--ink);border:1px solid var(--line)}
+.d-soc{background:var(--sage);color:#fff}
+.d-out{background:var(--gold);color:#fff}
+.d-fail{background:#c0392b;color:#fff}
+.d-arr{font-size:1.1rem;color:var(--muted)}
+
+/* Vote */
+.vote-row{display:flex;gap:.5rem;flex-wrap:wrap;margin:.8rem 0}
+.vote-btn{padding:.5rem 1rem;background:#fff;border:1.5px solid var(--line);border-radius:20px;font-family:'Noto Sans TC',sans-serif;font-size:.82rem;cursor:pointer;transition:all .25s}
+.vote-btn:hover{border-color:var(--accent);color:var(--accent)}
+.vote-btn.voted{background:var(--accent);color:#fff;border-color:var(--accent)}
+.vote-result{font-size:.84rem;color:var(--sage);margin-top:.3rem;min-height:1.2rem}
+
+/* Highlight box */
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.2rem 0}
+.hl-box p{margin-bottom:.3rem;font-size:.88rem}
+
+/* Guide elements */
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+.story-lead{font-size:1rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+.next-page{display:flex;align-items:center;gap:.8rem;padding:1rem 1.3rem;background:var(--ink);color:var(--paper);border-radius:8px;margin-top:2rem;cursor:pointer;transition:transform .2s}
+.next-page:hover{transform:translateX(4px)}
+.next-page .np-arrow{font-size:1.5rem;color:var(--gold)}
+.next-page .np-text{flex:1}
+.next-page .np-label{font-size:.72rem;color:var(--gold);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.next-page .np-title{font-size:.9rem;margin-top:.15rem}
+.checkpoint{background:rgba(90,110,90,.06);border:1px solid rgba(90,110,90,.2);border-radius:8px;padding:1rem 1.2rem;margin:1.5rem 0}
+.checkpoint h4{color:var(--sage);font-size:.88rem;margin-bottom:.5rem}
+.checkpoint p{font-size:.84rem;color:#555;margin-bottom:.2rem}
+
+/* Timeline */
+.tl{position:relative;padding-left:1.8rem;margin:1rem 0}
+.tl::before{content:'';position:absolute;left:.5rem;top:0;bottom:0;width:2px;background:var(--line)}
+.tl-item{position:relative;margin-bottom:1.2rem}
+.tl-item::before{content:'';position:absolute;left:-1.5rem;top:.45rem;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--paper)}
+.tl-node{position:relative;padding-left:0;margin-bottom:0}
+.tl-node>div:last-child:hover{transform:scale(1.02);box-shadow:0 2px 12px rgba(0,0,0,.1)}
+
+/* Spoiler reveal */
+.spoiler{max-height:2.2rem;overflow:hidden;background:rgba(90,110,90,.04);border-radius:5px;padding:.45rem .8rem;cursor:pointer;user-select:none;font-size:0;line-height:0;display:block;margin-top:.4rem;border:1px dashed var(--line);transition:max-height .5s ease,padding .3s,font-size .3s,line-height .3s,background .3s,border .3s}
+.spoiler::after{content:'👆 點選顯示解答';display:block;text-align:center;color:var(--muted);font-size:.82rem;line-height:2.2rem}
+.spoiler.revealed{max-height:800px;font-size:.84rem;line-height:1.7;background:rgba(184,134,11,.06);border:1px solid var(--gold);padding:.7rem .9rem}
+.spoiler.revealed::after{display:none}
+.spoiler.revealed strong{color:var(--accent)}
+.spoiler.revealed em{color:var(--ink)}
+.tl-label{font-size:.75rem;color:var(--gold);font-weight:600;letter-spacing:.03em}
+.tl-text{font-size:.87rem;color:#333;margin-top:.1rem}
+
+@media(max-width:600px){
+  .page{padding:1.5rem 1rem 3rem}
+  .card-grid{grid-template-columns:1fr}
+  .cmp-table{font-size:.72rem}
+  .s-tab{padding:.4rem .7rem;font-size:.75rem}
+  .kv{grid-template-columns:90px 1fr;font-size:.82rem}
+}
+
+/* ===== 封面（與 W1–W5 一致）===== */
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;color:var(--ink);line-height:1.14;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:680px;margin:0 auto 1.4rem}
+.hero-teacher{font-size:.9rem;color:#555;margin-bottom:1.4rem}
+.hero-teacher strong{color:var(--accent)}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top-nav">
+<span class="nav-title">W6 國際環境決定論</span>
+<button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+<button class="nav-btn" onclick="goPage(1)">1 · IR理論回顧</button>
+<button class="nav-btn" onclick="goPage(2)">2 · 四大理論</button>
+<button class="nav-btn" onclick="goPage(3)">3 · 五位學者</button>
+<span class="nav-divider"></span>
+<button class="nav-btn" onclick="goPage(4)">4 · 比較總表</button>
+<button class="nav-btn" onclick="goPage(5)">5 · 國家為何失敗</button>
+<span class="nav-divider"></span>
+<button class="nav-btn" onclick="goPage(6)">6 · 隨堂測驗</button>
+<button class="nav-btn" onclick="goPage(7)">7 · 課堂討論</button>
+</div>
+
+<div class="page-container">
+
+<!-- ====== P0 封面 ====== -->
+<div class="page active" data-page="0"><div class="page-inner">
+  <div class="hero">
+    <div class="hero-eyebrow">Political Sociology · Week 6</div>
+    <h1 class="hero-title">國際環境<span class="mark">決定論</span><br>國家，被「外面的世界」決定了多少？</h1>
+    <p class="hero-sub">我們把鏡頭一路拉遠：W3 看經濟、W4–W5 看國家自身。本週推到最外圈——<strong>國際體系</strong>。Tilly 已指出戰爭與國際競爭塑造了國家；本週要系統追問：在無政府的國際環境、全球資本體系與地緣壓力下，國家還剩下<strong>多少自主行動的空間</strong>？</p>
+    <div class="hero-teacher">授課教師：<strong>林文正</strong>　·　國立臺灣大學</div>
+    <div class="hero-meta"><span>🌐 現實 / 自由 / 建構</span><span>🏛 國家自主性再修正</span><span>📉 國家為何失敗</span></div>
+  </div>
+  <div class="story-lead">
+    本週是「<strong>宏觀／結構</strong>」這把透鏡的<strong>收尾</strong>。我們會先回顧國際關係三大典範如何各自看待「國家自主性」，再看 <strong>Mann、Giddens、Evans、Weiss、Hobson</strong> 五位學者如何修正 Skocpol，最後用 Acemoglu &amp; Robinson 的制度論追問「<strong>國家為何失敗</strong>」。下週起，我們將轉向「中觀／制度」的分析層次。
+  </div>
+  <div class="questions">
+    <h4>📌 本週要解答的核心問題</h4>
+    <ol>
+      <li><strong>國際關係三大典範（現實 / 自由 / 建構）</strong>如何各自看待「國家自主性」的大小與來源？</li>
+      <li><strong>五位學者如何修正 Skocpol？</strong>從 Mann 的「基礎結構權力」到 Weiss 的「管理互賴」。</li>
+      <li><strong>為什麼有些國家會「失敗」？</strong>Acemoglu &amp; Robinson：榨取式制度如何扼殺發展？</li>
+      <li><strong>「結構決定論」走到這裡</strong>，最大的解釋力是什麼？最大的盲點又是什麼？</li>
+    </ol>
+  </div>
+  <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--ink);margin:1.8rem 0 .7rem;font-weight:700">本週路線圖</h3>
+  <div class="card-grid">
+    <div class="card"><h4>P1 IR 理論回顧</h4><p>三大典範如何看「國家自主性」，互動時間線與關係地圖。</p></div>
+    <div class="card"><h4>P2 四大理論</h4><p>互動四象限：把現實 / 自由 / 建構 / 發展型國家定位。</p></div>
+    <div class="card"><h4>P3 五位學者</h4><p>Mann、Giddens、Evans、Weiss、Hobson 對 Skocpol 的修正。</p></div>
+    <div class="card"><h4>P4 比較總表</h4><p>用「最大差異法」把五位學者放在同一張表上對照。</p></div>
+    <div class="card"><h4>P5 國家為何失敗</h4><p>Acemoglu &amp; Robinson：榨取式 vs 廣納式制度。</p></div>
+    <div class="card"><h4>P6-7 測驗 · 討論</h4><p><strong>選擇題</strong>檢測理解，<strong>問答題</strong>把理論帶回台灣。</p></div>
+  </div>
+  <div class="next-page" onclick="next()"><div class="np-text"><div class="np-label">下一頁</div><div class="np-title">國際關係理論回顧——三大典範怎麼看「國家自主性」？</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+
+<!-- ====== IR理論回顧 ====== -->
+<div class="page" data-page="1"><div class="page-inner">
+<h2>國際關係理論回顧</h2>
+<div class="guide-breadcrumb">📍 你在這裡：<span>P1 IR理論回顧</span> → P2 四大理論 → P3 五位學者 → P4 比較總表 → P5 國家為何失敗 → P6 測驗 → P7 討論</div>
+
+<div class="story-lead">
+想像你是一個小國的領導人。你的國家夾在兩個大國之間，經濟依賴出口，國內有不同族群的張力。你該怎麼做決定？<strong>你的選擇空間有多大，取決於你怎麼理解國際環境。</strong>不同的國際關係理論，會給你截然不同的答案——也會讓你對「國家自主性」有完全不同的判斷。
+</div>
+
+<p>國際關係理論有三個最基本的「典範」（paradigm），所有後續的理論幾乎都是從這三個典範延伸出來的。我們先認識這三個起點，再看它們<strong>各自如何理解國家自主性</strong>，以及延伸出哪些具體理論。</p>
+
+<!-- ===== 與國家自主性的關係 ===== -->
+<h3>三大典範怎麼看「國家自主性」？</h3>
+<p>同一個問題——<strong>國家有多少自主行動的空間？</strong>——三個典範給出了截然不同的答案：</p>
+
+<div style="overflow-x:auto">
+<table class="cmp-table">
+<thead>
+<tr><th style="width:15%"></th><th style="width:28%">🦁 現實主義</th><th style="width:28%">🤝 自由主義</th><th style="width:28%">💭 建構主義</th></tr>
+</thead>
+<tbody>
+<tr><td class="hl">國家自主性<br>有多大？</td>
+<td>很大，但被國際<strong>權力結構</strong>限制。大國有自主性，小國只能選邊站。</td>
+<td>受到國際制度和經濟相互依賴的<strong>約束</strong>，但也因此獲得合作的收益。</td>
+<td>取決於國家如何<strong>定義自己的身分</strong>。認同改變，利益就改變，自主性空間也跟著變。</td>
+</tr>
+<tr><td class="hl">國家自主性<br>的來源？</td>
+<td>軍事力量、地緣位置、結盟策略</td>
+<td>制度參與、經濟實力、規範遵守</td>
+<td>國際認同、論述能力、規範創業</td>
+</tr>
+<tr><td class="hl">國家自主性<br>的限制？</td>
+<td>國際權力分配（單極/兩極/多極）決定了你的空間</td>
+<td>國際規範和經濟依賴限制了你的選項</td>
+<td>國際社會對你的「身分認知」限制了你的行動</td>
+</tr>
+<tr><td class="hl">台灣案例</td>
+<td>🇹🇼 兩岸軍事對峙、美中台三角、國防預算</td>
+<td>🇹🇼 WTO入會、APEC參與、ECFA利弊</td>
+<td>🇹🇼 台灣認同從「中國人」→「台灣人」的轉變</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ===== 三大典範發展時間線 ===== -->
+<h3>三大典範：發展關係時間線</h3>
+<p>三個典範不是同時出現的——它們是在不同歷史背景下，針對前一個理論的不足而誕生的。<strong>點選任一節點</strong>查看該理論的學者、專書、關鍵理論與對應的世界/台灣事件：</p>
+
+<!-- 圖例 -->
+<div style="display:flex;gap:1.2rem;flex-wrap:wrap;margin:.8rem 0;font-size:.78rem;color:var(--muted)">
+<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#8b2500;vertical-align:middle;margin-right:3px"></span>現實主義</span>
+<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#3a5a8c;vertical-align:middle;margin-right:3px"></span>自由主義</span>
+<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#5a6e5a;vertical-align:middle;margin-right:3px"></span>建構主義</span>
+<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#b8860b;vertical-align:middle;margin-right:3px"></span>衍生理論</span>
+<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#6b4c7a;vertical-align:middle;margin-right:3px"></span>批判理論</span>
+<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#2a7a6e;vertical-align:middle;margin-right:3px"></span>當代應用</span>
+</div>
+
+<!-- 互動式時間線 -->
+<div id="tlWrap" style="position:relative;padding-left:78px;margin:.6rem 0 .3rem">
+<!-- 主軸 -->
+<div style="position:absolute;left:38px;top:0;bottom:0;width:2px;background:var(--line)"></div>
+
+<div class="tl-node" onclick="showTL(0)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1948</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#8b2500;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(139,37,0,.07);border-radius:5px;border-left:3px solid #8b2500;transition:all .2s"><strong style="font-size:.8rem;color:#8b2500">Morgenthau《國際政治》</strong> <span style="font-size:.73rem;color:#777">— 古典現實主義奠基</span></div></div>
+
+<div class="tl-node" onclick="showTL(1)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1959</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#8b2500;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(139,37,0,.07);border-radius:5px;border-left:3px solid #8b2500;transition:all .2s"><strong style="font-size:.8rem;color:#8b2500">Waltz《人、國家與戰爭》</strong> <span style="font-size:.73rem;color:#777">— 三個分析層次</span></div></div>
+
+<div class="tl-node" onclick="showTL(2)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1966</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#6b4c7a;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(107,76,122,.07);border-radius:5px;border-left:3px solid #6b4c7a;transition:all .2s"><strong style="font-size:.8rem;color:#6b4c7a">Frank《拉美的資本主義與低度發展》</strong> <span style="font-size:.73rem;color:#777">— 依賴理論誕生</span></div></div>
+
+<div class="tl-node" onclick="showTL(3)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1974</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#6b4c7a;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(107,76,122,.07);border-radius:5px;border-left:3px solid #6b4c7a;transition:all .2s"><strong style="font-size:.8rem;color:#6b4c7a">Wallerstein《現代世界體系》I</strong> <span style="font-size:.73rem;color:#777">— 核心—半邊陲—邊陲</span></div></div>
+
+<div class="tl-node" onclick="showTL(4)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1977</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#3a5a8c;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(58,90,140,.07);border-radius:5px;border-left:3px solid #3a5a8c;transition:all .2s"><strong style="font-size:.8rem;color:#3a5a8c">Keohane & Nye《權力與相互依賴》</strong> <span style="font-size:.73rem;color:#777">— 自由主義挑戰現實主義</span></div></div>
+
+<div class="tl-node" onclick="showTL(5)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1979</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#8b2500;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(139,37,0,.07);border-radius:5px;border-left:3px solid #8b2500;transition:all .2s"><strong style="font-size:.8rem;color:#8b2500">Waltz《國際政治理論》</strong> <span style="font-size:.73rem;color:#777">— 新現實主義回應自由主義</span></div></div>
+
+<div class="tl-node" onclick="showTL(6)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1982</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#b8860b;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(184,134,11,.07);border-radius:5px;border-left:3px solid #b8860b;transition:all .2s"><strong style="font-size:.8rem;color:#b8860b">Johnson《通產省與日本奇蹟》</strong> <span style="font-size:.73rem;color:#777">— 發展型國家理論開創</span></div></div>
+
+<div class="tl-node" onclick="showTL(7)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1984</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#3a5a8c;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(58,90,140,.07);border-radius:5px;border-left:3px solid #3a5a8c;transition:all .2s"><strong style="font-size:.8rem;color:#3a5a8c">Keohane《霸權之後》</strong> <span style="font-size:.73rem;color:#777">— 新自由制度主義＋霸權穩定論成形</span></div></div>
+
+<div class="tl-node" onclick="showTL(8)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1989</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#5a6e5a;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(90,110,90,.07);border-radius:5px;border-left:3px solid #5a6e5a;transition:all .2s"><strong style="font-size:.8rem;color:#5a6e5a">冷戰結束 ｜ Onuf「建構主義」</strong> <span style="font-size:.73rem;color:#777">— 前兩大典範都無法預測蘇聯解體</span></div></div>
+
+<div class="tl-node" onclick="showTL(9)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1992</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#5a6e5a;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(90,110,90,.07);border-radius:5px;border-left:3px solid #5a6e5a;transition:all .2s"><strong style="font-size:.8rem;color:#5a6e5a">Wendt〈無政府狀態是國家製造的〉</strong> <span style="font-size:.73rem;color:#777">— 建構主義奠基</span></div></div>
+
+<div class="tl-node" onclick="showTL(10)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1995</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#b8860b;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(184,134,11,.07);border-radius:5px;border-left:3px solid #b8860b;transition:all .2s"><strong style="font-size:.8rem;color:#b8860b">Evans《鑲嵌性自主》</strong> <span style="font-size:.73rem;color:#777">— 發展型國家理論化（Wade 1990、Amsden 1989）</span></div></div>
+
+<div class="tl-node" onclick="showTL(11)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">1999</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#5a6e5a;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(90,110,90,.07);border-radius:5px;border-left:3px solid #5a6e5a;transition:all .2s"><strong style="font-size:.8rem;color:#5a6e5a">Wendt《國際政治的社會理論》</strong> <span style="font-size:.73rem;color:#777">— 建構主義成為 IR 第三大典範</span></div></div>
+
+<div class="tl-node" onclick="showTL(12)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">2001</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#8b2500;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(139,37,0,.05);border-radius:5px;border-left:3px solid #8b2500;transition:all .2s"><strong style="font-size:.8rem;color:#8b2500">Mearsheimer《大國政治的悲劇》</strong> <span style="font-size:.73rem;color:#777">vs. Ikenberry《勝利之後》</span></div></div>
+
+<div class="tl-node" onclick="showTL(13)" style="cursor:pointer"><div style="position:absolute;left:-40px;width:32px;text-align:right;font-size:.7rem;font-weight:700;color:var(--muted)">2019</div><div style="position:absolute;left:-7px;top:3px;width:10px;height:10px;border-radius:50%;background:#2a7a6e;border:2px solid var(--paper);z-index:1"></div><div style="padding:.3rem .7rem;margin-bottom:.25rem;background:rgba(42,122,110,.07);border-radius:5px;border-left:3px solid #2a7a6e;transition:all .2s"><strong style="font-size:.8rem;color:#2a7a6e">Farrell & Newman「武器化相互依賴」</strong> <span style="font-size:.73rem;color:#777">— 經濟網絡節點被武器化</span></div></div>
+
+</div><!-- /tlWrap -->
+
+<!-- 時間線詳情卡 -->
+<div id="tlDetail" style="min-height:80px;margin-top:.5rem">
+<div class="hl-box" id="tlCard" style="transition:all .3s">
+<p style="color:var(--muted);font-size:.88rem;text-align:center">👆 點選時間線上的任一節點，查看學者、專書、關鍵理論與對應事件</p>
+</div>
+</div>
+
+<div class="hl-box">
+<p><strong>讀時間線的重點：</strong>三大典範不是互相取代，而是<strong>層層堆疊、持續對話</strong>。現實主義在 1940s 主導了 IR 學科，自由主義在 1970s 起挑戰它，建構主義在冷戰結束後（1989-99）因為前兩者都無法預測蘇聯和平解體而崛起。到了 2020s，三者並存，學者越來越傾向跨典範整合。</p>
+</div>
+
+<!-- ===== 戰爭、經濟、國家自主性的三角關係 ===== -->
+<h3>戰爭、經濟與國家自主性：三大典範的核心分歧</h3>
+<p>如果把國際關係的核心問題拆成三個要素——<strong>戰爭（安全）、經濟（財富）、國家自主性（選擇空間）</strong>——三大典範對這三者關係的看法截然不同。這也是理解後面五位學者的基礎：</p>
+
+<div class="diagram-box" style="padding:1rem">
+<h4 style="margin-bottom:.8rem">戰爭 ↔ 經濟 ↔ 國家自主性：誰決定誰？</h4>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem">
+
+<div style="background:rgba(139,37,0,.06);padding:.8rem;border-radius:6px;border-top:3px solid #8b2500">
+<div style="font-size:.85rem;font-weight:700;color:#8b2500;margin-bottom:.4rem">🦁 現實主義的答案</div>
+<div style="font-size:.82rem;color:#333;line-height:1.7">
+<strong>戰爭 → 國家自主性 → 經濟</strong><br>
+戰爭（或戰爭威脅）是最根本的力量。國家為了生存必須建軍、結盟，國家自主性取決於你在軍事權力結構中的位置。經濟是為安全服務的工具。<br>
+<span style="font-size:.78rem;color:var(--gold)">Tilly：「戰爭製造國家，國家也製造戰爭。」</span>
+</div>
+</div>
+
+<div style="background:rgba(58,90,140,.06);padding:.8rem;border-radius:6px;border-top:3px solid #3a5a8c">
+<div style="font-size:.85rem;font-weight:700;color:#3a5a8c;margin-bottom:.4rem">🤝 自由主義的答案</div>
+<div style="font-size:.82rem;color:#333;line-height:1.7">
+<strong>經濟 → 國家自主性 → 戰爭（被抑制）</strong><br>
+經濟相互依賴是最重要的力量。貿易讓戰爭的代價太高，國際制度又降低了衝突風險。國家自主性來自經濟實力和制度參與，而不只是軍事力量。<br>
+<span style="font-size:.78rem;color:var(--gold)">Keohane：「制度讓合作成為可能，即使沒有霸權。」</span>
+</div>
+</div>
+
+<div style="background:rgba(90,110,90,.06);padding:.8rem;border-radius:6px;border-top:3px solid #5a6e5a">
+<div style="font-size:.85rem;font-weight:700;color:#5a6e5a;margin-bottom:.4rem">💭 建構主義的答案</div>
+<div style="font-size:.82rem;color:#333;line-height:1.7">
+<strong>認同 → 定義什麼是「威脅」和「利益」→ 決定戰爭或合作</strong><br>
+戰爭和經濟本身不決定任何事——關鍵是國家如何「理解」它們。同一個鄰國的軍備擴張，對「朋友」和「敵人」意味著完全不同的東西。國家自主性取決於你能否重新定義自己的身分。<br>
+<span style="font-size:.78rem;color:var(--gold)">Wendt：「500 顆英國核彈和 5 顆北韓核彈，哪個更危險？」</span>
+</div>
+</div>
+
+</div>
+</div>
+
+<div style="overflow-x:auto;margin-top:.8rem">
+<table class="cmp-table" style="font-size:.78rem">
+<thead>
+<tr><th style="width:18%">三角關係</th><th style="width:27%">🦁 現實主義</th><th style="width:27%">🤝 自由主義</th><th style="width:27%">💭 建構主義</th></tr>
+</thead>
+<tbody>
+<tr><td class="hl">戰爭的角色</td>
+<td>國際政治的常態，永遠無法消除</td>
+<td>可以透過制度和相互依賴來降低</td>
+<td>取決於國家之間建構的是敵人還是朋友關係</td>
+</tr>
+<tr><td class="hl">經濟的角色</td>
+<td>為軍事力量服務的資源基礎</td>
+<td>促進合作的黏著劑，讓國家不願開戰</td>
+<td>被認同和規範框架所詮釋——同一筆貿易可以是「合作」也可以是「依賴」</td>
+</tr>
+<tr><td class="hl">國家自主性的空間</td>
+<td>大國有，小國沒有——由權力結構決定</td>
+<td>所有國家都有，但受制度和相互依賴約束</td>
+<td>可以被創造——透過重新定義身分來擴大空間</td>
+</tr>
+<tr><td class="hl">台灣案例</td>
+<td>🇹🇼 兩岸軍事對峙決定了台灣的生存空間<br><span style="color:var(--muted)">（1996台海危機、國防預算）</span></td>
+<td>🇹🇼 經貿依賴既是機會也是風險<br><span style="color:var(--muted)">（ECFA、WTO、矽盾）</span></td>
+<td>🇹🇼 認同轉變打開了新的政策空間<br><span style="color:var(--muted)">（台灣認同↑→對中政策轉向）</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="hl-box" style="border-left-color:var(--gold)">
+<p><strong>為什麼這很重要？</strong>接下來五位學者（Mann、Giddens、Evans、Weiss、Hobson）正是在這個三角關係中工作。Mann 把軍事獨立為一種權力來源（呼應現實主義），Giddens 加入工業主義和監視（呼應自由主義的制度觀），Evans 關注經濟發展中的國家—社會關係，Weiss 直接回應「全球化是否削弱國家」的辯論，Hobson 則批評不應把國際（戰爭/經濟）和國內（國家自主性）切割開來。<strong>他們各自選擇了不同的三角切入點。</strong></p>
+</div>
+
+<!-- ===== 互動式關係圖 ===== -->
+<h3>從三大典範到具體理論：關係圖</h3>
+<p>三大典範各自延伸出了具體理論。每條連線標示了該理論對<strong>戰爭⚔️、經濟💰、國家自主性🏛️</strong>三者關係的核心看法。<strong>點選節點查看詳情：</strong></p>
+
+<div class="diagram-box" style="padding:1rem .5rem 1.4rem">
+<svg id="irMap" viewBox="0 0 760 680" style="width:100%;max-width:760px;margin:0 auto;display:block;font-family:'Noto Sans TC',sans-serif" xmlns="http://www.w3.org/2000/svg">
+
+<!-- 層級標籤 -->
+<text x="15" y="48" font-size="10" fill="#6b6560" font-weight="600">三大典範</text>
+<text x="15" y="230" font-size="10" fill="#6b6560" font-weight="600">連結理論</text>
+<text x="15" y="445" font-size="10" fill="#6b6560" font-weight="600">當代應用</text>
+
+<!-- ====== 連線 + 三角關係標注 ====== -->
+
+<!-- 現實主義 → 霸權穩定論 -->
+<line x1="140" y1="95" x2="140" y2="200" stroke="#8b2500" stroke-width="2" stroke-dasharray="6,3"/>
+<rect x="60" y="128" width="160" height="36" rx="5" fill="#fff" stroke="#8b2500" stroke-width=".7" opacity=".95"/>
+<text x="140" y="142" text-anchor="middle" font-size="8.5" fill="#8b2500" font-weight="600">⚔️戰爭→霸權提供安全</text>
+<text x="140" y="156" text-anchor="middle" font-size="8.5" fill="#8b2500">🏛️自主性＝被霸權允許</text>
+
+<!-- 自由主義 → 依賴論/世界體系 (跨典範) -->
+<line x1="340" y1="95" x2="380" y2="200" stroke="#3a5a8c" stroke-width="1.5" stroke-dasharray="6,3"/>
+<line x1="180" y1="95" x2="380" y2="200" stroke="#c9c0b4" stroke-width="1" stroke-dasharray="4,3"/>
+<rect x="295" y="128" width="170" height="36" rx="5" fill="#fff" stroke="#6b4c7a" stroke-width=".7" opacity=".95"/>
+<text x="380" y="142" text-anchor="middle" font-size="8.5" fill="#6b4c7a" font-weight="600">💰經濟結構→決定位置</text>
+<text x="380" y="156" text-anchor="middle" font-size="8.5" fill="#6b4c7a">🏛️自主性＝由位置決定</text>
+
+<!-- 建構主義 → 國際規範與認同 -->
+<line x1="630" y1="95" x2="630" y2="200" stroke="#5a6e5a" stroke-width="2" stroke-dasharray="6,3"/>
+<rect x="545" y="128" width="170" height="36" rx="5" fill="#fff" stroke="#5a6e5a" stroke-width=".7" opacity=".95"/>
+<text x="630" y="142" text-anchor="middle" font-size="8.5" fill="#5a6e5a" font-weight="600">💭認同→定義威脅與利益</text>
+<text x="630" y="156" text-anchor="middle" font-size="8.5" fill="#5a6e5a">🏛️自主性＝可被重新建構</text>
+
+<!-- 霸權穩定論 → 冷戰安全體系 -->
+<line x1="140" y1="270" x2="140" y2="420" stroke="#b8860b" stroke-width="1.5" stroke-dasharray="5,3"/>
+<rect x="48" y="330" width="184" height="36" rx="5" fill="#fff" stroke="#b8860b" stroke-width=".7" opacity=".95"/>
+<text x="140" y="344" text-anchor="middle" font-size="8.5" fill="#b8860b" font-weight="600">⚔️安全換順從</text>
+<text x="140" y="358" text-anchor="middle" font-size="8.5" fill="#b8860b">💰經濟發展＝安全的附產品</text>
+
+<!-- 依賴論 → 發展型國家 -->
+<line x1="380" y1="270" x2="380" y2="420" stroke="#8b2500" stroke-width="1.5" stroke-dasharray="5,3"/>
+<rect x="288" y="330" width="184" height="36" rx="5" fill="#fff" stroke="#8b2500" stroke-width=".7" opacity=".95"/>
+<text x="380" y="344" text-anchor="middle" font-size="8.5" fill="#8b2500" font-weight="600">🏛️國家自主性＝經濟引擎</text>
+<text x="380" y="358" text-anchor="middle" font-size="8.5" fill="#8b2500">⚔️冷戰壓力→迫使產業升級</text>
+
+<!-- 國際規範 → 武器化相互依賴 -->
+<line x1="630" y1="270" x2="630" y2="420" stroke="#2a7a6e" stroke-width="1.5" stroke-dasharray="5,3"/>
+<rect x="538" y="330" width="184" height="36" rx="5" fill="#fff" stroke="#2a7a6e" stroke-width=".7" opacity=".95"/>
+<text x="630" y="344" text-anchor="middle" font-size="8.5" fill="#2a7a6e" font-weight="600">💰經濟網絡＝新型⚔️武器</text>
+<text x="630" y="358" text-anchor="middle" font-size="8.5" fill="#2a7a6e">🏛️自主性＝控制關鍵節點</text>
+
+<!-- 跨典範水平連線 -->
+<line x1="240" y1="235" x2="290" y2="235" stroke="rgba(0,0,0,.12)" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="480" y1="235" x2="540" y2="235" stroke="rgba(0,0,0,.12)" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="240" y1="450" x2="290" y2="450" stroke="rgba(0,0,0,.12)" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="480" y1="450" x2="540" y2="450" stroke="rgba(0,0,0,.12)" stroke-width="1" stroke-dasharray="3,3"/>
+
+<!-- ====== 節點 ====== -->
+<!-- 第一層：三大典範 -->
+<g class="ir-node" data-id="0" onclick="showIR(0)" style="cursor:pointer">
+<rect x="50" y="30" width="180" height="65" rx="10" fill="#8b2500"/>
+<text x="140" y="53" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">🦁 現實主義</text>
+<text x="140" y="70" text-anchor="middle" fill="#e8ddd0" font-size="9">⚔️戰爭→🏛️自主性→💰經濟</text>
+<text x="140" y="85" text-anchor="middle" fill="#e8ddd0" font-size="9">「權力決定一切」</text>
+</g>
+<g class="ir-node" data-id="1" onclick="showIR(1)" style="cursor:pointer">
+<rect x="290" y="30" width="180" height="65" rx="10" fill="#3a5a8c"/>
+<text x="380" y="53" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">🤝 自由主義</text>
+<text x="380" y="70" text-anchor="middle" fill="#e8ddd0" font-size="9">💰經濟→🏛️自主性→⚔️抑制</text>
+<text x="380" y="85" text-anchor="middle" fill="#e8ddd0" font-size="9">「合作抑制衝突」</text>
+</g>
+<g class="ir-node" data-id="2" onclick="showIR(2)" style="cursor:pointer">
+<rect x="530" y="30" width="200" height="65" rx="10" fill="#5a6e5a"/>
+<text x="630" y="53" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">💭 建構主義</text>
+<text x="630" y="70" text-anchor="middle" fill="#e8ddd0" font-size="9">💭認同→定義⚔️和💰的意義</text>
+<text x="630" y="85" text-anchor="middle" fill="#e8ddd0" font-size="9">「世界是被想像的」</text>
+</g>
+
+<!-- 第二層：連結理論 -->
+<g class="ir-node" data-id="3" onclick="showIR(3)" style="cursor:pointer">
+<rect x="40" y="205" width="200" height="60" rx="10" fill="#8b2500" opacity=".8"/>
+<text x="140" y="228" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">霸權穩定論</text>
+<text x="140" y="245" text-anchor="middle" fill="#e8ddd0" font-size="9">⚔️霸權保障秩序→💰繁榮</text>
+<text x="140" y="258" text-anchor="middle" fill="#e8ddd0" font-size="8.5">Kindleberger · Gilpin</text>
+</g>
+<g class="ir-node" data-id="4" onclick="showIR(4)" style="cursor:pointer">
+<rect x="280" y="205" width="200" height="60" rx="10" fill="#6b4c7a" opacity=".85"/>
+<text x="380" y="228" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">依賴論 / 世界體系</text>
+<text x="380" y="245" text-anchor="middle" fill="#e8ddd0" font-size="9">💰全球分工→🏛️位置決定命運</text>
+<text x="380" y="258" text-anchor="middle" fill="#e8ddd0" font-size="8.5">Frank · Wallerstein</text>
+</g>
+<g class="ir-node" data-id="5" onclick="showIR(5)" style="cursor:pointer">
+<rect x="530" y="205" width="200" height="60" rx="10" fill="#5a6e5a" opacity=".8"/>
+<text x="630" y="228" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">國際規範與認同</text>
+<text x="630" y="245" text-anchor="middle" fill="#e8ddd0" font-size="9">💭規範擴散→重定義🏛️空間</text>
+<text x="630" y="258" text-anchor="middle" fill="#e8ddd0" font-size="8.5">Finnemore · Katzenstein</text>
+</g>
+
+<!-- 第三層：當代應用 -->
+<g class="ir-node" data-id="6" onclick="showIR(6)" style="cursor:pointer">
+<rect x="40" y="425" width="200" height="60" rx="10" fill="#b8860b" opacity=".9"/>
+<text x="140" y="448" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">冷戰安全體系</text>
+<text x="140" y="465" text-anchor="middle" fill="#e8ddd0" font-size="9">⚔️安全傘→💰發展空間</text>
+<text x="140" y="478" text-anchor="middle" fill="#e8ddd0" font-size="8.5">台灣：中美防禦條約</text>
+</g>
+<g class="ir-node" data-id="7" onclick="showIR(7)" style="cursor:pointer">
+<rect x="280" y="425" width="200" height="60" rx="10" fill="#8b2500" opacity=".85"/>
+<text x="380" y="448" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">發展型國家</text>
+<text x="380" y="465" text-anchor="middle" fill="#e8ddd0" font-size="9">🏛️國家主導💰→超越位置</text>
+<text x="380" y="478" text-anchor="middle" fill="#e8ddd0" font-size="8.5">台灣：工研院→台積電</text>
+</g>
+<g class="ir-node" data-id="8" onclick="showIR(8)" style="cursor:pointer">
+<rect x="530" y="425" width="200" height="60" rx="10" fill="#2a7a6e" opacity=".9"/>
+<text x="630" y="448" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">武器化相互依賴</text>
+<text x="630" y="465" text-anchor="middle" fill="#e8ddd0" font-size="9">💰網絡＝⚔️脅迫工具</text>
+<text x="630" y="478" text-anchor="middle" fill="#e8ddd0" font-size="8.5">台灣：矽盾 Silicon Shield</text>
+</g>
+
+<!-- 台灣 -->
+<rect x="200" y="530" width="360" height="48" rx="24" fill="none" stroke="#8b2500" stroke-width="2" stroke-dasharray="5,3"/>
+<text x="380" y="550" text-anchor="middle" fill="#8b2500" font-size="11" font-weight="700">🇹🇼 台灣同時經歷三條路線的交互作用</text>
+<text x="380" y="566" text-anchor="middle" fill="#8b2500" font-size="9">安全依賴美國 ⚔️ ＋ 經濟連結中國 💰 ＋ 認同轉向台灣 💭</text>
+<line x1="140" y1="485" x2="300" y2="530" stroke="rgba(139,37,0,.15)" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="380" y1="485" x2="380" y2="530" stroke="rgba(139,37,0,.15)" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="630" y1="485" x2="460" y2="530" stroke="rgba(139,37,0,.15)" stroke-width="1" stroke-dasharray="3,3"/>
+
+<!-- 下游銜接 -->
+<text x="380" y="620" text-anchor="middle" font-size="10" fill="#6b6560" font-style="italic">W6 的五位學者（Mann、Giddens、Evans、Weiss、Hobson）正是站在這些理論的肩膀上</text>
+<text x="380" y="637" text-anchor="middle" font-size="10" fill="#6b6560" font-style="italic">對「國家自主性」提出更細緻的分析 →</text>
+</svg>
+</div>
+
+<!-- 理論詳情卡 -->
+<div id="irDetail" style="min-height:180px">
+<div class="hl-box" id="irCard" style="transition:all .3s">
+<p style="color:var(--muted);font-size:.88rem;text-align:center">👆 點選上方關係圖中的任一節點，查看代表學者、重要個案與台灣事件</p>
+</div>
+</div>
+
+<h3>為什麼要回顧這些理論？</h3>
+<p>這些國際關係理論提供了理解「國際環境如何影響國家自主性」的不同鏡頭。但你可能會想：<strong>這些理論好像都在講「大結構」，那國家自己有沒有能力做選擇？</strong>這就是下一頁要回答的問題。</p>
+
+<div class="next-page" onclick="next()">
+<div class="np-text"><div class="np-label">下一頁</div><div class="np-title">Tilly 的四大理論分類——國家是被決定的，還是有自己的邏輯？</div></div>
+<div class="np-arrow">→</div>
+</div>
+
+</div></div>
+
+<!-- ====== P1 四大理論 ====== -->
+<div class="page" data-page="2"><div class="page-inner">
+<h2>四大理論譜系</h2>
+<div class="guide-breadcrumb">📍 P1 IR理論回顧 → <span>P2 四大理論</span> → P3 五位學者 → P4 比較總表 → P5 國家為何失敗 → P6 測驗 → P7 討論</div>
+
+<div class="story-lead">
+上一頁我們看了三大典範和它們的延伸理論。但這些理論之間到底有什麼差別？Tilly 幫我們整理出一個簡潔的分類方式：<strong>只要問兩個問題，就能把所有理論放進四個格子裡。</strong>點選每個象限，看它怎麼理解戰爭⚔️、經濟💰與國家自主性🏛️的關係。
+</div>
+
+<p>Tilly 在《強制、資本與歐洲國家》第一章提出了一個很好用的分類方式。分類的依據是兩個問題：<strong>（1）國家是經濟結構的「附屬品」，還是有自己的獨立邏輯？（2）影響國家的力量主要來自國內還是國外？</strong></p>
+
+<!-- 互動式四象限 -->
+<div class="diagram-box" style="padding:.8rem">
+<h4>Tilly 的國家形成理論四象限 <span style="font-size:.75rem;color:var(--muted);font-weight:400">— 點選查看詳情</span></h4>
+
+<!-- 軸線標籤 -->
+<div style="text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:.4rem">← 衍生自經濟 ————————— 獨立於經濟 →</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);border-radius:8px;overflow:hidden;max-width:640px;margin:0 auto;position:relative">
+
+<!-- 左側軸標 -->
+<div style="position:absolute;left:-28px;top:50%;transform:translateY(-50%) rotate(-90deg);font-size:.75rem;color:var(--muted);white-space:nowrap">外部 ↑ ——— ↓ 內部</div>
+
+<div class="q-cell" onclick="showQ(0)" style="background:var(--card-bg);padding:.9rem;text-align:center;cursor:pointer;transition:all .25s;border-left:3px solid transparent">
+<div style="font-size:.68rem;color:var(--muted);margin-bottom:.2rem">衍生自經濟 × 內部</div>
+<div style="font-weight:700;color:var(--accent);font-size:.88rem">生產模式分析</div>
+<div style="font-size:.76rem;color:#555;margin-top:.2rem">Perry Anderson｜新馬克思主義</div>
+<div style="font-size:.72rem;color:var(--gold);margin-top:.3rem">💰→決定一切</div>
+</div>
+
+<div class="q-cell" onclick="showQ(1)" style="background:var(--card-bg);padding:.9rem;text-align:center;cursor:pointer;transition:all .25s;border-left:3px solid transparent">
+<div style="font-size:.68rem;color:var(--muted);margin-bottom:.2rem">獨立於經濟 × 內部</div>
+<div style="font-weight:700;color:var(--sage);font-size:.88rem">國家主義分析</div>
+<div style="font-size:.76rem;color:#555;margin-top:.2rem">Skocpol、Tilly｜Evans、Mann</div>
+<div style="font-size:.72rem;color:var(--gold);margin-top:.3rem">🏛️國家有自己的邏輯</div>
+</div>
+
+<div class="q-cell" onclick="showQ(2)" style="background:var(--card-bg);padding:.9rem;text-align:center;cursor:pointer;transition:all .25s;border-left:3px solid transparent">
+<div style="font-size:.68rem;color:var(--muted);margin-bottom:.2rem">衍生自經濟 × 外部</div>
+<div style="font-weight:700;color:var(--purple);font-size:.88rem">世界體系分析</div>
+<div style="font-size:.76rem;color:#555;margin-top:.2rem">Wallerstein｜Gunder Frank</div>
+<div style="font-size:.72rem;color:var(--gold);margin-top:.3rem">💰全球結構→決定命運</div>
+</div>
+
+<div class="q-cell" onclick="showQ(3)" style="background:var(--card-bg);padding:.9rem;text-align:center;cursor:pointer;transition:all .25s;border-left:3px solid transparent">
+<div style="font-size:.68rem;color:var(--muted);margin-bottom:.2rem">獨立於經濟 × 外部</div>
+<div style="font-weight:700;color:var(--blue);font-size:.88rem">地緣政治分析</div>
+<div style="font-size:.76rem;color:#555;margin-top:.2rem">Waltz、Gilpin｜Tilly</div>
+<div style="font-size:.72rem;color:var(--gold);margin-top:.3rem">⚔️戰爭製造國家</div>
+</div>
+
+</div>
+</div>
+
+<!-- 詳情卡 -->
+<div id="qDetail" style="min-height:120px;margin-top:.5rem">
+<div class="hl-box" id="qCard" style="transition:all .3s">
+<p style="color:var(--muted);font-size:.88rem;text-align:center">👆 點選上方四象限中的任一格，查看理論說明、三角關係與台灣案例</p>
+</div>
+</div>
+
+<!-- 應用路線 -->
+<h3>這些理論如何變成具體的研究？</h3>
+<p>四個象限在 1980-90 年代被學者轉化成三條具體的研究路線。注意每條路線對戰爭⚔️、經濟💰、國家自主性🏛️的因果方向不同：</p>
+
+<div class="card-grid">
+<div class="card" style="border-top-color:var(--blue);border-top-width:3px">
+<h4 style="color:var(--blue)">霸權穩定論</h4>
+<p style="font-size:.82rem;margin-bottom:.3rem"><strong>地緣政治 → 應用</strong></p>
+<p style="font-size:.82rem;margin-bottom:.3rem">國際秩序需要一個「老大」（霸權）來維持。美國在冷戰中提供安全保障和開放市場，同時也影響了盟國的制度走向。</p>
+<p style="font-size:.78rem;color:var(--gold)">⚔️安全保障 → 🏛️政治順從 → 💰經濟發展空間</p>
+<p style="font-size:.78rem;color:var(--accent)">🇹🇼 美國安全傘下的台灣經濟奇蹟、美麗島事件後的民主化壓力</p>
+</div>
+<div class="card" style="border-top-color:var(--sage);border-top-width:3px">
+<h4 style="color:var(--sage)">發展型國家理論</h4>
+<p style="font-size:.82rem;margin-bottom:.3rem"><strong>國家主義 → 應用</strong></p>
+<p style="font-size:.82rem;margin-bottom:.3rem">台灣、韓國怎麼從窮國變富國？靠的是國家主導的產業政策。Evans 的「鑲嵌性自主」說明了成功的秘訣。</p>
+<p style="font-size:.78rem;color:var(--gold)">🏛️國家自主引導 → 💰產業升級 → ⚔️冷戰壓力是背景動力</p>
+<p style="font-size:.78rem;color:var(--accent)">🇹🇼 工研院→台積電、經建會的產業政策、新竹科學園區</p>
+</div>
+<div class="card" style="border-top-color:var(--purple);border-top-width:3px">
+<h4 style="color:var(--purple)">世界體系的當代版</h4>
+<p style="font-size:.82rem;margin-bottom:.3rem"><strong>世界體系 → 應用</strong></p>
+<p style="font-size:.82rem;margin-bottom:.3rem">核心國家透過貿易和金融控制邊陲。當代版本是 Farrell & Newman 的「武器化的相互依賴」。</p>
+<p style="font-size:.78rem;color:var(--gold)">💰經濟網絡的關鍵節點 → 變成⚔️脅迫工具 → 🏛️自主性＝控制節點</p>
+<p style="font-size:.78rem;color:var(--accent)">🇹🇼 矽盾（台積電）、SWIFT 金融制裁、CHIPS Act</p>
+</div>
+</div>
+
+<div class="checkpoint">
+<h4>✅ 到這裡你應該能回答：</h4>
+<p>• 四個象限分別把⚔️戰爭、💰經濟、🏛️國家自主性的因果方向排成什麼順序？</p>
+<p>• 霸權穩定論、發展型國家、世界體系理論各自從哪個象限延伸出來？</p>
+<p>• 如果你只用一個象限來解釋台灣，你會選哪個？為什麼不夠？</p>
+</div>
+
+<div class="next-page" onclick="next()">
+<div class="np-text"><div class="np-label">下一頁</div><div class="np-title">五位學者如何修正 Skocpol 的國家自主性理論？</div></div>
+<div class="np-arrow">→</div>
+</div>
+</div></div>
+
+<!-- ====== P2 五位學者 ====== -->
+<div class="page" data-page="3"><div class="page-inner">
+<h2>五位學者怎麼看國家能力？</h2>
+<div class="guide-breadcrumb">📍 P1 IR理論回顧 → P2 四大理論 → <span>P3 五位學者</span> → P4 比較總表 → P5 國家為何失敗 → P6 測驗 → P7 討論</div>
+
+<div class="story-lead">
+Skocpol 和 Tilly 讓學術界重新重視國家，但他們留下了三個問題。以下五位學者就是<strong>「修 bug 的工程師」</strong>。下圖整理了誰修了什麼，<strong>點選學者節點</strong>可跳至詳細說明。
+</div>
+
+<div class="diagram-box" style="padding:.8rem .5rem 1rem">
+<svg viewBox="0 0 720 440" style="width:100%;max-width:720px;margin:0 auto;display:block;font-family:'Noto Sans TC',sans-serif" xmlns="http://www.w3.org/2000/svg">
+
+<rect x="250" y="8" width="220" height="52" rx="10" fill="#8b2500"/>
+<text x="360" y="30" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">Skocpol &amp; Tilly</text>
+<text x="360" y="47" text-anchor="middle" fill="#e8ddd0" font-size="9">🏛️國家自主性 ← ⚔️戰爭驅動｜💰臣服國家</text>
+
+<line x1="290" y1="60" x2="130" y2="115" stroke="#8b2500" stroke-width="1.5" stroke-dasharray="5,3"/>
+<rect x="30" y="80" width="200" height="30" rx="5" fill="rgba(192,57,43,.06)" stroke="rgba(192,57,43,.3)" stroke-width=".8"/>
+<text x="130" y="100" text-anchor="middle" font-size="8.5" fill="#c0392b" font-weight="600">❌ 問題一：國家＝單一行動者</text>
+
+<line x1="430" y1="60" x2="590" y2="115" stroke="#5a6e5a" stroke-width="1.5" stroke-dasharray="5,3"/>
+<rect x="490" y="80" width="200" height="30" rx="5" fill="rgba(90,110,90,.06)" stroke="rgba(90,110,90,.3)" stroke-width=".8"/>
+<text x="590" y="100" text-anchor="middle" font-size="8.5" fill="#5a6e5a" font-weight="600">❌ 問題二：國家—社會一刀切</text>
+
+<line x1="360" y1="60" x2="360" y2="310" stroke="#3a5a8c" stroke-width="1.5" stroke-dasharray="5,3"/>
+<rect x="260" y="295" width="200" height="30" rx="5" fill="rgba(58,90,140,.06)" stroke="rgba(58,90,140,.3)" stroke-width=".8"/>
+<text x="360" y="315" text-anchor="middle" font-size="8.5" fill="#3a5a8c" font-weight="600">❌ 問題三：國際/國內二分法</text>
+
+<g class="s-node" onclick="switchS(0);scrollToTabs()" style="cursor:pointer">
+<rect x="20" y="120" width="210" height="72" rx="9" fill="#8b2500" opacity=".88"/>
+<text x="125" y="140" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">Mann 多樣態國家</text>
+<text x="125" y="157" text-anchor="middle" fill="#e8ddd0" font-size="8.5">✅ IEMP 四種權力・基礎結構能力</text>
+<text x="125" y="173" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="8">⚔️M 是四種權力之一｜💰E 有獨立邏輯</text>
+<text x="125" y="186" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="7.5">🇹🇼 健保系統＝基礎結構能力</text>
+</g>
+
+<g class="s-node" onclick="switchS(1);scrollToTabs()" style="cursor:pointer">
+<rect x="20" y="202" width="210" height="72" rx="9" fill="#6b4c7a" opacity=".88"/>
+<text x="125" y="222" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">Giddens 現代性制度</text>
+<text x="125" y="239" text-anchor="middle" fill="#e8ddd0" font-size="8.5">✅ 四制度叢結・社會監視</text>
+<text x="125" y="255" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="8">⚔️軍事＋工業互強｜監視＝核心能力</text>
+<text x="125" y="268" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="7.5">🇹🇼 數位防疫＝監視能力</text>
+</g>
+
+<g class="s-node" onclick="switchS(2);scrollToTabs()" style="cursor:pointer">
+<rect x="490" y="120" width="210" height="72" rx="9" fill="#5a6e5a" opacity=".88"/>
+<text x="595" y="140" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">Evans 鑲嵌性自主</text>
+<text x="595" y="157" text-anchor="middle" fill="#e8ddd0" font-size="8.5">✅ 官僚自主＋社會嵌入平衡</text>
+<text x="595" y="173" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="8">💰產業資本是必須嵌入的對象</text>
+<text x="595" y="186" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="7.5">🇹🇼 工研院→台積電＝鑲嵌性自主</text>
+</g>
+
+<g class="s-node" onclick="switchS(3);scrollToTabs()" style="cursor:pointer">
+<rect x="490" y="202" width="210" height="72" rx="9" fill="#2a7a6e" opacity=".88"/>
+<text x="595" y="222" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">Weiss 管理互賴</text>
+<text x="595" y="239" text-anchor="middle" fill="#e8ddd0" font-size="8.5">✅ 全球化中的國家能力</text>
+<text x="595" y="255" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="8">💰全球化壓力可被制度轉化</text>
+<text x="595" y="268" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="7.5">🇹🇼 矽盾＝管理互賴</text>
+</g>
+
+<g class="s-node" onclick="switchS(4);scrollToTabs()" style="cursor:pointer">
+<rect x="255" y="335" width="210" height="72" rx="9" fill="#3a5a8c" opacity=".88"/>
+<text x="360" y="355" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">Hobson 後設批判</text>
+<text x="360" y="372" text-anchor="middle" fill="#e8ddd0" font-size="8.5">✅ 打破國際/國內二分法</text>
+<text x="360" y="388" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="8">⚔️💰🏛️ 三者同時從國際＋國內作用</text>
+<text x="360" y="401" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="7.5">🇹🇼 美中台三角＝不能二分</text>
+</g>
+
+<line x1="230" y1="165" x2="490" y2="165" stroke="rgba(0,0,0,.08)" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="360" y="160" text-anchor="middle" font-size="7.5" fill="#999">共同修正：承認💰資本主義有獨立動力</text>
+<line x1="230" y1="245" x2="490" y2="245" stroke="rgba(0,0,0,.08)" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="360" y="240" text-anchor="middle" font-size="7.5" fill="#999">共同修正：國家—社會界線是模糊的</text>
+<line x1="125" y1="192" x2="125" y2="202" stroke="rgba(139,37,0,.2)" stroke-width="1" stroke-dasharray="3,2"/>
+<line x1="595" y1="192" x2="595" y2="202" stroke="rgba(90,110,90,.2)" stroke-width="1" stroke-dasharray="3,2"/>
+
+<text x="360" y="430" text-anchor="middle" font-size="9" fill="var(--gold)" font-weight="600">👇 點選學者節點 → 跳至下方詳細說明</text>
+</svg>
+</div>
+
+<h3 id="scholarDetailAnchor">各學者詳細說明</h3>
+<div class="scholar-tabs" id="stabs">
+<button class="s-tab on" onclick="switchS(0)">Mann</button>
+<button class="s-tab" onclick="switchS(1)">Giddens</button>
+<button class="s-tab" onclick="switchS(2)">Evans</button>
+<button class="s-tab" onclick="switchS(3)">Weiss</button>
+<button class="s-tab" onclick="switchS(4)">Hobson</button>
+</div>
+
+
+<!-- Mann -->
+<div class="s-panel on" id="sp0">
+<h3>Michael Mann：國家只是「權力網絡之一」</h3>
+<p>Mann 是歷史社會學家，代表作是《社會權力的來源》。他最大的貢獻是提出 <strong>IEMP 模型</strong>：人類社會的權力有四種來源，各自獨立，不能互相化約。</p>
+<div class="card-grid">
+<div class="card"><h4>I — 意識型態</h4><p>宗教、民族主義、意識形態的力量。想想伊斯蘭教或共產主義如何動員人群。</p></div>
+<div class="card sage"><h4>E — 經濟</h4><p>生產、交換、消費的組織方式。資本主義體系有自己的動力。</p></div>
+<div class="card blue"><h4>M — 軍事</h4><p>暴力的組織與使用。軍事力量有獨立於政治的邏輯。</p></div>
+<div class="card purple"><h4>P — 政治</h4><p>國家的行政、法律、稅收體系。這只是四種權力之一，不是唯一。</p></div>
+</div>
+<div class="hl-box">
+<p><strong>跟 Skocpol 最大的不同：</strong>Skocpol 認為國家菁英（官僚）的專業性是自主性的來源。Mann 不同意——他認為國家的自主性來自它的<strong>「基礎結構能力」</strong>，也就是國家穿透社會、提供後勤與基礎建設的能力。而且，國家不是不可取代的——更有競爭力的權力網絡有可能取代國家。</p>
+</div>
+<div class="hl-box" style="border-left-color:var(--blue)">
+<p><strong>與國際關係的連結：</strong>Mann 的軍事權力（M）直接對應地緣政治分析。他認為國家在國際軍事競爭中的表現，取決於四種權力的組合方式——而不僅僅是軍事力量本身。一個經濟崩潰或意識型態瓦解的國家，軍事力量再強也會失敗（想想蘇聯）。</p>
+</div>
+</div>
+
+<!-- Giddens -->
+<div class="s-panel" id="sp1">
+<h3>Anthony Giddens：現代國家的四根柱子</h3>
+<p>Giddens 在《現代性的結果》中提出：一個現代國家是<strong>四種制度</strong>共同作用的結果。</p>
+<div class="card-grid">
+<div class="card"><h4>資本主義</h4><p>市場經濟的運作邏輯。</p></div>
+<div class="card sage"><h4>工業主義</h4><p>技術與生產力的組織。</p></div>
+<div class="card blue"><h4>軍事主義</h4><p>合法暴力的壟斷。</p></div>
+<div class="card purple"><h4>社會監視</h4><p>國家收集資訊、監控人口的能力。戶籍、身分證、健保資料庫都是。</p></div>
+</div>
+<div class="hl-box">
+<p><strong>Giddens 的獨到之處：</strong>他特別強調<strong>「監視能力」</strong>——國家透過檔案管理、資訊收集來穿透社會。現代國家和古代帝國最大的差別，不是軍隊更強，而是國家更「了解」自己的人民。想想台灣的健保卡系統、數位防疫，這就是 Giddens 說的監視能力。</p>
+</div>
+<div class="hl-box" style="border-left-color:var(--blue)">
+<p><strong>與國際關係的連結：</strong>Giddens 指出資本主義和工業主義促成了現代軍事主義與民族國家的暴力壟斷，而軍事主義反過來也保障了資本主義的發展。國際體系中的軍備競賽、核武威懾，正是這種軍事—工業—資本交織的產物。</p>
+</div>
+</div>
+
+<!-- Evans -->
+<div class="s-panel" id="sp2">
+<h3>Peter Evans：鑲嵌性自主（Embedded Autonomy）</h3>
+<p>Evans 的問題很直接：<strong>為什麼有些國家能推動經濟發展，有些不行？</strong>他提出三種國家類型：</p>
+<div class="card-grid">
+<div class="card"><h4>🏴‍☠️ 掠奪型國家</h4><p>官僚腐敗、以權謀私。例如蒙乃托時代的薩伊（剛果）。國家只會搶劫人民。</p></div>
+<div class="card sage"><h4>🏗️ 發展型國家</h4><p>韋伯式理性官僚＋與產業資本的制度化連結。例如台灣的經濟部、韓國的經濟企劃院。</p></div>
+<div class="card blue"><h4>🔀 中間型國家</h4><p>部分官僚有能力，但整體缺乏一致性。如巴西——有些部門很強，但彼此不協調。</p></div>
+</div>
+<div class="hl-box">
+<p><strong>核心概念——鑲嵌性自主：</strong>國家既不能<strong>完全脫離社會</strong>（否則變成掠奪者，不知道產業需要什麼），也不能<strong>完全被社會滲透</strong>（否則官僚被財團綁架，失去政策方向）。成功的秘訣是兩者的動態平衡。</p>
+</div>
+<div class="hl-box" style="border-left-color:var(--blue)">
+<p><strong>與國際關係的連結：</strong>Evans 的發展型國家理論直接回應了世界體系論的悲觀預測——邊陲國家不是注定被剝削。透過正確的國家—社會連結，半邊陲國家（如台灣、韓國）可以在國際市場壓力下策略性地產業升級，挑戰世界體系中的「位置決定命運」。</p>
+</div>
+</div>
+
+<!-- Weiss -->
+<div class="s-panel" id="sp3">
+<h3>Linda Weiss：全球化不等於國家弱化</h3>
+<p>1990 年代很多人說「全球化讓國家失去力量」。Weiss 說：<strong>這是迷思！</strong></p>
+<div class="quote">
+<p>全球化對不同國家的影響取決於該國既有的制度安排。有些國家反而因為全球化而變更強。</p>
+<div class="attr">— Linda Weiss《無力國家的迷思》(1998) 核心論點</div>
+</div>
+<p>她提出的核心概念是<strong>「管理互賴」（governed interdependence）</strong>：國家能力不在於凌駕社會，而在於跟社會中的關鍵行動者建立制度化的合作關係。</p>
+<div class="hl-box">
+<p><strong>與國際關係的連結：</strong>Weiss 直接挑戰了自由制度主義中「全球化削弱國家」的預設。她強調要「把國內制度帶回」國際政治經濟的分析——同樣的全球化浪潮，在制度安排不同的國家會產生截然不同的效果。台灣透過產官學合作把全球化壓力轉化為半導體產業的發展動力，正是這個論點的最佳案例。</p>
+</div>
+</div>
+
+<!-- Hobson -->
+<div class="s-panel" id="sp4">
+<h3>John Hobson：批判者——打破國際/國內的二分法</h3>
+<p>Hobson 不是提出新理論的人，而是對上述所有人做<strong>「後設批判」</strong>的人。他的核心貢獻：</p>
+<div class="card-grid">
+<div class="card"><h4>對 Skocpol 的批評</h4><p>她把國際和國內「一刀切」：在國際層次，國家被動地受制於無政府體系；在國內層次，卻又認為國家凌駕社會。<strong>這兩個邏輯是矛盾的。</strong></p></div>
+<div class="card sage"><h4>兩波韋伯學派</h4><p>第一波（Skocpol、Tilly）太國家中心；第二波（Mann、Giddens、Weiss）才把資本主義和市民社會的自主力量帶回來。</p></div>
+</div>
+<div class="hl-box" style="border-left-color:var(--blue)">
+<p><strong>Hobson 就是國家自主性 × 國際關係的橋樑：</strong>他的整個學術計畫就是要把「國際關係」和「比較政治」這兩個被學科分工切割開的領域重新接合。他主張：國家同時被國際壓力和國內社會力量形塑——兩者是同一個過程的不同面向，不能分開分析。台灣就是最好的例子：美中關係（國際）和本土社會運動（國內）同時且交互地影響台灣的政治發展。</p>
+</div>
+</div>
+
+<div class="checkpoint">
+<h4>✅ 到這裡你應該能回答：</h4>
+<p>• 五位學者分別修正了 Skocpol 的什麼問題？</p>
+<p>• Mann 的「基礎結構能力」和 Skocpol 的「官僚自主性」差在哪？</p>
+<p>• Evans 的「鑲嵌性自主」為什麼說國家不能太獨立也不能太嵌入？</p>
+</div>
+
+<div class="next-page" onclick="next()">
+<div class="np-text"><div class="np-label">下一頁</div><div class="np-title">用「最大差異法」把五位學者放在一張表上比較</div></div>
+<div class="np-arrow">→</div>
+</div>
+
+</div></div>
+
+<!-- ====== P3 比較總表（最大差異法） ====== -->
+<div class="page" data-page="4"><div class="page-inner">
+<h2>五位學者比較總表</h2>
+<div class="guide-breadcrumb">📍 P1 IR理論回顧 → P2 四大理論 → P3 五位學者 → <span>P4 比較總表</span> → P5 國家為何失敗 → P6 測驗 → P7 討論</div>
+
+<div class="story-lead">
+前一頁我們逐一認識了五位學者。但讀完五個人之後，你可能覺得「好像都在講類似的事，又好像不太一樣」。這一頁用<strong>比較研究的方法</strong>幫你釐清：他們到底哪裡不同、哪裡一樣——以及為什麼「一樣的地方」比「不同的地方」更值得注意。
+</div>
+
+<h3>什麼是「最大差異法」？</h3>
+<p>最大差異法（Most Different Systems Design, MDSD）是比較研究的經典方法：挑選<strong>背景條件差異最大</strong>的案例，看它們是否在某個關鍵因素上得出<strong>相同的結論</strong>。如果背景差這麼多、結論卻一樣，那這個結論就更可信。</p>
+<p>這五位學者的學科背景、研究對象、方法論都很不同，但他們<strong>共同指向一個結論</strong>：Skocpol 的「國家中心主義」需要修正——國家不能脫離社會與國際體系單獨分析。以下我們用最大差異法的邏輯來整理。</p>
+
+<!-- ===== 差異面向 ===== -->
+<h3>差異面向：他們哪裡不一樣？</h3>
+<div style="overflow-x:auto">
+<table class="cmp-table">
+<thead>
+<tr><th style="width:15%">差異面向</th><th style="width:17%">Mann</th><th style="width:17%">Giddens</th><th style="width:17%">Evans</th><th style="width:17%">Weiss</th><th style="width:17%">Hobson</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="hl">學科定位</td>
+<td>歷史社會學</td>
+<td>社會理論</td>
+<td>比較政治經濟學</td>
+<td>國際政治經濟學</td>
+<td>國際關係理論</td>
+</tr>
+<tr>
+<td class="hl">分析尺度</td>
+<td>千年尺度的宏觀歷史</td>
+<td>「現代性」的結構條件</td>
+<td>中觀：特定國家的產業政策</td>
+<td>中觀：國家對全球化的回應</td>
+<td>後設：理論之間的比較</td>
+</tr>
+<tr>
+<td class="hl">主要研究對象</td>
+<td>歐洲帝國與民族國家</td>
+<td>所有現代國家</td>
+<td>巴西、韓國、印度、薩伊</td>
+<td>東亞小型開放經濟體</td>
+<td>（分析其他學者的理論）</td>
+</tr>
+<tr>
+<td class="hl">國家能力的來源</td>
+<td>基礎結構能力<br><small>（穿透社會的後勤力）</small></td>
+<td>監視能力＋合法暴力<br><small>（資訊掌控力）</small></td>
+<td>鑲嵌性自主<br><small>（官僚獨立＋社會嵌入）</small></td>
+<td>管理互賴<br><small>（制度化的產官學合作）</small></td>
+<td>—<br><small>（批判者，不提新概念）</small></td>
+</tr>
+<tr>
+<td class="hl">國家 vs. 社會</td>
+<td style="color:var(--accent);font-weight:600">社會可能取代國家</td>
+<td>國家監視穿透社會</td>
+<td>兩者需要動態平衡</td>
+<td style="color:var(--sage);font-weight:600">兩者是協調的夥伴</td>
+<td>社會應有獨立自主性</td>
+</tr>
+<tr>
+<td class="hl">對國際體系的重視程度</td>
+<td>中等<br><small>軍事權力是四者之一</small></td>
+<td>中等<br><small>軍事主義是四者之一</small></td>
+<td>高<br><small>國際市場壓力塑造策略</small></td>
+<td style="color:var(--teal);font-weight:600">很高<br><small>直接回應全球化辯論</small></td>
+<td style="color:var(--blue);font-weight:600">最高<br><small>整合國際/國內為核心使命</small></td>
+</tr>
+<tr>
+<td class="hl">核心概念</td>
+<td>IEMP 四種權力</td>
+<td>四種制度叢結</td>
+<td>鑲嵌性自主</td>
+<td>管理互賴</td>
+<td>兩波韋伯學派批判</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ===== 收斂面向 ===== -->
+<h3>收斂面向：他們哪裡一樣？（最大差異法的關鍵）</h3>
+<p>背景差異這麼大的五位學者，卻在以下三點上<strong>達成共識</strong>——這就是最大差異法告訴我們的「穩健結論」：</p>
+
+<div class="card-grid">
+<div class="card" style="border-top-color:var(--accent);border-top-width:4px">
+<h4 style="font-size:1rem">🎯 收斂一：國家不是鐵板一塊</h4>
+<p>Skocpol 把國家視為「單一行動者」（unitary actor），這五位學者都不同意。Mann 拆成四種權力，Giddens 拆成四種制度，Evans 區分三種國家類型，Weiss 強調國家內部的制度差異，Hobson 更直接批評這種簡化。</p>
+</div>
+<div class="card" style="border-top-color:var(--sage);border-top-width:4px">
+<h4 style="font-size:1rem">🎯 收斂二：國家—社會不能二分</h4>
+<p>Skocpol 把國家和社會畫出一條清楚的界線。五位學者都認為這條界線是模糊的：Mann 說權力網絡彼此重疊，Evans 說官僚必須嵌入社會，Weiss 說國家和社會是合作夥伴，Hobson 說國家—社會的互動才是分析的重點。</p>
+</div>
+<div class="card" style="border-top-color:var(--blue);border-top-width:4px">
+<h4 style="font-size:1rem">🎯 收斂三：資本主義有獨立的動力</h4>
+<p>Skocpol 在國內層次不承認資本主義體系的獨立影響力。五位學者都把資本主義或市場經濟帶回來作為獨立的分析變項：Mann 的經濟權力、Giddens 的資本主義制度叢結、Evans 的產業資本、Weiss 的全球市場力量。</p>
+</div>
+</div>
+
+<div class="hl-box">
+<p><strong>最大差異法的結論：</strong>五位學者的學科、方法、研究對象差異很大，但都指向同一個方向——<strong>「第二波新韋伯歷史社會學」的核心修正</strong>：國家有自主性，但這個自主性不是絕對的、不是脫離社會的、也不是與國際體系無關的。國家的能力取決於它如何與社會力量和國際環境互動。</p>
+</div>
+
+<!-- ===== 台灣案例對照 ===== -->
+<h3>台灣案例對照</h3>
+<div style="overflow-x:auto">
+<table class="cmp-table">
+<thead>
+<tr><th style="width:18%">台灣現象</th><th style="width:18%">最適合的學者</th><th>為什麼？</th></tr>
+</thead>
+<tbody>
+<tr><td class="hl">健保系統覆蓋率 99%</td><td>Mann</td><td>這是國家<strong>基礎結構能力</strong>的展現——穿透社會、建立後勤網絡、提供公共服務的能力。</td></tr>
+<tr><td class="hl">COVID-19 數位防疫</td><td>Giddens</td><td>健保卡串接入境資料、實聯制追蹤，是國家<strong>監視能力</strong>的當代應用。</td></tr>
+<tr><td class="hl">工研院→台積電模式</td><td>Evans</td><td>工研院是獨立的技術官僚機構（自主），同時與民間企業密切合作（嵌入）＝ <strong>鑲嵌性自主</strong>的教科書案例。</td></tr>
+<tr><td class="hl">矽盾（Silicon Shield）</td><td>Weiss</td><td>台灣透過制度化的半導體產業政策，把全球化的供應鏈壓力轉化為地緣政治籌碼＝ <strong>管理互賴</strong>。</td></tr>
+<tr><td class="hl">美中台三角關係</td><td>Hobson</td><td>台灣的政治發展不能只看國內（選舉、社運）或只看國際（美中博弈），必須<strong>同時分析兩者的交互作用</strong>。</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>一句話記住每位學者</h3>
+<div class="card-grid">
+<div class="card"><h4>Mann</h4><p>「國家只是人類社會四種權力網絡之一，不是唯一的。」</p></div>
+<div class="card sage"><h4>Giddens</h4><p>「現代國家最厲害的地方不是軍隊，是它有多了解你。」</p></div>
+<div class="card blue"><h4>Evans</h4><p>「官僚太獨立會變掠奪者，太嵌入會被綁架。成功在平衡。」</p></div>
+<div class="card purple"><h4>Weiss</h4><p>「全球化讓國家變弱？那是迷思。看你的制度怎麼接招。」</p></div>
+<div class="card teal"><h4>Hobson</h4><p>「別把國際和國內切開看，真實世界是同時發生的。」</p></div>
+</div>
+
+<div class="checkpoint">
+<h4>✅ 到這裡你應該能回答：</h4>
+
+<p style="margin-bottom:.6rem">• <strong>2026 年的時事題：</strong>台灣開放印度移工、美國關稅戰、韓國入境卡爭議——這些議題分別與哪位學者的理論最相關？</p>
+<p class="spoiler" onclick="this.classList.toggle('revealed')">開放印度移工 → <strong>Weiss（管理互賴）</strong>：國家如何在全球勞動力市場壓力下，透過制度安排管理跨國人口流動，同時維持國內產業競爭力。美國關稅戰 → <strong>Hobson（國際/國內不能二分）</strong>：關稅同時是國際經濟工具和國內政治策略，不能只從一個層次分析。韓國入境卡 → <strong>Giddens（社會監視）</strong>：入境卡是國家監控跨境人口流動的監視工具，數位化後更是國家穿透社會邊界的能力展現。</p>
+
+<p style="margin-top:1rem;margin-bottom:.6rem">• 五位學者的學科背景差異很大，但他們在哪<strong>三點</strong>上達成共識？</p>
+<p class="spoiler" onclick="this.classList.toggle('revealed')">❶ <strong>國家不是鐵板一塊</strong>——Skocpol 把國家視為「單一行動者」，五位都不同意。Mann 拆成四種權力，Giddens 拆成四種制度，Evans 區分三種國家類型。❷ <strong>國家—社會不能二分</strong>——界線是模糊的，Mann 說權力網絡重疊，Evans 說官僚必須嵌入社會，Weiss 說國家和社會是合作夥伴。❸ <strong>資本主義有獨立的動力</strong>——Skocpol 不承認國內資本主義的獨立影響力，五位都把市場經濟帶回來作為獨立的分析變項。</p>
+
+<p style="margin-top:1rem;margin-bottom:.6rem">• 如果你要向朋友解釋「鑲嵌性自主」，你會用什麼日常例子？</p>
+<p class="spoiler" onclick="this.classList.toggle('revealed')">想像你是一個<strong>餐廳主廚</strong>。你有自己的料理哲學和菜單規劃（<strong>自主性</strong>），但你不能完全不管客人想吃什麼。如果你<strong>太獨立</strong>——「我煮什麼你就吃什麼」——客人不來，餐廳倒閉。如果你<strong>太聽客人的</strong>——什麼都客製化——廚房混亂，品質崩潰。最好的狀態是：主廚有主見，同時透過外場服務生持續了解客人回饋，調整菜單方向。<br><br>台灣版本：<strong>工研院就是這個主廚</strong>。它有獨立的技術判斷力（自主），又透過制度化管道跟台積電、聯電等企業合作（嵌入）。兩者的平衡＝鑲嵌性自主。</p>
+</div>
+
+<div class="next-page" onclick="next()">
+<div class="np-text"><div class="np-label">下一頁 — 關鍵轉折</div><div class="np-title">如果制度這麼重要，為什麼有些國家還是失敗了？</div></div>
+<div class="np-arrow">→</div>
+</div>
+</div></div>
+
+<!-- ====== P4 國家為何失敗 ====== -->
+<div class="page" data-page="5"><div class="page-inner">
+<h2>國家為什麼會失敗？</h2>
+<div class="guide-breadcrumb">📍 P1 IR理論回顧 → P2 四大理論 → P3 五位學者 → P4 比較總表 → <span>P5 國家為何失敗</span> → P6 測驗 → P7 討論</div>
+
+<div class="story-lead">
+我們花了四頁在談「國家能力從哪裡來」。現在要反過來問：<strong>如果國家有能力，為什麼還是會失敗？</strong>Acemoglu & Robinson 的答案是「制度決定一切」。但五位學者會同意嗎？這一頁是整個結構取向的<strong>最後一站</strong>——也是我們通往「行動者取向」的橋樑。
+</div>
+
+<p>Acemoglu & Robinson 在 2012 年出版的《國家為什麼會失敗》可以說是 21 世紀影響力最大的政治經濟學著作之一。兩位作者在 2024 年獲得諾貝爾經濟學獎。他們的核心問題是：<strong>為什麼有些國家富裕，有些國家貧窮？</strong></p>
+
+<h3>核心框架：兩種制度</h3>
+<div class="card-grid">
+<div class="card sage" style="border-top-width:4px">
+<h4>🌱 廣納式制度 Inclusive</h4>
+<p>政治上：權力廣泛分配、有制衡機制<br>
+經濟上：保護財產權、允許自由競爭、鼓勵創新<br>
+<strong>結果：</strong>良性循環 → 持續繁榮</p>
+</div>
+<div class="card" style="border-top-color:#c0392b;border-top-width:4px">
+<h4 style="color:#c0392b">🔒 榨取式制度 Extractive</h4>
+<p>政治上：權力集中少數菁英<br>
+經濟上：壟斷資源、阻礙競爭、扼殺創新<br>
+<strong>結果：</strong>惡性循環 → 國家衰敗</p>
+</div>
+</div>
+
+<!-- ===== 戰爭-經濟-國家自主性 ===== -->
+<h3>⚔️💰🏛️ 在這本書裡，戰爭、經濟與國家自主性的角色是什麼？</h3>
+
+<div style="overflow-x:auto">
+<table class="cmp-table" style="font-size:.8rem">
+<thead>
+<tr><th style="width:20%">三角要素</th><th style="width:40%">Acemoglu & Robinson 怎麼看</th><th style="width:40%">五位學者會怎麼補充</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="hl">⚔️ 戰爭</td>
+<td>戰爭、殖民、革命是<strong>「關鍵時刻」的觸發器</strong>。例如黑死病打破歐洲封建制度，英國光榮革命建立議會制。戰爭本身不決定結果，但它打開了制度轉變的窗口。</td>
+<td><strong>Tilly</strong>：戰爭不只是「觸發器」，它本身就在製造國家。<strong>Mann</strong>：軍事權力有獨立邏輯，不能只當作背景條件。<strong>Hobson</strong>：戰爭的影響不能只看國際層次，它同時重組國內的階級與社會結構。</td>
+</tr>
+<tr>
+<td class="hl">💰 經濟</td>
+<td><strong>經濟制度是核心變項。</strong>廣納式經濟制度（保障財產權、鼓勵創新）帶來繁榮；榨取式經濟制度（壟斷、尋租）導致停滯。「創造性破壞」（熊彼特）只能在廣納制度下發生。</td>
+<td><strong>Evans</strong>：光有「好制度」不夠，還要看國家如何組織與產業的關係（鑲嵌性自主）。<strong>Weiss</strong>：同樣的全球經濟壓力，不同國家的回應完全不同——制度類型無法解釋這個差異。<strong>Wallerstein</strong>：你忽略了全球經濟結構對國內制度的限制。</td>
+</tr>
+<tr>
+<td class="hl">🏛️ 國家自主性</td>
+<td>國家自主性<strong>不是獨立變項</strong>——它是制度的產物。廣納式制度培養有能力的國家，榨取式制度培養掠奪性的國家。國家的能力來自制度設計，而非官僚菁英本身。</td>
+<td><strong>Skocpol</strong>：因果方向顛倒了！是國家（官僚菁英）在關鍵時刻做出制度選擇，而不是制度決定國家能力。<strong>Evans</strong>：為什麼同樣是「榨取式」的威權，台灣韓國能發展而剛果不能？關鍵在國家自主性的品質。</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="hl-box" style="border-left-color:var(--gold)">
+<p><strong>⚔️💰🏛️ Acemoglu & Robinson 的因果公式：</strong><br>
+<strong>關鍵時刻</strong>（常由⚔️戰爭/革命/瘟疫觸發）→ 制度選擇（廣納 or 榨取）→ 💰經濟結果（繁榮 or 衰敗）→ 🏛️國家能力（是制度的結果，不是原因）<br><br>
+<strong>五位學者的反駁：</strong>🏛️國家自主性不只是制度的「結果」，它也是制度被「選擇」的原因之一。因果方向不是單向的——⚔️戰爭、💰經濟、🏛️國家自主性三者互相形塑，不能簡化為一條因果鏈。</p>
+</div>
+
+<h3>關鍵時刻（Critical Junctures）</h3>
+<p>歷史上的重大事件（革命、瘟疫、殖民、戰爭）會打開一扇「機會之窗」。在這個時刻，國家可能走向更廣納，也可能走向更榨取。<strong>初始的小差異</strong>會隨時間累積放大，形成「制度漂移」。</p>
+
+<div class="diagram-box">
+<h4>從結構走向行動者：本週的理論橋樑</h4>
+<div class="dia-flow">
+<div class="dia-row"><div class="d-box d-ext">國際環境</div><div class="d-box d-state">國家制度</div><div class="d-box d-soc">社會力量</div></div>
+<div class="dia-row"><span class="d-arr">↓ 共同決定 ↓</span></div>
+<div class="dia-row"><div class="d-box d-mid">廣納式 或 榨取式 制度</div></div>
+<div class="dia-row"><span class="d-arr">↓ 但！誰在「關鍵時刻」做選擇？ ↓</span></div>
+<div class="dia-row"><div class="d-box d-out" style="font-size:.85rem;padding:.8rem 1.5rem">行動者（Agency）</div></div>
+<div class="dia-row"><span class="d-arr">↓ 這就是 W9 要討論的問題 ↓</span></div>
+<div class="dia-row"><div class="d-box d-fail">結構取向的極限：制度是怎麼被「選擇」的？</div></div>
+</div>
+</div>
+
+<h3>五位學者會怎麼批評這本書？</h3>
+<div class="card-grid">
+<div class="card"><h4>Mann 的質疑 <span style="font-size:.75rem;color:var(--gold)">⚔️💰🏛️</span></h4><p>「廣納 vs. 榨取」太簡單。一個國家可以在經濟💰上廣納、政治🏛️上榨取（例如中國），四種權力（IEMP）不能用一個標籤概括。戰爭⚔️作為獨立的軍事權力，在這本書裡被矮化成「關鍵時刻的背景」。</p></div>
+<div class="card sage"><h4>Evans 的質疑 <span style="font-size:.75rem;color:var(--gold)">💰🏛️</span></h4><p>為什麼同樣是威權（榨取式🏛️），台灣韓國變發展型國家💰↑，菲律賓剛果卻變掠奪型💰↓？光看制度「類型」不夠，要看官僚和社會的具體連結——<strong>鑲嵌性自主</strong>才是決定經濟成敗的關鍵。</p></div>
+<div class="card blue"><h4>Weiss 的質疑 <span style="font-size:.75rem;color:var(--gold)">💰🏛️</span></h4><p>不同國家面對同樣的國際經濟💰壓力（全球化），結果不同。國內制度🏛️會「過濾」外部衝擊——台灣把半導體全球化壓力轉為矽盾，而不是被動承受。制度類型不能解釋這種差異。</p></div>
+<div class="card purple"><h4>Hobson 的質疑 <span style="font-size:.75rem;color:var(--gold)">⚔️💰🏛️</span></h4><p>他們在國際層次承認⚔️結構力量很強（殖民、戰爭決定了制度），在國內又說行動者可以在「關鍵時刻」做選擇🏛️——<strong>這兩個邏輯之間有矛盾</strong>。國際和國內的⚔️💰🏛️三角是同時運作的，不能分開處理。</p></div>
+</div>
+
+<div class="hl-box">
+<p><strong>🔗 引導至下一主題的核心問題：</strong><br>結構取向告訴我們「制度決定了國家的興衰」，但誰來創造和改變制度？行動者如何在制度、文化與結構的限制中，協商與實踐政治？<br>→ 這就是 <strong>Week 9：行動者與互動取向</strong>的出發點。</p>
+</div>
+
+<div class="next-page" onclick="next()">
+<div class="np-text"><div class="np-label">下一頁 — 測試自己</div><div class="np-title">六道題測試你對五位學者＋Acemoglu & Robinson 的理解</div></div>
+<div class="np-arrow">→</div>
+</div>
+</div></div>
+
+<!-- ====== P5 測驗 ====== -->
+<div class="page" data-page="6"><div class="page-inner">
+<h2>隨堂測驗</h2>
+<div class="guide-breadcrumb">📍 P1 IR理論回顧 → P2 四大理論 → P3 五位學者 → P4 比較總表 → P5 國家為何失敗 → <span>P6 測驗</span> → P7 討論</div>
+
+<div class="story-lead">
+讀了這麼多理論，現在來檢查一下自己真的理解了多少。每題考的不是記憶背誦，而是<strong>你能不能分辨「這個觀點屬於誰」</strong>——這正是政治社會學的核心能力：把不同的理論鏡頭對準同一個現象，看到不同的東西。
+</div>
+
+<p>測試你對五位學者核心觀點的理解。<strong>點選你認為正確的答案。</strong></p>
+
+<!-- Q1 -->
+<div class="quiz-block" id="q1">
+<div class="quiz-q">Q1. 哪位學者認為國家自主性的關鍵在於「穿透社會的基礎結構能力」，而非官僚菁英的專業性？</div>
+<div class="quiz-opts">
+<div class="quiz-opt" onclick="checkQ('q1',this,false)">Skocpol</div>
+<div class="quiz-opt" onclick="checkQ('q1',this,true)">Mann</div>
+<div class="quiz-opt" onclick="checkQ('q1',this,false)">Evans</div>
+<div class="quiz-opt" onclick="checkQ('q1',this,false)">Weiss</div>
+</div>
+<div class="quiz-explain" id="q1e">Mann 區分了「獨斷性權力」（despotic power，統治者可以任意行事）和「基礎結構性權力」（infrastructural power，國家穿透社會、執行政策的能力）。他認為後者才是真正重要的。Skocpol 則更強調官僚菁英的專業自主性。</div>
+</div>
+
+<!-- Q2 -->
+<div class="quiz-block" id="q2">
+<div class="quiz-q">Q2. Evans 的「鑲嵌性自主」（embedded autonomy）概念，指的是哪兩者之間的平衡？</div>
+<div class="quiz-opts">
+<div class="quiz-opt" onclick="checkQ('q2',this,false)">國際壓力與國內社會</div>
+<div class="quiz-opt" onclick="checkQ('q2',this,true)">官僚的獨立性與和社會的制度化連結</div>
+<div class="quiz-opt" onclick="checkQ('q2',this,false)">軍事力量與經濟力量</div>
+<div class="quiz-opt" onclick="checkQ('q2',this,false)">民主制度與威權制度</div>
+</div>
+<div class="quiz-explain" id="q2e">Evans 認為成功的發展型國家需要同時具備兩個條件：（1）官僚體系有獨立於社會利益團體的專業自主性（autonomy）；（2）官僚與產業資本之間有制度化的溝通管道（embeddedness）。缺一不可——太獨立會變掠奪者，太嵌入會被財團綁架。</div>
+</div>
+
+<!-- Q3 -->
+<div class="quiz-block" id="q3">
+<div class="quiz-q">Q3. Giddens 認為現代國家和傳統帝國最大的差異是什麼？</div>
+<div class="quiz-opts">
+<div class="quiz-opt" onclick="checkQ('q3',this,false)">軍隊規模更大</div>
+<div class="quiz-opt" onclick="checkQ('q3',this,false)">稅收能力更強</div>
+<div class="quiz-opt" onclick="checkQ('q3',this,true)">社會監視能力：國家更能「了解」自己的人民</div>
+<div class="quiz-opt" onclick="checkQ('q3',this,false)">領土面積更大</div>
+</div>
+<div class="quiz-explain" id="q3e">Giddens 強調「社會監視」（surveillance）是現代國家的核心特徵。透過戶籍制度、身分證、檔案管理、電子化資訊系統，國家可以掌握人民一生所有活動的資訊。這種能力是傳統帝國做不到的。台灣的健保卡系統、COVID-19 數位防疫都是當代的例子。</div>
+</div>
+
+<!-- Q4 -->
+<div class="quiz-block" id="q4">
+<div class="quiz-q">Q4. Weiss 認為「全球化讓國家失去力量」這個說法是錯的，她的理由是？</div>
+<div class="quiz-opts">
+<div class="quiz-opt" onclick="checkQ('q4',this,false)">全球化其實沒有發生</div>
+<div class="quiz-opt" onclick="checkQ('q4',this,false)">軍事力量仍然由國家壟斷</div>
+<div class="quiz-opt" onclick="checkQ('q4',this,true)">國內制度會「過濾」國際壓力，有些國家反而因此變強</div>
+<div class="quiz-opt" onclick="checkQ('q4',this,false)">國際組織取代了國家的角色</div>
+</div>
+<div class="quiz-explain" id="q4e">Weiss 的核心論點是「管理互賴」：全球化的衝擊對不同國家的影響，取決於各國既有的制度安排。有些國家（如台灣、新加坡）透過制度化的產官學合作，把全球化壓力轉化為發展動力，國家能力反而增強了。</div>
+</div>
+
+<!-- Q5 -->
+<div class="quiz-block" id="q5">
+<div class="quiz-q">Q5. Hobson 對 Skocpol 最核心的批評是什麼？</div>
+<div class="quiz-opts">
+<div class="quiz-opt" onclick="checkQ('q5',this,false)">她完全忽略了經濟因素</div>
+<div class="quiz-opt" onclick="checkQ('q5',this,true)">她把國際和國內的因果關係切割開，邏輯上有矛盾</div>
+<div class="quiz-opt" onclick="checkQ('q5',this,false)">她的研究方法不夠科學</div>
+<div class="quiz-opt" onclick="checkQ('q5',this,false)">她只研究西方國家</div>
+</div>
+<div class="quiz-explain" id="q5e">Hobson 指出 Skocpol 的矛盾：在國際層次，她承認國家被鑲嵌在無政府體系中而居於次級地位；但在國內層次，卻又主張國家凌駕於社會之上。這種把「國際/國內資本主義體系二元化、一刀切的作法」是她理論最大的缺點。</div>
+</div>
+
+<!-- Q6 -->
+<div class="quiz-block" id="q6">
+<div class="quiz-q">Q6. Acemoglu & Robinson 認為國家失敗的根本原因是什麼？</div>
+<div class="quiz-opts">
+<div class="quiz-opt" onclick="checkQ('q6',this,false)">地理環境惡劣</div>
+<div class="quiz-opt" onclick="checkQ('q6',this,false)">文化不夠勤奮</div>
+<div class="quiz-opt" onclick="checkQ('q6',this,true)">榨取式的政治與經濟制度阻礙了創新與發展</div>
+<div class="quiz-opt" onclick="checkQ('q6',this,false)">領導人不夠聰明</div>
+</div>
+<div class="quiz-explain" id="q6e">Acemoglu & Robinson 明確否定了地理、文化、領導人無知等常見解釋。他們的核心論點是「制度決定一切」：榨取式制度讓少數菁英壟斷資源和權力，阻礙「創造性破壞」（熊彼特的概念），導致國家長期停滯甚至衰敗。</div>
+</div>
+
+<div id="quizScore" style="margin-top:1.5rem;padding:1rem;background:var(--accent);color:#fff;border-radius:8px;text-align:center;display:none;font-size:.95rem;font-weight:600"></div>
+
+<div class="next-page" onclick="next()">
+<div class="np-text"><div class="np-label">最後一頁</div><div class="np-title">課堂討論——把理論帶回台灣，思考結構的極限</div></div>
+<div class="np-arrow">→</div>
+</div>
+</div></div>
+
+<!-- ====== P6 討論 ====== -->
+<div class="page" data-page="7"><div class="page-inner">
+<h2>課堂討論</h2>
+<div class="guide-breadcrumb">📍 P1 IR理論回顧 → P2 四大理論 → P3 五位學者 → P4 比較總表 → P5 國家為何失敗 → P6 測驗 → <span>P7 討論</span></div>
+
+<div class="story-lead">
+我們今天走了一條完整的路：從國際關係的大理論 → 四大分類 → 五位學者的修正 → 國家為什麼會失敗。現在輪到你了——<strong>把這些理論帶回你最熟悉的案例：台灣</strong>，看看它們能解釋什麼、不能解釋什麼。
+</div>
+
+<div class="quiz-block" style="border-left-color:var(--accent)">
+<div class="quiz-q">問題一：台灣的國家能力，用哪位學者的概念最好解釋？</div>
+<p style="font-size:.87rem;color:#555">台灣在疫情初期的「口罩國家隊」、數位防疫系統、工研院和半導體產業的關係——你覺得哪位學者的概念最適合解釋台灣的經驗？<strong>選擇後請說明理由。</strong></p>
+<div class="vote-row" id="v1">
+<button class="vote-btn" onclick="vote('v1',this)">Mann 基礎結構能力</button>
+<button class="vote-btn" onclick="vote('v1',this)">Giddens 監視能力</button>
+<button class="vote-btn" onclick="vote('v1',this)">Evans 鑲嵌性自主</button>
+<button class="vote-btn" onclick="vote('v1',this)">Weiss 管理互賴</button>
+</div>
+<div class="vote-result" id="r1"></div>
+<div class="spoiler" onclick="this.classList.toggle('revealed')" style="margin-top:.8rem">
+📝 申論方向提示<br><br>
+選 <strong>Mann</strong>：可以論述台灣的健保系統覆蓋率 99%，口罩實名制在三天內上線——這是國家<strong>穿透社會的後勤能力</strong>（基礎結構能力），而不只是官僚菁英的決策。你需要說明為什麼這不只是「政府很厲害」，而是制度基礎建設長期累積的結果。<br><br>
+選 <strong>Giddens</strong>：可以聚焦在健保卡串接入境資料、實聯制追蹤、電子圍籬等<strong>監視技術</strong>。論述現代國家能力的核心不是軍事力量，而是「國家有多了解人民」。你需要同時討論監視能力的<strong>代價</strong>——隱私權的犧牲是否正當？<br><br>
+選 <strong>Evans</strong>：可以分析工研院→台積電的模式——官僚有獨立判斷力（自主），又跟企業密切合作（嵌入）。你需要論述這種平衡為什麼在台灣能成功，以及民主化後這個平衡是否改變了。<br><br>
+選 <strong>Weiss</strong>：可以論述台灣如何把全球半導體供應鏈的壓力轉化為「矽盾」——<strong>管理互賴</strong>的典範。你需要說明為什麼同樣面對全球化壓力，台灣能變成「節點控制者」而不是「被控制者」。
+</div>
+
+<div class="quiz-block" style="border-left-color:var(--sage)">
+<div class="quiz-q">問題二：結構取向最大的盲點是什麼？</div>
+<p style="font-size:.87rem;color:#555">我們花了五週學習結構取向的理論（經濟決定論、國際環境決定論、國家自主論）。你覺得這些理論最大的解釋力在哪？最大的盲點又是什麼？<strong>請舉一個台灣的例子來支持你的看法。</strong></p>
+<div class="vote-row" id="v2">
+<button class="vote-btn" onclick="vote('v2',this)">忽略了行動者的能動性</button>
+<button class="vote-btn" onclick="vote('v2',this)">無法解釋文化與認同</button>
+<button class="vote-btn" onclick="vote('v2',this)">對變遷的解釋力不足</button>
+<button class="vote-btn" onclick="vote('v2',this)">其他</button>
+</div>
+<div class="vote-result" id="r2"></div>
+<div class="spoiler" onclick="this.classList.toggle('revealed')" style="margin-top:.8rem">
+📝 申論方向提示<br><br>
+選 <strong>忽略行動者</strong>：可以舉<strong>蔣經國晚年決定解嚴</strong>的例子。結構取向可以解釋「為什麼會有壓力要求民主化」（國際壓力＋國內社會運動），但無法解釋「為什麼是蔣經國而不是別人做出這個決定」。個人的判斷、性格、時機選擇——這些是結構理論的盲區。<br><br>
+選 <strong>無法解釋文化與認同</strong>：可以舉<strong>台灣認同的轉變</strong>（從中國人→台灣人）。這個轉變不是經濟結構或國際壓力「決定」的，而是社會運動、教育改革、媒體論述共同「建構」出來的。結構取向缺乏處理認同政治的工具。<br><br>
+選 <strong>對變遷的解釋力不足</strong>：可以論述結構取向擅長解釋「為什麼事情是這樣」（靜態），但不擅長解釋「為什麼事情會改變」（動態）。例如<strong>太陽花運動</strong>——國際結構（美中關係）和國內制度（ECFA）都沒有預測到這場運動會發生，更無法解釋它如何改變了台灣的政治方向。<br><br>
+選 <strong>其他</strong>：請提出你自己的觀點，並舉出具體案例。好的申論不是「正確答案」，而是「有根據的論證」。
+</div>
+
+<div class="quiz-block" style="border-left-color:var(--blue)">
+<div class="quiz-q">問題三：中國是不是正在「失敗」？</div>
+<p style="font-size:.87rem;color:#555">Acemoglu & Robinson 在 2012 年預言中國的榨取式成長無法持續。2024 年他們得了諾貝爾獎。十多年後，中國面臨房地產危機、青年失業、民間活力下降。他們說對了嗎？<strong>請用本週學到的至少一位學者的理論框架來分析。</strong></p>
+<div class="vote-row" id="v3">
+<button class="vote-btn" onclick="vote('v3',this)">預言基本正確</button>
+<button class="vote-btn" onclick="vote('v3',this)">部分正確但過度簡化</button>
+<button class="vote-btn" onclick="vote('v3',this)">理論無法解釋中國</button>
+<button class="vote-btn" onclick="vote('v3',this)">需要更多時間觀察</button>
+</div>
+<div class="vote-result" id="r3"></div>
+<div class="spoiler" onclick="this.classList.toggle('revealed')" style="margin-top:.8rem">
+📝 申論方向提示<br><br>
+選 <strong>預言基本正確</strong>：可以用 A&R 的框架論述中國的榨取式制度（政治權力集中、打壓民營企業、限制創新自由）正在產生他們預測的後果。用具體數據：房地產占 GDP 比重下降、青年失業率、民營企業投資意願等。但你也需要回應反方：為什麼中國能「榨取」這麼久？<br><br>
+選 <strong>部分正確但過度簡化</strong>：可以用 <strong>Mann</strong> 的框架論述中國同時是「經濟💰上半廣納（市場化）、政治🏛️上榨取（一黨制）、軍事⚔️上擴張、意識型態上控制」——四種權力不能用一個「榨取」標籤概括。也可以用 <strong>Evans</strong>：中國某些部門（如半導體政策）展現了鑲嵌性自主的特徵，但其他部門是掠奪型的。<br><br>
+選 <strong>理論無法解釋中國</strong>：可以論述中國的「威權韌性」挑戰了所有西方理論的預測。用 <strong>Hobson</strong> 的框架：中國的國際地位（⚔️軍事崛起＋💰全球經濟整合）和國內制度（🏛️黨國體制）是同時且交互演化的，不能用「廣納 vs. 榨取」的二分法理解。<br><br>
+選 <strong>需要更多時間觀察</strong>：這不是逃避答案——你可以用 <strong>Weiss</strong> 的框架論述：全球化壓力（美中科技戰、供應鏈脫鉤）正在測試中國的制度回應能力。中國能否像台灣一樣把外部壓力轉化為改革動力？還是會像 A&R 預測的那樣走向衰敗？結論需要時間，但分析框架已經到位。
+</div>
+
+<div class="hl-box">
+<p><strong>📖 下週預告（W7 結構取向的理論整合與比較）：</strong><br>我們會用 Mahoney 的比較研究邏輯（充份/必要/共變條件、關鍵時刻與反事實推論）來重新檢視 W2-W6 的所有理論。然後從 W9 開始，我們進入全新的視角：<strong>行動者與互動取向</strong>——行動者如何在制度、文化與結構中協商與實踐政治。</p>
+</div>
+</div></div>
+
+</div><!-- /page-container -->
+
+<div class="bottom-bar">
+<div class="arrow-btns"><button class="arrow-btn" id="prevBtn" onclick="prev()" disabled>←</button></div>
+<div class="page-dots" id="dots"></div>
+<div style="display:flex;align-items:center;gap:.8rem">
+<span class="page-indicator" id="pageNum">1 / 8</span>
+<button class="arrow-btn" id="nextBtn" onclick="next()">→</button>
+</div>
+</div>
+</div>
+
+<script>
+/* NAV */
+let current=0;
+const pages=document.querySelectorAll('.page'),navBtns=document.querySelectorAll('.nav-btn'),total=pages.length;
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goPage(i);dotsEl.appendChild(d)}
+function goPage(idx){if(idx===current||idx<0||idx>=total)return;const right=idx>current;pages[current].classList.remove('active');pages[current].style.transform=right?'translateX(-36px)':'translateX(36px)';pages[current].style.opacity='0';pages[idx].style.transform=right?'translateX(36px)':'translateX(-36px)';void pages[idx].offsetWidth;pages[idx].classList.add('active');pages[idx].scrollTop=0;const old=current;setTimeout(()=>{pages[old].style.transform='';pages[old].style.opacity=''},400);current=idx;updateUI()}
+function next(){goPage(current+1)}function prev(){goPage(current-1)}
+function updateUI(){navBtns.forEach((b,i)=>b.classList.toggle('active',i===current));document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));document.getElementById('pageNum').textContent=(current+1)+' / '+total;document.getElementById('prevBtn').disabled=current===0;document.getElementById('nextBtn').disabled=current===total-1}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')next();if(e.key==='ArrowLeft'||e.key==='ArrowUp')prev()});
+
+/* SCHOLAR TABS */
+function switchS(idx){
+  document.querySelectorAll('#stabs .s-tab').forEach((b,i)=>{b.classList.toggle('on',i===idx)});
+  for(let i=0;i<5;i++){const p=document.getElementById('sp'+i);if(p)p.classList.toggle('on',i===idx)}
+}
+function highlightNode(el){
+  document.querySelectorAll('.s-node rect').forEach(r=>{r.setAttribute('opacity','.45');r.setAttribute('stroke','none')});
+  const rect=el.querySelector('rect');
+  rect.setAttribute('opacity','1');rect.setAttribute('stroke','#fff');rect.setAttribute('stroke-width','2.5');
+}
+function scrollToTabs(){
+  setTimeout(()=>{
+    const anchor=document.getElementById('scholarDetailAnchor');
+    if(anchor) anchor.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+/* QUIZ */
+let answered=0,correct=0;
+function checkQ(qid,el,isCorrect){
+  const block=document.getElementById(qid);
+  if(block.dataset.done) return;
+  block.dataset.done='1';
+  answered++;
+  const opts=block.querySelectorAll('.quiz-opt');
+  opts.forEach(o=>{o.classList.add('disabled')});
+  if(isCorrect){el.classList.add('correct');correct++}
+  else{el.classList.add('wrong');opts.forEach(o=>{if(!o.classList.contains('wrong')){/* find correct */}})}
+  const expl=document.getElementById(qid+'e');
+  expl.classList.add('show');
+  if(answered===6){
+    const scoreEl=document.getElementById('quizScore');
+    scoreEl.style.display='block';
+    scoreEl.textContent='你答對了 '+correct+' / 6 題！'+(correct>=5?' 🎉 很棒！':correct>=3?' 👍 不錯，可以再複習一下。':' 📖 建議回到前幾頁複習哦。');
+  }
+}
+
+/* VOTE */
+function vote(vid,btn){
+  const row=document.getElementById(vid);
+  if(row.dataset.done)return;
+  row.dataset.done='1';
+  btn.classList.add('voted');
+  document.getElementById('r'+vid.slice(1)).textContent='✓ 已記錄你的選擇：'+btn.textContent;
+}
+
+/* IR THEORY MAP */
+const irData=[
+  {title:'🦁 現實主義 Realism',color:'#8b2500',
+   era:'1948 Morgenthau《國際政治》→ 1979 Waltz《國際政治理論》新現實主義 → 2001 Mearsheimer《大國政治的悲劇》攻勢現實主義',
+   scholars:'Morgenthau (1948)、<strong>Waltz (1979)</strong>、Mearsheimer (2001)',
+   points:'國際體系是<strong>無政府狀態</strong>，國家以生存為首要目標。權力分配（單極/兩極/多極）決定戰爭與和平。國家自主性取決於你在權力結構中的位置——<strong>大國有自主性，小國只能選邊站</strong>。',
+   cases:'冷戰兩極對抗、古巴飛彈危機 (1962)、美蘇軍備競賽、中國崛起後的印太戰略',
+   tw:'<strong>兩岸軍事對峙</strong>（1996 台海危機）、美國對台軍售（F-16）、國防自主政策、中國軍機繞台 (2020s)'},
+  {title:'🤝 自由主義 Liberalism',color:'#3a5a8c',
+   era:'1977 Keohane & Nye《權力與相互依賴》→ 1984 Keohane《霸權之後》新自由制度主義 → 2001 Ikenberry《勝利之後》自由國際秩序',
+   scholars:'<strong>Keohane & Nye (1977)</strong>、Keohane (1984)、Ikenberry (2001)、Doyle (1983 民主和平論)',
+   points:'雖然是無政府狀態，但國際制度（WTO、UN、IMF）可以<strong>降低交易成本、促進合作</strong>。國家間的相互依賴讓戰爭代價太高。國家自主性受國際規範約束，但也因為<strong>參與制度而獲得合作收益</strong>。',
+   cases:'歐盟整合 (1957-)、WTO 爭端解決 (1995-)、巴黎氣候協定 (2015)、布列頓森林體系 (1944-71)',
+   tw:'<strong>2002 年加入 WTO</strong>、參與 APEC、無法加入聯合國的困境、新南向政策 (2016)、ECFA 利弊辯論 (2010-)'},
+  {title:'💭 建構主義 Constructivism',color:'#5a6e5a',
+   era:'1989 Onuf 首創「建構主義」一詞 → 1992 Wendt 奠基論文 → 1996 Katzenstein《文化與國家安全》→ 1999 Wendt《國際政治的社會理論》系統化',
+   scholars:'<strong>Wendt (1992, 1999)</strong>、Katzenstein (1996)、Finnemore (1996)、Anderson (1983 想像的共同體)',
+   points:'國際結構不只是物質的（軍隊、經濟），還包括<strong>觀念、認同與規範</strong>。Wendt 名言：「無政府狀態是國家自己製造的」。國家自主性取決於<strong>你如何定義自己的身分</strong>——認同改變，利益就改變。',
+   cases:'蘇聯解體後東歐身分重建 (1989-)、歐盟「歐洲認同」建構、人權規範全球擴散',
+   tw:'<strong>台灣認同從「中國人」→「台灣人」</strong> (1990s-至今)、國際形象塑造（民主台灣 vs. 自由中國）、原住民正名運動'},
+  {title:'霸權穩定論 Hegemonic Stability',color:'#8b2500',
+   era:'1973 Kindleberger《蕭條中的世界》提出假說 → 1981 Gilpin《國際關係的政治經濟學》→ 1984 Keohane《霸權之後》修正為制度延續論',
+   scholars:'Kindleberger (1973)、<strong>Gilpin (1981)</strong>、Keohane (1984)',
+   points:'從<strong>現實主義</strong>延伸：穩定的國際經濟秩序需要一個霸權國提供公共財（自由貿易、穩定貨幣、安全保障）。霸權衰落則秩序動搖。國家自主性在霸權體系下是<strong>被允許的</strong>——霸權國決定你的發展空間。',
+   cases:'美國主導戰後經濟秩序 (1945-)、布列頓森林體系崩潰 (1971)、美國霸權衰退辯論 (1980s-)',
+   tw:'冷戰時期<strong>美國安全傘下的經濟發展</strong>、美麗島事件 (1979) 後美國施壓民主化、宋學文＆陳亮智 (2011) 的分析'},
+  {title:'依賴論 / 世界體系 Dependency / World-System',color:'#6b4c7a',
+   era:'1966 Frank《拉美的資本主義與低度發展》→ 1974-89 Wallerstein《現代世界體系》四卷 → 1979 Cardoso & Faletto「依附發展」修正',
+   scholars:'Frank (1966)、<strong>Wallerstein (1974-89)</strong>、Cardoso (1979)、Cumings (1984 東北亞政經起源)',
+   points:'跨越<strong>現實主義與自由主義</strong>：全球經濟分成核心—半邊陲—邊陲。邊陲出口原料、進口工業品，利潤被核心國吸走。國家自主性取決於你在世界經濟中的<strong>結構位置</strong>——位置決定命運。',
+   cases:'拉美進口替代工業化失敗 (1960-70s)、東亞四小龍的「例外」(1960-90s)、非洲資源詛咒',
+   tw:'1960s <strong>加工出口區</strong>（邊陲代工）→ 半導體產業升級（半邊陲→部分核心）、全球供應鏈中的位置移動'},
+  {title:'國際規範與認同政治 Norms & Identity',color:'#5a6e5a',
+   era:'1983 Anderson《想像的共同體》→ 1998 Finnemore & Sikkink〈規範生命週期〉→ 1998 Keck & Sikkink《跨國倡議網絡》→ 2000s 規範擴散研究蓬勃',
+   scholars:'Finnemore & Sikkink (1998)、Keck & Sikkink (1998)、Anderson (1983)',
+   points:'從<strong>建構主義</strong>延伸：國際規範（人權、民主、環保）如何擴散？跨國倡議網絡如何影響國內政治？國家自主性不只受物質力量限制，也受<strong>國際社會對你的身分認知</strong>限制。',
+   cases:'反地雷運動 (1990s)、國際刑事法院 (2002)、LGBT 權利全球擴散 (2010s)、保護責任 R2P (2005)',
+   tw:'<strong>同婚合法化</strong>（2019，亞洲第一）背後的國際規範壓力、台灣參與 WHO 的認同之爭、「台灣」vs.「中華台北」正名'},
+  {title:'冷戰安全體系與同盟政治',color:'#b8860b',
+   era:'1987 Walt《同盟的起源》→ 1990s Christensen & Snyder 連鎖與推卸 → 2001 Ikenberry 戰後秩序理論 → 2020s 印太同盟重組',
+   scholars:'Walt (1987)、Ikenberry (2001)、Christensen & Snyder (1990)',
+   points:'<strong>霸權穩定論的具體應用</strong>：冷戰中美國建立的雙邊同盟網絡（hub-and-spoke），如何形塑盟國的國內制度？安全承諾換取政治順從，同盟關係同時限制和賦予國家自主性。',
+   cases:'美日安保條約 (1951-)、北約擴張 (1999-)、韓國威權發展與民主化 (1961-87)、菲律賓基地政治',
+   tw:'<strong>《中美共同防禦條約》(1954-79)</strong>、斷交後《台灣關係法》(1979-)、美國對台戰略模糊→清晰辯論 (2020s)'},
+  {title:'發展型國家 Developmental State',color:'#8b2500',
+   era:'1982 Johnson《通產省與日本奇蹟》開創 → 1989 Amsden 韓國案例 → 1990 Wade 台灣案例 → 1995 Evans《鑲嵌性自主》理論化 → 2018 Wade「發展型國家還活著嗎？」',
+   scholars:'<strong>Johnson (1982)</strong>、Amsden (1989)、<strong>Wade (1990)</strong>、<strong>Evans (1995)</strong>',
+   points:'<strong>世界體系的反例</strong>：邊陲國家不是注定被剝削。透過國家主導的產業政策，官僚自主性＋社會嵌入的平衡，半邊陲國家可以策略性地產業升級。國家自主性是<strong>經濟發展的引擎</strong>。',
+   cases:'日本通產省與經濟奇蹟 (1950-80s)、韓國財閥與國家 (1960-90s)、新加坡國家資本主義、中國「國家資本主義 2.0」(2000s-)',
+   tw:'<strong>工研院→台積電模式</strong> (1973-)、經建會產業政策、新竹科學園區 (1980-)、瞿宛文 (2011)「不成功轉型」論'},
+  {title:'武器化相互依賴 Weaponized Interdependence',color:'#2a7a6e',
+   era:'2019 Farrell & Newman 在《國際安全》發表開創性論文 → 2020s 美中科技戰加速理論發展 → 2022 俄烏戰爭 SWIFT 制裁驗證理論',
+   scholars:'<strong>Farrell & Newman (2019)</strong>、Drezner（制裁政治）、Norrlöf（美元霸權）',
+   points:'<strong>自由主義的當代挑戰</strong>：全球化網絡中存在關鍵節點（chokepoints），掌控節點的國家可以把相互依賴「武器化」來脅迫他國。國家自主性取決於你是<strong>控制節點的人，還是被節點控制的人</strong>。',
+   cases:'SWIFT 制裁俄羅斯 (2022)、對伊朗制裁 (2012)、美國對華為晶片禁令 (2019-)、TikTok 禁令 (2020s)',
+   tw:'<strong>矽盾（Silicon Shield）</strong>：台積電作為全球晶片供應鏈瓶頸。CHIPS Act (2022) 對台灣影響、台積電赴美設廠的戰略意涵'}
+];
+function showIR(idx){
+  const d=irData[idx];
+  const card=document.getElementById('irCard');
+  card.style.borderLeftColor=d.color;
+  card.innerHTML='<h4 style="font-family:Playfair Display,serif;color:'+d.color+';margin-bottom:.5rem;font-size:1.05rem">'+d.title+'</h4>'+
+    '<p style="font-size:.82rem;margin-bottom:.6rem;padding:.5rem .7rem;background:rgba(184,134,11,.07);border-radius:5px;line-height:1.65"><strong style="color:var(--gold)">📅 發展年代：</strong>'+d.era+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:.5rem"><strong style="color:var(--ink)">代表學者：</strong>'+d.scholars+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:.5rem"><strong style="color:var(--ink)">核心主張與國家自主性：</strong>'+d.points+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:.5rem"><strong style="color:var(--purple)">重要個案：</strong>'+d.cases+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:0"><strong style="color:var(--accent)">🇹🇼 台灣事件：</strong>'+d.tw+'</p>';
+  document.querySelectorAll('.ir-node rect').forEach((r,i)=>{
+    r.setAttribute('opacity',i===idx?'1':'.45');
+    r.setAttribute('stroke',i===idx?'#fff':'none');
+    r.setAttribute('stroke-width',i===idx?'2.5':'0');
+  });
+}
+/* FIX DETAIL (Page 2 - why five scholars) */
+const fixData=[
+  {color:'#8b2500',
+   original:'<strong>Skocpol 的原始主張：</strong>國家是一個「單一行動者」（unitary actor），官僚菁英的專業性是國家自主性的唯一來源。國家的組織邏輯是統一的。',
+   problem:'<strong>問題：</strong>這忽略了國家內部有多種權力來源，各自有獨立的邏輯。軍事力量、經濟組織、意識型態運動、政治行政——它們不能被化約為同一個東西。Tilly 雖然強調戰爭，但也把國家簡化為「戰爭機器」。',
+   fix:'<strong>Mann 的修正：</strong>提出 IEMP 四種權力模型（意識型態、經濟、軍事、政治），每種權力有獨立邏輯。國家的自主性來自「基礎結構能力」而非菁英專業性。<br><strong>Giddens 的修正：</strong>提出四種制度叢結（資本主義、工業主義、軍事主義、社會監視）。特別強調「監視能力」是現代國家的核心——國家最厲害的地方不是軍隊，是它有多了解人民。'},
+  {color:'#5a6e5a',
+   original:'<strong>Skocpol 的原始主張：</strong>國家和社會之間有一條清楚的界線。國家凌駕於社會之上，獨立於利益團體和階級力量。',
+   problem:'<strong>問題：</strong>國家如果完全脫離社會，怎麼知道產業需要什麼？怎麼執行政策？完全獨立的國家不是「強國家」，而是「掠奪型國家」（如蒙博托的薩伊）。Tilly 也沒有認真處理資本主義體系的獨立自主力量。',
+   fix:'<strong>Evans 的修正：</strong>提出「鑲嵌性自主」——國家既要有獨立於社會的專業自主性，又要與產業資本保持制度化的連結。成功在於兩者的動態平衡。<br><strong>Weiss 的修正：</strong>提出「管理互賴」——國家能力不在於凌駕社會，而在於與社會建立制度化的合作關係。全球化不等於國家弱化——關鍵在你的制度怎麼接招。'},
+  {color:'#3a5a8c',
+   original:'<strong>Skocpol & Tilly 的原始主張：</strong>Skocpol 把國家比喻為「雙錨」船——一端是國內政經關係，一端是國際體系。但在分析時，她把兩端切割開：國際層次國家受制於無政府體系，國內層次國家又凌駕社會。Tilly 也主要從歐洲國家形成的「內部」過程分析。',
+   problem:'<strong>問題：</strong>這兩個邏輯是矛盾的。如果國家在國際上被結構決定，為什麼在國內又有自主性？國際和國內資本主義不是兩個獨立的體系——它們是同一個全球資本主義的不同面向。',
+   fix:'<strong>Hobson 的修正：</strong>他的整個學術計畫就是要打破「國際關係」和「比較政治」的學科分工。他主張：國家同時被國際壓力和國內社會力量形塑——兩者是同一個過程的不同面向。台灣就是最好的例子：美中關係（國際）和本土社會運動（國內）同時且交互地影響台灣的政治發展。'}
+];
+function showFix(idx){
+  const d=fixData[idx];
+  document.getElementById('fixCard').style.borderLeftColor=d.color;
+  document.getElementById('fixCard').innerHTML=
+    '<p style="font-size:.84rem;margin-bottom:.4rem">'+d.original+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:.4rem;color:#c0392b">'+d.problem+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:0;padding:.5rem .7rem;background:rgba(90,110,90,.06);border-radius:4px">'+d.fix+'</p>';
+}
+
+/* ANGLE DETAIL (Page 2 - war/economy/autonomy per scholar) */
+const angleData=[
+  {name:'Mann',color:'#8b2500',
+   text:'<strong>⚔️ 軍事是四種獨立權力之一</strong>，不是唯一重要的。Mann 把 Tilly 的「戰爭→國家」擴展為四條平行的權力邏輯。<strong>💰 經濟（資本主義）有自己的動力</strong>，不臣服於國家——這正是 Skocpol 不承認的。<strong>🏛️ 國家自主性來自基礎結構能力</strong>（穿透社會的後勤與基建），而非官僚的專業壟斷。<br><span style="color:var(--accent)">🇹🇼 台灣的健保覆蓋率 99% 就是基礎結構能力的展現——國家穿透社會每一個角落。</span>'},
+  {name:'Giddens',color:'#6b4c7a',
+   text:'<strong>⚔️ 軍事主義和工業主義互相強化</strong>——現代戰爭需要工業生產，工業發展又刺激軍備競賽。<strong>💰 資本主義是四種制度叢結之一</strong>，有自己的發展邏輯。但 Giddens 最獨特的貢獻是加入<strong>社會監視</strong>這個被所有人忽略的面向。<strong>🏛️ 國家自主性＝監視能力＋合法暴力的壟斷。</strong><br><span style="color:var(--accent)">🇹🇼 COVID-19 數位防疫（健保卡串接入境資料）就是 Giddens 說的監視能力的當代展現。</span>'},
+  {name:'Evans',color:'#5a6e5a',
+   text:'<strong>⚔️ 冷戰的安全壓力是東亞發展型國家的背景條件</strong>——美國的安全保障讓台灣、韓國可以專注經濟發展。<strong>💰 國際市場壓力塑造了發展策略</strong>，但邊陲國家不是注定被剝削——透過正確的國家—社會連結可以產業升級。<strong>🏛️ 國家自主性是經濟發展的引擎</strong>，關鍵是鑲嵌性自主：官僚獨立＋社會嵌入的動態平衡。<br><span style="color:var(--accent)">🇹🇼 工研院→台積電模式：官僚有專業自主性（自主），又與民間企業密切合作（嵌入）。</span>'},
+  {name:'Weiss',color:'#2a7a6e',
+   text:'<strong>⚔️ 安全問題讓國家有正當性干預經濟</strong>，但 Weiss 更關注的是全球化。<strong>💰 全球化壓力對不同國家的影響不同</strong>——關鍵不是壓力有多大，而是你的國內制度能不能把壓力轉化為發展動力。<strong>🏛️ 國家自主性＝管理互賴</strong>——國家與社會建立制度化合作關係的能力。全球化讓國家變弱是迷思。<br><span style="color:var(--accent)">🇹🇼 矽盾：台灣透過產官學合作，把全球化的半導體供應鏈壓力轉化為地緣政治籌碼。</span>'},
+  {name:'Hobson',color:'#3a5a8c',
+   text:'<strong>Hobson 不提出新的三角關係——他批評所有人都把三角關係切割了。</strong>⚔️ 戰爭不只從國際層次影響國家，也從國內層次（如階級衝突、社會動員）影響。💰 經濟不是只有國內資本主義或只有國際資本主義——它們是同一個全球體系的不同面向。<strong>🏛️ 國家自主性不能只看國內或只看國際——必須同時分析兩者的交互作用。</strong><br><span style="color:var(--accent)">🇹🇼 台灣的政治發展：美中關係（國際）＋本土社會運動（國內）＋兩岸經貿（經濟）同時且交互地作用。</span>'}
+];
+function showAngle(idx){
+  const d=angleData[idx];
+  document.getElementById('angleCard').style.borderLeftColor=d.color;
+  document.getElementById('angleCard').innerHTML=
+    '<h4 style="color:'+d.color+';font-size:.95rem;margin-bottom:.4rem">'+d.name+' 的⚔️💰🏛️切入點</h4>'+
+    '<p style="font-size:.84rem;margin-bottom:0;line-height:1.75">'+d.text+'</p>';
+}
+
+/* QUADRANT DETAIL */
+const qData=[
+  {color:'#8b2500',title:'生產模式分析 Mode of Production',
+   desc:'國家只是經濟結構的「外殼」。誰控制了生產工具（土地、工廠、資本），誰就控制國家。想想馬克思說的：經濟基礎決定上層建築。國家的法律、制度、意識型態都是為統治階級服務的。',
+   scholars:'Perry Anderson（歐洲絕對主義國家）、Brenner（階級結構與經濟發展）、新馬克思主義陣營',
+   triangle:'<strong>💰經濟 → 決定一切。⚔️戰爭是階級鬥爭的延伸。🏛️國家自主性幾乎不存在</strong>——國家只是統治階級的工具。農奴制、封建制、資本主義制度決定了國家的形態，國家沒有獨立的意志。',
+   tw:'🇹🇼 馬克思主義視角下的台灣：威權時期國家服務於黨國資本家集團（黨營事業）；民主化後，財團是否仍然「控制」政策方向？（如土地開發、都更爭議）',
+   cases:'法國大革命（資產階級推翻封建貴族）、東歐農奴制與西歐自由農的不同國家路徑'},
+  {color:'#5a6e5a',title:'國家主義分析 Statist',
+   desc:'國家有自己的意志和能力，不只是經濟結構的產物。官僚、軍隊、稅收系統讓國家可以獨立於社會階級採取行動。<strong>這是上週 W5（Skocpol）的核心，也是本週五位學者的出發點。</strong>',
+   scholars:'Skocpol（國家與社會革命）、Tilly（強制、資本與歐洲國家）、Evans（鑲嵌性自主）、Mann（社會權力的來源）',
+   triangle:'<strong>🏛️國家自主性是獨立變項。⚔️戰爭壓力迫使國家建立能力，💰經濟發展是國家能力的結果。</strong>因果方向是：國際軍事競爭 → 國家組織能力 → 經濟與社會結果。Tilly 的名句：「戰爭製造國家，國家也製造戰爭。」',
+   tw:'🇹🇼 台灣的國家自主性：威權時期的經建會主導產業政策（國家引導經濟），COVID-19 口罩國家隊（國家的組織動員能力）。問題：民主化後國家自主性是變強還是變弱？',
+   cases:'法國舊政權的國家改革失敗→革命、普魯士的軍事—官僚國家建設、東亞發展型國家'},
+  {color:'#6b4c7a',title:'世界體系分析 World System',
+   desc:'一個國家的命運取決於它在全球經濟中的位置：你是核心（美國）、半邊陲（台灣、韓國）、還是邊陲（許多非洲國家）？<strong>位置決定命運。</strong>不是你不夠努力，而是全球經濟結構讓你無法翻身。',
+   scholars:'Wallerstein（現代世界體系）、Gunder Frank（依賴理論）、Cardoso（依附發展論）、Cumings（東北亞政治經濟起源）',
+   triangle:'<strong>💰全球經濟結構 → 決定你的位置 → 決定🏛️自主性空間。⚔️戰爭（殖民、帝國主義）是建立不平等經濟結構的工具。</strong>邊陲國家的國家自主性被全球分工結構嚴重限制——你想工業化，但核心國家需要你繼續出口原料。',
+   tw:'🇹🇼 台灣從邊陲到半邊陲的「例外」：1960s 加工出口區（邊陲代工）→ 1980s 半導體產業升級（半邊陲）→ 2020s 台積電成為核心節點。世界體系理論預測台灣應該被鎖在邊陲——為什麼沒有？（這正是發展型國家理論要回答的）',
+   cases:'拉美的進口替代工業化失敗、非洲的資源詛咒、東亞四小龍作為「例外」'},
+  {color:'#3a5a8c',title:'地緣政治分析 Geopolitical',
+   desc:'國家之間的軍事競爭和國際壓力，才是形塑國家的最大力量。<strong>戰爭製造國家，國家也製造戰爭。</strong>為了打仗，國家必須徵稅、建軍、動員人口——這些過程本身就塑造了國家的制度形態。',
+   scholars:'Waltz（結構現實主義）、Gilpin（霸權穩定論）、Tilly（戰爭與國家形成）、Mearsheimer（攻勢現實主義）',
+   triangle:'<strong>⚔️戰爭是最根本的力量 → 迫使國家建立🏛️組織能力（徵稅、建軍）→ 💰經濟是為戰爭服務的資源。</strong>國家自主性取決於你在國際軍事權力結構中的位置——大國有自主性，小國只能結盟求生存。',
+   tw:'🇹🇼 台灣是地緣政治分析的經典案例：冷戰前線（中美防禦條約）→ 斷交後的安全困境（台灣關係法）→ 當代的美中台三角。台灣的國家形態（動員體制、國防預算、徵兵制→募兵制）深受地緣政治壓力塑造。',
+   cases:'歐洲民族國家的形成（百年戰爭→法國集權）、冷戰同盟體系、當代美中大國競爭'}
+];
+function showQ(idx){
+  const d=qData[idx];
+  const card=document.getElementById('qCard');
+  card.style.borderLeftColor=d.color;
+  card.innerHTML=
+    '<h4 style="font-family:Playfair Display,serif;color:'+d.color+';margin-bottom:.4rem;font-size:1rem">'+d.title+'</h4>'+
+    '<p style="font-size:.84rem;margin-bottom:.4rem">'+d.desc+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:.4rem"><strong style="color:var(--ink)">代表學者：</strong>'+d.scholars+'</p>'+
+    '<p style="font-size:.82rem;margin-bottom:.4rem;padding:.45rem .7rem;background:rgba(184,134,11,.06);border-radius:4px;line-height:1.65"><strong style="color:var(--gold)">⚔️💰🏛️ 三角關係：</strong>'+d.triangle+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:.4rem"><strong style="color:var(--purple)">重要個案：</strong>'+d.cases+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:0"><strong style="color:var(--accent)">'+d.tw+'</strong></p>';
+  document.querySelectorAll('.q-cell').forEach((c,i)=>{
+    c.style.borderLeftColor=i===idx?d.color:'transparent';
+    c.style.background=i===idx?'rgba(184,134,11,.06)':'var(--card-bg)';
+  });
+}
+
+/* TIMELINE DETAIL CARDS */
+const tlData=[
+  {color:'#8b2500',scholar:'Hans Morgenthau（德裔美籍，芝加哥大學）',book:'《國際政治：權力與和平的鬥爭》<em>Politics Among Nations</em> (1948)',theory:'<strong>古典現實主義</strong>：國際政治的本質是權力鬥爭。國家領導人應以「國家利益」（以權力定義）作為外交決策的指導原則，而不是道德理想。',triangle:'<strong>戰爭是核心驅動力。</strong>二戰證明：忽視權力現實、寄望國際聯盟的理想主義是危險的。國家自主性＝有多少軍事和外交能力保護自己。經濟只是支撐權力的工具。',event:'🌍 二戰結束 (1945)、冷戰開始 (1947)、北約成立 (1949)',tw:'🇹🇼 國共內戰結束、國民政府遷台 (1949)、台灣成為冷戰前線'},
+  {color:'#8b2500',scholar:'Kenneth Waltz（美國，哥倫比亞大學/柏克萊）',book:'《人、國家與戰爭》<em>Man, the State, and War</em> (1959)',theory:'<strong>三個分析層次</strong>（images）：戰爭的原因可以從人性（第一層）、國家體制（第二層）、國際體系結構（第三層）三個層次分析。為後來的結構現實主義鋪路。',triangle:'<strong>戰爭的原因在體系結構，不在人性或經濟。</strong>國家自主性受限於國際體系——即使國內制度再好，體系壓力仍迫使國家備戰。經濟發展無法消除戰爭的根源。',event:'🌍 古巴飛彈危機前夕、美蘇核武競賽白熱化',tw:'🇹🇼 八二三砲戰 (1958)、《中美共同防禦條約》運作中 (1954-)'},
+  {color:'#6b4c7a',scholar:'André Gunder Frank（德裔美籍，拉美研究）',book:'《拉美的資本主義與低度發展》<em>Capitalism and Underdevelopment in Latin America</em> (1966)',theory:'<strong>依賴理論</strong>：低度發展不是「落後」，而是被核心國家「製造」出來的。邊陲國家的貧窮是全球資本主義結構的產物，不是自身努力不夠。',triangle:'<strong>經濟剝削取代了直接的軍事征服。</strong>殖民戰爭結束了，但經濟依賴延續了不對等關係。邊陲國家幾乎沒有自主性——你的發展路徑被核心國家的經濟利益決定。',event:'🌍 拉美進口替代工業化困境、第三世界不結盟運動',tw:'🇹🇼 台灣設立加工出口區 (1966) — 從農業轉向出口導向工業化'},
+  {color:'#6b4c7a',scholar:'Immanuel Wallerstein（美國，紐約州立大學）',book:'《現代世界體系》第一卷 <em>The Modern World-System I</em> (1974)',theory:'<strong>世界體系理論</strong>：全球經濟從16世紀起就是一個整體，分成核心—半邊陲—邊陲。一個國家的發展路徑取決於它在這個體系中的結構位置。',triangle:'<strong>全球經濟結構決定一切。</strong>戰爭是核心國家維持經濟霸權的手段，國家自主性取決於你在世界經濟中的位置。半邊陲國家有一些操作空間，但邊陲國家幾乎沒有。',event:'🌍 石油危機 (1973)、布列頓森林體系崩潰 (1971)、全球南北對話',tw:'🇹🇼 十大建設啟動 (1974) — 台灣試圖從邊陲代工升級為半邊陲工業國'},
+  {color:'#3a5a8c',scholar:'Robert Keohane & Joseph Nye（美國，哈佛/杜克大學）',book:'《權力與相互依賴》<em>Power and Interdependence</em> (1977)',theory:'<strong>複合相互依賴</strong>：國際關係不只有軍事安全，還有經濟、社會、環境等多重管道。相互依賴讓國家之間的關係更複雜，不能只用權力鬥爭來解釋。正式挑戰現實主義的壟斷地位。',triangle:'<strong>經濟相互依賴可以抑制戰爭。</strong>當貿易讓雙方都獲利，開戰的代價就太高了。國家自主性不只來自軍事力量，也來自經濟網絡中的位置和談判籌碼。',event:'🌍 越戰結束 (1975)、石油危機暴露經濟相互依賴的脆弱性',tw:'🇹🇼 台美斷交前夕 (1979斷交) — 經濟依賴vs.安全依賴的張力浮現'},
+  {color:'#8b2500',scholar:'Kenneth Waltz（美國，柏克萊大學）',book:'《國際政治理論》<em>Theory of International Politics</em> (1979)',theory:'<strong>新現實主義（結構現實主義）</strong>：國際體系的結構（無政府狀態＋權力分配）決定了國家行為。不是人性，而是體系結構迫使國家追求權力。這是對自由主義挑戰的系統性回應。',triangle:'<strong>體系結構壓倒經濟合作。</strong>即使貿易帶來利益，國家仍擔心「相對收益」——對方比我多賺，未來可能用來對付我。國家自主性由體系中的權力位置決定，經濟合作無法改變這個現實。',event:'🌍 蘇聯入侵阿富汗 (1979)、伊朗革命 (1979)、第二次冷戰升溫',tw:'🇹🇼 美麗島事件 (1979)、台美斷交 — 台灣在國際結構變動中的脆弱性'},
+  {color:'#b8860b',scholar:'Chalmers Johnson（美國，柏克萊大學）',book:'《通產省與日本奇蹟》<em>MITI and the Japanese Miracle</em> (1982)',theory:'<strong>發展型國家理論開創</strong>：日本的經濟奇蹟不是市場自發的結果，而是國家（特別是通產省）策略性引導的產物。國家可以透過產業政策主導經濟發展。',triangle:'<strong>國家自主性是經濟發展的引擎。</strong>冷戰安全保障（美國提供）讓日本可以把資源集中在經濟發展上。戰爭的「缺席」（安全外包給美國）反而擴大了國家在經濟領域的自主性。',event:'🌍 日本經濟超越西歐、東亞四小龍崛起引發學術關注',tw:'🇹🇼 工研院成立 (1973) 並開始技術移轉、新竹科學園區設立 (1980) — 台灣發展型國家的關鍵基礎建設'},
+  {color:'#3a5a8c',scholar:'Robert Keohane（美國，普林斯頓/杜克大學）',book:'《霸權之後》<em>After Hegemony</em> (1984)',theory:'<strong>新自由制度主義</strong>：即使美國霸權衰落，國際制度（IMF、WTO 等）仍能降低交易成本、提供資訊、維持合作。制度有自己的慣性，不會因霸權消失而立刻崩潰。同時期：霸權穩定論成形（Kindleberger 1973 → Gilpin 1981）。',triangle:'<strong>制度讓經濟合作延續，即使霸權的軍事力量衰退。</strong>國家自主性不只受軍事權力約束，也受國際經濟制度的約束——但這種約束是「自願的」，因為參與制度帶來的經濟收益大於成本。',event:'🌍 美國雙赤字危機、美國霸權衰退辯論、G7 協調機制',tw:'🇹🇼 台灣經濟起飛持續、半導體產業萌芽 — 受惠於美國主導的開放貿易體系'},
+  {color:'#5a6e5a',scholar:'Nicholas Onuf（美國，佛羅里達國際大學）',book:'《我們造就的世界》<em>World of Our Making</em> (1989)',theory:'<strong>建構主義命名</strong>：Onuf 首次在 IR 學科使用「建構主義」一詞。同年冷戰和平結束——現實主義和自由主義都無法預測蘇聯會不經一戰就解體，暴露了純物質分析的盲點。',triangle:'<strong>蘇聯的解體證明：戰爭和經濟都不是最根本的。</strong>蘇聯軍事仍強、經濟雖弱但未崩潰——真正改變的是「認同」：戈巴契夫重新定義了蘇聯的國家利益，放棄了與西方的敵對身分。國家自主性可以透過認同轉變而擴大。',event:'🌍 柏林圍牆倒塌 (1989)、天安門事件 (1989)、冷戰和平結束',tw:'🇹🇼 解嚴 (1987) 後社會運動蓬勃、野百合學運 (1990) — 台灣民主化與認同轉變加速'},
+  {color:'#5a6e5a',scholar:'Alexander Wendt（德裔美籍，俄亥俄州立大學）',book:'〈無政府狀態是國家製造的〉論文 <em>Anarchy is What States Make of It</em> (1992)',theory:'<strong>建構主義奠基</strong>：無政府狀態本身不決定任何事——關鍵是國家如何「建構」彼此的關係。美國和英國都有核武，但美國不怕英國的核武，因為兩國的互動歷史建構了「朋友」的身分認知。',triangle:'<strong>「威脅」是被建構的，不是客觀存在的。</strong>同一個鄰國的軍備擴張，對「朋友」和「敵人」意味著完全不同的事。經濟競爭也一樣——是「雙贏的合作」還是「零和的威脅」，取決於雙方如何定義彼此。國家自主性的邊界是由互動中的認同來劃定的。',event:'🌍 蘇聯正式解體 (1991)、波士尼亞戰爭中的族群認同衝突',tw:'🇹🇼 台灣認同開始大幅轉變 — 1992年「一個中國」的不同詮釋浮現'},
+  {color:'#b8860b',scholar:'Peter Evans（美國，柏克萊大學）',book:'《鑲嵌性自主》<em>Embedded Autonomy</em> (1995)',theory:'<strong>發展型國家理論化</strong>：比較巴西、韓國、印度、薩伊，提出國家能力的關鍵不是「強不強」，而是官僚自主性與社會嵌入之間的<strong>動態平衡</strong>。同時期：Wade《管理市場》(1990) 以台灣為案例、Amsden (1989) 以韓國為案例。',triangle:'<strong>國家自主性是連結戰爭與經濟的樞紐。</strong>冷戰（戰爭威脅）迫使東亞國家快速工業化，但能否成功取決於國家的制度能力——官僚太獨立會掠奪經濟，太嵌入會被財團綁架。經濟發展的成敗不是由國際結構「決定」的，而是由國家如何組織自己的能力來回應結構壓力。',event:'🌍 東亞金融危機前夕、WTO 成立 (1995)、全球化辯論白熱化',tw:'🇹🇼 台灣半導體產業進入黃金期、台積電上市 (1994) — Evans 的理論幾乎就是在描述台灣模式'},
+  {color:'#5a6e5a',scholar:'Alexander Wendt（俄亥俄州立大學）',book:'《國際政治的社會理論》<em>Social Theory of International Politics</em> (1999)',theory:'<strong>建構主義系統化</strong>：提出三種無政府文化（霍布斯式敵人、洛克式競爭者、康德式朋友），國際體系可以在三者之間轉變。同時期 Katzenstein (1996)、Finnemore (1996) 分別從文化安全與國際規範角度發展建構主義。',triangle:'<strong>戰爭與經濟的意義取決於你處在哪種「無政府文化」。</strong>霍布斯文化下，經濟是零和的、戰爭是常態；洛克文化下，競爭可控、有規則；康德文化下，戰爭不可想像、經濟合作是常態。國家自主性＝你能否推動文化從霍布斯向康德轉變。',event:'🌍 科索沃戰爭 (1999)、人道干預辯論、歐盟擴大',tw:'🇹🇼 首次政黨輪替 (2000) — 台灣的國際身分認知從「反共前線」轉向「民主台灣」'},
+  {color:'#8b2500',scholar:'John Mearsheimer（美國，芝加哥大學）｜G. John Ikenberry（美國，普林斯頓大學）',book:'Mearsheimer《大國政治的悲劇》(2001) ｜ Ikenberry《勝利之後》(2001)',theory:'<strong>攻勢現實主義 vs. 自由國際秩序</strong>：同年出版的兩本書代表了新一輪大辯論。Mearsheimer 預言中國崛起必然導致衝突；Ikenberry 認為自由國際秩序的制度韌性可以容納中國。',triangle:'<strong>這是戰爭 vs. 經濟的終極辯論。</strong>Mearsheimer：經濟崛起必然轉化為軍事威脅，大國衝突無法避免。Ikenberry：經濟整合＋制度約束可以馴服崛起的大國。國家自主性的空間取決於你相信哪一邊——這也是台灣每天面對的現實選擇。',event:'🌍 911 事件 (2001)、反恐戰爭、中國加入 WTO (2001)',tw:'🇹🇼 台灣加入 WTO (2002)、兩岸經貿急速擴張 — 自由主義的「和平紅利」vs. 現實主義的「安全風險」'},
+  {color:'#2a7a6e',scholar:'Henry Farrell & Abraham Newman（美國，喬治城大學）',book:'〈武器化的相互依賴〉<em>Weaponized Interdependence</em>，《國際安全》(2019)',theory:'<strong>自由主義的當代挑戰</strong>：全球經濟網絡中的關鍵節點（金融清算、海底電纜、半導體）可以被強國「武器化」。相互依賴不一定帶來合作，也可能成為脅迫工具。',triangle:'<strong>經濟網絡本身變成了新型態的「戰爭」工具。</strong>戰爭和經濟不再是對立的——經濟相互依賴被「武器化」後，制裁就是不開槍的戰爭。國家自主性取決於你是控制關鍵節點的人（美國），還是被節點控制的人（被制裁國），還是節點本身（台灣的矽盾）。',event:'🌍 美中貿易戰 (2018-)、華為禁令 (2019)、俄烏戰爭 SWIFT 制裁 (2022)',tw:'🇹🇼 <strong>矽盾</strong>：台積電成為全球晶片供應鏈瓶頸、CHIPS Act (2022)、台積電赴美設廠 — 台灣從被保護者變成關鍵節點控制者'}
+];
+function showTL(idx){
+  const d=tlData[idx];
+  const card=document.getElementById('tlCard');
+  card.style.borderLeftColor=d.color;
+  card.innerHTML=
+    '<p style="font-size:.84rem;margin-bottom:.4rem"><strong style="color:'+d.color+'">📖 學者：</strong>'+d.scholar+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:.4rem"><strong style="color:'+d.color+'">📕 專書/論文：</strong>'+d.book+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:.4rem"><strong style="color:var(--ink)">💡 關鍵理論：</strong>'+d.theory+'</p>'+
+    '<p style="font-size:.82rem;margin-bottom:.4rem;padding:.45rem .7rem;background:rgba(184,134,11,.06);border-radius:4px;line-height:1.65"><strong style="color:var(--gold)">⚔️ 戰爭—經濟—國家自主性：</strong>'+d.triangle+'</p>'+
+    '<p style="font-size:.84rem;margin-bottom:.4rem"><strong style="color:var(--purple)">'+d.event+'</strong></p>'+
+    '<p style="font-size:.84rem;margin-bottom:0"><strong style="color:var(--accent)">'+d.tw+'</strong></p>';
+  document.querySelectorAll('.tl-node > div:last-child').forEach((n,i)=>{
+    n.style.transform=i===idx?'scale(1.02)':'';
+    n.style.boxShadow=i===idx?'0 2px 12px rgba(0,0,0,.12)':'';
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles Tilly — 強制、資本與歐洲國家</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;
+  --gold:#b8860b;--sage:#4a7a6a;--muted:#6b6560;--line:#c9c0b4;
+  --card-bg:#faf7f2;--red:#7a2020;--orange:#b85c1a;--purple:#5a3a7a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.25rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .95rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.78rem;font-weight:500;color:#c0b0a0;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#d8cabc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:#f5f0e8;background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.92rem;font-weight:700;margin-right:1.2rem;flex-shrink:0;letter-spacing:.02em}
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:860px;margin:0 auto}
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:700;color:var(--accent);line-height:1.2;margin-bottom:.3rem}
+.page h2::after{content:'';display:block;width:48px;height:3px;background:var(--gold);margin-top:.6rem;margin-bottom:1.6rem}
+.page h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--ink);margin:2rem 0 .7rem;font-weight:700}
+.page p{font-size:.93rem;margin-bottom:1.1rem;color:#333}
+.page p strong{color:var(--ink)}
+.hero-header{border-bottom:1px solid var(--line);padding-bottom:1.8rem;margin-bottom:2rem}
+.hero-header .name{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:900;color:var(--ink);line-height:1.1}
+.hero-header .role{font-family:'Source Serif 4',serif;font-size:.95rem;color:var(--gold);font-style:italic;margin:.4rem 0 1rem}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.2rem}
+.tag{padding:.3rem .8rem;background:rgba(139,37,0,.08);color:var(--accent);border-radius:18px;font-size:.76rem;font-weight:500}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin:1.3rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.3rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card .icon{font-size:1.4rem;margin-bottom:.5rem}
+.card h4{font-family:'Playfair Display',serif;font-size:1rem;color:var(--accent);margin-bottom:.4rem}
+.card p{font-size:.84rem;color:#555;margin-bottom:0}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.red{border-top-color:var(--red)}.card.red h4{color:var(--red)}
+.card.orange{border-top-color:var(--orange)}.card.orange h4{color:var(--orange)}
+.card.purple{border-top-color:var(--purple)}.card.purple h4{color:var(--purple)}
+
+.quote{position:relative;background:linear-gradient(135deg,#1a1a1a,#2d1a12);color:#e8e4d8;padding:2rem 2.2rem;border-radius:7px;margin:1.8rem 0}
+.quote::before{content:'\201C';position:absolute;top:-.2rem;left:1rem;font-family:'Playfair Display',serif;font-size:4.5rem;color:var(--gold);opacity:.22;line-height:1}
+.quote p{font-family:'Source Serif 4',serif;font-style:italic;font-size:.95rem;color:#e8e4d8;position:relative;z-index:1;margin-bottom:.7rem}
+.quote .attr{font-style:normal;font-size:.8rem;color:var(--gold);text-align:right}
+
+.diagram-box{background:var(--card-bg);border-radius:9px;padding:1.6rem;margin:1.8rem 0;box-shadow:0 2px 10px rgba(0,0,0,.04);overflow-x:auto}
+.diagram-box h4{font-family:'Playfair Display',serif;text-align:center;color:var(--accent);margin-bottom:1rem;font-size:1.05rem}
+
+.flow-row{display:flex;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap;margin:.5rem 0}
+.f-box{padding:.55rem 1rem;border-radius:5px;font-size:.82rem;font-weight:500;text-align:center;min-width:110px}
+.f-state{background:var(--accent);color:#fff;font-weight:700;padding:.8rem 1.4rem;font-size:.88rem}
+.f-war{background:#7a2020;color:#fff}
+.f-cap{background:#4a7a6a;color:#fff}
+.f-prot{background:#b8860b;color:#fff}
+.f-ext{background:#5a4a7a;color:#fff}
+.f-arr{font-size:1.3rem;color:var(--muted)}
+
+.path-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.3rem 0}
+.path-card{background:var(--card-bg);border-radius:7px;padding:1.1rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.path-card h5{font-family:'Playfair Display',serif;font-size:.95rem;margin-bottom:.4rem}
+.path-card.c1{border-top:3px solid #7a2020}.path-card.c1 h5{color:#7a2020}
+.path-card.c2{border-top:3px solid #4a7a6a}.path-card.c2 h5{color:#4a7a6a}
+.path-card.c3{border-top:3px solid var(--accent)}.path-card.c3 h5{color:var(--accent)}
+.path-card p{font-size:.8rem;color:#555;margin:0}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:.83rem;margin-top:.6rem}
+.cmp-table thead tr{background:var(--accent);color:#fff}
+.cmp-table th,.cmp-table td{padding:.6rem .8rem;text-align:left}
+.cmp-table tbody tr:nth-child(even){background:var(--card-bg)}
+.cmp-table td:first-child{font-weight:600}
+
+.timeline{position:relative;margin:1.5rem 0;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:.7rem;top:0;bottom:0;width:2px;background:var(--line)}
+.tl-item{position:relative;margin-bottom:1.4rem}
+.tl-item::before{content:'';position:absolute;left:-1.55rem;top:.35rem;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--paper)}
+.tl-item h5{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent);margin-bottom:.2rem}
+.tl-item p{font-size:.84rem;color:#555;margin:0}
+
+.vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0}
+.vs-col{background:var(--card-bg);border-radius:7px;padding:1.3rem;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.vs-col h4{font-family:'Playfair Display',serif;font-size:1.05rem;margin-bottom:.6rem}
+.vs-col.tilly{border-top:3px solid var(--accent)}.vs-col.tilly h4{color:var(--accent)}
+.vs-col.skocpol{border-top:3px solid var(--red)}.vs-col.skocpol h4{color:var(--red)}
+.vs-col p{font-size:.86rem;color:#555;margin-bottom:.5rem}
+.vs-col ul{font-size:.84rem;color:#555;margin:.4rem 0 0 1.2rem}
+.vs-col li{margin-bottom:.3rem}
+
+.badge{display:inline-block;padding:.18rem .6rem;border-radius:3px;font-size:.72rem;font-weight:600;font-family:'Noto Sans TC',sans-serif;margin-right:.3rem}
+.badge-ext{background:rgba(139,37,0,.1);color:var(--accent)}
+.badge-int{background:rgba(74,122,106,.12);color:var(--sage)}
+.badge-war{background:rgba(122,32,32,.1);color:var(--red)}
+
+/* Murmann四策略 grid */
+.strat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.3rem 0}
+.strat-card{background:var(--card-bg);border-radius:7px;padding:1.1rem;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.strat-card h5{font-family:'Playfair Display',serif;font-size:.95rem;margin-bottom:.3rem}
+.strat-card p{font-size:.82rem;color:#555;margin-bottom:.3rem}
+.strat-card .eg{font-size:.78rem;color:var(--muted);font-style:italic}
+.strat-card.s1{border-left:4px solid var(--accent)}.strat-card.s1 h5{color:var(--accent)}
+.strat-card.s2{border-left:4px solid var(--sage)}.strat-card.s2 h5{color:var(--sage)}
+.strat-card.s3{border-left:4px solid var(--gold)}.strat-card.s3 h5{color:var(--gold)}
+.strat-card.s4{border-left:4px solid var(--red)}.strat-card.s4 h5{color:var(--red)}
+.strat-card.s5{border-left:4px solid var(--purple)}.strat-card.s5 h5{color:var(--purple)}
+
+/* 問題討論區 */
+.q-section{background:linear-gradient(135deg,#1a1a1a,#241008);border-radius:10px;padding:1.8rem;margin:1.5rem 0}
+.q-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem}
+.q-item{background:rgba(255,255,255,.06);border-radius:7px;padding:1rem 1.2rem;margin-bottom:.8rem;border-left:3px solid var(--gold)}
+.q-item p{font-size:.88rem;color:#ffffff;margin:0;line-height:1.75}
+.q-item p strong,.q-item strong{color:#ffffff !important}
+.q-item .q-label{font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:.3rem;letter-spacing:.04em}
+.vote-row{display:flex;gap:.7rem;margin-top:1.2rem;flex-wrap:wrap}
+.vote-btn{padding:.5rem 1.1rem;border-radius:20px;border:1px solid rgba(184,134,11,.4);background:rgba(184,134,11,.08);color:#d4b878;font-size:.82rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;transition:all .25s}
+.vote-btn:hover{background:rgba(184,134,11,.18);border-color:var(--gold);color:var(--gold)}
+.vote-btn.voted{background:var(--gold);color:#fff;border-color:var(--gold)}
+.vote-result{font-size:.78rem;color:#bbb;margin-top:.8rem;display:none}
+
+/* SVG diagram container */
+.svg-wrap{background:var(--card-bg);border-radius:9px;padding:1rem;margin:1.5rem 0;box-shadow:0 2px 10px rgba(0,0,0,.04);overflow-x:auto}
+
+/* 事件說明卡 */
+.ev-card{background:var(--card-bg);border-radius:7px;border-left:4px solid var(--gold);padding:1.2rem 1.4rem;margin:.8rem 0 1.2rem;box-shadow:0 2px 12px rgba(0,0,0,.06);animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.ev-card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.8rem}
+.ev-card-body p{font-size:.86rem;color:#444;margin-bottom:.65rem;line-height:1.8}
+.ev-card-body p:last-child{margin-bottom:0}
+.ev-card-body strong{color:var(--ink)}
+
+@media(max-width:768px){
+  .hero-header .name{font-size:2rem}
+  .page{padding:1.8rem 1rem 3rem}
+  .nav-title{display:none}
+  .vs-grid{grid-template-columns:1fr}
+  .path-grid{grid-template-columns:1fr}
+  .strat-grid{grid-template-columns:1fr}
+}
+
+/* ===== 與 W1–W4 一致的元件 ===== */
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+.page h2 .mark{color:var(--accent)}
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;color:var(--ink);line-height:1.14;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:660px;margin:0 auto 1.4rem}
+.hero-teacher{font-size:.9rem;color:#555;margin-bottom:1.4rem}
+.hero-teacher strong{color:var(--accent)}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+.story-lead{font-size:.98rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+.section-lead{font-size:.88rem;color:var(--muted);margin:-.3rem 0 .8rem;font-style:italic;font-family:'Source Serif 4',serif}
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.1rem 0}
+.hl-box p:last-child{margin-bottom:0}
+.hl-box h4{margin-top:0;color:var(--accent)}
+.hl-box.gold{background:rgba(184,134,11,.06);border-left-color:var(--gold)}.hl-box.gold h4{color:var(--gold)}
+.hl-box.sage{background:rgba(90,110,90,.06);border-left-color:var(--sage)}.hl-box.sage h4{color:var(--sage)}
+.hl-box.red{background:rgba(122,32,32,.06);border-left-color:var(--red)}.hl-box.red h4{color:var(--red)}
+.next-page{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:1.1rem 1.4rem;border-radius:10px;margin-top:2.2rem;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.next-page:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(139,37,0,.3)}
+.np-label{font-size:.72rem;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.np-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.np-arrow{font-size:1.4rem;opacity:.8}
+.spoiler{cursor:pointer;background:linear-gradient(135deg,rgba(90,110,90,.08),rgba(184,134,11,.06));border-left:3px dashed var(--sage);padding:.8rem 1.1rem;border-radius:0 6px 6px 0;font-size:.85rem;color:var(--sage);max-height:46px;overflow:hidden;transition:max-height .5s ease;line-height:1.85;position:relative;margin:.9rem 0}
+.spoiler::after{content:'▼ 點擊展開';position:absolute;right:1rem;top:.85rem;font-size:.72rem;color:var(--muted);font-style:italic}
+.spoiler.revealed{max-height:1200px;color:#333}
+.spoiler.revealed::after{content:'▲ 點擊收合';color:var(--sage)}
+.spoiler strong{color:var(--accent)}
+/* Quiz */
+.quiz-block{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0;border:1px solid #e5e0d6;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative}
+.quiz-q-num{position:absolute;top:-12px;left:1.5rem;background:var(--accent);color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;padding:.25rem .75rem;border-radius:5px;letter-spacing:.05em}
+.quiz-question{font-size:.95rem;font-weight:600;color:var(--ink);margin:.4rem 0 .9rem;line-height:1.7}
+.quiz-question strong{color:var(--accent)}
+.quiz-options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.7rem}
+.quiz-opt{text-align:left;background:#fafaf6;border:1.5px solid #e0d9c8;border-radius:7px;padding:.7rem 1rem;font-size:.88rem;line-height:1.6;color:#333;cursor:pointer;transition:all .2s;font-family:inherit}
+.quiz-opt:hover{background:#f5f0e8;border-color:#b8860b}
+.quiz-opt.selected-correct{background:linear-gradient(135deg,#d4edd4,#c0e0c0);border-color:#5a8c5a;color:#1e4d1e;font-weight:600}
+.quiz-opt.selected-wrong{background:linear-gradient(135deg,#f8d8d4,#efc4be);border-color:#b85040;color:#7a1a10}
+.quiz-opt.show-correct{background:#eaf5ea;border-color:#5a8c5a;font-weight:500}
+.quiz-explain{font-size:.85rem;line-height:1.8;color:#333;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(90,110,90,.04));padding:.9rem 1.1rem;border-radius:7px;border-left:3px solid var(--sage);display:none}
+.quiz-explain.shown{display:block}
+.quiz-explain strong{color:var(--accent)}
+.quiz-explain em{color:var(--accent-light);font-style:normal;font-weight:600}
+/* 討論題 */
+.discussion-block{background:linear-gradient(135deg,#fff,#faf7f2);border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid rgba(139,37,0,.12)}
+.discussion-eyebrow{display:inline-block;padding:.2rem .7rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem}
+.discussion-q{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin-bottom:.7rem;line-height:1.7}
+.discussion-q em{color:var(--accent);font-style:normal}
+.discussion-block .ctx{font-size:.85rem;color:#555;margin-bottom:.5rem;line-height:1.85}
+.discussion-block .ctx strong{color:var(--accent)}
+/* 讀物 */
+.reading-card{background:#fff;border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0;border-left:4px solid;display:flex;gap:.9rem;align-items:flex-start;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.reading-card.must{border-left-color:var(--accent)}.reading-card.rec{border-left-color:var(--gold)}
+.reading-icon{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;font-family:'Playfair Display',serif}
+.reading-card.must .reading-icon{background:var(--accent)}.reading-card.rec .reading-icon{background:var(--gold)}
+.reading-body{flex:1}
+.reading-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:.2rem;line-height:1.5}
+.reading-meta{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:.3rem;font-family:'Source Serif 4',serif}
+.reading-note{font-size:.83rem;color:#444;line-height:1.75}
+.reading-note strong{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="app">
+<nav class="top-nav">
+  <span class="nav-title">W5 Tilly · 國家形成</span>
+  <button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+  <button class="nav-btn" onclick="goPage(1)">1 · 人物簡介</button>
+  <button class="nav-btn" onclick="goPage(2)">2 · 研究方法</button>
+  <button class="nav-btn" onclick="goPage(3)">3 · 核心論點</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(4)">4 · 三條路徑</button>
+  <button class="nav-btn" onclick="goPage(5)">5 · 關鍵發現</button>
+  <button class="nav-btn" onclick="goPage(6)">6 · Tilly對比</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(7)">7 · 討論投票</button>
+  <button class="nav-btn" onclick="goPage(8)">8 · 隨堂測驗</button>
+  <button class="nav-btn" onclick="goPage(9)">9 · 讀物小結</button>
+</nav>
+
+<div class="page-container">
+
+<!-- P0 封面 -->
+<div class="page active" data-page="0"><div class="page-inner">
+  <div class="hero">
+    <div class="hero-eyebrow">Political Sociology · Week 5</div>
+    <h1 class="hero-title">戰爭造就<span class="mark">國家</span><br>國家最初是怎麼長出來的？</h1>
+    <p class="hero-sub">上週 Skocpol 告訴我們「國家有自己的意志」。本週 Charles Tilly 再往前追問一千年：這個會打仗、會徵稅的<strong>國家</strong>，一開始究竟是<strong>怎麼被「打」出來的</strong>？</p>
+    <div class="hero-teacher">授課教師：<strong>林文正</strong>　·　國立臺灣大學</div>
+    <div class="hero-meta"><span>⚔️ 戰爭與國家建構</span><span>💰 強制與資本</span><span>🌍 三條路徑</span></div>
+  </div>
+  <div class="story-lead">
+    Tilly 的名言是「<strong>戰爭造就國家，國家製造戰爭</strong>」。他主張：現代國家不是聖賢理性設計的產物，而是統治者為了打仗、向社會<strong>強制汲取</strong>資源，在與人民<strong>討價還價</strong>過程中擠壓出來的<strong>意外副產品</strong>——連代議制度、公民權利都是這樣「吵」出來的。
+  </div>
+  <div class="questions">
+    <h4>📌 本週要解答的核心問題</h4>
+    <ol>
+      <li><strong>為什麼說「戰爭造就國家」？</strong>戰爭壓力如何一步步逼出稅務局、軍隊與代議機構？</li>
+      <li><strong>「強制」與「資本」如何組合？</strong>為什麼最後是「資本化強制」這條路勝出？</li>
+      <li><strong>民族主義是國家形成的「原因」還是「副產品」？</strong></li>
+      <li><strong>Tilly 用什麼方法做千年比較？</strong>四種比較策略、八個有害預設，又有什麼代價？</li>
+      <li><strong>Tilly 與上週的 Skocpol 有何根本差異？</strong>宏觀歷史 vs 制度能力。</li>
+    </ol>
+  </div>
+  <h3>本週路線圖</h3>
+  <div class="card-grid">
+    <div class="card"><div class="icon">👤</div><h4>P1 人物簡介</h4><p>Tilly 的學術生涯、關係性現實主義與核心命題。</p></div>
+    <div class="card sage"><div class="icon">📊</div><h4>P2-3 方法與論點</h4><p>四種比較策略、八個有害預設；戰爭→汲取→談判→制度的因果鏈。</p></div>
+    <div class="card gold"><div class="icon">🌍</div><h4>P4 三條路徑</h4><p><strong>互動圖</strong>：強制密集／資本化強制／資本密集，點節點看歷史案例。</p></div>
+    <div class="card red"><div class="icon">🔍</div><h4>P5-6 發現與對比</h4><p>四大反直覺發現；<strong>互動比較圖</strong>：Tilly vs Skocpol。</p></div>
+    <div class="card purple"><div class="icon">✏️</div><h4>P7-9 討論 · 測驗 · 讀物</h4><p>立場<strong>投票</strong>、<strong>選擇題與問答題</strong>、本週讀物與下週預告。</p></div>
+  </div>
+  <div class="next-page" onclick="goPage(1)"><div><div class="np-label">下一頁</div><div class="np-title">P1 · 人物簡介</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+
+<!-- 人物簡介 -->
+<div class="page" data-page="1"><div class="page-inner">
+<div class="hero-header">
+  <div class="name">Charles Tilly</div>
+  <div class="role">Columbia University · 比較歷史社會學巨擘</div>
+  <p>Tilly（1929–2008）是二十世紀最重要的<strong>歷史社會學家</strong>與<strong>國家理論家</strong>之一。他以千年尺度的比較研究追問：<em>為什麼戰爭造就了國家，國家又不斷製造戰爭？</em> 他的核心貢獻在於揭示：現代國家並非理性設計的產物，而是強制汲取與社會討價還價過程中的<strong>意外副產品</strong>。</p>
+  <div class="hero-tags">
+    <span class="tag">戰爭與國家建構</span>
+    <span class="tag">強制與資本</span>
+    <span class="tag">比較歷史方法</span>
+    <span class="tag">集體行動</span>
+    <span class="tag">歐洲國家形成</span>
+    <span class="tag">大規模過程分析</span>
+  </div>
+</div>
+<h3>學術生涯與核心關懷</h3>
+<p>Tilly 畢業於哈佛大學，一生任教於密西根大學、哈佛、New School，最終落腳哥倫比亞大學。其學術生涯橫跨法國農村史、集體暴力、社會運動理論到民主理論，但始終以一個核心問題貫穿：<strong>強制性政治如何塑造人類歷史的宏觀結構？</strong></p>
+<div class="card-grid">
+  <div class="card"><div class="icon">⚔️</div><h4>主著：強制、資本與歐洲國家（1990）</h4><p>AD 990–1990 千年歐洲，追蹤戰爭如何逼出國家組織，資本如何決定路徑，最終解釋為何民族國家征服其他所有形式。</p></div>
+  <div class="card sage"><div class="icon">📊</div><h4>方法論：大規模過程比較</h4><p>不拘於單一個案，在千年尺度、數十個案例之間尋找系統性規律，並明確承認代價：必須「如礁石掠水而過」，犧牲深度換取宏觀解釋力。</p></div>
+  <div class="card gold"><div class="icon">🔄</div><h4>理論立場：關係性現實主義</h4><p>反對把國家視為統一行動者，強調國家能力來自統治者與社會之間持續的<strong>討價還價</strong>（bargaining）過程。</p></div>
+</div>
+<div class="quote">
+  <p>戰爭造就國家，國家製造戰爭。</p>
+  <div class="attr">— Charles Tilly，《強制、資本與歐洲國家》核心命題</div>
+</div>
+<div class="next-page" onclick="goPage(2)"><div><div class="np-label">下一頁</div><div class="np-title">P2 · 研究方法</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P1 METHOD（擴充版含Murmann） -->
+<div class="page" data-page="2"><div class="page-inner">
+<h2>研究方法</h2>
+<p>Tilly 的方法論是本書最值得細究的面向。理解他「如何研究」，有助於評估他結論的效力範圍，也有助於理解他與 Skocpol 等人的根本差異。</p>
+
+<h3>一、宏觀歷史比較的核心策略</h3>
+<div class="card-grid">
+  <div class="card"><h4>時間尺度：千年（990–1990）</h4><p>從歐洲碎裂主權時代到現代民族國家全球擴張，跨千年使他能觀察到「大多數國家曾消失」這一事實——幾乎所有現有解釋都忽略了消失的國家（勃艮第、阿拉貢、摩拉維亞…）。</p></div>
+  <div class="card sage"><h4>分析單位：路徑類型</h4><p>不以「典型國家」為樣本，而是分析強制–資本不同組合下的路徑差異。明確拒絕以英法為唯一原型，強調多路徑並存才是歐洲真實歷史。</p></div>
+  <div class="card gold"><h4>誠實的方法代價</h4><p>Tilly 在前言罕見自承：「在如此廣闊的尺度上，我必須像礁石上的石頭掠過水面。」犧牲個案深度，也無法全面記錄文獻。這是一種方法論上的<strong>誠信宣告</strong>。</p></div>
+</div>
+
+<h3>二、Murmann 的整理：Tilly 方法論貢獻的三個階段</h3>
+<p>根據 Murmann 整理的 Tilly 方法論著作脈絡，Tilly 一生約四分之一的出版物專注於方法論問題，其演進有清晰的階段性：</p>
+<div class="timeline">
+  <div class="tl-item">
+    <h5>早期（1970年代）：擁抱量化歷史</h5>
+    <p>Tilly 呼籲歷史學家採納量化（形式化）方法於歷史分析，主張歷史社會科學應向社會學看齊，系統性蒐集數據。</p>
+  </div>
+  <div class="tl-item">
+    <h5>中期（1984）：批判八個有害預設</h5>
+    <p>《大結構、大過程、大比較》（<em>Big Structures, Large Processes, Huge Comparisons</em>）系統清算十九世紀遺留下來的八個「有害預設」（pernicious postulates），為宏觀比較研究奠定本體論基礎。</p>
+  </div>
+  <div class="tl-item">
+    <h5>晚期（1990年代後）：轉向因果機制本體論</h5>
+    <p>方法論關注從「比較策略」轉向「社會變遷的本體論」——強調規律不在於「大規模重複的結構或過程」，而在於「在不同情境中組合出可解釋效果的<strong>反覆出現的因果機制</strong>」。</p>
+  </div>
+</div>
+
+<h3>三、八個有害預設（Big Structures, 1984）</h3>
+<p>Tilly 批評二十世紀社會科學繼承了十九世紀歐洲思想的八種誤導性假設，導致理論「沒有時間、沒有地點」（timeless, placeless）：</p>
+<div class="strat-grid">
+  <div class="strat-card s1"><h5>預設一：社會是自成一體的</h5><p>把「社會」當作有邊界的獨立單位分析，忽略跨界關係。</p></div>
+  <div class="strat-card s2"><h5>預設二：心理事件決定社會行為</h5><p>以個人心理、態度、意識形態作為社會解釋的最終基礎。</p></div>
+  <div class="strat-card s3"><h5>預設三：「社會變遷」是單一連貫現象</h5><p>把現代化、發展視為整體性的變遷過程。</p></div>
+  <div class="strat-card s4"><h5>預設四：階段論</h5><p>所有社會必然經歷相同的發展階段，走向「現代性」。</p></div>
+  <div class="strat-card s1"><h5>預設五：分化是進步的主過程</h5><p>社會愈來愈複雜的分工就是文明進步的標誌。</p></div>
+  <div class="strat-card s2"><h5>預設六：整合對抗分化的緊張</h5><p>社會變遷本質上是整合與分化的拉鋸。</p></div>
+  <div class="strat-card s3"><h5>預設七：變遷必然帶來失序</h5><p>把社會動盪視為變遷過快的病理反應。</p></div>
+  <div class="strat-card s4"><h5>預設八：合法 vs. 非法強制力</h5><p>把國家強制力的合法性視為天然預設，而非需要解釋的現象。</p></div>
+</div>
+
+<h3>四、四種比較策略</h3>
+<p>Tilly 在同書中提出社會科學研究大結構的四種策略，並各舉代表學者：</p>
+<div class="strat-grid">
+  <div class="strat-card s1">
+    <h5>個別化比較（Individualizing）</h5>
+    <p>以多個案例突顯每個個案的獨特性，反對普遍性概括。</p>
+    <p class="eg">代表：年鑑學派、深度個案研究。優點：豐富脈絡；缺點：難以進行跨案學習。</p>
+  </div>
+  <div class="strat-card s2">
+    <h5>普遍化比較（Universalizing）</h5>
+    <p>尋找跨案例共同的、獨立運作的因果機制或規律。</p>
+    <p class="eg">代表：Skocpol 的革命理論。優點：解釋力強；缺點：容易忽略語境差異。</p>
+  </div>
+  <div class="strat-card s3">
+    <h5>變異尋找（Variation-Finding）</h5>
+    <p>比較案例以建立系統性變異的分類，解釋差異的來源。</p>
+    <p class="eg">代表：Barrington Moore《民主與獨裁的社會起源》。優點：類型學清晰；缺點：因果機制仍待連結。</p>
+  </div>
+  <div class="strat-card s4">
+    <h5>涵攝比較（Encompassing）</h5>
+    <p>將個別案例定位於更大的整體系統（如世界體系）中，用整體特性解釋部分差異。</p>
+    <p class="eg">代表：Wallerstein 世界體系理論、Rokkan 歐洲政治發展。優點：宏觀視野；缺點：缺乏個體層次機制。</p>
+  </div>
+</div>
+<p style="margin-top:1rem"><strong>Tilly 自己採用哪種？</strong> 他在《強制、資本與歐洲國家》中主要結合了<strong>涵攝比較</strong>（將各國定位於歐洲體系內）與<strong>變異尋找</strong>（解釋強制–資本組合的路徑差異），輔以少量普遍化命題（戰爭驅動國家建構）。</p>
+
+<h3>五、晚期轉向：因果機制本體論</h3>
+<p>Murmann 的整理揭示 Tilly 晚期的重要轉向。Tilly（1995）指出：「政治生活中的規律非常廣泛，甚至跨越歷史，但它們<strong>並不以大尺度的重複結構或過程呈現</strong>。它們由<strong>反覆出現的因果原因</strong>構成，在不同情境與序列中組合出高度可變但仍可解釋的效果。」</p>
+<div class="quote">
+  <p>大結構和序列從不重複自身，但它們是由機制的不同組合和序列所產生的——而這些機制本身具有非常普遍的適用性。</p>
+  <div class="attr">— Tilly，引自 McAdam, Tarrow & Tilly（2001）</div>
+</div>
+
+<div class="card-grid">
+  <div class="card red"><h4>對 Tilly 方法論的批評</h4><p>千年尺度使偽證極為困難；過度依賴二手文獻；歐洲中心主義（其框架能否適用於亞非拉？）；個別機制如何連結到宏觀結果仍缺乏精確說明。</p></div>
+  <div class="card sage"><h4>Tilly 方法論的持久貢獻</h4><p>示範「有多種比較策略可用」而非只有一種；示範如何誠實承認研究設計的代價；開創了因果機制導向的歷史社會學路線，影響後來的 process tracing 方法論。</p></div>
+</div>
+<div class="next-page" onclick="goPage(3)"><div><div class="np-label">下一頁</div><div class="np-title">P3 · 核心論點</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P2 CORE ARGUMENT -->
+<div class="page" data-page="3"><div class="page-inner">
+<h2>核心論點</h2>
+<p>Tilly 的核心命題可以用一個邏輯鏈條來呈現：戰爭壓力→資源汲取→社會討價還價→制度副產品。</p>
+
+<h3>戰爭–國家建構的因果機制</h3>
+<div class="diagram-box">
+  <h4>Tilly 的核心因果鏈</h4>
+  <div class="flow-row">
+    <div class="f-box f-war">戰爭壓力</div>
+    <span class="f-arr">→</span>
+    <div class="f-box f-ext">強制汲取<br><small style="font-size:.72rem;opacity:.85">徵稅、徵兵</small></div>
+    <span class="f-arr">→</span>
+    <div class="f-box f-prot">社會抵抗<br><small style="font-size:.72rem;opacity:.85">談判、議價</small></div>
+    <span class="f-arr">→</span>
+    <div class="f-box f-cap">制度副產品<br><small style="font-size:.72rem;opacity:.85">稅收局、軍隊、代議機構</small></div>
+  </div>
+  <div class="flow-row" style="margin-top:1rem">
+    <span style="font-size:.82rem;color:var(--muted)">↑ 也反向強化：國家能力增強 → 更大規模戰爭 ↑</span>
+  </div>
+</div>
+
+<h3>戰爭的驅動性角色</h3>
+<p>Tilly 以五百年歐洲國家支出資料揭示：整個中世紀到近代初期，<strong>軍事支出佔國家預算的壓倒性比重</strong>（通常超過 70–80%）。戰爭不只是歐洲國家的一項活動——它是<strong>定義性活動</strong>（defining activity）。</p>
+<div class="card-grid">
+  <div class="card"><h4>戰爭造就國家的四個機制</h4><p><strong>戰爭製造（warmaking）</strong>：消滅外部敵人；<strong>國家製造（statemaking）</strong>：消滅內部挑戰者；<strong>保護（protection）</strong>：消滅宣稱的敵人；<strong>汲取（extraction）</strong>：從人口取得戰爭資源。</p></div>
+  <div class="card sage"><h4>資本主義者的關鍵中介</h4><p>統治者需要<strong>資本家</strong>作為信貸仲介——不只是提供貸款，更是動員社會信任、管理長期公債。資本家的存在使借貸成為可能，進而使快速戰爭動員成為可能。</p></div>
+  <div class="card gold"><h4>強制與資本的組合</h4><p>決定性的不是強制或資本何者「更重要」，而是它們的<strong>相對組合比例</strong>決定了國家走向哪條路徑、最終形成何種國家形式。</p></div>
+</div>
+
+<h3>汲取–談判–公民權利的邏輯</h3>
+<p>Tilly 提出一個深刻的觀察：許多現代政治制度——包括代議機構、公民權利、社會政策——並非統治者主動設計的「好政府」，而是<strong>社會在抵抗資源汲取的談判中逼出的副產品</strong>。</p>
+<div class="quote">
+  <p>談判有時導致國家進一步涉入生產、分配與裁決。它始終創造出某種形式的國家結構——其變化形式取決於它所發生的那個經濟環境與階級配置。</p>
+  <div class="attr">— Tilly，《強制、資本與歐洲國家》</div>
+</div>
+<div class="card-grid">
+  <div class="card red"><h4>從間接統治到直接統治</h4><p>早期統治者透過地方仲介汲取資源。隨著戰爭規模擴大，逐步轉向直接統治——建立稅務局、徵兵體系、司法機構。此一轉型本身就是民族主義動員的溫床。</p></div>
+  <div class="card orange"><h4>抵抗催生制度</h4><p>地方人民抵抗稅收官員、逃避徵兵、向國王請願——這些抵抗行動迫使統治者給出讓步，逐步形成了「保護換取服從」的制度性安排，成為後來公民權利的前身。</p></div>
+</div>
+<div class="next-page" onclick="goPage(4)"><div><div class="np-label">下一頁</div><div class="np-title">P4 · 三條路徑（互動圖）</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P3 THREE PATHS -->
+<div class="page" data-page="4"><div class="page-inner">
+<h2>三條路徑</h2>
+<p>Tilly 最重要的理論貢獻之一是揭示歐洲國家形成並非單一線性過程，而是強制與資本的不同組合產生了截然不同的路徑——最終都收斂到民族國家，但機制迥異。</p>
+
+<!-- SVG 樹狀分叉圖 -->
+<div class="svg-wrap">
+<svg width="100%" viewBox="0 0 820 560" role="img">
+  <title>Tilly 三條國家形成路徑樹狀圖</title>
+  <desc>從強制與資本的高低組合出發，分叉為三條路徑，最終收斂至民族國家</desc>
+  <defs>
+    <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- ── 根節點：強制與資本的組合 ── -->
+  <rect x="270" y="18" width="280" height="56" rx="10" fill="#1a1a1a"/>
+  <text x="410" y="40" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="13" font-weight="600" fill="#f5f0e8">AD 990 歐洲各地的起點</text>
+  <text x="410" y="60" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#c0b0a0">強制資源 vs 資本資源的初始分布</text>
+
+  <!-- ── 三條分支線 ── -->
+  <!-- 左枝（強制密集） -->
+  <path d="M350 74 L350 90 L120 140 L120 156" fill="none" stroke="#7a2020" stroke-width="2" marker-end="url(#arr2)"/>
+  <!-- 中枝（資本化強制） -->
+  <path d="M410 74 L410 156" fill="none" stroke="#8b2500" stroke-width="2.5" marker-end="url(#arr2)"/>
+  <!-- 右枝（資本密集） -->
+  <path d="M470 74 L470 90 L700 140 L700 156" fill="none" stroke="#4a7a6a" stroke-width="2" marker-end="url(#arr2)"/>
+
+  <!-- ── 路徑標籤軸 ── -->
+  <!-- 強制高 / 資本低 -->
+  <text x="120" y="132" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#7a2020">強制高∙資本低</text>
+  <!-- 強制中 / 資本中 -->
+  <text x="410" y="132" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#8b2500">強制中∙資本中</text>
+  <!-- 強制低 / 資本高 -->
+  <text x="700" y="132" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#4a7a6a">強制低∙資本高</text>
+
+  <!-- ══ 路徑一：強制密集型 ══ -->
+  <rect x="20" y="156" width="200" height="52" rx="8" fill="#7a2020"/>
+  <text x="120" y="176" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="600" fill="#fff">強制密集型路徑</text>
+  <text x="120" y="195" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#f0c8c8">Coercion-Intensive</text>
+
+  <!-- 路徑一特徵 -->
+  <line x1="120" y1="208" x2="120" y2="226" stroke="#7a2020" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <rect x="20" y="226" width="200" height="110" rx="7" fill="#f5eaea" stroke="#7a2020" stroke-width="0.8"/>
+  <text x="120" y="247" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" font-weight="600" fill="#7a2020">地區代表</text>
+  <text x="120" y="264" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#5a2020">俄羅斯∙匈牙利</text>
+  <line x1="30" y1="272" x2="210" y2="272" stroke="#c9c0b4" stroke-width="0.5"/>
+  <text x="120" y="289" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#5a2020">城市薄弱∙武裝地主強</text>
+  <text x="120" y="306" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#5a2020">直接向農民榨取</text>
+  <text x="120" y="323" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#5a2020">貴族官僚∙農奴制鞏固</text>
+
+  <!-- 路徑一結果 -->
+  <line x1="120" y1="336" x2="120" y2="354" stroke="#7a2020" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <rect x="30" y="354" width="180" height="40" rx="6" fill="#f0d0d0" stroke="#7a2020" stroke-width="0.8"/>
+  <text x="120" y="370" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" font-weight="600" fill="#7a2020">廣泛官僚國家</text>
+  <text x="120" y="386" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#7a2020">高度集權∙貴族階層固化</text>
+
+  <!-- ══ 路徑二：資本化強制型（中間強調） ══ -->
+  <rect x="300" y="156" width="220" height="52" rx="8" fill="#8b2500"/>
+  <text x="410" y="174" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="600" fill="#fff">資本化強制路徑</text>
+  <text x="410" y="193" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#ecdac9">Capitalized Coercion ★勝出</text>
+
+  <!-- 路徑二特徵 -->
+  <line x1="410" y1="208" x2="410" y2="226" stroke="#8b2500" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <rect x="300" y="226" width="220" height="110" rx="7" fill="#f7efe8" stroke="#8b2500" stroke-width="1"/>
+  <text x="410" y="247" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" font-weight="600" fill="#8b2500">地區代表</text>
+  <text x="410" y="264" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#6e2410">法國∙英國∙普魯士</text>
+  <line x1="310" y1="272" x2="510" y2="272" stroke="#c9c0b4" stroke-width="0.5"/>
+  <text x="410" y="289" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#6e2410">資本∙強制兼具</text>
+  <text x="410" y="306" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#6e2410">統治者制衡兩端</text>
+  <text x="410" y="323" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#6e2410">公民軍隊＋國家借貸</text>
+
+  <!-- 路徑二結果（突出） -->
+  <line x1="410" y1="336" x2="410" y2="354" stroke="#8b2500" stroke-width="2" marker-end="url(#arr2)"/>
+  <rect x="310" y="354" width="200" height="40" rx="6" fill="#8b2500"/>
+  <text x="410" y="370" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" font-weight="600" fill="#fff">民族國家（最終主導）</text>
+  <text x="410" y="386" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#ecdac9">大規模戰爭中系統性勝出</text>
+
+  <!-- ══ 路徑三：資本密集型 ══ -->
+  <rect x="600" y="156" width="200" height="52" rx="8" fill="#4a7a6a"/>
+  <text x="700" y="176" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="600" fill="#fff">資本密集型路徑</text>
+  <text x="700" y="195" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#d0ece4">Capital-Intensive</text>
+
+  <!-- 路徑三特徵 -->
+  <line x1="700" y1="208" x2="700" y2="226" stroke="#4a7a6a" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <rect x="600" y="226" width="200" height="110" rx="7" fill="#eaf4f0" stroke="#4a7a6a" stroke-width="0.8"/>
+  <text x="700" y="247" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" font-weight="600" fill="#4a7a6a">地區代表</text>
+  <text x="700" y="264" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#2a5a4a">威尼斯∙熱那亞∙荷蘭</text>
+  <line x1="610" y1="272" x2="790" y2="272" stroke="#c9c0b4" stroke-width="0.5"/>
+  <text x="700" y="289" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#2a5a4a">商業城市強∙資本家主導</text>
+  <text x="700" y="306" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#2a5a4a">外包軍隊∙傭兵雇用</text>
+  <text x="700" y="323" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#2a5a4a">瘦身國家機器</text>
+
+  <!-- 路徑三結果（被淘汰） -->
+  <line x1="700" y1="336" x2="700" y2="354" stroke="#4a7a6a" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <rect x="610" y="354" width="180" height="40" rx="6" fill="#d0ece4" stroke="#4a7a6a" stroke-width="0.8"/>
+  <text x="700" y="370" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" font-weight="600" fill="#4a7a6a">城邦∙商業聯盟</text>
+  <text x="700" y="386" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#4a7a6a">十九世紀後逐漸被整併</text>
+
+  <!-- ── 三路收斂箭頭到民族國家 ── -->
+  <!-- 左路到中 -->
+  <path d="M120 394 L120 430 L380 450 L380 470" fill="none" stroke="#7a2020" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr2)"/>
+  <!-- 中路直下 -->
+  <line x1="410" y1="394" x2="410" y2="470" stroke="#8b2500" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arr2)"/>
+  <!-- 右路到中 -->
+  <path d="M700 394 L700 430 L440 450 L440 470" fill="none" stroke="#4a7a6a" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr2)"/>
+
+  <!-- ── 收斂終點 ── -->
+  <rect x="280" y="470" width="260" height="52" rx="10" fill="#1a1a1a" stroke="#b8860b" stroke-width="1.5"/>
+  <text x="410" y="490" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="600" fill="#f5d97a">共同收斂終點</text>
+  <text x="410" y="510" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#ecdac9">民族國家體系（National State System）</text>
+
+  <!-- 圖例 -->
+  <rect x="28" y="432" width="10" height="10" rx="2" fill="#7a2020"/>
+  <text x="44" y="442" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#6b6560">強制密集（被整併）</text>
+  <rect x="28" y="452" width="10" height="10" rx="2" fill="#8b2500"/>
+  <text x="44" y="462" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#6b6560">資本化強制（主導）</text>
+  <rect x="28" y="472" width="10" height="10" rx="2" fill="#4a7a6a"/>
+  <text x="44" y="482" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#6b6560">資本密集（被邊緣化）</text>
+</svg>
+</div>
+
+<h3>歐洲國家千年生存戰：國家數量×時間</h3>
+<p>以下圖表呈現三類政治實體在 AD 990–1990 年間的相對數量消長。數字為示意性估算，反映 Tilly 的核心論點：強制密集型與資本密集型實體在歷史競爭中逐漸消亡，資本化強制型最終主導。</p>
+
+<div class="svg-wrap">
+<svg width="100%" viewBox="0 0 820 380" role="img">
+  <title>歐洲三類政治實體數量消長圖（AD 990–1990）</title>
+  <desc>折線圖顯示強制密集型、資本密集型（城邦）、資本化強制型（民族國家）三類實體在千年間的數量變化</desc>
+  <defs>
+    <marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- 背景 -->
+  <rect x="0" y="0" width="820" height="380" rx="8" fill="#f8f5ee"/>
+
+  <!-- 標題 -->
+  <text x="410" y="26" text-anchor="middle" font-family="'Playfair Display',serif" font-size="14" font-weight="700" fill="#1a1a1a">歐洲政治實體數量消長（AD 990 → 1990）</text>
+  <text x="410" y="43" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#8a8078">示意估算，基於 Tilly 的歷史分析框架</text>
+
+  <!-- ── 圖表區域：x=70~780, y=58~290 ── -->
+  <!-- 網格線 -->
+  <line x1="70" y1="58"  x2="780" y2="58"  stroke="#e0dbd0" stroke-width="0.5"/>
+  <line x1="70" y1="99"  x2="780" y2="99"  stroke="#e0dbd0" stroke-width="0.5"/>
+  <line x1="70" y1="140" x2="780" y2="140" stroke="#e0dbd0" stroke-width="0.5"/>
+  <line x1="70" y1="181" x2="780" y2="181" stroke="#e0dbd0" stroke-width="0.5"/>
+  <line x1="70" y1="222" x2="780" y2="222" stroke="#e0dbd0" stroke-width="0.5"/>
+  <line x1="70" y1="263" x2="780" y2="263" stroke="#e0dbd0" stroke-width="0.5"/>
+  <line x1="70" y1="290" x2="780" y2="290" stroke="#c9c0b4" stroke-width="1"/>
+
+  <!-- Y 軸 -->
+  <line x1="70" y1="55" x2="70" y2="293" stroke="#888" stroke-width="1" marker-end="url(#arr3)"/>
+  <!-- Y 軸標籤 -->
+  <text x="62" y="293" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#888">0</text>
+  <text x="62" y="263" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#888">20</text>
+  <text x="62" y="222" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#888">50</text>
+  <text x="62" y="181" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#888">80</text>
+  <text x="62" y="140" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#888">120</text>
+  <text x="62" y="99"  text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#888">160</text>
+  <text x="62" y="58"  text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#888">200</text>
+  <text x="20" y="180" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#888" transform="rotate(-90 20 180)">政治實體數量（估算）</text>
+
+  <!-- X 軸 -->
+  <line x1="70" y1="290" x2="785" y2="290" stroke="#888" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- X 軸時間刻度 — 9個時間點均分 x=70 to 780，間距=88.75 -->
+  <!-- t0=990, t1=1200, t2=1400, t3=1500, t4=1600, t5=1700, t6=1800, t7=1900, t8=1990 -->
+  <!-- x positions: 70, 159, 248, 337, 426, 515, 604, 693, 780 -->
+  <line x1="70"  y1="290" x2="70"  y2="296" stroke="#888" stroke-width="1"/>
+  <line x1="159" y1="290" x2="159" y2="296" stroke="#888" stroke-width="1"/>
+  <line x1="248" y1="290" x2="248" y2="296" stroke="#888" stroke-width="1"/>
+  <line x1="337" y1="290" x2="337" y2="296" stroke="#888" stroke-width="1"/>
+  <line x1="426" y1="290" x2="426" y2="296" stroke="#888" stroke-width="1"/>
+  <line x1="515" y1="290" x2="515" y2="296" stroke="#888" stroke-width="1"/>
+  <line x1="604" y1="290" x2="604" y2="296" stroke="#888" stroke-width="1"/>
+  <line x1="693" y1="290" x2="693" y2="296" stroke="#888" stroke-width="1"/>
+  <line x1="780" y1="290" x2="780" y2="296" stroke="#888" stroke-width="1"/>
+  <text x="70"  y="308" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#555">990</text>
+  <text x="159" y="308" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#555">1200</text>
+  <text x="248" y="308" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#555">1400</text>
+  <text x="337" y="308" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#555">1500</text>
+  <text x="426" y="308" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#555">1600</text>
+  <text x="515" y="308" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#555">1700</text>
+  <text x="604" y="308" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#555">1800</text>
+  <text x="693" y="308" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#555">1900</text>
+  <text x="780" y="308" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#555">1990</text>
+  <text x="425" y="328" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#888">年代（AD）</text>
+
+  <!-- ── 垂直事件線 ── -->
+  <!-- 1500 火藥革命 -->
+  <line x1="337" y1="60" x2="337" y2="290" stroke="#b8860b" stroke-width="1" stroke-dasharray="4 3" opacity=".6"/>
+  <g id="ev1" style="cursor:pointer" onclick="toggleEvent('ev1-box')">
+    <circle cx="337" cy="66" r="8" fill="#b8860b" opacity=".85"/>
+    <text x="337" y="70" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="9" font-weight="700" fill="#fff">①</text>
+    <text x="345" y="82" font-family="'Noto Sans TC',sans-serif" font-size="9" fill="#b8860b">1500 火藥革命</text>
+  </g>
+  <!-- 1648 西伐利亞 -->
+  <line x1="471" y1="60" x2="471" y2="290" stroke="#b8860b" stroke-width="1" stroke-dasharray="4 3" opacity=".6"/>
+  <g id="ev2" style="cursor:pointer" onclick="toggleEvent('ev2-box')">
+    <circle cx="471" cy="66" r="8" fill="#b8860b" opacity=".85"/>
+    <text x="471" y="70" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="9" font-weight="700" fill="#fff">②</text>
+    <text x="479" y="82" font-family="'Noto Sans TC',sans-serif" font-size="9" fill="#b8860b">1648 西伐利亞</text>
+  </g>
+  <!-- 1789 法國大革命 -->
+  <line x1="586" y1="60" x2="586" y2="290" stroke="#b8860b" stroke-width="1" stroke-dasharray="4 3" opacity=".6"/>
+  <g id="ev3" style="cursor:pointer" onclick="toggleEvent('ev3-box')">
+    <circle cx="586" cy="66" r="8" fill="#b8860b" opacity=".85"/>
+    <text x="586" y="70" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="9" font-weight="700" fill="#fff">③</text>
+    <text x="594" y="82" font-family="'Noto Sans TC',sans-serif" font-size="9" fill="#b8860b">1789 法國大革命</text>
+  </g>
+
+  <!-- ════════════════════════════════ -->
+  <!-- 路徑一：強制密集型（紅色）       -->
+  <!-- 起點高，緩降，1648後加速消亡      -->
+  <!-- 990:160→1200:150→1400:130→1500:110→1600:70→1700:40→1800:18→1900:8→1990:4 -->
+  <!-- y轉換：y = 290 - (val/200)*232  (200→y=58, 0→y=290) -->
+  <!-- 160→104.4→58+185.6=243... 重算：y=290-(v/200)*232 -->
+  <!-- 160: 290-185.6=104  150: 290-174=116  130: 290-150.8=139  110: 290-127.6=162 -->
+  <!-- 70: 290-81.2=209   40: 290-46.4=244   18: 290-20.9=269   8: 290-9.3=281  4: 290-4.6=285 -->
+  <polyline
+    points="70,104 159,116 248,139 337,162 426,209 515,244 604,269 693,281 780,285"
+    fill="none" stroke="#7a2020" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- 圓點 -->
+  <circle cx="70"  cy="104" r="4" fill="#7a2020"/>
+  <circle cx="159" cy="116" r="3" fill="#7a2020"/>
+  <circle cx="248" cy="139" r="3" fill="#7a2020"/>
+  <circle cx="337" cy="162" r="3" fill="#7a2020"/>
+  <circle cx="426" cy="209" r="3" fill="#7a2020"/>
+  <circle cx="515" cy="244" r="3" fill="#7a2020"/>
+  <circle cx="604" cy="269" r="3" fill="#7a2020"/>
+  <circle cx="693" cy="281" r="3" fill="#7a2020"/>
+  <circle cx="780" cy="285" r="4" fill="#7a2020"/>
+
+  <!-- ════════════════════════════════ -->
+  <!-- 路徑二：資本密集型（城邦，綠色）  -->
+  <!-- 中期繁榮，1500後急降              -->
+  <!-- 990:30→1200:55→1400:80→1500:85→1600:50→1700:28→1800:12→1900:5→1990:2 -->
+  <!-- 30:255.1  55:226.2  80:197.2  85:191.4  50:232  28:257.5  12:276  5:284.2  2:287.7 -->
+  <!-- y=290-(v/200)*232 -->
+  <!-- 30:255  55:226  80:197  85:191  50:232  28:257  12:276  5:284  2:288 -->
+  <polyline
+    points="70,255 159,226 248,197 337,191 426,232 515,257 604,276 693,284 780,288"
+    fill="none" stroke="#4a7a6a" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="70"  cy="255" r="4" fill="#4a7a6a"/>
+  <circle cx="159" cy="226" r="3" fill="#4a7a6a"/>
+  <circle cx="248" cy="197" r="3" fill="#4a7a6a"/>
+  <circle cx="337" cy="191" r="3" fill="#4a7a6a"/>
+  <circle cx="426" cy="232" r="3" fill="#4a7a6a"/>
+  <circle cx="515" cy="257" r="3" fill="#4a7a6a"/>
+  <circle cx="604" cy="276" r="3" fill="#4a7a6a"/>
+  <circle cx="693" cy="284" r="3" fill="#4a7a6a"/>
+  <circle cx="780" cy="288" r="4" fill="#4a7a6a"/>
+
+  <!-- ════════════════════════════════ -->
+  <!-- 路徑三：資本化強制型（民族國家，藍色） -->
+  <!-- 起點低，緩增，1500後急增，1648後主導  -->
+  <!-- 990:5→1200:8→1400:14→1500:20→1600:40→1700:65→1800:110→1900:165→1990:195 -->
+  <!-- 5:284  8:281  14:274  20:267  40:244  65:215  110:162  165:99  195:64 -->
+  <polyline
+    points="70,284 159,281 248,274 337,267 426,244 515,215 604,162 693,99 780,64"
+    fill="none" stroke="#8b2500" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="70"  cy="284" r="4" fill="#8b2500"/>
+  <circle cx="159" cy="281" r="3" fill="#8b2500"/>
+  <circle cx="248" cy="274" r="3" fill="#8b2500"/>
+  <circle cx="337" cy="267" r="3" fill="#8b2500"/>
+  <circle cx="426" cy="244" r="3" fill="#8b2500"/>
+  <circle cx="515" cy="215" r="3" fill="#8b2500"/>
+  <circle cx="604" cy="162" r="3" fill="#8b2500"/>
+  <circle cx="693" cy="99"  r="3" fill="#8b2500"/>
+  <circle cx="780" cy="64"  r="4" fill="#8b2500"/>
+
+  <!-- ── 線末標籤 ── -->
+  <text x="786" y="107" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#7a2020">強制密集型</text>
+  <text x="786" y="291" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#4a7a6a">城邦型</text>
+  <text x="786" y="67"  font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#8b2500">民族國家</text>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 戰役標注點（鑽石形，帶序號） -->
+  <!-- 
+    年份→x座標對照（9點均分 x=70~780，每格88.75）：
+    990=70, 1200=159, 1400=248, 1500=337, 1600=426, 1700=515, 1800=604, 1900=693, 1990=780
+    插值：1346=(248+(337-248)*0.73)=313   1453=(337+(426-337)*0.53)=384
+          1571=(426+(515-426)*0.71)=489   1618=(426+(515-426)*0.18)=442 (三十年戰爭開始約在ev2線前)
+          1813=(604+(693-604)*0.13)=616   1866=(604+(693-604)*0.66)=663
+  -->
+
+  <!-- A 黑死病後英法百年戰爭（1337–1453）→ 紅線上 x≈313, y≈146 -->
+  <g style="cursor:pointer" onclick="toggleEvent('bA-box')">
+    <polygon points="313,136 320,146 313,156 306,146" fill="#fff" stroke="#7a2020" stroke-width="2"/>
+    <text x="313" y="150" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="8" font-weight="700" fill="#7a2020">A</text>
+    <text x="316" y="132" font-family="'Noto Sans TC',sans-serif" font-size="8" fill="#7a2020">百年戰爭</text>
+  </g>
+
+  <!-- B 鄂圖曼攻陷君士坦丁堡（1453）→ 綠線上 x≈384, y≈194 -->
+  <g style="cursor:pointer" onclick="toggleEvent('bB-box')">
+    <polygon points="384,184 391,194 384,204 377,194" fill="#fff" stroke="#4a7a6a" stroke-width="2"/>
+    <text x="384" y="198" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="8" font-weight="700" fill="#4a7a6a">B</text>
+    <text x="388" y="180" font-family="'Noto Sans TC',sans-serif" font-size="8" fill="#4a7a6a">君士坦丁堡陷落</text>
+  </g>
+
+  <!-- C 勒班陀海戰（1571）→ 綠線插值 x=489 y≈213 -->
+  <g style="cursor:pointer" onclick="toggleEvent('bC-box')">
+    <polygon points="489,203 496,213 489,223 482,213" fill="#fff" stroke="#4a7a6a" stroke-width="2"/>
+    <text x="489" y="217" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="8" font-weight="700" fill="#4a7a6a">C</text>
+    <text x="493" y="199" font-family="'Noto Sans TC',sans-serif" font-size="8" fill="#4a7a6a">勒班陀海戰</text>
+  </g>
+
+  <!-- D 三十年戰爭（1618–1648）→ 藍線 x≈442 y≈242 -->
+  <g style="cursor:pointer" onclick="toggleEvent('bD-box')">
+    <polygon points="442,232 449,242 442,252 435,242" fill="#fff" stroke="#8b2500" stroke-width="2"/>
+    <text x="442" y="246" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="8" font-weight="700" fill="#8b2500">D</text>
+    <text x="446" y="228" font-family="'Noto Sans TC',sans-serif" font-size="8" fill="#8b2500">三十年戰爭</text>
+  </g>
+
+  <!-- E 拿破崙戰爭終結／維也納會議（1813–1815）→ 藍線 x≈616 y≈158 -->
+  <g style="cursor:pointer" onclick="toggleEvent('bE-box')">
+    <polygon points="616,148 623,158 616,168 609,158" fill="#fff" stroke="#8b2500" stroke-width="2"/>
+    <text x="616" y="162" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="8" font-weight="700" fill="#8b2500">E</text>
+    <text x="620" y="144" font-family="'Noto Sans TC',sans-serif" font-size="8" fill="#8b2500">維也納會議</text>
+  </g>
+
+  <!-- F 普奧∙普法戰爭（1866∙1870）→ 藍線 x≈663 y≈128 -->
+  <g style="cursor:pointer" onclick="toggleEvent('bF-box')">
+    <polygon points="663,118 670,128 663,138 656,128" fill="#fff" stroke="#8b2500" stroke-width="2"/>
+    <text x="663" y="132" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="8" font-weight="700" fill="#8b2500">F</text>
+    <text x="667" y="114" font-family="'Noto Sans TC',sans-serif" font-size="8" fill="#8b2500">德意志統一戰爭</text>
+  </g>
+
+  <!-- 圖例補充：戰役說明提示 -->
+  <text x="410" y="322" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="9.5" fill="#b8860b">◆ 點擊 A–F 鑽石標記可展開重要戰役說明</text>
+
+  <!-- ── 圖例 ── -->
+  <rect x="70" y="338" width="720" height="34" rx="6" fill="rgba(139,37,0,.05)" stroke="#c9c0b4" stroke-width="0.5"/>
+  <line x1="85"  y1="356" x2="115" y2="356" stroke="#7a2020" stroke-width="2.5"/>
+  <circle cx="100" cy="356" r="3.5" fill="#7a2020"/>
+  <text x="120" y="360" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#555">強制密集型（逐步被整併）</text>
+  <line x1="295" y1="356" x2="325" y2="356" stroke="#4a7a6a" stroke-width="2.5"/>
+  <circle cx="310" cy="356" r="3.5" fill="#4a7a6a"/>
+  <text x="330" y="360" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#555">資本密集型城邦（中期繁榮後消亡）</text>
+  <line x1="540" y1="356" x2="570" y2="356" stroke="#8b2500" stroke-width="3"/>
+  <circle cx="555" cy="356" r="3.5" fill="#8b2500"/>
+  <text x="575" y="360" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#555">資本化強制型（持續崛起）</text>
+</svg>
+</div>
+
+<!-- 事件說明卡（點擊圓圈後顯示） -->
+<div id="ev1-box" class="ev-card" style="display:none;border-left-color:#b8860b">
+  <div class="ev-card-title">① 1500 前後：火藥革命與戰爭成本爆炸</div>
+  <div class="ev-card-body">
+    <p><strong>誰帶進來？</strong> 火藥技術源自中國，經由蒙古西征與鄂圖曼帝國傳入歐洲。十五世紀末，西班牙與法國率先大規模採用<strong>青銅砲攻城</strong>與要塞工程（trace italienne），改寫戰爭形態。</p>
+    <p><strong>對國家的衝擊：</strong> 舊式城堡在砲火面前數小時即淪陷，各地領主的私人防禦優勢瞬間消失。同時，建造和維護新型稜堡（bastion fort）造價高昂——單一要塞耗費相當一個中型城市年收入。只有能<strong>大規模借貸與徵稅</strong>的統治者才負擔得起。</p>
+    <p><strong>對三條路徑的影響：</strong> 弱小的城邦開始被淘汰（資本再多也缺乏人力守備要塞）；單純強制型的領主無力籌資現代化武器；<strong>資本化強制型國家</strong>（法、西、後來的英）取得決定性軍事優勢。</p>
+  </div>
+</div>
+
+<div id="ev2-box" class="ev-card" style="display:none;border-left-color:#4a7a6a">
+  <div class="ev-card-title">② 1648：西伐利亞條約——現代國際體系的誕生</div>
+  <div class="ev-card-body">
+    <p><strong>誰簽訂？</strong> 結束<strong>三十年戰爭</strong>（1618–1648）的兩份條約：奧斯納布呂克條約（Osnabrück）與明斯特條約（Münster），由神聖羅馬帝國、法國、西班牙、瑞典、荷蘭及眾多德意志諸侯共同簽訂，涉及歐洲幾乎所有主要政治實體。</p>
+    <p><strong>條約核心內容：</strong> ①確立<strong>主權平等原則</strong>——每個國家在其領土內擁有最高統治權，不受教宗或神聖羅馬皇帝干涉；②承認新教國家的合法性，打破天主教普世帝國的政治想象；③正式確立<strong>「不干涉內政」原則</strong>，現代國際法的基礎。</p>
+    <p><strong>對 Tilly 理論的意義：</strong> 西伐利亞標誌著以<strong>民族國家</strong>為單位的競爭體系正式成形。城邦與宗教帝國的合法性同時崩潰。此後兩個世紀，強制密集型與資本密集型實體急速被整併進入民族國家體系。</p>
+  </div>
+</div>
+
+<div id="ev3-box" class="ev-card" style="display:none;border-left-color:#7a2020">
+  <div class="ev-card-title">③ 1789：法國大革命——民族動員與直接統治的全面擴張</div>
+  <div class="ev-card-body">
+    <p><strong>為何在 Tilly 的框架中如此重要？</strong> 法國大革命不只是政治革命，更是<strong>國家–社會關係的根本重組</strong>。革命政府首次以「全體公民」為名義進行<strong>全面徵兵</strong>（levée en masse，1793），動員數十萬人——遠超任何傭兵制度。</p>
+    <p><strong>直接統治的完成：</strong> 革命廢除了封建仲介結構，國家直接面對每一個公民徵稅、徵兵、立法。Tilly 認為這是「間接統治→直接統治」轉型的決定性時刻，也是<strong>民族認同</strong>從地方認同轉化為全國認同的關鍵機制。</p>
+    <p><strong>拿破崙的擴散效應：</strong> 拿破崙戰爭（1803–1815）將「公民軍隊＋全面動員＋中央行政」的模式強制輸出至全歐洲。被征服地區為了抵抗，也不得不仿效法國模式建立自己的民族軍隊與民族國家——這是民族主義與民族國家在歐洲全面擴散的直接動力。</p>
+  </div>
+</div>
+
+<!-- 戰役說明卡 A–F -->
+<div id="bA-box" class="ev-card" style="display:none;border-left-color:#7a2020">
+  <div class="ev-card-title">A｜英法百年戰爭（1337–1453）</div>
+  <div class="ev-card-body">
+    <p><strong>衝突雙方：</strong> 英格蘭王國 vs 法蘭西王國。起因於英王對法國王位的繼承主張，以及對加斯科涅（Gascony）領地的控制權爭奪。</p>
+    <p><strong>關鍵轉折：</strong> 聖女貞德（1429）激發法國民族意識，協助王儲查理七世收復諾曼底。英國最終喪失除加萊以外的所有法國領地。</p>
+    <p><strong>對國家建構的意義：</strong> 百年戰爭是法國「直接統治」機器的催生劑——戰爭迫使法王建立<strong>常備軍、常態稅收（taille）、常設議會</strong>，是 Tilly 所說汲取→制度副產品最清晰的早期案例。英國方面，戰爭失敗引發玫瑰戰爭（1455–1485），最終鞏固都鐸王朝的中央集權。</p>
+  </div>
+</div>
+
+<div id="bB-box" class="ev-card" style="display:none;border-left-color:#4a7a6a">
+  <div class="ev-card-title">B｜鄂圖曼攻陷君士坦丁堡（1453）</div>
+  <div class="ev-card-body">
+    <p><strong>衝突雙方：</strong> 鄂圖曼帝國蘇丹穆罕默德二世 vs 拜占庭帝國（東羅馬帝國末代）。城牆守軍僅約7,000人，對抗約8萬鄂圖曼軍隊。</p>
+    <p><strong>決定性武器：</strong> 鄂圖曼使用由匈牙利工程師烏爾班（Urban）鑄造的<strong>超大型青銅砲</strong>，轟開千年城牆——這是火藥武器改變要塞攻防的最震撼示範，直接啟示西歐各國的要塞改革。</p>
+    <p><strong>對三條路徑的影響：</strong> 拜占庭帝國滅亡斷絕地中海東部商路，迫使威尼斯、熱那亞等城邦尋找替代貿易路線（大航海時代的間接推手）。大量希臘學者西逃，帶動文藝復興。城邦依賴的東地中海商業秩序開始瓦解，資本密集型路徑的地緣基礎動搖。</p>
+  </div>
+</div>
+
+<div id="bC-box" class="ev-card" style="display:none;border-left-color:#4a7a6a">
+  <div class="ev-card-title">C｜勒班陀海戰（1571）</div>
+  <div class="ev-card-body">
+    <p><strong>衝突雙方：</strong> 神聖同盟（西班牙、威尼斯、教宗國、熱那亞等）vs 鄂圖曼帝國海軍。在希臘西岸勒班陀灣（Lepanto）爆發，是歷史上最大規模的槳帆船海戰。</p>
+    <p><strong>結果：</strong> 神聖同盟大勝，鄂圖曼損失約200艘戰艦、3萬人。被視為基督教歐洲對鄂圖曼西擴的首次決定性阻遏。塞萬提斯（《唐吉訶德》作者）參戰並失去左手。</p>
+    <p><strong>對城邦路徑的意義：</strong> 威尼斯在此役中顯示傭兵海軍的極限——雖打贏了，卻在之後的外交談判中被西班牙排除在外，被迫與鄂圖曼單獨媾和。此後威尼斯加速衰落，說明<strong>資本密集型城邦在需要持久政治意志的長期戰略中結構性弱勢</strong>。</p>
+  </div>
+</div>
+
+<div id="bD-box" class="ev-card" style="display:none;border-left-color:#8b2500">
+  <div class="ev-card-title">D｜三十年戰爭（1618–1648）</div>
+  <div class="ev-card-body">
+    <p><strong>衝突性質：</strong> 歐洲迄今最具破壞力的宗教兼政治戰爭。始於波希米亞新教貴族反抗哈布斯堡皇帝，逐步捲入神聖羅馬帝國諸侯、丹麥、瑞典、法國（天主教法國支持新教方對抗哈布斯堡）。</p>
+    <p><strong>規模與代價：</strong> 德意志地區人口損失估計達25–40%，部分地區城市幾近廢墟。瑞典以小國之姿成為歐洲強權，證明<strong>高效財政動員</strong>（向農民徵兵＋荷蘭資本借貸）可以打敗大型帝國。</p>
+    <p><strong>對三條路徑的決定性影響：</strong> 戰爭結果確認神聖羅馬帝國碎裂主權不可能統一，以1648年西伐利亞條約劃下句點。這是強制密集型「帝國模式」最後的掙扎——失敗後碎裂成數百個諸侯邦，為後來<strong>普魯士型資本化強制國家</strong>的崛起清空了競爭空間。</p>
+  </div>
+</div>
+
+<div id="bE-box" class="ev-card" style="display:none;border-left-color:#8b2500">
+  <div class="ev-card-title">E｜拿破崙戰爭與維也納會議（1813–1815）</div>
+  <div class="ev-card-body">
+    <p><strong>衝突雙方：</strong> 法蘭西第一帝國（拿破崙）vs 第六次反法同盟（英、俄、奧、普、瑞典）。1813年萊比錫「民族大會戰」（Battle of Nations）——史上最大規模地面戰役，逾50萬人參戰——終結了拿破崙在歐陸的主導地位。</p>
+    <p><strong>維也納會議（1814–1815）：</strong> 由奧地利外長梅特涅主導，重劃歐洲版圖。確立「大國協調」（Concert of Europe）體系，以「正統原則」與「均勢原則」為基礎。法國疆界縮回1792年前，波蘭被俄普奧瓜分。</p>
+    <p><strong>對 Tilly 理論的意義：</strong> 拿破崙戰爭將「公民軍隊+全面動員+中央官僚」模式強制擴散至全歐。維也納會議後，<strong>民族主義</strong>作為政治動員工具在各地爆發，最終推動19世紀的義大利統一（1861）與德意志統一（1871），民族國家數量急速攀升。</p>
+  </div>
+</div>
+
+<div id="bF-box" class="ev-card" style="display:none;border-left-color:#8b2500">
+  <div class="ev-card-title">F｜德意志統一戰爭：普奧戰爭（1866）＆普法戰爭（1870–71）</div>
+  <div class="ev-card-body">
+    <p><strong>普奧戰爭（1866）：</strong> 普魯士宰相俾斯麥以「石勒蘇益格—荷爾斯泰因問題」為由向奧地利開戰，僅七週結束（Sadowa / Königgrätz 戰役）。奧地利退出德意志邦聯，普魯士主導北德意志邦聯成立。</p>
+    <p><strong>普法戰爭（1870–71）：</strong> 俾斯麥操縱「埃姆斯電報」激怒拿破崙三世宣戰。普魯士聯合南德各邦，在色當（Sedan）俘虜法皇，圍攻巴黎。1871年1月，<strong>德意志帝國</strong>在凡爾賽宮鏡廳宣告成立。</p>
+    <p><strong>對 Tilly 框架的終極體現：</strong> 德意志統一是「資本化強制型」路徑邏輯的最後勝利宣言——普魯士以<strong>克虜伯鋼鐵砲（資本）＋義務兵役制（強制）＋鐵路動員（行政）</strong>三位一體，在歐洲確立了工業時代民族國家的完整範式，直接引發後續歐洲列強的軍備競賽。</p>
+  </div>
+</div>
+
+<script>
+function toggleEvent(id){
+  var all=['ev1-box','ev2-box','ev3-box','bA-box','bB-box','bC-box','bD-box','bE-box','bF-box'];
+  all.forEach(function(b){
+    var el=document.getElementById(b);
+    if(!el)return;
+    if(b===id){el.style.display=el.style.display==='none'?'block':'none';}
+    else{el.style.display='none';}
+  });
+}
+</script>
+
+<h3>為何資本化強制路徑勝出？</h3>
+<p>Tilly 的解釋不是規範性的，而是功能性的：在十六至十七世紀戰爭規模急遽擴大後，只有能<strong>同時動員大量資金與大量人力</strong>的國家才能生存。</p>
+<div class="card-grid">
+  <div class="card"><h4>大規模戰爭的篩選效果</h4><p>法國和西班牙在十五世紀末採用「要塞火砲傭兵」的昂貴戰爭形式，既需要城市資本家，也需要廣泛稅基，系統性地打敗了其他形式。</p></div>
+  <div class="card sage"><h4>小型商業國家的消亡</h4><p>荷蘭共和國、威尼斯等城邦最終因<strong>人口基數不足</strong>、無法動員大規模公民軍隊，在十九世紀後的民族戰爭中被邊緣化。</p></div>
+  <div class="card gold"><h4>民族國家的擴散</h4><p>歐洲民族國家成為「世界樣板」，不是因為它「更好」，而是因為歐洲國家征服了世界，並在殖民地建立了複製品——前殖民地的「民族國家」是被植入的。</p></div>
+</div>
+<div class="next-page" onclick="goPage(5)"><div><div class="np-label">下一頁</div><div class="np-title">P5 · 關鍵發現</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P4 KEY FINDINGS -->
+<div class="page" data-page="5"><div class="page-inner">
+<h2>關鍵發現</h2>
+<p>除了主要理論架構，Tilly 書中還有幾個反直覺的「關鍵發現」，值得深入討論。</p>
+
+<h3>發現一：國家消亡是常態，生存是例外</h3>
+<div class="card-grid">
+  <div class="card red"><h4>生存的條件</h4><p>非自願性汲取能力（強制力）＋長期信用（資本家關係）＋能抵禦鄰國的軍事力量——三者缺一不可。</p></div>
+  <div class="card sage"><h4>失敗的模式</h4><p>蒙古、韃靼等掠奪型國家靠劫掠為生，無法建立持久行政；義大利城邦靠傭兵租借，無法維持大規模公民軍隊；神聖羅馬帝國諸侯過於分散，無法集中資源。</p></div>
+</div>
+
+<h3>發現二：民族主義是國家的副產品，而非原因</h3>
+<p>與民族主義者的敘事相反，Tilly 認為<strong>民族認同感的擴散</strong>是國家走向直接統治後的結果，而非民族國家形成的原因。當國家越來越直接向農民徵稅、徵兵，農民才第一次被捲入「全國政治」，才開始以「法國人」而非「諾曼底人」自我認同。</p>
+
+<h3>發現三：文官化（Civilianization）伴隨軍事化</h3>
+<div class="quote">
+  <p>軍事化 ≡ 文官化。戰爭的征服創造了文官行政的基礎設施。</p>
+  <div class="attr">— Tilly 的反直覺等式</div>
+</div>
+<p>現代文官體制（海關、郵政、稅務、司法）大多是在軍事動員的壓力下誕生的。普魯士最高稅務機構叫「戰爭委員會總局」；英國海軍工廠是當時國內最大的集中工業組織。</p>
+
+<h3>發現四：六大問題的解答</h3>
+<div class="timeline">
+  <div class="tl-item">
+    <h5>為何歐洲國家最終收斂至民族國家？</h5>
+    <p>不是設計，而是戰爭淘汰。民族國家結合了相對充沛的資本（大規模借貸）與相對充沛的人口（大規模徵兵），系統性地打敗其他形式。</p>
+  </div>
+  <div class="tl-item">
+    <h5>為何歐洲國家路徑如此歧異？</h5>
+    <p>取決於 AD 990 時強制與資本在各地的分布狀況——即地理、地緣政治與歷史偶然的組合，而非某一「必然法則」。</p>
+  </div>
+  <div class="tl-item">
+    <h5>為何民族主義是副產品而非原因？</h5>
+    <p>直接統治使普通農民第一次被納入全國政治，在此過程中形成民族認同，而非民族認同推動統一。</p>
+  </div>
+  <div class="tl-item">
+    <h5>為何城邦、城市帝國消失？</h5>
+    <p>十六世紀戰爭規模急遽擴大，小型商業國家無法承擔，被迫被整併或征服。</p>
+  </div>
+</div>
+<div class="next-page" onclick="goPage(6)"><div><div class="np-label">下一頁</div><div class="np-title">P6 · Tilly vs Skocpol</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P5 TILLY vs SKOCPOL（含 SVG 圖示） -->
+<div class="page" data-page="6"><div class="page-inner">
+<h2>Tilly vs Skocpol</h2>
+<p>Tilly 與 Skocpol 同為歷史社會學大師，彼此相互尊重（Tilly 在書中明確致謝 Skocpol 的研究）。但兩人在分析框架、關注焦點與研究設計上存在根本性差異。</p>
+
+<!-- SVG 比較圖 -->
+<div class="svg-wrap">
+<svg width="100%" viewBox="0 0 820 420" role="img">
+  <title>Tilly 與 Skocpol 研究框架比較圖</title>
+  <desc>左側為 Tilly 的宏觀歷史路徑，右側為 Skocpol 的制度能力路徑，中間顯示兩者的對話與互補關係</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- ===== TILLY 側（左） ===== -->
+  <!-- 背景容器 -->
+  <rect x="14" y="14" width="360" height="392" rx="12" fill="#EAF1F8" stroke="#8b2500" stroke-width="1" opacity=".5"/>
+  <text x="194" y="42" text-anchor="middle" font-family="'Playfair Display',serif" font-size="15" font-weight="700" fill="#8b2500">Charles Tilly</text>
+  <text x="194" y="60" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#4a6a8a">宏觀歷史路徑</text>
+
+  <!-- 驅動變數 -->
+  <rect x="50" y="80" width="290" height="44" rx="7" fill="#8b2500"/>
+  <text x="195" y="99" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="600" fill="#fff">驅動力：戰爭競爭</text>
+  <text x="195" y="116" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#ecdac9">國際體系的生存壓力</text>
+
+  <!-- 箭頭 -->
+  <line x1="195" y1="124" x2="195" y2="144" stroke="#8b2500" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- 核心機制 -->
+  <rect x="50" y="148" width="290" height="44" rx="7" fill="#c4532b"/>
+  <text x="195" y="167" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="600" fill="#fff">機制：強制–資本組合</text>
+  <text x="195" y="184" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#ecdac9">汲取 → 抵抗 → 談判 → 制度</text>
+
+  <line x1="195" y1="192" x2="195" y2="212" stroke="#c4532b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- 分析單位 -->
+  <rect x="50" y="216" width="130" height="44" rx="7" fill="#4a7a6a" opacity=".9"/>
+  <text x="115" y="235" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11.5" font-weight="600" fill="#fff">路徑類型</text>
+  <text x="115" y="251" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#d0ece4">3條路徑</text>
+
+  <rect x="210" y="216" width="130" height="44" rx="7" fill="#4a7a6a" opacity=".9"/>
+  <text x="275" y="235" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11.5" font-weight="600" fill="#fff">千年時間尺度</text>
+  <text x="275" y="251" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#d0ece4">990–1990</text>
+
+  <line x1="195" y1="260" x2="195" y2="280" stroke="#4a7a6a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- 輸出 -->
+  <rect x="50" y="284" width="290" height="44" rx="7" fill="#b8860b" opacity=".85"/>
+  <text x="195" y="303" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="600" fill="#fff">解釋：為何民族國家主導世界？</text>
+  <text x="195" y="319" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#f0d898">國家能力 = 外部競爭的結構性產物</text>
+
+  <!-- 方法標籤 -->
+  <rect x="50" y="344" width="290" height="50" rx="7" fill="rgba(139,37,0,.06)" stroke="#8b2500" stroke-width="0.8"/>
+  <text x="195" y="363" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#8b2500">方法：涵攝比較 ＋ 變異尋找</text>
+  <text x="195" y="381" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#4a6a8a">宏觀敘事 ∙ 多路徑比較 ∙ 大時間尺度</text>
+
+  <!-- ===== 中間分隔 ===== -->
+  <line x1="410" y1="30" x2="410" y2="400" stroke="#c9c0b4" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="410" y="214" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#8a8078" transform="rotate(-90 410 214)">互補而非對立</text>
+
+  <!-- ===== SKOCPOL 側（右） ===== -->
+  <rect x="446" y="14" width="360" height="392" rx="12" fill="#F5EAEA" stroke="#7a2020" stroke-width="1" opacity=".5"/>
+  <text x="626" y="42" text-anchor="middle" font-family="'Playfair Display',serif" font-size="15" font-weight="700" fill="#7a2020">Theda Skocpol</text>
+  <text x="626" y="60" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#a05050">歷史制度主義路徑</text>
+
+  <!-- 驅動變數 -->
+  <rect x="480" y="80" width="290" height="44" rx="7" fill="#7a2020"/>
+  <text x="625" y="99" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="600" fill="#fff">驅動力：國家–社會結構關係</text>
+  <text x="625" y="116" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#f0c8c8">官僚組織能力 ＋ 國際壓力</text>
+
+  <line x1="625" y1="124" x2="625" y2="144" stroke="#7a2020" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="480" y="148" width="290" height="44" rx="7" fill="#a03030"/>
+  <text x="625" y="167" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="600" fill="#fff">機制：路徑依賴 ＋ 關鍵時刻</text>
+  <text x="625" y="184" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#f0c8c8">制度結構如何塑造行動可能性</text>
+
+  <line x1="625" y1="192" x2="625" y2="212" stroke="#a03030" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="480" y="216" width="130" height="44" rx="7" fill="#b85c1a" opacity=".9"/>
+  <text x="545" y="235" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11.5" font-weight="600" fill="#fff">特定國家</text>
+  <text x="545" y="251" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#fde0c0">組織自主性</text>
+
+  <rect x="640" y="216" width="130" height="44" rx="7" fill="#b85c1a" opacity=".9"/>
+  <text x="705" y="235" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11.5" font-weight="600" fill="#fff">中觀時間尺度</text>
+  <text x="705" y="251" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10" fill="#fde0c0">革命∙政策∙制度</text>
+
+  <line x1="625" y1="260" x2="625" y2="280" stroke="#b85c1a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="480" y="284" width="290" height="44" rx="7" fill="#b8860b" opacity=".85"/>
+  <text x="625" y="303" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" font-weight="600" fill="#fff">解釋：誰能行動？在哪些條件下？</text>
+  <text x="625" y="319" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#f0d898">國家能力 = 組織自主性的函數</text>
+
+  <rect x="480" y="344" width="290" height="50" rx="7" fill="rgba(122,32,32,.06)" stroke="#7a2020" stroke-width="0.8"/>
+  <text x="625" y="363" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#7a2020">方法：比較歷史 ＋ 過程追蹤</text>
+  <text x="625" y="381" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="10.5" fill="#a05050">制度分析 ∙ 關鍵個案 ∙ 中觀機制</text>
+</svg>
+</div>
+
+<div class="vs-grid">
+  <div class="vs-col tilly">
+    <h4>Charles Tilly</h4>
+    <p><strong>核心問題：</strong>國家形成的宏觀動力為何？</p>
+    <ul>
+      <li>分析單位：<strong>國家間體系</strong>與路徑類型</li>
+      <li>時間尺度：千年（990–1990）</li>
+      <li>驅動變數：<strong>戰爭競爭＋資本-強制組合</strong></li>
+      <li>國家能力來源：戰爭壓力迫使的汲取組織</li>
+      <li>制度來源：汲取-抵抗-談判的副產品</li>
+      <li>社會關係：統治者與社會是<strong>長期討價還價</strong>關係</li>
+    </ul>
+  </div>
+  <div class="vs-col skocpol">
+    <h4>Theda Skocpol</h4>
+    <p><strong>核心問題：</strong>國家自主性從何而來？如何運作？</p>
+    <ul>
+      <li>分析單位：<strong>特定國家</strong>的組織能力與制度結構</li>
+      <li>時間尺度：革命前後或特定政策時段</li>
+      <li>驅動變數：<strong>國家-社會結構關係＋國際壓力</strong></li>
+      <li>國家能力來源：官僚體系的獨立專業性</li>
+      <li>制度來源：歷史路徑依賴與政體結構</li>
+      <li>社會關係：制度賦予不同群體不同的<strong>進入管道</strong></li>
+    </ul>
+  </div>
+</div>
+
+<h3>核心分歧：兩者可以一起讀</h3>
+<p>Tilly 解釋了<strong>為何</strong>現代國家擁有某種組織規模與財政能力（宏觀歷史因果）；Skocpol 解釋了<strong>如何</strong>在既定制度結構下，特定行動者能夠（或無法）利用這些能力（中觀制度機制）。兩者的差異更多是分析層次的差異，而非根本對立。</p>
+<div class="card-grid">
+  <div class="card"><h4>Tilly 更好地解釋</h4><p>為何不同國家有不同的財政汲取能力？為何民族國家成為主導形式？為何公民社會制度出現的時序如此多樣？</p></div>
+  <div class="card red"><h4>Skocpol 更好地解釋</h4><p>為何相似結構的國家做出不同的政策選擇？為何有些官僚能推動改革、有些不能？為何相同的社會壓力在不同制度環境下產生不同結果？</p></div>
+</div>
+<div class="next-page" onclick="goPage(7)"><div><div class="np-label">下一頁</div><div class="np-title">P7 · 討論投票</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P6 討論問題 -->
+<div class="page" data-page="7"><div class="page-inner">
+<h2>課堂討論問題</h2>
+<p>本頁提供三組討論題，涵蓋研究設計偏好、2025年當代國家自主性的現狀，以及民粹主義對國家–社會關係的衝擊。</p>
+
+<!-- 問題一：研究設計投票 -->
+<div class="q-section">
+  <div class="q-title">問題一：你比較喜歡哪一種研究設計？</div>
+  <div class="q-item">
+    <div class="q-label">核心問題</div>
+    <p>讀完 Tilly 與 Skocpol 後，你更傾向哪一種研究取向？是 Tilly 式的<strong>宏觀歷史敘事</strong>——千年尺度、多路徑比較、接受「礁石掠水」的代價；還是 Skocpol 式的<strong>多歷史側面的深度比較</strong>——少數個案、精確制度分析、過程追蹤？</p>
+  </div>
+  <div class="q-item">
+    <div class="q-label">延伸思考</div>
+    <p>你認為宏觀敘事的「解釋力」與個案深描的「精確性」之間是否存在根本性的取捨（trade-off）？能否找到一種研究設計，真正兼顧兩者？Tilly 晚期轉向「因果機制本體論」，是否是一種可能的橋樑？</p>
+  </div>
+  <div class="vote-row" id="v1">
+    <button class="vote-btn" onclick="vote('v1',this,'宏觀歷史敘事（Tilly）')">宏觀歷史敘事（Tilly）</button>
+    <button class="vote-btn" onclick="vote('v1',this,'多歷史側面深度比較（Skocpol）')">多歷史側面深度比較（Skocpol）</button>
+    <button class="vote-btn" onclick="vote('v1',this,'兩者結合∙視問題而定')">兩者結合∙視問題而定</button>
+  </div>
+  <div class="vote-result" id="r1"></div>
+</div>
+
+<!-- 問題二：2025年國家自主性 -->
+<div class="q-section">
+  <div class="q-title">問題二：2025年的國家自主性是何種樣貌？</div>
+  <div class="q-item">
+    <div class="q-label">脈絡設定</div>
+    <p>Tilly 在1990年完成本書。三十五年後，我們看到：<strong>主權債務危機</strong>使部分國家財政自主性幾乎消失；<strong>跨國科技平台</strong>（Google、Meta、抖音）控制著比許多政府更大的資訊流通能力；<strong>氣候協定、WTO規範、人權法庭</strong>對國家政策選擇構成持續限制。</p>
+  </div>
+  <div class="q-item">
+    <div class="q-label">問題</div>
+    <p>如果 Tilly 的分析框架（強制-資本-戰爭）是針對 AD 990–1990 年的歷史，<strong>今天的「戰爭」是什麼形式？今天的「資本」由誰掌握？今天的「強制汲取」指向何處？</strong> 國家是否還有獨立的自主性，還是它已經成為某種更大的跨國秩序的執行機關？</p>
+  </div>
+  <div class="q-item">
+    <div class="q-label">與 Skocpol 的連結</div>
+    <p>Skocpol（2025）將川普政權定性為「家產制政權」與「腐敗的威權少數控制」——這是否意味著國家已不再有韋伯意義上的「組織自主性」，而已蛻變為家族與資本集團的私產？2025年的國家–社會關係是否正在逆轉 Tilly 描述的「汲取→談判→公民權利」的歷史進程？</p>
+  </div>
+  <div class="vote-row" id="v2">
+    <button class="vote-btn" onclick="vote('v2',this,'國家仍保有核心自主性')">國家仍保有核心自主性</button>
+    <button class="vote-btn" onclick="vote('v2',this,'自主性已被跨國資本稀釋')">自主性已被跨國資本稀釋</button>
+    <button class="vote-btn" onclick="vote('v2',this,'自主性被國內威權化侵蝕')">自主性被國內威權化侵蝕</button>
+    <button class="vote-btn" onclick="vote('v2',this,'因地區∙議題而異')">因地區∙議題而異</button>
+  </div>
+  <div class="vote-result" id="r2"></div>
+</div>
+
+<!-- 問題三：民粹主義 -->
+<div class="q-section">
+  <div class="q-title">問題三：民粹主義在國家自主性框架中扮演何種角色？</div>
+  <div class="q-item">
+    <div class="q-label">理論張力</div>
+    <p>民粹主義領導人（Orbán、Erdoğan、Modi、川普）常以「人民對抗菁英」的語言奪取政權，卻往往強化了國家在特定議題上的<strong>執行性能力</strong>（邊境管控、稅收、媒體管制），同時削弱了<strong>制度性制衡</strong>（司法、選委會、央行）。</p>
+  </div>
+  <div class="q-item">
+    <div class="q-label">問題</div>
+    <p>用 Tilly 的框架看：民粹主義是否是一種新型的「汲取–抵抗–談判」循環，只是這次抵抗的對象是「國際規範與菁英制度」而非「統治者的稅收官員」？民粹主義<strong>增強還是削弱了</strong>國家自主性？它改變了國家–社會之間的「討價還價」本質嗎？</p>
+  </div>
+  <div class="q-item">
+    <div class="q-label">用 Skocpol 的框架看</div>
+    <p>Skocpol 研究的茶黨運動（2009–）預示了民粹右翼的組織動員模式。她的「聯邦式基層組織」分析能否解釋民粹主義的制度韌性？民粹主義對「政體取徑」（polity approach）中「否決點」結構的衝擊是什麼？</p>
+  </div>
+  <div class="vote-row" id="v3">
+    <button class="vote-btn" onclick="vote('v3',this,'民粹主義強化國家強制能力')">民粹主義強化國家強制能力</button>
+    <button class="vote-btn" onclick="vote('v3',this,'民粹主義削弱制度性自主性')">民粹主義削弱制度性自主性</button>
+    <button class="vote-btn" onclick="vote('v3',this,'民粹主義是新型社會–國家談判')">民粹主義是新型社會–國家談判</button>
+    <button class="vote-btn" onclick="vote('v3',this,'民粹主義改變的是誰代表「人民」')">民粹主義改變的是誰代表「人民」</button>
+  </div>
+  <div class="vote-result" id="r3"></div>
+</div>
+
+<p style="font-size:.82rem;color:var(--muted);margin-top:1.5rem">本週文獻：Tilly (1990) <em>Coercion, Capital, and European States AD 990–1990</em>；Skocpol (1985) "Bringing the State Back In"；Murmann 整理之 Tilly 方法論著作網站；Tilly (1984) <em>Big Structures, Large Processes, Huge Comparisons</em></p>
+<div class="next-page" onclick="goPage(8)"><div><div class="np-label">下一頁</div><div class="np-title">P8 · 隨堂測驗與問答</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P8 隨堂測驗 -->
+<div class="page" data-page="8"><div class="page-inner">
+  <div class="guide-breadcrumb">第 8 章 · <span>隨堂測驗與討論</span></div>
+  <h2>隨堂測驗<span class="mark">：</span>選擇題</h2>
+  <p class="section-lead">點選你認為正確的選項，系統會立刻標出正解並顯示解析。</p>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q1</div>
+    <div class="quiz-question">Tilly「戰爭造就國家」的因果鏈，最正確的順序是？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 民族認同 → 國家統一 → 發動戰爭</button>
+      <button class="quiz-opt" data-correct="true">(B) 戰爭壓力 → 強制汲取（徵稅徵兵） → 社會抵抗與談判 → 制度副產品</button>
+      <button class="quiz-opt" data-correct="false">(C) 理性設計 → 建立官僚 → 避免戰爭</button>
+      <button class="quiz-opt" data-correct="false">(D) 資本累積 → 商業繁榮 → 自然形成民主</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：B</strong><br>Tilly 認為現代國家是<em>意外副產品</em>：統治者為打仗而向社會榨取資源，人民抵抗、討價還價，逼出了稅務局、軍隊，甚至代議機構與公民權利。國家能力反過來又支撐更大規模的戰爭。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q2</div>
+    <div class="quiz-question">在 Tilly 的三條路徑中，最終「系統性勝出」、成為主導形式的是哪一條？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 強制密集型（俄羅斯、匈牙利）</button>
+      <button class="quiz-opt" data-correct="false">(B) 資本密集型（威尼斯、荷蘭等城邦）</button>
+      <button class="quiz-opt" data-correct="true">(C) 資本化強制型（法、英、普魯士）</button>
+      <button class="quiz-opt" data-correct="false">(D) 三者最終都同樣強盛、平分天下</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：C</strong><br><em>資本化強制路徑</em>同時擁有相對充沛的資本（大規模借貸）與人口（大規模徵兵），在十六世紀後戰爭規模急遽擴大時系統性打敗了純強制型與純資本型，成為「民族國家」的原型。城邦因無法承擔大規模戰爭而被整併。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q3</div>
+    <div class="quiz-question">關於「民族主義」，Tilly 的看法是？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 民族認同是國家統一的根本原因</button>
+      <button class="quiz-opt" data-correct="true">(B) 民族認同是國家走向直接統治後的副產品，而非原因</button>
+      <button class="quiz-opt" data-correct="false">(C) 民族主義與國家形成無關</button>
+      <button class="quiz-opt" data-correct="false">(D) 民族主義只存在於城邦國家</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：B</strong><br>與民族主義者的敘事相反：當國家越來越<em>直接</em>向農民徵稅、徵兵，農民才第一次被捲入「全國政治」，開始以「法國人」而非「諾曼第人」自我認同。是<em>先有直接統治，才有民族認同</em>。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q4</div>
+    <div class="quiz-question">Tilly 在《強制、資本與歐洲國家》中主要採用哪種比較策略？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 個別化比較（突顯每個個案獨特性）</button>
+      <button class="quiz-opt" data-correct="true">(B) 涵攝比較 ＋ 變異尋找（將各國定位於歐洲體系、解釋強制–資本組合的路徑差異）</button>
+      <button class="quiz-opt" data-correct="false">(C) 純粹的普遍化比較（只找跨案通則）</button>
+      <button class="quiz-opt" data-correct="false">(D) 完全不做比較，只描述單一國家</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：B</strong><br>Tilly 把各國定位在歐洲整體體系中（<em>涵攝比較</em>），再以強制–資本的不同組合解釋路徑差異（<em>變異尋找</em>），輔以少量普遍化命題（戰爭驅動國家建構）。相對地，Skocpol 偏向<em>普遍化比較</em>。</div>
+  </div>
+
+  <h2 style="margin-top:2rem">課堂討論<span class="mark">：</span>問答題</h2>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 A</span>
+    <div class="discussion-q">用 Tilly 的「<em>戰爭—汲取—談判</em>」邏輯，重新解釋台灣的國家建構。</div>
+    <div class="ctx">提示：戰後台灣長期處於<strong>軍事動員體制</strong>（動員戡亂、徵兵制、高國防支出）。這種「戰爭壓力」如何形塑了台灣的稅制、戶政、與國家對社會的滲透能力？與 Tilly 的歐洲故事有何異同？</div>
+  </div>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 B</span>
+    <div class="discussion-q">Tilly 說民族主義是「副產品」。這個說法能否套用到<em>台灣認同</em >的形成？</div>
+    <div class="ctx">提示：對照 Tilly 的「直接統治 → 全國政治參與 → 民族認同」邏輯，思考台灣認同的形成中，「國家直接觸及個人」（如義務教育、徵兵、選舉）扮演了什麼角色？又有哪些 Tilly 模型沒涵蓋的因素（如外部威脅、民主化）？</div>
+  </div>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 C</span>
+    <div class="discussion-q">Tilly（宏觀歷史）與 Skocpol（制度能力）——研究<em>當代中國</em>時你會選哪一套？</div>
+    <div class="ctx">提示：若要解釋中國國家能力的「長時段根源」，Tilly 的強制–資本框架較有力；若要解釋特定時刻的政策與革命，Skocpol 的國家自主性與過程追蹤較合適。試說明你的問題意識決定了方法選擇。</div>
+  </div>
+
+  <div class="next-page" onclick="goPage(9)"><div><div class="np-label">下一頁</div><div class="np-title">P9 · 本週讀物與小結</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P9 讀物小結 -->
+<div class="page" data-page="9"><div class="page-inner">
+  <div class="guide-breadcrumb">第 9 章 · <span>延伸</span></div>
+  <h2>本週讀物與<span class="mark">小結</span></h2>
+  <div class="story-lead">本週的關鍵轉折：把國家的起源，從「理性設計」拉回到「<strong>戰爭與汲取的暴力過程</strong>」。閱讀時請聚焦於 Tilly 如何用千年尺度的比較，論證「<strong>強制＋資本的組合</strong>」決定了國家形式。</div>
+
+  <h3>核心文獻</h3>
+  <div class="reading-card must"><div class="reading-icon">📚</div><div class="reading-body">
+    <div class="reading-title">Tilly, C. (1990). <em>Coercion, Capital, and European States, AD 990–1990</em></div>
+    <div class="reading-meta">英文專書｜中譯《強制、資本與歐洲國家》｜重點：導論、三條路徑、戰爭與汲取章節</div>
+    <div class="reading-note">本週理論核心。讀的時候請對照 P4 的<strong>三條路徑互動圖</strong>，並標出「強制」與「資本」在每條路徑中的相對比重。</div>
+  </div></div>
+  <div class="reading-card rec"><div class="reading-icon">📄</div><div class="reading-body">
+    <div class="reading-title">Tilly, C. (1984). <em>Big Structures, Large Processes, Huge Comparisons</em></div>
+    <div class="reading-meta">英文專書｜方法論經典</div>
+    <div class="reading-note">理解「<strong>八個有害預設</strong>」與「<strong>四種比較策略</strong>」的最佳來源，呼應 P2 研究方法。</div>
+  </div></div>
+  <div class="reading-card rec"><div class="reading-icon">📘</div><div class="reading-body">
+    <div class="reading-title">Skocpol, T. (1985). "Bringing the State Back In"（對照閱讀）</div>
+    <div class="reading-meta">英文編著導論｜搭配 P6 Tilly vs Skocpol</div>
+    <div class="reading-note">與 Tilly 對照，體會「<strong>宏觀歷史敘事</strong>」與「<strong>制度能力分析</strong>」兩種歷史社會學路徑的差異。</div>
+  </div></div>
+
+  <h3>本週一句話總結</h3>
+  <div class="hl-box gold"><p style="font-family:'Playfair Display',serif;font-size:1.05rem;text-align:center;color:var(--accent);font-weight:700;padding:1rem;background:#fff;border-radius:8px;margin-top:.5rem;line-height:1.7">國家不是被「設計」出來的，<br>是統治者為了打仗、向社會榨取資源，<br>在討價還價中「擠」出來的副產品。</p></div>
+
+  <div class="hl-box red"><h4>🔮 下週預告 · W6 國際環境與國家</h4><p>Tilly 已經把「<strong>戰爭與國際競爭</strong>」放進了國家形成的核心。下週我們把鏡頭進一步拉到<strong>國際環境</strong>：在全球體系、地緣政治與外部壓力之下，國家的行動空間如何被形塑？我們仍在「宏觀／結構」這把透鏡之下，準備邁向中觀的制度分析。</p></div>
+</div></div>
+
+</div><!-- /page-container -->
+
+<div class="bottom-bar">
+  <div class="arrow-btns"><button class="arrow-btn" id="prevBtn" onclick="prev()" disabled>←</button></div>
+  <div class="page-dots" id="dots"></div>
+  <div style="display:flex;align-items:center;gap:.8rem">
+    <span class="page-indicator" id="pageNum">1 / 10</span>
+    <button class="arrow-btn" id="nextBtn" onclick="next()">→</button>
+  </div>
+</div>
+</div>
+
+<script>
+let current=0;
+const pages=document.querySelectorAll('.page');
+const navBtns=document.querySelectorAll('.nav-btn');
+const total=pages.length;
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<total;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>goPage(i);
+  dotsEl.appendChild(d);
+}
+function goPage(idx){
+  if(idx===current||idx<0||idx>=total)return;
+  const right=idx>current;
+  pages[current].classList.remove('active');
+  pages[current].style.transform=right?'translateX(-36px)':'translateX(36px)';
+  pages[current].style.opacity='0';
+  pages[idx].style.transform=right?'translateX(36px)':'translateX(-36px)';
+  void pages[idx].offsetWidth;
+  pages[idx].classList.add('active');
+  pages[idx].scrollTop=0;
+  const old=current;
+  setTimeout(()=>{pages[old].style.transform='';pages[old].style.opacity=''},400);
+  current=idx;
+  updateUI();
+}
+function next(){goPage(current+1)}
+function prev(){goPage(current-1)}
+function updateUI(){
+  navBtns.forEach((b,i)=>b.classList.toggle('active',i===current));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+  document.getElementById('pageNum').textContent=(current+1)+' / '+total;
+  document.getElementById('prevBtn').disabled=current===0;
+  document.getElementById('nextBtn').disabled=current===total-1;
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')next();
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')prev();
+});
+
+// 投票功能（本地記錄）
+const votes={};
+function vote(group,btn,label){
+  if(votes[group])return;
+  votes[group]=label;
+  btn.classList.add('voted');
+  const res=document.getElementById('r'+group.replace('v',''));
+  res.style.display='block';
+  res.textContent='你選擇了：'+label+'。歡迎進一步在課堂上說明你的理由。';
+}
+
+// 選擇題
+document.addEventListener('click',function(e){
+  const btn=e.target.closest('.quiz-opt');
+  if(!btn)return;
+  const block=btn.closest('.quiz-block');
+  if(!block||block.dataset.answered==='1')return;
+  block.dataset.answered='1';
+  const correct=btn.dataset.correct==='true';
+  btn.classList.add(correct?'selected-correct':'selected-wrong');
+  if(!correct){block.querySelectorAll('.quiz-opt').forEach(o=>{if(o.dataset.correct==='true')o.classList.add('show-correct');});}
+  const exp=block.querySelector('.quiz-explain');
+  if(exp)exp.classList.add('shown');
+});
+// 折疊
+document.addEventListener('click',function(e){
+  const sp=e.target.closest('.spoiler');
+  if(sp)sp.classList.toggle('revealed');
+});
+</script>
+</body>
+</html>

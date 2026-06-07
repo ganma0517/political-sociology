@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政治社會學 W4 — Skocpol 與國家自主性</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;
+  --gold:#b8860b;--sage:#5a6e5a;--muted:#6b6560;--line:#c9c0b4;
+  --card-bg:#faf7f2;--blue:#3a5a8c;--purple:#6b4c7a;--teal:#2a7a6e;
+  --red:#c0392b;--orange:#d35400;
+  --fr:#2a7a6e;   /* 法國 */
+  --ru:#6b4c7a;   /* 俄國 */
+  --cn:#a8322a;   /* 中國 */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+
+/* 頂部導航 */
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.2rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .9rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.76rem;font-weight:500;color:#888;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#ccc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:var(--paper);background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.88rem;font-weight:700;margin-right:1rem;flex-shrink:0}
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+
+/* 頁面 */
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:920px;margin:0 auto}
+
+/* 底部 */
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+
+/* 標題 */
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,3vw,2.1rem);font-weight:800;color:var(--ink);margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent);position:relative}
+.page h2::after{content:'';position:absolute;left:0;bottom:-2px;width:60px;height:2px;background:var(--gold)}
+.page h2 .mark{color:var(--accent)}
+.page h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent);margin:1.6rem 0 .8rem;display:flex;align-items:center;gap:.5rem}
+.page h3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;font-size:.85rem;font-weight:700;flex-shrink:0}
+.page h4{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin:1rem 0 .5rem}
+.page p{font-size:.92rem;color:#333;margin-bottom:.7rem;line-height:1.95}
+.page p strong{color:var(--accent);font-weight:700}
+.page ul,.page ol{margin:.6rem 0 .9rem 1.5rem}
+.page li{font-size:.9rem;margin-bottom:.35rem;line-height:1.9;color:#333}
+.page li strong{color:var(--ink)}
+.section-lead{font-size:.88rem;color:var(--muted);margin:-.3rem 0 .8rem;font-style:italic;font-family:'Source Serif 4',serif}
+
+/* Hero */
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:900;color:var(--ink);line-height:1.12;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:660px;margin:0 auto 1.4rem}
+.hero-teacher{font-size:.9rem;color:#555;margin-bottom:1.4rem}
+.hero-teacher strong{color:var(--accent)}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+
+/* 人物 hero */
+.profile{border-bottom:1px solid var(--line);padding-bottom:1.6rem;margin-bottom:1.6rem;display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap}
+.profile-av{flex-shrink:0;width:90px;height:90px;border-radius:12px;background:linear-gradient(135deg,#8b2500,#c4532b);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:2.2rem;color:#fff;box-shadow:0 4px 14px rgba(139,37,0,.25)}
+.profile-info{flex:1;min-width:240px}
+.profile-info .pname{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1.15}
+.profile-info .prole{font-family:'Source Serif 4',serif;font-size:.9rem;color:var(--gold);font-style:italic;margin:.3rem 0 .6rem}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+.tag{padding:.28rem .75rem;background:rgba(139,37,0,.07);color:var(--accent);border-radius:18px;font-size:.74rem;font-weight:500}
+
+.story-lead{font-size:.98rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+
+/* 卡片 */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin:1.2rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.1rem 1.2rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card .icon{font-size:1.4rem;margin-bottom:.4rem}
+.card h4{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--accent);margin-bottom:.4rem;margin-top:0}
+.card p{font-size:.84rem;color:#555;margin-bottom:0;line-height:1.75}
+.card p em{font-style:italic;color:#777}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.blue{border-top-color:var(--blue)}.card.blue h4{color:var(--blue)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.purple{border-top-color:var(--purple)}.card.purple h4{color:var(--purple)}
+.card.teal{border-top-color:var(--teal)}.card.teal h4{color:var(--teal)}
+
+/* 引言框 */
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.1rem 0}
+.hl-box p:last-child{margin-bottom:0}
+.hl-box h4{margin-top:0;color:var(--accent)}
+.hl-box.blue{background:rgba(58,90,140,.05);border-left-color:var(--blue)}.hl-box.blue h4{color:var(--blue)}
+.hl-box.sage{background:rgba(90,110,90,.05);border-left-color:var(--sage)}.hl-box.sage h4{color:var(--sage)}
+.hl-box.gold{background:rgba(184,134,11,.06);border-left-color:var(--gold)}.hl-box.gold h4{color:var(--gold)}
+.hl-box.purple{background:rgba(107,76,122,.05);border-left-color:var(--purple)}.hl-box.purple h4{color:var(--purple)}
+
+/* 中央問題列 */
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+
+/* 引言（深色 quote） */
+.quote{position:relative;background:linear-gradient(135deg,#2d1f1a,#1a1a1a);color:#e8e0d4;padding:1.6rem 1.9rem;border-radius:10px;margin:1.4rem 0}
+.quote::before{content:'\201C';position:absolute;top:-.1rem;left:.9rem;font-family:'Playfair Display',serif;font-size:4rem;color:var(--gold);opacity:.22;line-height:1}
+.quote p{font-family:'Source Serif 4',serif;font-style:italic;font-size:.95rem;color:#e8e0d4;position:relative;z-index:1;margin-bottom:.6rem}
+.quote .attr{font-style:normal;font-size:.8rem;color:var(--gold);text-align:right}
+
+/* 下一頁 */
+.next-page{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:1.1rem 1.4rem;border-radius:10px;margin-top:2.2rem;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.next-page:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(139,37,0,.3)}
+.np-label{font-size:.72rem;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.np-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.np-arrow{font-size:1.4rem;opacity:.8}
+
+/* Spoiler */
+.spoiler{cursor:pointer;background:linear-gradient(135deg,rgba(90,110,90,.08),rgba(184,134,11,.06));border-left:3px dashed var(--sage);padding:.8rem 1.1rem;border-radius:0 6px 6px 0;font-size:.85rem;color:var(--sage);max-height:46px;overflow:hidden;transition:max-height .5s ease;line-height:1.85;position:relative;margin:.9rem 0}
+.spoiler::after{content:'▼ 點擊展開';position:absolute;right:1rem;top:.85rem;font-size:.72rem;color:var(--muted);font-family:'Source Serif 4',serif;font-style:italic}
+.spoiler.revealed{max-height:1500px;color:#333}
+.spoiler.revealed::after{content:'▲ 點擊收合';color:var(--sage)}
+.spoiler strong{color:var(--accent)}
+.spoiler .sp-title{font-weight:700;color:var(--sage)}
+
+/* Tabs */
+.tabs{display:flex;gap:.3rem;margin:1.1rem 0 .7rem;border-bottom:2px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:.6rem 1.1rem;background:0;border:0;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .25s;white-space:nowrap}
+.tab:hover{color:var(--accent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* 著作主題 */
+.theme-group{margin:1.6rem 0}
+.theme-label{display:inline-block;padding:.3rem .9rem;border-radius:5px;font-size:.78rem;font-weight:700;letter-spacing:.03em;margin-bottom:.7rem}
+.theme-label.rev{background:rgba(139,37,0,.1);color:var(--accent)}
+.theme-label.state{background:rgba(90,110,90,.12);color:var(--sage)}
+.theme-label.civic{background:rgba(58,90,140,.1);color:var(--blue)}
+.theme-label.contemp{background:rgba(107,76,122,.1);color:var(--purple)}
+.theme-note{font-size:.85rem;color:#666;line-height:1.8;margin-top:.3rem}
+.theme-note strong{color:var(--accent)}
+
+/* 比較表 */
+.cmp-table{width:100%;border-collapse:collapse;font-size:.83rem;margin:.8rem 0;border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.06)}
+.cmp-table thead tr{background:#1a1a1a;color:#fff}
+.cmp-table th,.cmp-table td{padding:.6rem .8rem;text-align:left;line-height:1.6}
+.cmp-table tbody tr:nth-child(even){background:var(--card-bg)}
+.cmp-table td:first-child{font-weight:700;color:var(--accent)}
+
+/* 互動雙軌框架 */
+.track-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.1rem 0}
+.track-card{background:#fff;border-radius:12px;padding:1.2rem 1.3rem;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:4px solid #999;cursor:pointer;transition:all .25s;position:relative}
+.track-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+.track-card.weber{border-top-color:var(--accent)}
+.track-card.tocq{border-top-color:var(--sage)}
+.track-card.sel{box-shadow:0 0 0 3px rgba(184,134,11,.4),0 6px 20px rgba(0,0,0,.12)}
+.track-card .tk-tag{display:inline-block;padding:.2rem .7rem;border-radius:12px;font-size:.72rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.track-card.weber .tk-tag{background:var(--accent)}
+.track-card.tocq .tk-tag{background:var(--sage)}
+.track-card h4{margin:.1rem 0 .3rem}
+.track-card.weber h4{color:var(--accent)}.track-card.tocq h4{color:var(--sage)}
+.track-card .tk-q{font-size:.84rem;color:#555;line-height:1.7;margin:0}
+.track-card .tk-hint{position:absolute;right:1rem;bottom:.8rem;font-size:.72rem;color:var(--muted);font-style:italic}
+.track-detail{background:var(--card-bg);border-radius:10px;padding:1.1rem 1.3rem;margin:.4rem 0 1rem;border-left:4px solid var(--gold);min-height:90px;transition:border-color .3s}
+.track-detail .td-name{font-family:'Playfair Display',serif;font-weight:800;font-size:1.05rem;margin-bottom:.5rem}
+.track-detail ul{margin:.3rem 0 .5rem 1.2rem}
+.track-detail li{font-size:.85rem;line-height:1.7;margin-bottom:.3rem}
+.track-detail li strong{color:var(--ink)}
+.track-detail .td-char{font-size:.83rem;color:#555;font-style:italic;border-top:1px dashed var(--line);padding-top:.5rem;margin-top:.2rem}
+.track-flow{background:#1a1a1a;border-radius:12px;padding:1.2rem;margin:1rem 0;text-align:center}
+.tf-row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin:.4rem 0}
+.tf-box{padding:.55rem .9rem;border-radius:7px;font-size:.82rem;font-weight:700;color:#fff}
+.tf-state{background:var(--accent);font-size:.9rem}
+.tf-w{background:rgba(139,37,0,.35);border:1px solid var(--accent-light)}
+.tf-t{background:rgba(90,110,90,.4);border:1px solid var(--sage)}
+.tf-mid{background:rgba(255,255,255,.1);color:#e8e0d4;font-weight:500;font-size:.8rem}
+.tf-out{background:var(--gold)}
+.tf-arr{color:var(--gold);font-size:1.1rem;line-height:1}
+
+/* 互動三國革命 */
+.revx{background:#fff;border-radius:14px;padding:1.3rem;margin:1.2rem 0;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.rev-btns{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.1rem}
+.rev-btn{padding:.55rem 1.3rem;border:2px solid var(--line);background:#faf7f2;border-radius:11px;font-family:inherit;font-weight:800;font-size:.92rem;color:var(--muted);cursor:pointer;transition:all .3s}
+.rev-btn:hover{border-color:var(--gold)}
+.rev-btn.fr.on{background:var(--fr);border-color:var(--fr);color:#fff}
+.rev-btn.ru.on{background:var(--ru);border-color:var(--ru);color:#fff}
+.rev-btn.cn.on{background:var(--cn);border-color:var(--cn);color:#fff}
+.rev-stage{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;margin:.5rem 0}
+.rev-step{background:var(--card-bg);border-radius:10px;padding:.9rem 1rem;border-top:4px solid var(--accent)}
+.rev-step .rs-n{font-size:.72rem;font-weight:700;color:var(--accent);font-style:italic;margin-bottom:.3rem}
+.rev-step .rs-t{font-weight:800;font-size:.88rem;color:var(--ink);margin-bottom:.4rem}
+.rev-step .rs-b{font-size:.82rem;color:#555;line-height:1.65}
+.rev-step.s2{border-top-color:var(--gold)}.rev-step.s2 .rs-n{color:#946a09}
+.rev-step.s3{border-top-color:var(--sage)}.rev-step.s3 .rs-n{color:var(--sage)}
+.rev-common{background:#1a1a1a;color:#e8e0d4;border-radius:10px;padding:1rem 1.2rem;margin-top:.8rem}
+.rev-common .rc-h{color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;margin-bottom:.4rem}
+.rev-common p{font-size:.85rem;color:#d8d0c4;margin:0;line-height:1.8}
+.rev-common strong{color:#fff}
+
+/* 衍伸分類 */
+.ext-cat{margin:1.4rem 0}
+.ext-cat-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;padding:.5rem 0;border-bottom:2px solid var(--line);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;color:var(--ink)}
+.badge{font-size:.72rem;padding:.2rem .6rem;border-radius:4px;font-weight:700;font-family:'Noto Sans TC',sans-serif}
+.badge-method{background:rgba(139,37,0,.1);color:var(--accent)}
+.badge-polity{background:rgba(90,110,90,.12);color:var(--sage)}
+.badge-party{background:rgba(107,76,122,.1);color:var(--purple)}
+.badge-ir{background:rgba(58,90,140,.1);color:var(--blue)}
+.badge-welfare{background:rgba(184,134,11,.12);color:#946a09}
+.ext-item{padding:.9rem 1.1rem;background:var(--card-bg);border-radius:8px;margin-bottom:.6rem;border-left:3px solid var(--line);box-shadow:0 1px 6px rgba(0,0,0,.03);transition:transform .25s}
+.ext-item:hover{transform:translateX(3px)}
+.ext-item.m{border-left-color:var(--accent)}.ext-item.po{border-left-color:var(--sage)}.ext-item.pa{border-left-color:var(--purple)}.ext-item.ir{border-left-color:var(--blue)}.ext-item.w{border-left-color:var(--gold)}
+.ext-item h5{font-family:'Playfair Display',serif;font-size:.93rem;color:var(--ink);margin-bottom:.25rem}
+.ext-item p{font-size:.83rem;color:#666;margin:0;line-height:1.7}
+.src-btn{display:inline-block;margin-top:1.2rem;padding:.7rem 1.3rem;background:var(--accent);color:#fff;text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:600;transition:all .3s}
+.src-btn:hover{background:var(--accent-light);transform:translateY(-2px)}
+
+/* Quiz */
+.quiz-block{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0;border:1px solid #e5e0d6;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative}
+.quiz-q-num{position:absolute;top:-12px;left:1.5rem;background:var(--accent);color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;padding:.25rem .75rem;border-radius:5px;letter-spacing:.05em}
+.quiz-question{font-size:.95rem;font-weight:600;color:var(--ink);margin:.4rem 0 .9rem;line-height:1.7}
+.quiz-question strong{color:var(--accent)}
+.quiz-options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.7rem}
+.quiz-opt{text-align:left;background:#fafaf6;border:1.5px solid #e0d9c8;border-radius:7px;padding:.7rem 1rem;font-size:.88rem;line-height:1.6;color:#333;cursor:pointer;transition:all .2s;font-family:inherit}
+.quiz-opt:hover{background:#f5f0e8;border-color:#b8860b}
+.quiz-opt.selected-correct{background:linear-gradient(135deg,#d4edd4,#c0e0c0);border-color:#5a8c5a;color:#1e4d1e;font-weight:600}
+.quiz-opt.selected-wrong{background:linear-gradient(135deg,#f8d8d4,#efc4be);border-color:#b85040;color:#7a1a10}
+.quiz-opt.show-correct{background:#eaf5ea;border-color:#5a8c5a;font-weight:500}
+.quiz-explain{font-size:.85rem;line-height:1.8;color:#333;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(90,110,90,.04));padding:.9rem 1.1rem;border-radius:7px;border-left:3px solid var(--sage);display:none}
+.quiz-explain.shown{display:block}
+.quiz-explain strong{color:var(--accent)}
+.quiz-explain em{color:var(--blue);font-style:normal;font-weight:600}
+
+/* 討論題 */
+.discussion-block{background:linear-gradient(135deg,#fff,#faf7f2);border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid rgba(139,37,0,.12)}
+.discussion-eyebrow{display:inline-block;padding:.2rem .7rem;background:var(--accent);color:#fff;border-radius:12px;font-size:.7rem;font-weight:700;letter-spacing:.05em;margin-bottom:.6rem}
+.discussion-q{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink);margin-bottom:.7rem;line-height:1.7}
+.discussion-q em{color:var(--accent);font-style:normal}
+.discussion-block .ctx{font-size:.85rem;color:#555;margin-bottom:.5rem;line-height:1.85}
+.discussion-block .ctx strong{color:var(--accent)}
+
+/* 讀物 */
+.reading-card{background:#fff;border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0;border-left:4px solid;display:flex;gap:.9rem;align-items:flex-start;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.reading-card.must{border-left-color:var(--accent)}
+.reading-card.rec{border-left-color:var(--gold)}
+.reading-icon{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;font-family:'Playfair Display',serif}
+.reading-card.must .reading-icon{background:var(--accent)}
+.reading-card.rec .reading-icon{background:var(--gold)}
+.reading-body{flex:1}
+.reading-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:.2rem;line-height:1.5}
+.reading-meta{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:.3rem;font-family:'Source Serif 4',serif}
+.reading-note{font-size:.83rem;color:#444;line-height:1.75}
+.reading-note strong{color:var(--accent)}
+
+/* RWD */
+@media(max-width:780px){
+  .page{padding:1.8rem 1rem 3rem}
+  .hero-title{font-size:1.9rem}
+  .page h2{font-size:1.45rem}
+  .track-grid,.rev-stage,.tf-row{grid-template-columns:1fr}
+  .rev-stage{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="top-nav">
+  <span class="nav-title">W4 Skocpol · 國家自主性</span>
+  <button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+  <button class="nav-btn" onclick="goPage(1)">1 · 人物生平</button>
+  <button class="nav-btn" onclick="goPage(2)">2 · 著作四階段</button>
+  <button class="nav-btn" onclick="goPage(3)">3 · 為何重要</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(4)">4 · 歷史制度主義</button>
+  <button class="nav-btn" onclick="goPage(5)">5 · 國家自主性</button>
+  <button class="nav-btn" onclick="goPage(6)">6 · 三國革命</button>
+  <button class="nav-btn" onclick="goPage(7)">7 · 研究衍伸</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(8)">8 · 隨堂測驗</button>
+  <button class="nav-btn" onclick="goPage(9)">9 · 讀物小結</button>
+</div>
+
+<div class="page-container">
+
+<!-- ============ P0 封面 ============ -->
+<div class="page active" data-page="0"><div class="page-inner">
+  <div class="hero">
+    <div class="hero-eyebrow">Political Sociology · Week 4</div>
+    <h1 class="hero-title">把<span class="mark">國家</span>帶回來<br>國家有「自己的意志」嗎？</h1>
+    <p class="hero-sub">上週 Moore 把焦點放在「社會裡的階級」。本週 Theda Skocpol 反問：難道<strong>國家本身</strong>沒有獨立的行動能力嗎？革命，會不會是<strong>國家機器崩潰</strong>的結果，而不只是階級鬥爭？</p>
+    <div class="hero-teacher">授課教師：<strong>林文正</strong>　·　國立臺灣大學</div>
+    <div class="hero-meta">
+      <span>🏛 國家自主性</span>
+      <span>⏳ 歷史制度主義</span>
+      <span>💥 三國革命</span>
+    </div>
+  </div>
+
+  <div class="story-lead">
+    1960–70 年代的社會科學，幾乎把「國家」從分析語彙裡刪掉了——它要嘛是利益團體的中立場域，要嘛是階級的工具。Skocpol 的一聲「<strong>把國家帶回來（Bringing the State Back In）</strong>」，重新讓國家成為<strong>擁有自身組織邏輯的行動者</strong>。本週我們認識這位學者，並學會用她的雙軌框架重新看待國家與社會。
+  </div>
+
+  <div class="questions">
+    <h4>📌 本週要解答的核心問題</h4>
+    <ol>
+      <li><strong>Skocpol 是誰？</strong>她如何幾乎以一人之力，打造了「歷史制度主義」與「政治社會學」兩個領域？</li>
+      <li><strong>什麼是「歷史制度主義」？</strong>路徑依賴、關鍵時刻、時序、政策反饋——為什麼「歷史」會決定命運？</li>
+      <li><strong>什麼是「國家自主性」？</strong>韋伯面向（國家能做什麼）與托克維爾面向（制度讓誰做什麼）如何互補？</li>
+      <li><strong>為什麼法、俄、中三場革命，是國家自主性理論的起點？</strong>革命真的是「被製造」的嗎？</li>
+      <li><strong>這套理論如何延伸到今天？</strong>從福利國家、政治極化，到當代美國的民主危機。</li>
+    </ol>
+  </div>
+
+  <h3><span class="num">📖</span>本週路線圖</h3>
+  <div class="card-grid">
+    <div class="card"><div class="icon">👤</div><h4>P1-3 認識 Skocpol</h4><p>生平、四階段著作、為何她在政治社會學如此重要。</p></div>
+    <div class="card blue"><div class="icon">⏳</div><h4>P4 歷史制度主義</h4><p><strong>互動分頁</strong>：核心概念、三大制度主義比較、研究方法。</p></div>
+    <div class="card sage"><div class="icon">🏛</div><h4>P5 國家自主性</h4><p><strong>互動雙軌圖</strong>：韋伯面向 vs 托克維爾面向，點擊切換細節。</p></div>
+    <div class="card"><div class="icon">💥</div><h4>P6 三國革命</h4><p><strong>互動圖</strong>：法/俄/中——革命的共同結構性密碼。</p></div>
+    <div class="card purple"><div class="icon">🌐</div><h4>P7 研究衍伸</h4><p>方法、政體、政黨、國際關係、福利部門五大延伸。</p></div>
+    <div class="card gold"><div class="icon">✏️</div><h4>P8-9 測驗 · 讀物</h4><p><strong>選擇題與問答題</strong>、本週讀物與下週預告。</p></div>
+  </div>
+
+  <div class="next-page" onclick="goPage(1)">
+    <div><div class="np-label">下一頁</div><div class="np-title">P1 · 人物與生平</div></div>
+    <div class="np-arrow">→</div>
+  </div>
+</div></div>
+<!-- ============ /P0 ============ -->
+
+
+<!-- P1 人物生平 -->
+<div class="page" data-page="1"><div class="page-inner">
+  <div class="guide-breadcrumb">認識 Skocpol · <span>人物生平</span></div>
+  <div class="profile">
+    <div class="profile-av">TS</div>
+    <div class="profile-info">
+      <div class="pname">Theda Skocpol</div>
+      <div class="prole">Victor S. Thomas Professor of Government and Sociology, Harvard University（1947–）</div>
+      <div class="hero-tags"><span class="tag">歷史制度主義</span><span class="tag">國家自主性</span><span class="tag">比較革命</span><span class="tag">美國福利國家</span><span class="tag">公民參與</span><span class="tag">茶黨研究</span></div>
+    </div>
+  </div>
+  <p>Skocpol 是當代最具影響力的<strong>政治社會學家</strong>與<strong>比較歷史學者</strong>之一。她開創了<strong>歷史制度主義</strong>研究取徑，提出<strong>國家自主性</strong>理論，從根本改變了社會科學看待國家與社會關係的方式。</p>
+
+  <h3><span class="num">①</span>從農家女孩到哈佛教授</h3>
+  <p>成長於密西根州農業家庭，父母為教師、祖父母務農。就讀<strong>密西根州立大學</strong>榮譽學程時，受 C. Wright Mills 與 Barrington Moore 著作啟發。大學時代與丈夫 Bill 赴密西西比州參與民權運動教育計畫，影響深遠。</p>
+  <p>進入<strong>哈佛大學</strong>社會學博士班，師從 <strong>Barrington Moore</strong>（上週的主角）與 <strong>Seymour Martin Lipset</strong>。博士論文比較法、俄、中三國革命，她自稱「幾乎要了她的命」，但最終成為經典。曾任教芝加哥大學（1981–86），後回歸哈佛。因性別歧視申訴案遭排擠十五年，最終以學術成就贏得政治學系的接納。</p>
+
+  <h3><span class="num">②</span>學術地位與公共參與</h3>
+  <p>曾任<strong>美國政治學會會長</strong>、<strong>社會科學史學會會長</strong>、<strong>哈佛文理研究院院長</strong>。2007 年獲 <strong>Johan Skytte 政治學獎</strong>（政治學界最高榮譽之一）。創辦<strong>學者策略網絡</strong>（Scholars Strategy Network），致力於將社會科學研究帶入公共政策對話。</p>
+
+  <div class="hl-box gold"><h4>🔗 與上週的連結</h4><p>注意：Skocpol 的指導教授正是上週的 <strong>Barrington Moore</strong>。但她沒有止步於「階級分析」——她要追問一個 Moore 較少著墨的問題：<strong>國家機器本身</strong>，在革命與改革中扮演了什麼角色？</p></div>
+
+  <div class="next-page" onclick="goPage(2)"><div><div class="np-label">下一頁</div><div class="np-title">P2 · 著作的四個主題階段</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P2 著作四階段 -->
+<div class="page" data-page="2"><div class="page-inner">
+  <div class="guide-breadcrumb">認識 Skocpol · <span>著作四階段</span></div>
+  <h2>著作與<span class="mark">主題分類</span></h2>
+  <p>Skocpol 的研究生涯可分為四個主題階段。她並非固守單一議題，而是不斷追問新的「大問題」，同時在方法上持續演進——從依賴二手文獻，到挖掘政府統計，再到親自田野訪談。</p>
+
+  <div class="theme-group">
+    <div class="theme-label rev">主題一：比較革命與國家理論（1975–1985）</div>
+    <div class="card-grid">
+      <div class="card"><h4>《國家與社會革命》1979</h4><p><em>States and Social Revolutions</em>——比較法、俄、中三國，主張革命的結構性條件：國家組織必須先在與上層階級的衝突中崩潰，才為下層反抗開路。依賴二手歷史文獻的系統比較。</p></div>
+      <div class="card"><h4>《把國家帶回來》1985</h4><p><em>Bringing the State Back In</em>——與 Evans、Rueschemeyer 合編。確立國家自主性理論，源於 SSRC 工作小組，系統闡述國家作為自主行動者的分析框架。</p></div>
+    </div>
+    <p class="theme-note"><strong>轉向動力：</strong>完成革命研究後追問「民主資本主義中的改革從何而來？」Skowronek 的美國國家建構研究與 Shefter 的政黨—國家比較，提供了轉入美國政治的理論橋樑。Tilly 的「戰爭—國家建構」理論啟發她關注南北戰爭對美國的影響。</p>
+  </div>
+
+  <div class="theme-group">
+    <div class="theme-label state">主題二：美國國家建構與福利政策（1986–1995）</div>
+    <div class="card-grid">
+      <div class="card sage"><h4>《保護士兵與母親》1992</h4><p><em>Protecting Soldiers and Mothers</em>——揭示美國 20 世紀初已是「早熟福利國家」：南北戰爭退伍軍人年金的支出與涵蓋範圍超越同期德、英。她自稱「最喜歡的書」，首次大量使用政府統計數據。</p></div>
+      <div class="card sage"><h4>從「國家中心」到「政體中心」</h4><p>此書標誌理論轉向：承認社會運動、壓力團體聯盟與政黨同樣重要，分析框架擴展為「政體取徑」。她寫道：「我的國家中心理論框架已演化為完整的政體取徑。」</p></div>
+    </div>
+    <p class="theme-note"><strong>關注焦點：</strong>恩庇政治如何塑造美國獨特的社會政策路徑？為何美國的福利國家以退伍軍人和母親（而非工人階級）為核心受益者？制度結構如何賦予婦女組織不成比例的政策影響力？</p>
+  </div>
+
+  <div class="theme-group">
+    <div class="theme-label civic">主題三：公民社會與會員組織（1996–2009）</div>
+    <div class="card-grid">
+      <div class="card blue"><h4>《衰落的民主》2003</h4><p><em>Diminished Democracy</em>——追蹤美國 58 個百萬以上成員的大型聯邦式會員組織。1960 年代後急速衰退，留下「更多組織但更少成員」的局面。自建原創組織數據庫。</p></div>
+      <div class="card blue"><h4>學者策略網絡 2009–</h4><p>Scholars Strategy Network——將公民組織研究洞見付諸實踐，創建跨學科學者的聯邦式組織，將研究轉譯為兩頁政策摘要。全美 30 多個分會，包括保守州。</p></div>
+    </div>
+    <p class="theme-note"><strong>轉向動力：</strong>與 Putnam 的「社會資本」論辯論。Skocpol 不同意將社會資本化約為個人態度與地方網絡，主張必須關注<strong>全國性聯邦式會員組織</strong>的歷史角色。</p>
+  </div>
+
+  <div class="theme-group">
+    <div class="theme-label contemp">主題四：當代美國政治與民主危機（2010–迄今）</div>
+    <div class="card-grid">
+      <div class="card purple"><h4>《茶黨》2012</h4><p>與 Williamson 合著。首次採用田野調查，親赴保守地區訪談草根右翼運動者，結合全國組織數據庫與媒體分析。約 900 個地方茶黨組織被系統記錄。</p></div>
+      <div class="card purple"><h4>科赫網絡與八縣追蹤</h4><p>追蹤右翼富豪網絡如何透過<strong>組織（非僅金錢）</strong>改變共和黨。2016 年後在賓州、俄亥俄、北卡、威斯康辛各選兩縣，持續訪談地方領袖，觀察華府政策如何「落地」。</p></div>
+      <div class="card purple"><h4>民主危機分析 2025</h4><p>將川普二任政權定性為「腐敗的家產制政權」，提出「McConnellism」概念（利用準法律形式推動威權少數控制），建議民主黨聚焦州級選舉與基層人際網絡。</p></div>
+    </div>
+    <p class="theme-note"><strong>轉向動力：</strong>她意識到量化模型無法解釋川普現象——茶黨田野研究比所有預測模型更早洞察民粹右翼的深層動力。方法全面擁抱田野調查與面對面訪談。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(3)"><div><div class="np-label">下一頁</div><div class="np-title">P3 · 為何她如此重要？</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P3 為何重要 -->
+<div class="page" data-page="3"><div class="page-inner">
+  <div class="guide-breadcrumb">認識 Skocpol · <span>學術貢獻</span></div>
+  <h2>為何她在政治社會學中<span class="mark">如此重要？</span></h2>
+  <p>Skocpol 的重要性不僅在於她是傑出學者，更在於她<strong>幾乎以一人之力，打造了兩個學術領域的制度基礎</strong>。</p>
+  <div class="card-grid">
+    <div class="card"><div class="icon">🔬</div><h4>方法論革新</h4><p>示範如何以比較歷史方法處理宏觀因果問題，結合量化、檔案、田野。主張「對重要問題的好答案，比對瑣碎問題的精確答案更有價值」。</p></div>
+    <div class="card"><div class="icon">🏛️</div><h4>「把國家帶回來」</h4><p>在社會中心論盛行時，主張國家是擁有自主行動能力的組織結構，從根本改變比較政治學的分析框架。</p></div>
+    <div class="card"><div class="icon">🌍</div><h4>跨學科制度建構</h4><p>創建 ASA 的「政治社會學」與「比較歷史社會學」分會，以及 APSA「政治與歷史」分會。在兩個學科都建設了制度。</p></div>
+    <div class="card"><div class="icon">📢</div><h4>學術與公共的橋樑</h4><p>創辦學者策略網絡，鼓勵學者將研究翻譯為平易摘要，連結公民社會與政策制定者。</p></div>
+    <div class="card"><div class="icon">🔄</div><h4>學科語言的翻譯者</h4><p>政治學家說「利益團體」、社會學家說「階級」，講的卻是同一項研究。她運用社會學概念回答政治學問題。</p></div>
+    <div class="card"><div class="icon">🗳️</div><h4>理論與田野的連結</h4><p>從茶黨田野到八縣追蹤，始終堅持「走出去」。發現保守地區的人只要感受到尊重，就願意深談。</p></div>
+  </div>
+  <div class="quote"><p>社會科學必須回答學術界以外的人也會關心的問題。我們不再處在一個學術界可以無限自我指涉、自我成長的時代了。</p><div class="attr">— Theda Skocpol，2025 年訪談</div></div>
+
+  <div class="next-page" onclick="goPage(4)"><div><div class="np-label">下一頁</div><div class="np-title">P4 · 歷史制度主義是什麼？</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P4 歷史制度主義 -->
+<div class="page" data-page="4"><div class="page-inner">
+  <div class="guide-breadcrumb">理論核心 · <span>歷史制度主義</span></div>
+  <h2>歷史制度主義<span class="mark">是什麼？</span></h2>
+  <div class="story-lead">歷史制度主義（Historical Institutionalism, HI）是新制度主義三大分支之一，強調<strong>制度如何隨時間演化</strong>，以及<strong>歷史時序為何重要</strong>。核心問題：面對相似壓力時，不同國家為何走上截然不同的發展路徑？</div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'it-core')">核心概念</button>
+    <button class="tab" onclick="switchTab(this,'it-cmp')">三大制度主義比較</button>
+    <button class="tab" onclick="switchTab(this,'it-meth')">研究方法</button>
+  </div>
+
+  <div class="tab-panel active" id="it-core">
+    <div class="card-grid">
+      <div class="card"><h4>路徑依賴</h4><p>制度走上某條路徑後，轉換成本隨時間遞增而自我強化。行動者投入制度特定技能的資源越多，越不可能轉向替代制度。</p></div>
+      <div class="card"><h4>關鍵時刻</h4><p>特定歷史節點上制度約束力鬆動，行動者得以做出影響深遠的選擇。革命、戰爭、經濟危機皆可構成。Capoccia &amp; Kelemen (2007) 系統化此概念。</p></div>
+      <div class="card"><h4>時序與因果</h4><p>事件先後順序影響結果。如 Ertman 指出，歐洲國家建構型態取決於地緣競爭開始時、現代官僚技術是否已出現。</p></div>
+      <div class="card"><h4>政策反饋</h4><p>已建立的政策重塑政治格局——創造新利益團體、改變公民參與方式、影響認知框架。Pierson (1993) 闡明「當結果變成原因」的制度動態。</p></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="it-cmp">
+    <h4>新制度主義三大取徑比較</h4>
+    <div style="overflow-x:auto"><table class="cmp-table"><thead><tr><th>面向</th><th>歷史制度主義</th><th>理性選擇制度主義</th><th>社會學制度主義</th></tr></thead><tbody>
+      <tr><td>行動者假設</td><td>兼容理性與文化</td><td>理性自利、效用最大化</td><td>受文化規範與合法性驅動</td></tr>
+      <tr><td>制度定義</td><td>正式與非正式規則、組織結構</td><td>博弈規則、協調均衡</td><td>文化認知框架、規範</td></tr>
+      <tr><td>變遷解釋</td><td>路徑依賴＋關鍵時刻</td><td>均衡打破與重建</td><td>制度同構與擴散</td></tr>
+      <tr><td>核心方法</td><td>比較歷史分析、過程追蹤</td><td>形式模型、博弈論</td><td>個案研究、論述分析</td></tr>
+      <tr><td>權力觀</td><td>強調不對稱的權力分配</td><td>較少關注權力不對稱</td><td>關注文化霸權</td></tr>
+      <tr><td>光譜位置</td><td>居中，兼採兩端之長</td><td>偏理性端</td><td>偏文化端</td></tr>
+    </tbody></table></div>
+    <p class="theme-note"><strong>Hall &amp; Taylor (1996)</strong> 歸納 HI 四大特徵：廣義的制度—行動者關係、強調權力不對稱、以路徑依賴與非預期後果解釋制度發展、將制度視為因果鏈一環而非唯一因素。</p>
+  </div>
+
+  <div class="tab-panel" id="it-meth">
+    <h4>HI 的研究方法特色</h4>
+    <p><strong>比較歷史分析：</strong>少數個案的深入比較。Skocpol 的三國革命即為經典——以最大相似與最大差異體系設計（呼應 W2）識別關鍵變項。</p>
+    <p><strong>過程追蹤：</strong>追溯因果鏈條的每個環節，確認機制是否真正運作，如偵探式推理。</p>
+    <p><strong>反事實推理：</strong>考察「如果關鍵時刻做出不同選擇會如何」。指明「為何某些路徑未被走上」與「為何走上這條路徑」同等重要。</p>
+    <p><strong>方法折衷主義：</strong>Skocpol 強調不被單一方法捕獲：「能量化就量化，不能就用其他方式。」她的生涯從二手文獻、到政府統計、到面對面訪談，方法不斷擴展，但始終保持大圖景與細節的平衡。</p>
+  </div>
+
+  <div class="next-page" onclick="goPage(5)"><div><div class="np-label">下一頁</div><div class="np-title">P5 · 國家自主性：互動雙軌框架</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P5 國家自主性（互動雙軌） -->
+<div class="page" data-page="5"><div class="page-inner">
+  <div class="guide-breadcrumb">理論核心 · <span>國家自主性</span></div>
+  <h2>國家自主性的概念<span class="mark">如何形成？</span></h2>
+
+  <h3><span class="num">①</span>時代背景：為何需要「把國家帶回來」？</h3>
+  <p>1960–70 年代主流社會科學有三大取徑，它們<strong>共同的盲點</strong>是忽視國家本身的組織能力與自主行動潛力：</p>
+  <div class="card-grid">
+    <div class="card"><h4>多元主義</h4><p>國家是利益團體競爭的中立場域，本身沒有獨立偏好。「國家」一詞幾乎不被使用。</p></div>
+    <div class="card"><h4>結構功能主義</h4><p>Parsons 等將政治系統視為滿足社會需求的功能子系統，國家角色被化約為「維持系統整合」的工具。</p></div>
+    <div class="card"><h4>馬克思主義</h4><p>國家是資產階級統治工具或階級鬥爭場域。即使承認「相對自主性」，核心解釋力仍在階級結構。</p></div>
+  </div>
+  <p><strong>更深的時代脈絡：</strong>二戰後美國社會科學刻意將「國家」從分析語彙中刪除——因為國家自主性被等同於極權主義的「國家強制」。Skocpol 呼籲回歸<strong>韋伯式</strong>的理解：國家不等於獨裁，而是一種具有自身組織邏輯的行政與強制結構。</p>
+
+  <h3><span class="num">②</span>核心框架：互動雙軌（點卡片切換）</h3>
+  <p class="section-lead">Skocpol 在 2019 年訪談中明確指出，分析國家必須<strong>兩軌並用</strong>。點下方任一張卡片，看它各自關注什麼。</p>
+  <div class="track-grid">
+    <div class="track-card weber sel" data-tk="weber" onclick="selectTrack('weber')">
+      <span class="tk-tag">韋伯面向</span>
+      <h4>國家「能做什麼」</h4>
+      <p class="tk-q">國家的行政—軍事組織，能否獨立於社會力量行動？</p>
+      <span class="tk-hint">👆 點擊看細節</span>
+    </div>
+    <div class="track-card tocq" data-tk="tocq" onclick="selectTrack('tocq')">
+      <span class="tk-tag">托克維爾面向</span>
+      <h4>制度「讓誰做什麼」</h4>
+      <p class="tk-q">制度結構如何塑造行動者的聯盟方式與利益認知？</p>
+      <span class="tk-hint">👆 點擊看細節</span>
+    </div>
+  </div>
+  <div class="track-detail" id="track-detail">
+    <div class="td-name" style="color:var(--accent)">韋伯面向：國家的組織自主性</div>
+    <p style="font-size:.85rem;color:#444;margin:0 0 .4rem"><strong>核心問題：</strong>國家的行政—軍事組織，能否獨立於社會力量採取行動？</p>
+    <ul>
+      <li>官僚體系的<strong>專業化</strong>——是否有獨立於政治任命的常任文官？</li>
+      <li>國家的<strong>財政自主</strong>——稅收是否獨立於特定社會群體？</li>
+      <li><strong>官僚社群</strong>是否擁有自己的世界觀與集體行動能力？</li>
+      <li>國家的<strong>強制與資訊能力</strong>——軍事、警察、情報的組織形態</li>
+    </ul>
+    <div class="td-char">國家自主性是「變項」，非常量。瑞典預現代官僚國家比英國更早主動診斷社會問題；法國舊政權的國家能力被貴族反抗削弱。分析的是國家「能做什麼」。</div>
+  </div>
+
+  <div class="track-flow">
+    <div class="tf-row"><div class="tf-box tf-state">國 家（行政官僚 ∙ 軍事 ∙ 法律）</div></div>
+    <div class="tf-row"><span class="tf-arr">↕ 雙向互動，非單向決定 ↕</span></div>
+    <div class="tf-row"><div class="tf-box tf-w">韋伯面向：能做什麼</div><div class="tf-box tf-t">托克維爾面向：讓誰做什麼</div></div>
+    <div class="tf-row"><span class="tf-arr">↓ 共同作用於 ↓</span></div>
+    <div class="tf-row"><div class="tf-box tf-mid">社會結構</div><div class="tf-box tf-mid">組織動員</div><div class="tf-box tf-mid">國際壓力</div></div>
+    <div class="tf-row"><span class="tf-arr">↓</span></div>
+    <div class="tf-row"><div class="tf-box tf-out">政策結果 ∙ 制度變遷 ∙ 革命或改革</div></div>
+  </div>
+
+  <h3><span class="num">③</span>不是王權與菁英的混合體</h3>
+  <p>國家自主性<strong>不等於</strong>君主專制或菁英統治。Skocpol 恰恰指出王權與貴族之間的<strong>矛盾性</strong>：法國王權的改革需求與貴族的反抗衝突，削弱了國家、為革命開路。在現代民主中，國家自主性來源更多元：官僚專業知識、制度慣性、公眾政治無知。<strong>國家自主性是一個分析工具，測量國家行動者在特定脈絡下偏離主要社會階級利益的程度。</strong></p>
+
+  <div class="next-page" onclick="goPage(6)"><div><div class="np-label">下一頁</div><div class="np-title">P6 · 三國革命：國家自主性的起點</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P6 三國革命（互動） -->
+<div class="page" data-page="6"><div class="page-inner">
+  <div class="guide-breadcrumb">理論應用 · <span>三國革命</span></div>
+  <h2>三國革命<span class="mark">：</span>國家自主性的起點</h2>
+  <div class="story-lead">Skocpol 的成名作《國家與社會革命》（1979）比較<strong>法、俄、中</strong>三場革命。她的驚人主張：革命<strong>不是被「製造」出來的</strong>——不是革命者的意識形態或單純的階級鬥爭造成，而是<strong>舊政權的國家機器先崩潰</strong>，加上<strong>農民有能力起義</strong>，兩者匯合的結構性產物。點下方按鈕，看每個國家如何符合這個共同結構。</div>
+
+  <div class="revx">
+    <div class="rev-btns">
+      <button class="rev-btn fr on" onclick="pickRev('fr',this)">🇫🇷 法國 1789</button>
+      <button class="rev-btn ru" onclick="pickRev('ru',this)">🇷🇺 俄國 1917</button>
+      <button class="rev-btn cn" onclick="pickRev('cn',this)">🇨🇳 中國 1949</button>
+    </div>
+    <p class="section-lead" style="text-align:center">目前檢視：<strong id="rev-cur" style="color:var(--fr)">法國 1789</strong></p>
+    <div class="rev-stage">
+      <div class="rev-step s1"><div class="rs-n">① 舊政權的國家危機</div><div class="rs-t">國家機器為何崩潰</div><div class="rs-b" id="rs1">財政破產＋對外戰爭壓力下，王權想改革徵稅，卻被<strong>貴族（三級會議）抵制</strong>。舊政權的國家機器在與上層階級的衝突中癱瘓。</div></div>
+      <div class="rev-step s2"><div class="rs-n">② 農民起義的能力</div><div class="rs-t">下層為何能反抗</div><div class="rs-b" id="rs2">法國農民擁有<strong>緊密的村社共同體</strong>與反封建傳統，趁國家虛弱大規模起事，攻擊地主與封建特權。</div></div>
+      <div class="rev-step s3"><div class="rs-n">③ 革命後的新國家</div><div class="rs-t">結果是什麼</div><div class="rs-b" id="rs3">推翻舊制度，最終由<strong>拿破崙</strong>建立起更<strong>中央集權的官僚國家</strong>——比舊政權更強大。</div></div>
+    </div>
+    <div class="rev-common">
+      <div class="rc-h">🔑 三場革命的共同密碼（Skocpol 的核心論點）</div>
+      <p><strong>國際壓力 → 舊國家機器崩潰 ＋ 農民起義能力 → 社會革命 → 更中央集權的官僚國家。</strong>革命不是由意識形態「發動」的，而是<strong>結構性危機</strong>的產物。這正是「國家自主性」理論的起點——國家的組織能力（能否承受壓力、能否鎮壓）本身，才是關鍵變項。</p>
+    </div>
+  </div>
+
+  <div class="hl-box gold"><h4>🔗 串起 W2 與 W3</h4><p>還記得嗎？<strong>W2</strong> 用法俄中當作「最大差異法（MDSD）」的例子——背景天差地遠卻都革命；<strong>W3</strong> 的 Moore 決策樹也把中俄歸為「共產」路徑。Skocpol 在這裡給出了 Moore 較少強調的答案：別只看階級，<strong>先看國家機器有沒有垮</strong>。</p></div>
+
+  <div class="next-page" onclick="goPage(7)"><div><div class="np-label">下一頁</div><div class="np-title">P7 · 研究衍伸分類</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P7 研究衍伸 -->
+<div class="page" data-page="7"><div class="page-inner">
+  <div class="guide-breadcrumb">理論發展 · <span>研究衍伸</span></div>
+  <h2>研究<span class="mark">衍伸分類</span></h2>
+  <p>依<strong>方法論創新</strong>與<strong>研究對象</strong>（政體、政黨、國際關係、福利部門）兩大軸線，後繼學者把 Skocpol 的歷史制度主義推向五個方向：</p>
+
+  <div class="ext-cat">
+    <div class="ext-cat-title"><span class="badge badge-method">方法論</span>制度變遷理論的方法革新</div>
+    <div class="ext-item m"><h5>漸進式制度變遷理論</h5><p><strong>Thelen (2004)、Mahoney &amp; Thelen (2010)：</strong>修正 HI 過度強調「關鍵時刻」的傾向，提出四種漸進變遷機制——層疊、漂移、轉換、取代，使 HI 能解釋「沒有關鍵時刻的變遷」。</p></div>
+    <div class="ext-item m"><h5>HI 與實踐理論的結合</h5><p><strong>Pouliot (2020) 等：</strong>將 HI 的「層疊」與 Bourdieu 式實踐理論結合，提出「拉力型能動性」——實踐網絡使某些行動比其他行動更可行，導引制度變遷方向。</p></div>
+  </div>
+
+  <div class="ext-cat">
+    <div class="ext-cat-title"><span class="badge badge-polity">政體</span>威權主義、民主韌性與國家能力</div>
+    <div class="ext-item po"><h5>新家產制與威權主義</h5><p><strong>Skocpol (2025)、Hanson &amp; Kopstein (2024)：</strong>將當代美國政治定性為「家產制政權」。「McConnellism」指利用準法律形式推動威權少數控制，與 MAGA 的法外強制互補。</p></div>
+    <div class="ext-item po"><h5>草根組織與民主韌性</h5><p><strong>Skocpol (2012, 2025)：</strong>從茶黨到反川普運動，展示 HI 框架的當代應用。強調聯邦式基層組織（地方—州—全國三層）對民主韌性的關鍵作用。</p></div>
+  </div>
+
+  <div class="ext-cat">
+    <div class="ext-cat-title"><span class="badge badge-party">政黨</span>極化、捐助者網絡與政黨轉型</div>
+    <div class="ext-item pa"><h5>政治極化的制度機制</h5><p><strong>Pierson &amp; Schickler (2024)：</strong>《黨派國家》用 HI 框架解釋美國政治極化如何透過政策反饋、選區劃分、初選制度形成正反饋迴路。</p></div>
+    <div class="ext-item pa"><h5>富豪捐助者網絡的組織分析</h5><p><strong>Skocpol 等：</strong>追蹤科赫網絡如何透過組織建設（非僅金錢）改變共和黨。追蹤人員流動而非僅追蹤資金——「你無法隱藏人員」。</p></div>
+  </div>
+
+  <div class="ext-cat">
+    <div class="ext-cat-title"><span class="badge badge-ir">國際關係</span>國際制度的路徑依賴與變遷</div>
+    <div class="ext-item ir"><h5>國際制度中的 HI</h5><p><strong>Fioretos (2011)、Rixen &amp; Viola (2016)：</strong>將 HI 引入 IR，分析國際制度的路徑依賴與「黏著性」。聯合國秘書長遴選的「層疊式」改革、歐盟「歐洲學期」的漸進演化都是體現。</p></div>
+  </div>
+
+  <div class="ext-cat">
+    <div class="ext-cat-title"><span class="badge badge-welfare">福利與非營利</span>社會政策的制度動態</div>
+    <div class="ext-item w"><h5>福利國家的隱性退縮</h5><p><strong>Hacker (2004)：</strong>美國社會政策如何在「不改變制度」表象下，透過「漂移」機制實質退縮——風險被私有化，但正式結構未被拆除。</p></div>
+    <div class="ext-item w"><h5>非營利部門的制度多樣性</h5><p><strong>Anheier &amp; Salamon、Plaček 等 (2022)：</strong>以 HI 分析各國非營利部門的多樣性。疫情研究發現捷克非營利組織的危機回應深受先前制度軌跡制約——路徑依賴不僅適用於國家，也適用於第三部門。</p></div>
+  </div>
+
+  <a href="https://sociologica.unibo.it/article/view/23285" target="_blank" class="src-btn">📄 閱讀完整訪談原文（Sociologica, 2025）→</a>
+  <p style="margin-top:1rem;font-size:.8rem;color:#999">資料來源：Skocpol &amp; Amenta (2025), <em>Sociologica</em> V.19 N.3 ｜ Skocpol &amp; Schickler (2019), <em>Annual Review of Political Science</em> 22:1–16</p>
+
+  <div class="next-page" onclick="goPage(8)"><div><div class="np-label">下一頁</div><div class="np-title">P8 · 隨堂測驗與課堂討論</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P8 測驗 + 討論 -->
+<div class="page" data-page="8"><div class="page-inner">
+  <div class="guide-breadcrumb">第 8 章 · <span>隨堂測驗與討論</span></div>
+  <h2>隨堂測驗<span class="mark">：</span>選擇題</h2>
+  <p class="section-lead">點選你認為正確的選項，系統會立刻標出正解並顯示解析。</p>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q1</div>
+    <div class="quiz-question">「把國家帶回來（Bringing the State Back In）」這個主張，最直接挑戰的是哪一種看法？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 認為國家擁有過大權力的極權主義</button>
+      <button class="quiz-opt" data-correct="true">(B) 把國家僅當成利益團體場域或階級工具、忽視其自主性的取徑</button>
+      <button class="quiz-opt" data-correct="false">(C) 主張經濟發展帶來民主的現代化理論</button>
+      <button class="quiz-opt" data-correct="false">(D) 強調文化與認同的社會學制度主義</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：B</strong><br>1960–70 年代的多元主義（國家＝中立場域）、結構功能主義（國家＝功能子系統）、馬克思主義（國家＝階級工具）<em>共同忽視</em>了國家本身的組織自主性。Skocpol 主張國家是<em>擁有自身組織邏輯的行動者</em>。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q2</div>
+    <div class="quiz-question">根據 Skocpol《國家與社會革命》，法、俄、中三場革命的<strong>共同結構性條件</strong>是？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 革命者擁有正確的意識形態</button>
+      <button class="quiz-opt" data-correct="true">(B) 舊政權國家機器崩潰 ＋ 農民具備起義能力</button>
+      <button class="quiz-opt" data-correct="false">(C) 三國都已高度工業化</button>
+      <button class="quiz-opt" data-correct="false">(D) 三國都有強大的都市資產階級</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：B</strong><br>Skocpol 主張革命<em>不是被「製造」</em>的：先是國家機器在國際壓力與上層階級衝突中崩潰，加上農民（村社共同體）有能力起義，兩者匯合才產生社會革命，最後往往催生一個<em>更中央集權的官僚國家</em>。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q3</div>
+    <div class="quiz-question">關於「韋伯面向」與「托克維爾面向」，下列配對何者<strong>正確</strong>？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="true">(A) 韋伯面向＝國家「能做什麼」；托克維爾面向＝制度「讓誰做什麼」</button>
+      <button class="quiz-opt" data-correct="false">(B) 韋伯面向＝文化認同；托克維爾面向＝官僚財政</button>
+      <button class="quiz-opt" data-correct="false">(C) 兩者都只關注國家的軍事能力</button>
+      <button class="quiz-opt" data-correct="false">(D) 托克維爾面向主張國家沒有自主性</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：A</strong><br>韋伯面向看國家的<em>組織自主性</em>（官僚專業化、財政自主、強制能力）——國家「能做什麼」；托克維爾面向看<em>制度的塑造效果</em>（政黨體系、否決點、認知框架）——制度「讓誰做什麼」。1992 年後 Skocpol 轉向「政體取徑」，正因光有韋伯面向不夠。</div>
+  </div>
+
+  <div class="quiz-block">
+    <div class="quiz-q-num">Q4</div>
+    <div class="quiz-question">下列何者<strong>不是</strong>歷史制度主義（HI）的核心概念？</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">(A) 路徑依賴</button>
+      <button class="quiz-opt" data-correct="false">(B) 關鍵時刻</button>
+      <button class="quiz-opt" data-correct="false">(C) 政策反饋</button>
+      <button class="quiz-opt" data-correct="true">(D) 效用最大化的形式博弈模型</button>
+    </div>
+    <div class="quiz-explain"><strong>✅ 答案：D</strong><br>「效用最大化的形式博弈模型」是<em>理性選擇制度主義</em>的核心方法。HI 的核心是路徑依賴、關鍵時刻、時序與因果、政策反饋，方法上偏好比較歷史分析與過程追蹤。</div>
+  </div>
+
+  <h2 style="margin-top:2rem">課堂討論<span class="mark">：</span>問答題</h2>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 A</span>
+    <div class="discussion-q">用 Skocpol 的「<em>國家自主性</em>」概念，重新解釋台灣的戰後發展。</div>
+    <div class="ctx">提示：戰後國民政府（一個<strong>外來、相對獨立於本地社會階級</strong>的國家機器）如何展現「韋伯面向」的高自主性？這與上週「發展型國家」的討論如何呼應？</div>
+  </div>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 B</span>
+    <div class="discussion-q">Moore 說「沒有資產階級就沒有民主」，Skocpol 說「先看國家機器有沒有垮」。兩者<em>衝突</em>還是<em>互補</em>？</div>
+    <div class="ctx">請各舉一個案例支持你的看法。提示：可從「分析的層次」（社會中的階級 vs 國家組織）切入，思考它們是否在回答不同的問題。</div>
+  </div>
+  <div class="discussion-block">
+    <span class="discussion-eyebrow">問答題 C</span>
+    <div class="discussion-q">用「<em>路徑依賴</em>」與「<em>政策反饋</em>」解釋一個你熟悉的台灣制度。</div>
+    <div class="ctx">例如全民健保、勞退制度、或某項教育政策。它如何因為「已經走上某條路」而難以改變？它又如何「創造了新的利益團體」反過來鞏固自己？</div>
+  </div>
+
+  <div class="next-page" onclick="goPage(9)"><div><div class="np-label">下一頁</div><div class="np-title">P9 · 本週讀物與小結</div></div><div class="np-arrow">→</div></div>
+</div></div>
+
+<!-- P9 讀物小結 -->
+<div class="page" data-page="9"><div class="page-inner">
+  <div class="guide-breadcrumb">第 9 章 · <span>延伸</span></div>
+  <h2>本週讀物與<span class="mark">小結</span></h2>
+  <div class="story-lead">本週的關鍵轉折：把分析的焦點，從「<strong>社會裡的階級</strong>」（Moore）移到「<strong>國家本身的組織能力</strong>」（Skocpol）。閱讀時請特別注意她如何用「比較歷史方法」處理宏觀因果。</div>
+
+  <h3><span class="num">①</span>核心文獻</h3>
+  <div class="reading-card must"><div class="reading-icon">📚</div><div class="reading-body">
+    <div class="reading-title">Skocpol, T. (1979). <em>States and Social Revolutions</em></div>
+    <div class="reading-meta">英文專書｜中譯《國家與社會革命》｜重點：導論與三國比較的因果邏輯</div>
+    <div class="reading-note">本週理論核心。讀的時候請畫出「<strong>國際壓力 → 國家崩潰 ＋ 農民起義 → 革命 → 新國家</strong>」的因果鏈，並對照 P6 互動圖。</div>
+  </div></div>
+  <div class="reading-card must"><div class="reading-icon">📄</div><div class="reading-body">
+    <div class="reading-title">Evans, Rueschemeyer &amp; Skocpol (eds.) (1985). <em>Bringing the State Back In</em>（導論）</div>
+    <div class="reading-meta">英文編著｜國家自主性理論的綱領性文獻</div>
+    <div class="reading-note">理解「<strong>國家自主性</strong>」與「<strong>國家能力</strong>」兩個核心概念的定義與測量方式。</div>
+  </div></div>
+  <div class="reading-card rec"><div class="reading-icon">📘</div><div class="reading-body">
+    <div class="reading-title">Skocpol &amp; Amenta (2025), <em>Sociologica</em> 訪談</div>
+    <div class="reading-meta">開放取用｜回顧其學思歷程與當代關懷</div>
+    <div class="reading-note">想了解 Skocpol 如何看待當代美國民主危機、以及方法論演進的同學，這是最新、最平易的入口。</div>
+  </div></div>
+
+  <h3><span class="num">②</span>本週一句話總結</h3>
+  <div class="hl-box gold"><p style="font-family:'Playfair Display',serif;font-size:1.05rem;text-align:center;color:var(--accent);font-weight:700;padding:1rem;background:#fff;border-radius:8px;margin-top:.5rem;line-height:1.7">別只問「社會裡的階級想要什麼」——<br>先問「國家機器，自己能做什麼、又撐不撐得住」。</p></div>
+
+  <div class="hl-box blue"><h4>🔮 下週預告 · W5 Tilly 與國家形成</h4><p>Skocpol 告訴我們國家有自己的意志。下週 Charles Tilly 進一步追問：<strong>這個「國家」一開始是怎麼長出來的？</strong>他那句名言「<strong>戰爭造就國家，國家發動戰爭</strong>」，把國家形成的根源直指——<strong>強制（coercion）與資本（capital）</strong>。我們仍在「宏觀／結構」這把透鏡之下。</p></div>
+</div></div>
+
+</div><!-- /page-container -->
+
+<div class="bottom-bar">
+  <div class="page-indicator">第 <span id="cur-page">1</span> / 10 頁</div>
+  <div class="page-dots" id="dots"></div>
+  <div class="arrow-btns">
+    <button class="arrow-btn" id="prev-btn" onclick="goPrev()">←</button>
+    <button class="arrow-btn" id="next-btn" onclick="goNext()">→</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+const totalPages=10;
+let currentPage=0;
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<totalPages;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>goPage(i);
+  dotsEl.appendChild(d);
+}
+function goPage(n){
+  if(n<0||n>=totalPages)return;
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('cur-page').textContent=n+1;
+  document.getElementById('prev-btn').disabled=n===0;
+  document.getElementById('next-btn').disabled=n===totalPages-1;
+  currentPage=n;
+  document.querySelectorAll('.page')[n].scrollTop=0;
+}
+function goPrev(){goPage(currentPage-1);}
+function goNext(){goPage(currentPage+1);}
+function switchTab(btn,panelId){
+  btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const container=btn.closest('.page-inner');
+  container.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id===panelId));
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft')goPrev();
+  if(e.key==='ArrowRight')goNext();
+});
+document.addEventListener('click',e=>{
+  const sp=e.target.closest('.spoiler');
+  if(sp)sp.classList.toggle('revealed');
+});
+document.addEventListener('click',function(e){
+  const btn=e.target.closest('.quiz-opt');
+  if(!btn)return;
+  const block=btn.closest('.quiz-block');
+  if(!block||block.dataset.answered==='1')return;
+  block.dataset.answered='1';
+  const correct=btn.dataset.correct==='true';
+  btn.classList.add(correct?'selected-correct':'selected-wrong');
+  if(!correct){block.querySelectorAll('.quiz-opt').forEach(o=>{if(o.dataset.correct==='true')o.classList.add('show-correct');});}
+  const exp=block.querySelector('.quiz-explain');
+  if(exp)exp.classList.add('shown');
+});
+
+// ===== 互動雙軌框架 =====
+const TRACK={
+  weber:{name:'韋伯面向：國家的組織自主性',color:'var(--accent)',
+    q:'國家的行政—軍事組織，能否獨立於社會力量採取行動？',
+    items:['官僚體系的<strong>專業化</strong>——是否有獨立於政治任命的常任文官？','國家的<strong>財政自主</strong>——稅收是否獨立於特定社會群體？','<strong>官僚社群</strong>是否擁有自己的世界觀與集體行動能力？','國家的<strong>強制與資訊能力</strong>——軍事、警察、情報的組織形態'],
+    char:'國家自主性是「變項」，非常量。瑞典預現代官僚國家比英國更早主動診斷社會問題；法國舊政權的國家能力被貴族反抗削弱。分析的是國家「能做什麼」。'},
+  tocq:{name:'托克維爾面向：制度的塑造效果',color:'var(--sage)',
+    q:'政治制度的結構，如何塑造社會行動者的聯盟方式與利益認知？',
+    items:['<strong>政黨體系</strong>結構——兩黨制 vs 多黨制如何影響利益表達？','制度中的<strong>否決點</strong>——哪些群體擁有不成比例的決策管道？','<strong>選舉規則與代表性</strong>——如美國恩庇政治如何塑造 19 世紀社會政策？','制度如何影響人們<strong>理解自身利益</strong>——制度不只是約束，更是認知框架'],
+    char:'超越「國家中心」。解釋了為何社會運動、政黨聯盟與壓力團體同樣重要。1992 年後 Skocpol 轉向「政體取徑」，正因光有韋伯面向不夠。分析的是制度「讓誰做什麼」。'}
+};
+function selectTrack(which){
+  document.querySelectorAll('.track-card').forEach(c=>c.classList.toggle('sel',c.dataset.tk===which));
+  const d=TRACK[which];if(!d)return;
+  const det=document.getElementById('track-detail');
+  det.style.borderLeftColor=d.color;
+  det.innerHTML='<div class="td-name" style="color:'+d.color+'">'+d.name+'</div><p style="font-size:.85rem;color:#444;margin:0 0 .4rem"><strong>核心問題：</strong>'+d.q+'</p><ul>'+d.items.map(i=>'<li>'+i+'</li>').join('')+'</ul><div class="td-char">'+d.char+'</div>';
+}
+
+// ===== 互動三國革命 =====
+const REV={
+  fr:{name:'法國 1789',color:'var(--fr)',
+    s1:'財政破產＋對外戰爭壓力下，王權想改革徵稅，卻被<strong>貴族（三級會議）抵制</strong>。舊政權的國家機器在與上層階級的衝突中癱瘓。',
+    s2:'法國農民擁有<strong>緊密的村社共同體</strong>與反封建傳統，趁國家虛弱大規模起事，攻擊地主與封建特權。',
+    s3:'推翻舊制度，最終由<strong>拿破崙</strong>建立起更<strong>中央集權的官僚國家</strong>——比舊政權更強大。'},
+  ru:{name:'俄國 1917',color:'var(--ru)',
+    s1:'<strong>一戰軍事潰敗</strong>使沙皇體制徹底瓦解——僵化的國家機器無法承受現代戰爭壓力，臨時政府也無力重建。',
+    s2:'俄國農民透過<strong>村社（mir）</strong>奪取地主土地；都市工人與士兵同時叛變，國家失去鎮壓能力。',
+    s3:'布爾什維克奪權，最終由<strong>史達林</strong>建立高度集權的<strong>黨—國官僚體制</strong>與計劃經濟。'},
+  cn:{name:'中國 1949',color:'var(--cn)',
+    s1:'列強入侵、軍閥割據、日本侵華——<strong>清朝與國民政府的國家機器</strong>在長期戰亂與外部壓力下逐步瓦解。',
+    s2:'農民在<strong>中國共產黨的組織動員</strong>下（土地改革承諾），形成有領導的廣泛農村起義。',
+    s3:'中共建立<strong>黨—國一體</strong>的強大官僚國家，國家對社會的滲透與控制能力遠超前代。'}
+};
+function pickRev(c,btn){
+  document.querySelectorAll('.rev-btn').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  const d=REV[c];if(!d)return;
+  document.querySelectorAll('.rev-step').forEach(s=>{s.style.borderTopColor='';});
+  document.getElementById('rs1').innerHTML=d.s1;
+  document.getElementById('rs2').innerHTML=d.s2;
+  document.getElementById('rs3').innerHTML=d.s3;
+  document.getElementById('rev-cur').textContent=d.name;
+  document.getElementById('rev-cur').style.color=d.color;
+}
+</script>
+</body>
+</html>
