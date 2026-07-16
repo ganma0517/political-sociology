@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政治社會學 — 比較方法的兩把鑰匙：最大相似法 × 最大差異法</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+--ink:#1a1a1a;--paper:#f5f0e8;--accent:#8b2500;--accent-light:#c4532b;
+--gold:#b8860b;--sage:#5a6e5a;--muted:#6b6560;--line:#c9c0b4;
+--card-bg:#faf7f2;--blue:#3a5a8c;--purple:#6b4c7a;--teal:#2a7a6e;
+--red:#c0392b;--green:#27ae60;--orange:#d35400;
+--mssd:#8b2500;--mdsd:#3a5a8c;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC','Source Serif 4',serif;background:var(--paper);color:var(--ink);line-height:1.85}
+.app{display:flex;flex-direction:column;height:100vh}
+
+/* ===== 頂部導航 ===== */
+.top-nav{flex-shrink:0;background:#1a1a1a;display:flex;align-items:center;padding:0 1.2rem;height:52px;gap:.2rem;overflow-x:auto;scrollbar-width:none}
+.top-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:.45rem .9rem;background:0;border:0;font-family:'Noto Sans TC',sans-serif;font-size:.76rem;font-weight:500;color:#888;cursor:pointer;border-radius:5px;transition:all .25s;white-space:nowrap}
+.nav-btn:hover{color:#ccc;background:rgba(255,255,255,.06)}
+.nav-btn.active{color:var(--paper);background:var(--accent)}
+.nav-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:.88rem;font-weight:700;margin-right:1rem;flex-shrink:0}
+.nav-divider{flex-shrink:0;width:1px;height:20px;background:#444;margin:0 .5rem}
+
+/* ===== 頁面 ===== */
+.page-container{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:2.5rem 2rem 4rem;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .38s,transform .38s}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page-inner{max-width:920px;margin:0 auto}
+
+/* ===== 底部 ===== */
+.bottom-bar{flex-shrink:0;height:50px;background:#faf7f2;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.page-indicator{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.page-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .3s}
+.dot.active{background:var(--accent);transform:scale(1.35)}
+.arrow-btns{display:flex;gap:.4rem}
+.arrow-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);transition:all .2s}
+.arrow-btn:hover{border-color:var(--accent);color:var(--accent)}
+.arrow-btn:disabled{opacity:.3;cursor:default}
+
+/* ===== 標題 ===== */
+.page h2{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,3vw,2.1rem);font-weight:800;color:var(--ink);margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent);position:relative}
+.page h2::after{content:'';position:absolute;left:0;bottom:-2px;width:60px;height:2px;background:var(--gold)}
+.page h2 .mark{color:var(--accent)}
+.page h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent);margin:1.6rem 0 .8rem;display:flex;align-items:center;gap:.5rem}
+.page h3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;font-size:.85rem;font-weight:700;flex-shrink:0}
+.page p{font-size:.92rem;color:#333;margin-bottom:.7rem;line-height:1.95}
+.page p strong{color:var(--accent);font-weight:700}
+.page ul,.page ol{margin:.6rem 0 .9rem 1.5rem}
+.page li{font-size:.9rem;margin-bottom:.35rem;line-height:1.9;color:#333}
+.page li strong{color:var(--ink)}
+.section-lead{font-size:.88rem;color:var(--muted);margin:-.3rem 0 .8rem;font-style:italic;font-family:'Source Serif 4',serif}
+
+/* ===== Hero ===== */
+.hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero-eyebrow{font-family:'Source Serif 4',serif;font-style:italic;color:var(--gold);font-size:.92rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;color:var(--ink);line-height:1.1;margin-bottom:.8rem}
+.hero-title .mark{color:var(--accent)}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:640px;margin:0 auto 1.4rem}
+.hero-teacher{font-size:.9rem;color:#555;margin-bottom:1.4rem}
+.hero-teacher strong{color:var(--accent)}
+.hero-meta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.82rem}
+.hero-meta span{padding:.3rem .9rem;background:rgba(184,134,11,.1);border-radius:20px;color:var(--gold);font-weight:600}
+
+.story-lead{font-size:.98rem;color:var(--ink);line-height:1.9;margin-bottom:1.5rem;padding:1rem 1.3rem;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(139,37,0,.04));border-radius:8px;border-left:4px solid var(--gold)}
+.story-lead strong{color:var(--accent)}
+
+.guide-breadcrumb{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;letter-spacing:.02em}
+.guide-breadcrumb span{color:var(--accent);font-weight:600}
+
+/* ===== 卡片 ===== */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.2rem 0}
+.card{background:var(--card-bg);border-radius:7px;padding:1.1rem 1.2rem;border-top:3px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 5px 22px rgba(0,0,0,.09)}
+.card h4{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--accent);margin-bottom:.4rem;margin-top:0}
+.card p{font-size:.84rem;color:#555;margin-bottom:0;line-height:1.75}
+.card.blue{border-top-color:var(--blue)}.card.blue h4{color:var(--blue)}
+.card.gold{border-top-color:var(--gold)}.card.gold h4{color:var(--gold)}
+.card.sage{border-top-color:var(--sage)}.card.sage h4{color:var(--sage)}
+.card.teal{border-top-color:var(--teal)}.card.teal h4{color:var(--teal)}
+
+/* ===== hl-box ===== */
+.hl-box{background:rgba(139,37,0,.05);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;margin:1.1rem 0}
+.hl-box p:last-child{margin-bottom:0}
+.hl-box h4{margin-top:0;color:var(--accent)}
+.hl-box.blue{background:rgba(58,90,140,.05);border-left-color:var(--blue)}
+.hl-box.blue h4{color:var(--blue)}
+.hl-box.sage{background:rgba(90,110,90,.05);border-left-color:var(--sage)}
+.hl-box.sage h4{color:var(--sage)}
+.hl-box.gold{background:rgba(184,134,11,.06);border-left-color:var(--gold)}
+.hl-box.gold h4{color:var(--gold)}
+
+/* ===== 概念框 ===== */
+.concept{background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(58,90,140,.04));padding:.9rem 1.2rem;border-radius:8px;margin:.8rem 0;border:1px solid rgba(184,134,11,.2)}
+.concept .lead{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent);font-weight:700;margin-bottom:.4rem}
+.concept .body{font-size:.86rem;color:#333;line-height:1.85}
+.concept .body strong{color:var(--accent)}
+
+/* ===== 問題框（深色背景） ===== */
+.questions{background:#1a1a1a;color:#e8e0d4;padding:1.3rem 1.5rem;border-radius:10px;margin:1.2rem 0}
+.questions h4{color:var(--gold);margin-top:0;margin-bottom:.7rem;font-size:1rem;font-weight:700}
+.questions ol{padding-left:1.3rem;margin-bottom:0}
+.questions li{font-size:.9rem;margin-bottom:.4rem;line-height:1.85;color:#d8d0c4}
+.questions li strong{color:#fff}
+
+/* ===== 下一頁 ===== */
+.next-page{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:1.1rem 1.4rem;border-radius:10px;margin-top:2.2rem;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.next-page:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(139,37,0,.3)}
+.np-label{font-size:.72rem;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.np-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.np-arrow{font-size:1.4rem;opacity:.8}
+
+/* ===== Spoiler ===== */
+.spoiler{cursor:pointer;background:linear-gradient(135deg,rgba(90,110,90,.08),rgba(184,134,11,.06));border-left:3px dashed var(--sage);padding:.8rem 1.1rem;border-radius:0 6px 6px 0;font-size:.85rem;color:var(--sage);max-height:46px;overflow:hidden;transition:max-height .5s ease;line-height:1.85;position:relative;margin:.9rem 0}
+.spoiler::after{content:'▼ 點擊展開';position:absolute;right:1rem;top:.85rem;font-size:.72rem;color:var(--muted);font-family:'Source Serif 4',serif;font-style:italic}
+.spoiler.revealed{max-height:800px;color:#333}
+.spoiler.revealed::after{content:'▲ 點擊收合';color:var(--sage)}
+.spoiler strong{color:var(--accent)}
+.spoiler .sp-title{font-weight:700;color:var(--sage)}
+
+/* ===== Tabs ===== */
+.tabs{display:flex;gap:.3rem;margin:1.1rem 0 .7rem;border-bottom:2px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:.6rem 1.1rem;background:0;border:0;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .25s;white-space:nowrap}
+.tab:hover{color:var(--accent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ===== MSSD/MDSD 二欄對照 ===== */
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0}
+.method-card{border-radius:12px;padding:1.3rem 1.4rem;box-shadow:0 3px 14px rgba(0,0,0,.06);position:relative;overflow:hidden}
+.method-card.mssd{background:#fbf3ef;border-top:5px solid var(--mssd)}
+.method-card.mdsd{background:#eef2f8;border-top:5px solid var(--mdsd)}
+.method-label{font-size:.7rem;letter-spacing:.15em;font-weight:700;color:#fff;padding:.2rem .65rem;border-radius:12px;display:inline-block;margin-bottom:.6rem}
+.method-card.mssd .method-label{background:var(--mssd)}
+.method-card.mdsd .method-label{background:var(--mdsd)}
+.method-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:800;margin-bottom:.2rem}
+.method-card.mssd .method-name{color:var(--mssd)}
+.method-card.mdsd .method-name{color:var(--mdsd)}
+.method-en{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:.8rem;font-family:'Source Serif 4',serif}
+.method-card p{font-size:.88rem;line-height:1.85;color:#333;margin-bottom:.5rem}
+.method-card p:last-child{margin-bottom:0}
+.method-key{margin-top:.7rem;padding:.55rem .8rem;background:#fff;border-radius:6px;font-size:.82rem;color:#444;font-style:italic}
+
+/* ===== SVG 比較圖 ===== */
+.compare-svg-wrap{background:#fff;border-radius:12px;padding:1.2rem;margin:1.2rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.compare-svg-wrap svg{display:block;width:100%;max-width:760px;margin:0 auto}
+.svg-hint{font-size:.78rem;color:var(--muted);text-align:center;font-style:italic;margin-top:.5rem}
+
+/* ===== 案例情境卡（P5） ===== */
+.scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:1.2rem 0}
+.scenario-card{background:#fff;border-radius:10px;padding:1.2rem 1.3rem;border:1.5px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.04);cursor:pointer;transition:all .3s}
+.scenario-card:hover{border-color:var(--gold);box-shadow:0 5px 20px rgba(0,0,0,.09)}
+.sc-num{font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--muted);margin-bottom:.3rem}
+.sc-q{font-family:'Playfair Display',serif;font-size:.98rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:.7rem}
+.sc-reveal{display:none;margin-top:.7rem;padding:.7rem 1rem;border-radius:7px;font-size:.85rem;line-height:1.8}
+.sc-reveal.mssd-ans{background:rgba(139,37,0,.07);border-left:3px solid var(--mssd);color:#333}
+.sc-reveal.mdsd-ans{background:rgba(58,90,140,.07);border-left:3px solid var(--mdsd);color:#333}
+.sc-reveal strong{font-weight:700}
+.sc-reveal.mssd-ans strong{color:var(--mssd)}
+.sc-reveal.mdsd-ans strong{color:var(--mdsd)}
+.sc-badge{display:inline-block;padding:.25rem .75rem;border-radius:12px;font-size:.74rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.sc-badge.mssd{background:var(--mssd)}
+.sc-badge.mdsd{background:var(--mdsd)}
+.sc-hint{font-size:.74rem;color:var(--muted);font-style:italic;margin-top:.4rem}
+.scenario-card.answered{border-color:var(--gold)}
+
+/* ===== Quiz ===== */
+.quiz-block{background:#fff;border-radius:10px;padding:1.3rem 1.5rem;margin:1rem 0;border:1px solid #e5e0d6;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative}
+.quiz-q-num{position:absolute;top:-12px;left:1.5rem;background:var(--accent);color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;padding:.25rem .75rem;border-radius:5px;letter-spacing:.05em}
+.quiz-question{font-size:.95rem;font-weight:600;color:var(--ink);margin:.4rem 0 .9rem;line-height:1.7}
+.quiz-question strong{color:var(--accent)}
+.quiz-options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.7rem}
+.quiz-opt{text-align:left;background:#fafaf6;border:1.5px solid #e0d9c8;border-radius:7px;padding:.7rem 1rem;font-size:.88rem;line-height:1.6;color:#333;cursor:pointer;transition:all .2s;font-family:inherit}
+.quiz-opt:hover{background:#f5f0e8;border-color:#b8860b}
+.quiz-opt.selected-correct{background:linear-gradient(135deg,#d4edd4,#c0e0c0);border-color:#5a8c5a;color:#1e4d1e;font-weight:600}
+.quiz-opt.selected-wrong{background:linear-gradient(135deg,#f8d8d4,#efc4be);border-color:#b85040;color:#7a1a10}
+.quiz-opt.show-correct{background:#eaf5ea;border-color:#5a8c5a;font-weight:500}
+.quiz-opt:disabled{cursor:default}
+.quiz-explain{font-size:.85rem;line-height:1.8;color:#333;background:linear-gradient(135deg,rgba(184,134,11,.06),rgba(90,110,90,.04));padding:.9rem 1.1rem;border-radius:7px;border-left:3px solid var(--sage);display:none}
+.quiz-explain.shown{display:block}
+.quiz-explain strong{color:var(--accent)}
+.quiz-explain em{color:var(--blue);font-style:normal;font-weight:600}
+
+/* ===== 對照表 ===== */
+.compare-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.86rem}
+.compare-table th{background:#1a1a1a;color:#e8e0d4;padding:.7rem 1rem;text-align:left;font-family:'Playfair Display',serif;font-size:.88rem;font-weight:700}
+.compare-table th:first-child{width:30%}
+.compare-table td{padding:.65rem 1rem;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7;color:#333}
+.compare-table tr:nth-child(even) td{background:rgba(245,240,232,.5)}
+.compare-table td:first-child{font-weight:600;color:var(--ink)}
+.compare-table td.mssd-col{border-left:3px solid var(--mssd);color:#5a1500}
+.compare-table td.mdsd-col{border-left:3px solid var(--mdsd);color:#1a3a60}
+
+/* ===== 分隔 ===== */
+.section-divider{border:none;border-top:1px dashed var(--line);margin:1.6rem 0}
+
+/* ===== RWD ===== */
+@media(max-width:780px){
+.page{padding:1.8rem 1rem 3rem}
+.hero-title{font-size:2rem}
+.page h2{font-size:1.5rem}
+.method-grid,.scenario-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- 頂部導航 -->
+<div class="top-nav">
+  <span class="nav-title">政治社會學 · 比較方法</span>
+  <button class="nav-btn active" onclick="goPage(0)">0 · 封面</button>
+  <button class="nav-btn" onclick="goPage(1)">1 · 為什麼比較？</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(2)">2 · 最大相似法</button>
+  <button class="nav-btn" onclick="goPage(3)">3 · 最大差異法</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(4)">4 · 兩法並置</button>
+  <button class="nav-btn" onclick="goPage(5)">5 · 台灣案例實作</button>
+  <span class="nav-divider"></span>
+  <button class="nav-btn" onclick="goPage(6)">6 · 隨堂測驗</button>
+</div>
+
+<div class="page-container">
+
+<!-- ============ P0 封面 ============ -->
+<div class="page active" data-page="0"><div class="page-inner">
+<div class="hero">
+  <div class="hero-eyebrow">Political Sociology · 比較研究方法</div>
+  <h1 class="hero-title">比較方法的<span class="mark">兩把鑰匙</span></h1>
+  <p class="hero-sub">最大相似法（MSSD）與最大差異法（MDSD）——<br>比較政治研究的核心設計邏輯</p>
+  <div class="hero-teacher">授課教師：<strong>林文正</strong> · 輔仁大學 · 政治社會學</div>
+  <div class="hero-meta">
+    <span>🔬 MSSD 最大相似法</span>
+    <span>🌐 MDSD 最大差異法</span>
+    <span>🇹🇼 台灣比較政治應用</span>
+  </div>
+</div>
+
+<div class="story-lead">
+學政治社會學，你遲早要面對這個問題：<strong>我要怎麼選案例？</strong>比較兩個案例是為了什麼？為什麼不直接看一個「典型案例」就好？<br><br>
+答案藏在兩個方法論概念裡。<strong>最大相似法</strong>（MSSD）與<strong>最大差異法</strong>（MDSD）是比較政治研究的核心設計邏輯——理解了這兩把鑰匙，你就掌握了「為什麼這篇論文選這些案例」的關鍵。
+</div>
+
+<div class="questions">
+  <h4>📌 本單元要解答的核心問題</h4>
+  <ol>
+    <li><strong>比較研究的目的是什麼？</strong>「看多個案例」與「真正的比較研究」有什麼差別？</li>
+    <li><strong>最大相似法的邏輯是什麼？</strong>為什麼要選相似的案例？相似到什麼程度？</li>
+    <li><strong>最大差異法的邏輯是什麼？</strong>為什麼選差異極大的案例，反而能找到普遍性？</li>
+    <li><strong>兩種方法分別解決什麼問題？</strong>什麼時候用 MSSD、什麼時候用 MDSD？</li>
+    <li><strong>如何應用在台灣案例？</strong>台灣政治研究如何使用這兩種設計？</li>
+  </ol>
+</div>
+
+<h3><span class="num">📖</span>本單元路線圖</h3>
+<div class="card-grid">
+  <div class="card"><h4>P1 為什麼要比較？</h4><p>比較的邏輯：用案例選擇代替實驗控制，Przeworski &amp; Teune 的核心貢獻。</p></div>
+  <div class="card" style="border-top-color:var(--mssd)"><h4 style="color:var(--mssd)">P2 最大相似法（MSSD）</h4><p>選擇相似案例，讓差異說話——台灣 vs 南韓民主化的研究設計邏輯。</p></div>
+  <div class="card blue"><h4>P3 最大差異法（MDSD）</h4><p>選擇差異極大的案例，讓共同點更有力——跨國勞工運動案例。</p></div>
+  <div class="card gold"><h4>P4 兩法並置比較</h4><p>MSSD vs MDSD 的適用情境、優缺點、常見誤用一次看清。</p></div>
+  <div class="card sage"><h4>P5 台灣案例實作</h4><p>四個情境題：判斷研究設計應該用哪種方法，點擊揭露解析。</p></div>
+  <div class="card teal"><h4>P6 隨堂測驗</h4><p>四題選擇題，測試你對 MSSD 與 MDSD 的掌握程度。</p></div>
+</div>
+
+<div class="next-page" onclick="goPage(1)">
+  <div><div class="np-label">下一頁</div><div class="np-title">P1 · 為什麼要比較？比較研究的邏輯基礎</div></div>
+  <div class="np-arrow">→</div>
+</div>
+</div></div>
+<!-- ============ /P0 ============ -->
+
+<!-- ============ P1 為什麼比較？ ============ -->
+<div class="page" data-page="1"><div class="page-inner">
+<div class="guide-breadcrumb">第 1 章 · <span>比較研究的邏輯基礎</span></div>
+<h2>為什麼要<span class="mark">比較</span>？</h2>
+
+<div class="story-lead">
+社會科學家沒有辦法做<strong>真正的實驗</strong>。我們不能「把台灣複製兩份，讓一份民主化、一份不民主化，然後比較結果」。但我們可以做的是：<strong>聰明地選擇現實中的案例</strong>，讓案例之間的比較邏輯，接近實驗的控制效果。
+</div>
+
+<h3><span class="num">1</span>比較的本質：以選案代替控制</h3>
+<p>實驗的力量來自<strong>隨機分派</strong>（random assignment）：把受試者隨機分成實驗組與對照組，兩組只差在「是否接受處置（treatment）」，其他條件一樣。這讓我們能把結果差異歸因於處置本身。</p>
+<p>比較研究的目標相同——找出 X 對 Y 的因果效果——但<strong>用案例選擇策略來代替隨機分派</strong>。關鍵著作是 Przeworski &amp; Teune（1970）的《比較社會研究的邏輯》（<em>The Logic of Comparative Social Inquiry</em>）。</p>
+
+<div class="concept">
+  <div class="lead">Przeworski &amp; Teune（1970）的核心論點</div>
+  <div class="body">社會科學的比較研究，其目的是<strong>以系統（system）變數替代人名（proper names）</strong>。換言之：不是「因為台灣這樣、南韓那樣」，而是要找到可以跨案例普遍化的<strong>社會科學概念</strong>，解釋為什麼某些結果出現、另一些不出現。<br><br>要做到這點，必須有策略地選擇案例，讓案例之間的對比能夠<strong>隔離（isolate）真正起作用的變數</strong>。</div>
+</div>
+
+<h3><span class="num">2</span>N 的問題：多少案例才夠？</h3>
+<p>比較政治面對一個根本困境：<strong>觀察值（N）通常遠少於變數（K）</strong>。全球只有兩百個國家，但影響民主化的變數可能有數十個。統計回歸需要大 N，但個案研究的深度又是大 N 難以企及的。</p>
+
+<div class="spoiler" onclick="this.classList.toggle('revealed')">
+  <span class="sp-title">▶ 比較研究如何應對「N 不夠」的問題？</span><br>
+  Lijphart（1971）提出幾種策略：<strong>增加案例數</strong>、<strong>聚焦關鍵案例</strong>、或<strong>精簡變數數量</strong>。其中最重要的兩種選案邏輯，就是本單元的核心：<strong>最大相似法</strong>讓研究者可以用少數案例控制多個變數；<strong>最大差異法</strong>讓研究者在差異極大的案例中找到普遍性命題。兩者都是面對 N 不足困境的聰明解法。
+</div>
+
+<h3><span class="num">3</span>變數的邏輯：哪些要相同，哪些要不同？</h3>
+<p>選案策略的核心問題是：<strong>什麼條件應該在案例之間「保持一致」，什麼條件應該「有所差異」？</strong>答案取決於你的研究問題：</p>
+<ul>
+  <li>你想知道<strong>是什麼造成了差異</strong>（不同結果的原因）→ 讓結果不同，控制其他條件 → <strong>最大相似法</strong></li>
+  <li>你想知道<strong>是什麼普遍存在</strong>（相同結果的共同原因）→ 讓背景條件迥異，但找出共同的解釋變數 → <strong>最大差異法</strong></li>
+</ul>
+
+<div class="hl-box gold">
+  <h4>💡 一句話記憶</h4>
+  <p><strong>MSSD</strong>：「同中求異」——讓相似的案例說出差異從哪裡來。<br>
+  <strong>MDSD</strong>：「異中求同」——讓差異極大的案例說出共同的原因是什麼。</p>
+</div>
+
+<div class="next-page" onclick="goPage(2)">
+  <div><div class="np-label">下一頁</div><div class="np-title">P2 · 最大相似法（MSSD）：同中求異</div></div>
+  <div class="np-arrow">→</div>
+</div>
+</div></div>
+<!-- ============ /P1 ============ -->
+
+<!-- ============ P2 最大相似法 ============ -->
+<div class="page" data-page="2"><div class="page-inner">
+<div class="guide-breadcrumb">第 2 章 · <span>最大相似法（MSSD）</span></div>
+<h2><span class="mark">最大相似法</span>（MSSD）：同中求異</h2>
+
+<div class="story-lead">
+最大相似法（<strong>Most Similar Systems Design，MSSD</strong>）的邏輯很直覺：<strong>選擇在多數條件上高度相似的案例</strong>，唯獨在你感興趣的解釋變數（X）或結果（Y）上有差異。如此一來，案例間的差異就更容易被鎖定在那個「不同的地方」。
+</div>
+
+<div class="method-grid">
+  <div class="method-card mssd">
+    <span class="method-label">MSSD</span>
+    <div class="method-name">最大相似法</div>
+    <div class="method-en">Most Similar Systems Design</div>
+    <p>選擇<strong>多數變數相似</strong>的案例進行比較。由於大部分條件相同，案例間的結果差異（Y不同）就比較容易歸因於那個「不同的X」。</p>
+    <div class="method-key">目標：在控制了背景相似性後，隔離出造成差異的關鍵解釋變數</div>
+  </div>
+  <div class="method-card mdsd">
+    <span class="method-label">比較</span>
+    <div class="method-name">邏輯對照</div>
+    <div class="method-en">Control by Similarity</div>
+    <p>類比實驗：實驗組與對照組<strong>除了處置（treatment）之外一切相同</strong>。MSSD 嘗試透過<strong>選相似案例</strong>達到同樣的效果。</p>
+    <div class="method-key">限制：若案例間仍有很多無法測量的差異，控制效果有限</div>
+  </div>
+</div>
+
+<h3><span class="num">⚙</span>MSSD 的設計邏輯（示意圖）</h3>
+<p class="section-lead">下圖以台灣與南韓民主化為例，展示 MSSD 如何「鎖定」差異變數。</p>
+
+<div class="compare-svg-wrap">
+<svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><polygon points="0 0,8 4,0 8" fill="#888"/></marker>
+    <marker id="arr-r" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><polygon points="0 0,8 4,0 8" fill="#8b2500"/></marker>
+  </defs>
+  <!-- 欄標題 -->
+  <rect x="120" y="14" width="180" height="38" rx="8" fill="#fbf3ef" stroke="#8b2500" stroke-width="1.8"/>
+  <text x="210" y="38" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="15" font-weight="700" fill="#8b2500">案例 A：台灣</text>
+  <rect x="420" y="14" width="180" height="38" rx="8" fill="#fbf3ef" stroke="#8b2500" stroke-width="1.8"/>
+  <text x="510" y="38" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="15" font-weight="700" fill="#8b2500">案例 B：南韓</text>
+
+  <!-- 變數列 -->
+  <!-- 行1：一致 -->
+  <text x="108" y="90" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#555">威權歷史</text>
+  <rect x="120" y="74" width="180" height="30" rx="5" fill="#d4edd4" stroke="#5a8c5a" stroke-width="1.2"/>
+  <text x="210" y="94" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#1e4d1e" font-weight="600">✓ 一黨威權統治</text>
+  <rect x="420" y="74" width="180" height="30" rx="5" fill="#d4edd4" stroke="#5a8c5a" stroke-width="1.2"/>
+  <text x="510" y="94" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#1e4d1e" font-weight="600">✓ 一黨威權統治</text>
+  <!-- 行2：一致 -->
+  <text x="108" y="130" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#555">出口導向工業化</text>
+  <rect x="120" y="114" width="180" height="30" rx="5" fill="#d4edd4" stroke="#5a8c5a" stroke-width="1.2"/>
+  <text x="210" y="134" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#1e4d1e" font-weight="600">✓ 高速經濟成長</text>
+  <rect x="420" y="114" width="180" height="30" rx="5" fill="#d4edd4" stroke="#5a8c5a" stroke-width="1.2"/>
+  <text x="510" y="134" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#1e4d1e" font-weight="600">✓ 高速經濟成長</text>
+  <!-- 行3：一致 -->
+  <text x="108" y="170" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#555">美國安全保護</text>
+  <rect x="120" y="154" width="180" height="30" rx="5" fill="#d4edd4" stroke="#5a8c5a" stroke-width="1.2"/>
+  <text x="210" y="174" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#1e4d1e" font-weight="600">✓ 美軍協防條約</text>
+  <rect x="420" y="154" width="180" height="30" rx="5" fill="#d4edd4" stroke="#5a8c5a" stroke-width="1.2"/>
+  <text x="510" y="174" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#1e4d1e" font-weight="600">✓ 美韓共同防禦</text>
+  <!-- 行4：差異（關鍵變數） -->
+  <text x="108" y="215" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#8b2500" font-weight="700">★ 公民社會強度</text>
+  <rect x="120" y="196" width="180" height="34" rx="5" fill="#fff0ee" stroke="#8b2500" stroke-width="2"/>
+  <text x="210" y="218" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#8b2500" font-weight="700">◆ 相對較強</text>
+  <rect x="420" y="196" width="180" height="34" rx="5" fill="#fff0ee" stroke="#8b2500" stroke-width="2"/>
+  <text x="510" y="218" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#8b2500" font-weight="700">◆ 相對較弱（初期）</text>
+  <text x="360" y="216" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#8b2500" font-weight="700">← 差異！</text>
+  <!-- 結果 -->
+  <line x1="210" y1="232" x2="210" y2="280" stroke="#888" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="510" y1="232" x2="510" y2="280" stroke="#888" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="120" y="282" width="180" height="34" rx="5" fill="#e8d6f0" stroke="#6b4c7a" stroke-width="1.5"/>
+  <text x="210" y="304" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#3d1f54" font-weight="700">Y：1996 首次直選</text>
+  <rect x="420" y="282" width="180" height="34" rx="5" fill="#dce8f5" stroke="#3a5a8c" stroke-width="1.5"/>
+  <text x="510" y="304" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#1a3a60" font-weight="700">Y：1987 六月抗爭</text>
+  <!-- 圖例 -->
+  <rect x="14" y="340" width="14" height="14" rx="3" fill="#d4edd4" stroke="#5a8c5a" stroke-width="1"/>
+  <text x="32" y="352" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#555">控制變數（相似）</text>
+  <rect x="160" y="340" width="14" height="14" rx="3" fill="#fff0ee" stroke="#8b2500" stroke-width="2"/>
+  <text x="178" y="352" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#8b2500" font-weight="600">解釋變數（差異）</text>
+</svg>
+<div class="svg-hint">✦ 綠色框 = 相似條件（被控制）；紅色框 = 關鍵差異變數；箭頭 = 導致不同的民主化結果</div>
+</div>
+
+<h3><span class="num">🇹🇼</span>台韓民主化：MSSD 的經典應用</h3>
+<div class="hl-box">
+  <h4>研究問題</h4>
+  <p>台灣與南韓都是出口導向工業化的東亞威權體制，都有美國保護傘，都在 1980 年代中期面臨民主化壓力。但兩者的民主化路徑有所差異：台灣走向漸進協商，南韓經歷激烈街頭衝突。<strong>為什麼？</strong></p>
+  <p>MSSD 的邏輯：既然兩個案例在很多條件上相似，那麼它們路徑的差異，就更可能追溯到那些「不相同的地方」——例如公民社會的組織強度、黨內改革派的影響力、勞工運動的激烈程度等。</p>
+</div>
+
+<div class="spoiler" onclick="this.classList.toggle('revealed')">
+  <span class="sp-title">▶ MSSD 的主要限制是什麼？</span><br>
+  選相似案例的問題在於：<strong>沒有任何兩個國家是真正完全相同的</strong>。「台灣與南韓很像」是一種簡化；兩者在族群結構、殖民歷史、地緣位置上仍有差異。如果這些未測量的差異正好也影響了結果（Y），那研究者以為找到的「關鍵 X」，可能只是虛假相關。這就是 MSSD 最常被批評的<strong>遺漏變數偏誤</strong>問題——相似並不等於控制了一切。
+</div>
+
+<div class="next-page" onclick="goPage(3)">
+  <div><div class="np-label">下一頁</div><div class="np-title">P3 · 最大差異法（MDSD）：異中求同</div></div>
+  <div class="np-arrow">→</div>
+</div>
+</div></div>
+<!-- ============ /P2 ============ -->
+
+<!-- ============ P3 最大差異法 ============ -->
+<div class="page" data-page="3"><div class="page-inner">
+<div class="guide-breadcrumb">第 3 章 · <span>最大差異法（MDSD）</span></div>
+<h2><span class="mark">最大差異法</span>（MDSD）：異中求同</h2>
+
+<div class="story-lead">
+最大差異法（<strong>Most Different Systems Design，MDSD</strong>）的邏輯與 MSSD 完全相反：<strong>刻意選擇在背景條件上差異極大的案例</strong>。邏輯是：如果差異如此懸殊的案例，卻出現了<strong>相同的結果（Y）</strong>，那麼造成這個共同結果的，很可能就是那個<strong>各案例都共享的變數（X）</strong>。
+</div>
+
+<div class="method-grid">
+  <div class="method-card mdsd">
+    <span class="method-label">MDSD</span>
+    <div class="method-name">最大差異法</div>
+    <div class="method-en">Most Different Systems Design</div>
+    <p>選擇<strong>背景條件迥異</strong>的案例進行比較。儘管案例彼此差距極大，它們卻出現了<strong>相同的結果（Y）</strong>，那麼各案例共享的那個 X，就更有可能是真正的成因。</p>
+    <div class="method-key">目標：在排除了背景差異的干擾後，找出跨案例皆有的普遍性解釋</div>
+  </div>
+  <div class="method-card mssd">
+    <span class="method-label">比較</span>
+    <div class="method-name">邏輯對照</div>
+    <div class="method-en">Control by Difference</div>
+    <p>類比：比較在<strong>完全不同條件下</strong>成功的企業，找出它們都有的那個共同成功因素。差異背景正好<strong>幫助排除其他解釋</strong>。</p>
+    <div class="method-key">限制：若共同的 X 是偶然巧合，或背景差異導致 X 的意義不同，結論就不穩固</div>
+  </div>
+</div>
+
+<h3><span class="num">⚙</span>MDSD 的設計邏輯（示意圖）</h3>
+<p class="section-lead">下圖以跨國勞工運動為例，展示 MDSD 如何「提取」普遍性解釋變數。</p>
+
+<div class="compare-svg-wrap">
+<svg viewBox="0 0 720 370" xmlns="http://www.w3.org/2000/svg">
+  <!-- 欄標題 -->
+  <rect x="120" y="14" width="180" height="38" rx="8" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.8"/>
+  <text x="210" y="38" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="15" font-weight="700" fill="#3a5a8c">案例 A：英國</text>
+  <rect x="420" y="14" width="180" height="38" rx="8" fill="#eef2f8" stroke="#3a5a8c" stroke-width="1.8"/>
+  <text x="510" y="38" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="15" font-weight="700" fill="#3a5a8c">案例 B：台灣</text>
+
+  <!-- 背景差異 -->
+  <text x="108" y="90" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#555">殖民歷史</text>
+  <rect x="120" y="74" width="180" height="30" rx="5" fill="#f8d8d4" stroke="#b85040" stroke-width="1.2"/>
+  <text x="210" y="94" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#7a1a10" font-weight="600">✗ 主要殖民帝國</text>
+  <rect x="420" y="74" width="180" height="30" rx="5" fill="#f8d8d4" stroke="#b85040" stroke-width="1.2"/>
+  <text x="510" y="94" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#7a1a10" font-weight="600">✗ 日本殖民地</text>
+
+  <text x="108" y="130" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#555">政治體制</text>
+  <rect x="120" y="114" width="180" height="30" rx="5" fill="#f8d8d4" stroke="#b85040" stroke-width="1.2"/>
+  <text x="210" y="134" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#7a1a10" font-weight="600">✗ 議會民主傳統</text>
+  <rect x="420" y="114" width="180" height="30" rx="5" fill="#f8d8d4" stroke="#b85040" stroke-width="1.2"/>
+  <text x="510" y="134" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#7a1a10" font-weight="600">✗ 威權遺緒</text>
+
+  <text x="108" y="170" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#555">文化宗教</text>
+  <rect x="120" y="154" width="180" height="30" rx="5" fill="#f8d8d4" stroke="#b85040" stroke-width="1.2"/>
+  <text x="210" y="174" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#7a1a10" font-weight="600">✗ 基督新教傳統</text>
+  <rect x="420" y="154" width="180" height="30" rx="5" fill="#f8d8d4" stroke="#b85040" stroke-width="1.2"/>
+  <text x="510" y="174" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#7a1a10" font-weight="600">✗ 儒家／多元信仰</text>
+
+  <!-- 共同的解釋變數（關鍵） -->
+  <text x="108" y="215" text-anchor="end" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#3a5a8c" font-weight="700">★ 工業化集中勞工</text>
+  <rect x="120" y="196" width="180" height="34" rx="5" fill="#dce8f5" stroke="#3a5a8c" stroke-width="2"/>
+  <text x="210" y="218" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#3a5a8c" font-weight="700">◆ 工廠集中化勞動</text>
+  <rect x="420" y="196" width="180" height="34" rx="5" fill="#dce8f5" stroke="#3a5a8c" stroke-width="2"/>
+  <text x="510" y="218" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#3a5a8c" font-weight="700">◆ 工廠集中化勞動</text>
+  <text x="360" y="216" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#3a5a8c" font-weight="700">← 共同！</text>
+
+  <!-- 結果 -->
+  <line x1="210" y1="232" x2="210" y2="280" stroke="#3a5a8c" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="510" y1="232" x2="510" y2="280" stroke="#3a5a8c" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="120" y="282" width="180" height="34" rx="5" fill="#dce8f5" stroke="#3a5a8c" stroke-width="1.5"/>
+  <text x="210" y="304" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#1a3a60" font-weight="700">Y：工會運動興起</text>
+  <rect x="420" y="282" width="180" height="34" rx="5" fill="#dce8f5" stroke="#3a5a8c" stroke-width="1.5"/>
+  <text x="510" y="304" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="12" fill="#1a3a60" font-weight="700">Y：工會運動興起</text>
+  <!-- 圖例 -->
+  <rect x="14" y="348" width="14" height="14" rx="3" fill="#f8d8d4" stroke="#b85040" stroke-width="1"/>
+  <text x="32" y="360" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#555">背景差異（被排除）</text>
+  <rect x="175" y="348" width="14" height="14" rx="3" fill="#dce8f5" stroke="#3a5a8c" stroke-width="2"/>
+  <text x="193" y="360" font-family="'Noto Sans TC',sans-serif" font-size="11" fill="#3a5a8c" font-weight="600">共同解釋變數（保留）</text>
+</svg>
+<div class="svg-hint">✦ 紅色框 = 背景差異（各案例不同，不是解釋原因）；藍色框 = 共同解釋變數（跨案例一致）→ 指向相同結果</div>
+</div>
+
+<h3><span class="num">🌐</span>跨國勞工運動：MDSD 的邏輯示範</h3>
+<div class="hl-box blue">
+  <h4>研究問題</h4>
+  <p>19世紀末到20世紀初，英國、德國、日本、台灣、巴西等文化、殖民史、政治體制截然不同的社會，<strong>都出現了類似的工人組織與工會運動</strong>。為什麼？</p>
+  <p>MDSD 的邏輯：這些國家差異如此之大，要找出一個能跨越所有案例的普遍解釋。研究者的答案：<strong>工業化帶來的工廠集中化勞動</strong>——把大量工人集中在同一時間、同一地點，創造了集體行動的條件，不論文化或政體為何。</p>
+</div>
+
+<div class="spoiler" onclick="this.classList.toggle('revealed')">
+  <span class="sp-title">▶ MDSD 的主要限制是什麼？</span><br>
+  MDSD 的問題在於<strong>「相同的 X」可能在不同案例中有不同含義</strong>。「工廠集中化勞動」在英國工業革命與台灣出口加工區中，其社會意義、國家關係、政治機會結構都不同。如果「共同的 X」只是表面上看起來相同，但實際上運作機制各異，那 MDSD 的普遍性結論就站不穩。這也是為什麼 MDSD 的結論往往需要<strong>更仔細的機制檢驗（process tracing）</strong>來補強。
+</div>
+
+<div class="next-page" onclick="goPage(4)">
+  <div><div class="np-label">下一頁</div><div class="np-title">P4 · MSSD vs MDSD：兩法並置比較</div></div>
+  <div class="np-arrow">→</div>
+</div>
+</div></div>
+<!-- ============ /P3 ============ -->
+
+<!-- ============ P4 兩法並置 ============ -->
+<div class="page" data-page="4"><div class="page-inner">
+<div class="guide-breadcrumb">第 4 章 · <span>兩法並置比較</span></div>
+<h2>MSSD vs MDSD：<span class="mark">並置比較</span></h2>
+
+<div class="story-lead">
+兩種方法都是比較研究的正規工具，但適用情境不同。理解它們的差異，不只是記憶定義，更是建立一種<strong>研究設計思維</strong>——在看到一篇論文時，能夠立刻辨識作者用的是哪種邏輯，以及這個邏輯的強項與弱點在哪裡。
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab(this,'tab-compare')">整體比較</button>
+  <button class="tab" onclick="switchTab(this,'tab-when')">何時使用</button>
+  <button class="tab" onclick="switchTab(this,'tab-pitfalls')">常見誤用</button>
+</div>
+
+<div class="tab-panel active" id="tab-compare">
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>比較面向</th>
+        <th>最大相似法（MSSD）</th>
+        <th>最大差異法（MDSD）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>選案原則</td><td class="mssd-col">選擇背景條件高度相似的案例</td><td class="mdsd-col">選擇背景條件差異極大的案例</td></tr>
+      <tr><td>控制邏輯</td><td class="mssd-col">相似條件 = 被「控制」的背景變數</td><td class="mdsd-col">差異條件 = 被「排除」的可能原因</td></tr>
+      <tr><td>研究目的</td><td class="mssd-col">找出造成結果差異的關鍵原因（Y 不同，找 X）</td><td class="mdsd-col">找出跨案例的普遍性原因（Y 相同，找共同 X）</td></tr>
+      <tr><td>邏輯口訣</td><td class="mssd-col">「同中求異」</td><td class="mdsd-col">「異中求同」</td></tr>
+      <tr><td>主要強項</td><td class="mssd-col">干擾變數較少，解釋力集中</td><td class="mdsd-col">普遍性命題更有說服力</td></tr>
+      <tr><td>主要弱點</td><td class="mssd-col">無法真正控制所有差異；遺漏變數偏誤風險</td><td class="mdsd-col">「共同 X」可能只是表面相同，機制各異</td></tr>
+      <tr><td>經典文獻</td><td class="mssd-col">Skocpol（1979）《國家與社會革命》</td><td class="mdsd-col">Tilly（1984）《大結構、大過程》</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="tab-panel" id="tab-when">
+  <div class="method-grid">
+    <div class="method-card mssd">
+      <span class="method-label">用 MSSD 的時機</span>
+      <div class="method-name" style="font-size:1rem">當你想問：「為什麼 A 和 B 的結果不同？」</div>
+      <br>
+      <p>✅ 你有<strong>相似程度夠高</strong>的案例可以選</p>
+      <p>✅ 研究重點是<strong>解釋差異</strong>（為什麼台灣民主化了，新加坡沒有？）</p>
+      <p>✅ 你想縮小解釋範圍，<strong>排除大量背景因素</strong></p>
+      <p>❌ 避免：案例「相似」只是假象，其實有很多未控制的差異</p>
+    </div>
+    <div class="method-card mdsd">
+      <span class="method-label">用 MDSD 的時機</span>
+      <div class="method-name" style="font-size:1rem">當你想問：「什麼因素在各地都造成同樣的 Y？」</div>
+      <br>
+      <p>✅ 你想提出<strong>普遍性理論命題</strong>（跨文化、跨體制皆適用）</p>
+      <p>✅ 你有<strong>差異明顯</strong>但出現相同結果的案例</p>
+      <p>✅ 你想<strong>排除情境特殊性</strong>，論證某個機制的普遍效力</p>
+      <p>❌ 避免：把「表面上有共同 X」當成「機制相同」——仍需個案驗證</p>
+    </div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab-pitfalls">
+  <div class="hl-box">
+    <h4>⚠ 誤用一：把「選很多案例」當成 MDSD</h4>
+    <p>MDSD 不是「隨便選幾個背景不同的國家」。它要求研究者能<strong>系統性地論證</strong>：這些案例的背景差異足以排除特定替代解釋，而共同的 X 才是真正的原因。沒有方法論意識的「多案例比較」，不構成 MDSD。</p>
+  </div>
+  <div class="hl-box blue">
+    <h4>⚠ 誤用二：把 MSSD 當成「找兩個看起來像的國家」</h4>
+    <p>選相似案例必須基於理論：哪些變數<strong>理論上</strong>可能影響 Y？這些都需要「相似」才能被視為控制。隨意說「台灣和南韓很像」而不界定「在哪些維度相似」，不構成嚴謹的 MSSD 設計。</p>
+  </div>
+  <div class="hl-box sage">
+    <h4>⚠ 誤用三：混淆 Y 與 X 的角色</h4>
+    <p>MSSD 讓 Y 不同（才能解釋差異）、讓大部分 X 相同（控制）。MDSD 讓 Y 相同（尋找普遍原因）、讓背景 X 不同（排除特殊解釋）。<strong>搞混誰要「相同」、誰要「不同」，是最根本的誤用。</strong></p>
+  </div>
+</div>
+
+<div class="concept">
+  <div class="lead">核心洞察：兩種方法都是「控制」的策略</div>
+  <div class="body">無論 MSSD 還是 MDSD，目的都是在沒有實驗的情況下，盡量<strong>縮小「其他可能原因」的干擾空間</strong>。MSSD 用「相似背景」來控制；MDSD 用「差異背景中的共同結果」來排除。兩者都不完美，但都是比「隨便選案例」嚴謹得多的設計邏輯。</div>
+</div>
+
+<div class="next-page" onclick="goPage(5)">
+  <div><div class="np-label">下一頁</div><div class="np-title">P5 · 台灣案例實作：判斷要用哪種方法</div></div>
+  <div class="np-arrow">→</div>
+</div>
+</div></div>
+<!-- ============ /P4 ============ -->
+
+<!-- ============ P5 台灣案例實作 ============ -->
+<div class="page" data-page="5"><div class="page-inner">
+<div class="guide-breadcrumb">第 5 章 · <span>台灣案例實作</span></div>
+<h2>台灣政治案例<span class="mark">實作練習</span></h2>
+
+<div class="story-lead">
+理論要透過案例才能活起來。以下四個研究情境，都是台灣政治社會學的真實議題。請先讀完研究問題，<strong>思考應該用 MSSD 還是 MDSD</strong>，再點擊卡片揭露解析。
+</div>
+
+<p class="section-lead">👇 點擊每張卡片，揭露方法選擇與理由。</p>
+
+<div class="scenario-grid">
+
+  <div class="scenario-card" onclick="revealScenario(this)">
+    <div class="sc-num">情境 01</div>
+    <div class="sc-q">研究台灣與南韓的威權轉型：兩者都經歷了出口導向工業化與威權統治，但民主化的過程與速度有所差異。研究者想找出造成這種差異的原因。</div>
+    <div class="sc-hint">→ 點擊揭露答案</div>
+    <div class="sc-reveal mssd-ans">
+      <span class="sc-badge mssd">最大相似法（MSSD）</span><br>
+      <strong>為什麼？</strong> 台灣與南韓在威權體制類型、工業化路徑、地緣政治依賴上高度相似（控制變數），但民主化路徑有差異（Y 不同）。MSSD 讓研究者得以鎖定造成路徑差異的關鍵變數，例如公民社會組織強度或黨內改革派影響力。
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="revealScenario(this)">
+    <div class="sc-num">情境 02</div>
+    <div class="sc-q">比較台灣、波蘭、南非三國的民主轉型：三個國家的地理位置、文化宗教、殖民歷史、冷戰陣營都截然不同，但都在1980-90年代成功實現了民主化。為什麼？</div>
+    <div class="sc-hint">→ 點擊揭露答案</div>
+    <div class="sc-reveal mdsd-ans">
+      <span class="sc-badge mdsd">最大差異法（MDSD）</span><br>
+      <strong>為什麼？</strong> 三個案例的背景條件差異懸殊（被排除），但都出現了民主化（Y 相同）。MDSD 的邏輯是：如此不同的國家都出現了同樣的結果，那麼共同的解釋（如精英協商機制、國際民主化壓力）就更有普遍性說服力。
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="revealScenario(this)">
+    <div class="sc-num">情境 03</div>
+    <div class="sc-q">研究台灣與新加坡的執政黨永續執政：兩個城市型島嶼政治體，都有威權遺緒，都是出口型小型開放經濟體，但一個民主化，一個至今仍維持一黨優勢。</div>
+    <div class="sc-hint">→ 點擊揭露答案</div>
+    <div class="sc-reveal mssd-ans">
+      <span class="sc-badge mssd">最大相似法（MSSD）</span><br>
+      <strong>為什麼？</strong> 台灣與新加坡在規模、開放經濟體、威權歷史上高度相似，但政治結果迥異（Y 不同：台灣民主化 vs 新加坡人民行動黨持續執政）。研究者可用 MSSD 探問：是哪個差異造就了不同的政治結果——例如反對黨組織能力、媒體自由度、族群政治結構。
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="revealScenario(this)">
+    <div class="sc-num">情境 04</div>
+    <div class="sc-q">比較台灣、巴西、捷克三國的工人抗議運動：三國工業結構、政治體制、文化背景各異，但都在1980年代出現了大規模自發性工人集體行動。是什麼共同機制？</div>
+    <div class="sc-hint">→ 點擊揭露答案</div>
+    <div class="sc-reveal mdsd-ans">
+      <span class="sc-badge mdsd">最大差異法（MDSD）</span><br>
+      <strong>為什麼？</strong> 三個案例背景懸殊（被排除），但都出現了類似的工人集體行動（Y 相同）。MDSD 讓研究者提出普遍性命題：例如「進口替代工業化帶來的工廠規模擴大」或「威權放鬆管控的政治機會窗口」，是跨案例的共同觸發機制。
+    </div>
+  </div>
+
+</div>
+
+<div class="hl-box gold" style="margin-top:1.5rem">
+  <h4>💡 這個練習告訴我們什麼？</h4>
+  <p>選擇 MSSD 還是 MDSD，關鍵在於你的<strong>研究問題</strong>：你想解釋的是「差異」（為什麼 A 不同於 B）還是「共同性」（為什麼那麼不同的案例都出現了 Y）？案例的性質（相似或差異）是<strong>服務於研究問題的工具</strong>，而不是隨機的選擇。</p>
+</div>
+
+<div class="next-page" onclick="goPage(6)">
+  <div><div class="np-label">下一頁</div><div class="np-title">P6 · 隨堂測驗：測試你的理解</div></div>
+  <div class="np-arrow">→</div>
+</div>
+</div></div>
+<!-- ============ /P5 ============ -->
+
+<!-- ============ P6 隨堂測驗 ============ -->
+<div class="page" data-page="6"><div class="page-inner">
+<div class="guide-breadcrumb">第 6 章 · <span>隨堂測驗</span></div>
+<h2>隨堂<span class="mark">測驗</span>：共 4 題</h2>
+<p class="section-lead">請獨立作答，選擇最正確的答案，作答後立即顯示解析。</p>
+<hr class="section-divider">
+
+<!-- Q1 -->
+<div class="quiz-block">
+  <div class="quiz-q-num">Q1</div>
+  <div class="quiz-question">最大相似法（MSSD）的核心設計邏輯是什麼？</div>
+  <div class="quiz-options">
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q1')">（A）選擇差異極大的案例，找出共同成因</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,true,'q1')">（B）選擇多數條件相似的案例，隔離造成差異結果的關鍵變數</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q1')">（C）盡量增加案例數量，提高統計顯著性</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q1')">（D）選擇最有代表性的單一典型案例進行深度分析</button>
+  </div>
+  <div class="quiz-explain" id="q1-exp">MSSD 的邏輯是「同中求異」：讓大部分背景條件<strong>相似</strong>（等同於控制這些變數），然後觀察在那個「不同的地方」是否能解釋結果的差異。<em>（C）</em>是統計方法的思維，<em>（D）</em>是單案例研究，都不是 MSSD。</div>
+</div>
+
+<!-- Q2 -->
+<div class="quiz-block">
+  <div class="quiz-q-num">Q2</div>
+  <div class="quiz-question">研究者想了解「為什麼台灣在1990年代民主化，而同屬小型島嶼威權體制的新加坡沒有」。這個研究問題最適合哪種比較設計？</div>
+  <div class="quiz-options">
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q2')">（A）最大差異法（MDSD），因為兩個案例本質上差距很大</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,true,'q2')">（B）最大相似法（MSSD），因為兩案例背景相似但結果不同</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q2')">（C）單案例研究，選擇台灣進行深度訪談</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q2')">（D）跨國大樣本統計迴歸，納入所有民主化國家</button>
+  </div>
+  <div class="quiz-explain" id="q2-exp">台灣與新加坡在小型島嶼型、威權遺緒、出口型開放經濟體等條件上<strong>高度相似</strong>——這些相似性可作為控制變數。但兩者結果不同（台灣民主化，新加坡未）。這是 MSSD 的標準適用情境：用相似背景控制干擾因素，聚焦在「差異在哪」的問題上。</div>
+</div>
+
+<!-- Q3 -->
+<div class="quiz-block">
+  <div class="quiz-q-num">Q3</div>
+  <div class="quiz-question">下列哪個描述最符合最大差異法（MDSD）的設計目的？</div>
+  <div class="quiz-options">
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q3')">（A）讓案例之間的背景條件盡量相似，以控制干擾變數</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q3')">（B）選擇歷史上最重要的幾個關鍵案例進行比較</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,true,'q3')">（C）在背景條件差異極大的案例中找出共同的解釋變數，以強化普遍性命題</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q3')">（D）先從單一案例歸納，再逐步擴大比較範圍</button>
+  </div>
+  <div class="quiz-explain" id="q3-exp">MDSD 的核心邏輯是「異中求同」：<strong>正因為背景差異如此之大</strong>，若這些案例都出現了相同的結果（Y），那個共同的解釋變數（X）就更有說服力。差異背景幫助排除「只是因為特定情境才有效」的替代解釋，讓命題更具普遍性。</div>
+</div>
+
+<!-- Q4 -->
+<div class="quiz-block">
+  <div class="quiz-q-num">Q4</div>
+  <div class="quiz-question">以下哪個研究設計最接近「最大相似法（MSSD）」的邏輯？</div>
+  <div class="quiz-options">
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q4')">（A）比較台灣、奈及利亞、瑞典、巴西的勞工運動，找出跨越文化差異的共同動員機制</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,true,'q4')">（B）比較台灣與南韓的威權轉型，兩者工業化路徑相似但民主化時機不同，探索差異原因</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q4')">（C）對台灣工會領袖進行三十次深度訪談，理解組織動員的主觀意義</button>
+    <button class="quiz-opt" onclick="answerQuiz(this,false,'q4')">（D）以 OLS 迴歸分析一百個國家的民主指數與人均 GDP 的相關性</button>
+  </div>
+  <div class="quiz-explain" id="q4-exp">（B）是典型的 MSSD：台灣與南韓在工業化路徑、威權體制類型等背景條件上<strong>相似</strong>（控制），但民主化時機或路徑<strong>不同</strong>（結果差異待解釋）。<br>（A）屬於 MDSD（差異極大案例、找共同原因）；（C）是質性單案例研究；（D）是大樣本統計設計。</div>
+</div>
+
+<div class="hl-box gold" style="margin-top:1.5rem">
+  <h4>🎓 本單元關鍵摘要</h4>
+  <p>MSSD 與 MDSD 都是<strong>以案例選擇策略代替實驗控制</strong>的研究設計。前者「同中求異」，用相似背景控制干擾因素；後者「異中求同」，用差異背景排除特殊解釋。掌握這兩把鑰匙，你就能讀懂比較政治論文的核心研究邏輯，也能在自己的研究設計中做出有方法論意識的案例選擇。</p>
+</div>
+
+</div></div>
+<!-- ============ /P6 ============ -->
+
+</div><!-- /page-container -->
+
+<!-- 底部導航 -->
+<div class="bottom-bar">
+  <div class="page-indicator" id="page-indicator">第 1 頁，共 7 頁</div>
+  <div class="page-dots" id="page-dots"></div>
+  <div class="arrow-btns">
+    <button class="arrow-btn" id="btn-prev" onclick="goPage(currentPage-1)" disabled>‹</button>
+    <button class="arrow-btn" id="btn-next" onclick="goPage(currentPage+1)">›</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+var currentPage = 0;
+var totalPages = 7;
+
+// 初始化底部點
+(function(){
+  var dots = document.getElementById('page-dots');
+  for(var i=0;i<totalPages;i++){
+    var d=document.createElement('div');
+    d.className='dot'+(i===0?' active':'');
+    d.setAttribute('data-page',i);
+    d.onclick=(function(pi){return function(){goPage(pi)}})(i);
+    dots.appendChild(d);
+  }
+})();
+
+function goPage(n){
+  if(n<0||n>=totalPages)return;
+  var pages=document.querySelectorAll('.page');
+  pages[currentPage].classList.remove('active');
+  pages[n].classList.add('active');
+  var dots=document.querySelectorAll('.dot');
+  dots[currentPage].classList.remove('active');
+  dots[n].classList.add('active');
+  var navBtns=document.querySelectorAll('.nav-btn');
+  navBtns[currentPage].classList.remove('active');
+  navBtns[n].classList.add('active');
+  currentPage=n;
+  document.getElementById('page-indicator').textContent='第 '+(n+1)+' 頁，共 '+totalPages+' 頁';
+  document.getElementById('btn-prev').disabled=(n===0);
+  document.getElementById('btn-next').disabled=(n===totalPages-1);
+  pages[n].scrollTop=0;
+}
+
+function switchTab(btn,panelId){
+  var tabs=btn.parentElement.querySelectorAll('.tab');
+  tabs.forEach(function(t){t.classList.remove('active')});
+  btn.classList.add('active');
+  var container=btn.parentElement.parentElement;
+  container.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active')});
+  document.getElementById(panelId).classList.add('active');
+}
+
+function answerQuiz(btn, isCorrect, qId){
+  var block=btn.closest('.quiz-block');
+  var opts=block.querySelectorAll('.quiz-opt');
+  opts.forEach(function(o){o.disabled=true;o.style.cursor='default'});
+  if(isCorrect){
+    btn.classList.add('selected-correct');
+  } else {
+    btn.classList.add('selected-wrong');
+    opts.forEach(function(o){
+      if(o.onclick.toString().includes('true')){o.classList.add('show-correct')}
+    });
+  }
+  var exp=document.getElementById(qId+'-exp');
+  if(exp)exp.classList.add('shown');
+}
+
+function revealScenario(card){
+  if(card.classList.contains('answered'))return;
+  card.classList.add('answered');
+  var reveal=card.querySelector('.sc-reveal');
+  var hint=card.querySelector('.sc-hint');
+  if(reveal){reveal.style.display='block'}
+  if(hint){hint.style.display='none'}
+}
+</script>
+</body>
+</html>
